@@ -1,0 +1,29 @@
+---
+name: containers
+
+packages:
+  - bosh-helpers
+
+templates:
+  bin/containers_ctl.erb: bin/containers_ctl
+  bin/job_properties.sh.erb: bin/job_properties.sh
+
+properties:
+  docker.user:
+    description: 'User which will own the Docker services'
+    default: 'root'
+  docker.group:
+    description: 'Group which will own the Docker services'
+    default: 'vcap'
+  containers:
+    description: 'Containers Array (see below for details)'
+    # containers.name: String containing the name of the container
+    # containers.image: String containing the name of the image to create/run
+    # containers.entrypoint: Optional string containing the entrypoint (only if you want to override the default entrypoint set by the image)
+    # containers.command: Optional String containing the command to the run (including arguments)
+    # containers.bind_ports: Optional array of network ports to map to the container
+    # containers.bind_volumes:Optional array of container mountpoints to bind to a host directory
+    # containers.links: Optional array of links to another containers (name:alias)
+    # containers.env_vars: Optional array of environment variables to pass to the container
+    # containers.memory: Optional memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
+    # containers.cpu_shares: Optional CPU shares to assign to the container (relative weight)

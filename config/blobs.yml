@@ -1,0 +1,11 @@
+---
+docker/docker-0.10.0:
+  object_id: 2f66df0c-312d-4745-873b-ce6a784ea682
+  sha: !binary |-
+    MzgyZjIwNWJjZmM1ODYzNzlhZjk1ZGM5N2Q0OWIzODVjY2E1ODUxZA==
+  size: 16970072
+docker/aufs-tools_20120411-3_amd64.deb:
+  object_id: 0866debb-d731-4c1c-b442-3294247506e8
+  sha: !binary |-
+    MmRmYzFmZTM4NmNkM2YwNWFjN2UwYjRlYmNmM2ViYzhhN2YzYjA0ZA==
+  size: 91762

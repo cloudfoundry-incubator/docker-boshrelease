@@ -1,0 +1,100 @@
+<% deployment_name = 'docker-google' %>
+<% os = 'ubuntu' %>
+<% tld = 'microbosh' %>
+<% director_uuid = 'CHANGE-ME' %>
+---
+name: <%= deployment_name %>
+director_uuid: <%= director_uuid %>
+
+releases:
+ - name: docker
+   version: latest
+
+compilation:
+  workers: 5
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties:
+    instance_type: n1-standard-8
+
+update:
+  canaries: 0
+  canary_watch_time: 30000-180000
+  update_watch_time:  30000-180000
+  max_in_flight: 32
+  serial: false
+
+networks:
+  - name: default
+    type: dynamic
+    cloud_properties:
+      ephemeral_external_ip: true
+      tags:
+        - <%= deployment_name %>
+
+resource_pools:
+  - name: default
+    network: default
+    size: 1
+    stemcell:
+      name: bosh-google-kvm-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: n1-highmem-8
+
+jobs:
+  - name: docker
+    templates:
+      - name: docker
+      - name: containers
+    instances: 1
+    resource_pool: default
+    persistent_disk: 65536
+    networks:
+      - name: default
+        default: [dns, gateway]
+    properties:
+      containers:
+        - name: redis
+          image: "dockerfile/redis"
+          command: "--dir /var/lib/redis/ --appendonly yes"
+          bind_ports:
+            - "6379:6379"
+          bind_volumes:
+            - "/var/lib/redis"
+          entrypoint: "redis-server"
+          memory: "256m"
+          cpu_shares: 1
+          env_vars:
+            - "EXAMPLE_VAR=1"
+
+        - name: mysql
+          image: "google/mysql"
+          bind_ports:
+            - "3306:3306"
+          bind_volumes:
+            - "/mysql"
+
+        - name: elasticsearch
+          image: "bosh/elasticsearch"
+          links:
+            - mysql:db
+          bind_ports:
+            - "9200:9200"
+            - "9300:9300"
+          bind_volumes:
+            - "/opt/elasticsearch/data"
+          dockerfile: |
+            FROM dockerfile/java
+
+            RUN wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.tar.gz
+            RUN tar xzf elasticsearch-1.0.1.tar.gz
+            RUN mv elasticsearch-1.0.1 /opt/elasticsearch
+            RUN rm elasticsearch-1.0.1.tar.gz
+
+            EXPOSE 9200
+            EXPOSE 9300
+
+            ENTRYPOINT ["/opt/elasticsearch/bin/elasticsearch"]
+
+properties: {}

@@ -1,0 +1,101 @@
+<% deployment_name = 'shipyard-google' %>
+<% os = 'ubuntu' %>
+<% tld = 'microbosh' %>
+<% director_uuid = 'CHANGE-ME' %>
+---
+name: <%= deployment_name %>
+director_uuid: <%= director_uuid %>
+
+releases:
+ - name: docker
+   version: latest
+
+compilation:
+  workers: 5
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties:
+    instance_type: n1-standard-8
+
+update:
+  canaries: 0
+  canary_watch_time: 30000-180000
+  update_watch_time:  30000-180000
+  max_in_flight: 32
+  serial: false
+
+networks:
+  - name: default
+    type: dynamic
+    cloud_properties:
+      ephemeral_external_ip: true
+      tags:
+        - <%= deployment_name %>
+
+resource_pools:
+  - name: default
+    network: default
+    size: 1
+    stemcell:
+      name: bosh-google-kvm-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: n1-highmem-8
+
+jobs:
+  - name: shipyard
+    templates:
+      - name: docker
+      - name: containers
+    instances: 1
+    resource_pool: default
+    persistent_disk: 65536
+    networks:
+      - name: default
+        default: [dns, gateway]
+    properties:
+      containers:
+        - name: shipyard_db
+          image: "shipyard/db"
+          bind_ports:
+            - "5432"
+          bind_volumes:
+            - "/var/lib/postgresql"
+          env_vars:
+            - "DB_NAME=shipyard"
+            - "DB_USER=shipyard"
+            - "DB_PASS=shipyard"
+
+        - name: shipyard_redis
+          image: "shipyard/redis"
+          bind_ports:
+            - "6379:6379"
+
+        - name: shipyard_router
+          image: "shipyard/router"
+          bind_ports:
+            - "80"
+          links:
+            - "shipyard_redis:redis"
+
+        - name: shipyard_lb
+          image: "shipyard/lb"
+          links:
+            - "shipyard_redis:redis"
+            - "shipyard_router:app_router"
+          bind_ports:
+            - "80:80"
+
+        - name: shipyard
+          image: "shipyard/shipyard"
+          command: "app master-worker"
+          links:
+            - "shipyard_db:db"
+            - "shipyard_redis:redis"
+          bind_ports:
+            - "8000:8000"
+          env_vars:
+            - "ADMIN_PASS=shipyard"
+            - "DEBUG=False"
+
+properties: {}

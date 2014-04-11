@@ -1,0 +1,70 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+
+# Setup common env vars and folders
+source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
+export DOCKER_PID_FILE=$DOCKER_PID_DIR/docker.pid
+
+# Set the hostname
+if hostname=$(public_hostname); then
+  hostname $hostname
+else
+  hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
+fi
+
+case $1 in
+
+  start)
+    pid_guard $DOCKER_PID_FILE $JOB_NAME
+
+    # Install aufs-tools
+    dpkg -i /var/vcap/packages/docker/aufs-tools_20120411-3_amd64.deb
+
+    # Create Docker user & group
+    create_group $DOCKER_GROUP
+    create_user $DOCKER_USER $DOCKER_GROUP
+
+    # Create docker data store
+    if [ ! -d $DOCKER_STORE_DIR/docker ]; then
+      mkdir -p $DOCKER_STORE_DIR/docker
+      chown $DOCKER_USER:$DOCKER_GROUP $DOCKER_STORE_DIR/docker
+      chmod 770 $DOCKER_STORE_DIR/docker
+    fi
+
+    # Mount cgroupfs hierarchy
+    $JOB_DIR/bin/cgroupfs-mount
+
+    # Start Docker daemon
+    exec chpst -u $DOCKER_USER:$DOCKER_GROUP docker --daemon \
+        --group $DOCKER_GROUP \
+        --pidfile $DOCKER_PID_FILE \
+        --graph $DOCKER_STORE_DIR/docker \
+        --host unix://$DOCKER_PID_DIR/docker.sock \
+        ${DOCKER_TCP:-} \
+        ${DOCKER_DNS:-} \
+        ${DOCKER_MTU:-} \
+        ${DOCKER_DEBUG:-} \
+        -r=false \
+        >>$DOCKER_LOG_DIR/$OUTPUT_LABEL.stdout.log \
+        2>>$DOCKER_LOG_DIR/$OUTPUT_LABEL.stderr.log
+    ;;
+
+  stop)
+    # Stop Docker daemon
+    kill_and_wait $DOCKER_PID_FILE
+
+    # Hack: Seems Docker is not releasing the mountpoint for its store dir
+    mounted=$(cat /proc/mounts | grep $DOCKER_STORE_DIR/docker)
+    if [ ! -z "${mounted}" ]; then
+        umount $DOCKER_STORE_DIR/docker
+    fi
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+
+esac
+exit 0

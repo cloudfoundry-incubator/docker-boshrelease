@@ -1,0 +1,19 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=`grep -c ^processor /proc/cpuinfo`
+
+# We grab the latest versions that are in the directory
+DOCKER_VERSION=`ls -r docker/docker-* | sed 's/docker\/docker-\(.*\)/\1/' | head -1`
+AUFS_TOOLS_VERSION=`ls -r docker/aufs-tools_*.deb | sed 's/docker\/aufs-tools_\(.*\).deb/\1/' | head -1`
+
+# Copy Docker package
+echo "Copying Docker ${DOCKER_VERSION}..."
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+cp -a ${BOSH_COMPILE_TARGET}/docker/docker-${DOCKER_VERSION} ${BOSH_INSTALL_TARGET}/bin/docker
+chmod +x ${BOSH_INSTALL_TARGET}/bin/docker
+
+# Copy aufs-tools package
+echo "Copying aufs-tools ${AUFS_TOOLS_VERSION}..."
+cp -a ${BOSH_COMPILE_TARGET}/docker/aufs-tools_${AUFS_TOOLS_VERSION}.deb ${BOSH_INSTALL_TARGET}/

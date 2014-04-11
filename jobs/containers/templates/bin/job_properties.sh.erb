@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+#
+# Containers properties
+#
+
+# Directory to store the Containers configuration files
+export CONTAINERS_CONF_DIR=$JOB_DIR/config
+
+# Directory to store the Containers logs
+export CONTAINERS_LOG_DIR=$LOG_DIR
+
+# Directory to store the Containers process IDs
+export CONTAINERS_PID_DIR=$RUN_DIR
+
+# Directory to store the Containers data files
+export CONTAINERS_STORE_DIR=$STORE_DIR
+
+# Directory to store the Containers temp files
+export CONTAINERS_TMP_DIR=$TMP_DIR
+
+# User which will own the Docker services
+export DOCKER_USER="<%= p('docker.user') %>"
+
+# Group which will own the Docker services
+export DOCKER_GROUP="<%= p('docker.group') %>"
+
+
+<% p('containers').each do |container| %>
+#
+# "<%= container['name'] %>" properties
+#
+
+# Name of the Docker image to create/run
+export <%= container['name'] %>_image="<%= container['image'] %>"
+
+<% if container['entrypoint'] %>
+# Overwrite the default entrypoint set by the image
+export <%= container['name'] %>_entrypoint="--entrypoint <%= container['entrypoint'] %>"
+<% end %>
+
+<% if container['command'] %>
+# Command to the run (including arguments)
+export <%= container['name'] %>_command="<%= container['command'] %>"
+<% end %>
+
+<% if container['cpu_shares'] %>
+# CPU shares (relative weight)
+export <%= container['name'] %>_cpu_shares="-c <%= container['cpu_shares'] %>"
+<% end %>
+
+<% if container['memory'] %>
+# Memory limit (format: <number><optional unit>, where unit = b, k, m or g)
+export <%= container['name'] %>_memory="-m <%= container['memory'] %>"
+<% end %>
+
+<% unless container['bind_ports'].nil? || container['bind_ports'].empty? %>
+<% bind_ports = container['bind_ports'].map { |ports| "--publish #{ports}" }.join(' ') %>
+# Map a network port to the container
+export <%= container['name'] %>_publish="<%= bind_ports %>"
+<% end %>
+
+<% unless container['bind_volumes'].nil? || container['bind_volumes'].empty? %>
+<% bind_volumes = container['bind_volumes'].map { |vol| "--volume $CONTAINERS_STORE_DIR/#{container['name']}:#{vol} "}.join(' ') %>
+# Create a bind mount to a directory
+export <%= container['name'] %>_volumes="<%= bind_volumes %>"
+<% end %>
+
+<% unless container['links'].nil? || container['links'].empty? %>
+<% links = container['links'].map { |link| "--link #{link}" }.join(' ') %>
+# Add link to another container (name:alias)
+export <%= container['name'] %>_links="<%= links %>"
+<% end %>
+
+<% unless container['env_vars'].nil? || container['env_vars'].empty? %>
+<% env_vars = container['env_vars'].map { |var| "--env #{var}" }.join(' ') %>
+# Set environment variables
+export <%= container['name'] %>_env="<%= env_vars %>"
+<% end %>
+
+<% if container['dockerfile'] %>
+# Dockerfile
+mkdir -p "${CONTAINERS_CONF_DIR}"/<%= container['name'] %>
+cat > "${CONTAINERS_CONF_DIR}"/<%= container['name'] %>/Dockerfile <<DOCKERFILE
+<%= container['dockerfile'] %>
+DOCKERFILE
+<% end %>
+<% end %>

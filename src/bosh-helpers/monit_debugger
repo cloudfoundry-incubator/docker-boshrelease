@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# USAGE monit_debugger <label> <command-to-run>
+export MONIT_LOG_DIR=/var/vcap/sys/log/monit
+mkdir -p $MONIT_LOG_DIR
+{
+  echo "MONIT-DEBUG date"
+  date
+  echo "MONIT-DEBUG env"
+  env
+  echo "MONIT-DEBUG $@"
+  $2 $3 $4 $5 $6 $7
+  R=$?
+  echo "MONIT-DEBUG exit code $R"
+} >$MONIT_LOG_DIR/monit_debugger.$1.log 2>&1

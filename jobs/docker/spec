@@ -1,0 +1,32 @@
+---
+name: docker
+
+packages:
+  - bosh-helpers
+  - docker
+
+templates:
+  bin/cgroupfs-mount: bin/cgroupfs-mount
+  bin/docker_ctl: bin/docker_ctl
+  bin/job_properties.sh.erb: bin/job_properties.sh
+
+properties:
+  docker.user:
+    description: 'User which will own the Docker services'
+    default: 'root'
+  docker.group:
+    description: 'Group which will own the Docker services'
+    default: 'vcap'
+  docker.tcp_address:
+    description: 'TCP address where Docker daemon will listen to (if not set, TCP will not be available)'
+    default: '127.0.0.1'
+  docker.tcp_port:
+    description: 'TCP port where Docker daemon will listen to (if not set, TCP will not be available)'
+    default: '4243'
+  docker.debug:
+    description: 'Enable debug mode'
+    default: false
+  docker.dns_servers:
+    description: 'Array of DNS servers to be used by Docker'
+  docker.mtu:
+    description: 'Docker Containers network MTU'

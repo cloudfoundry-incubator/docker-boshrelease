@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+#
+# Docker properties
+#
+
+# Directory to store the Docker configuration files
+export DOCKER_CONF_DIR=$JOB_DIR/config
+
+# Directory to store the Docker logs
+export DOCKER_LOG_DIR=$LOG_DIR
+
+# Directory to store the Docker process IDs
+export DOCKER_PID_DIR=$RUN_DIR
+
+# Directory to store the Docker data files
+export DOCKER_STORE_DIR=$STORE_DIR
+
+# Directory to store the Docker temp files
+export DOCKER_TMP_DIR=$TMP_DIR
+
+# User which will own the Docker services
+export DOCKER_USER="<%= p('docker.user') %>"
+
+# Group which will own the Docker services
+export DOCKER_GROUP="<%= p('docker.group') %>"
+
+<% if p('docker.debug') %>
+# Enable debug mode
+export DOCKER_DEBUG="-D"
+<% end %>
+
+<% if_p('docker.tcp_address', 'docker.tcp_port') do |address, port| %>
+# TCP Address/Port where Docker daemon will listen to
+export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
+<% end %>
+
+<% if_p('docker.dns_servers') do |dns_servers| %>
+<% dns_options = dns_servers.map { |dns| "--dns #{dns}" }.join(' ') %>
+# Array of DNS servers to be used by Docker
+export DOCKER_DNS="<%= dns_options %>"
+<% end %>
+
+<% if_p('docker.mtu') do |mtu| %>
+# Docker Containers network MTU
+export DOCKER_MTU="--mtu <%= mtu %>"
+<% end %>
