@@ -1,0 +1,33 @@
+---
+packages:
+- name: bosh-helpers
+  version: 1
+  sha1: !binary |-
+    NmY1NjUwMjNkNzM1YTM2ZjkwMGI3MTQyMzNhNjcxYzExZjlhNTIxNQ==
+  fingerprint: !binary |-
+    Mjg0ZDAyZTcwOTYzZTA4OWI1MmUyZDNlZDY4M2E3Yzg0M2VkMDk0Yg==
+  dependencies: []
+- name: docker
+  version: 1
+  sha1: !binary |-
+    ZDU3YmJiNTZiNTllZTc4NGRjNDBlMzczYjJmODgzMTRlZmJjYzRjOA==
+  fingerprint: !binary |-
+    MmFjNDNkOGQ4YWFiNDBmZDRhZTg5OTZkYmMwM2E2ZTYzODdhNjk3OQ==
+  dependencies: []
+jobs:
+- name: containers
+  version: 1
+  fingerprint: !binary |-
+    MjQ0MjI2OTRlYTlhZmNmYWRiNzdhYmQzNzVmMDlmMzE3ODU2NTM1Zg==
+  sha1: !binary |-
+    ODE0MmVmMGNjNmJmM2U5Njg3ODBkMjg1YmZjNzFiMDZkNGVlZjY0NQ==
+- name: docker
+  version: 1
+  fingerprint: !binary |-
+    Yjg2OTkyMzRmNDA4ZDJkY2FjNDVhZmJkMTM1ZWU2NDAyZTAxNjg3OA==
+  sha1: !binary |-
+    MTc0NjY4OWJhYjMxNmM3OWIzM2IxNzFhMjhkMmNmY2RjMjBiOGY4NA==
+commit_hash: 13d3a7eb
+uncommitted_changes: true
+name: docker
+version: 1
