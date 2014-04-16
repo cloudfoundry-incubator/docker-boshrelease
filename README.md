@@ -10,6 +10,7 @@ This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_c
 
 * AWS: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-aws-xen-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-aws-xen-ubuntu-3.8.tgz)
 * OpenStack: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-openstack-kvm-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-openstack-kvm-ubuntu-3.8.tgz)
+* VSphere: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-vsphere-esxi-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-vsphere-esxi-ubuntu-3.8.tgz)
 * GCE: [http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2005-google-kvm-ubuntu.tgz](http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2005-google-kvm-ubuntu.tgz)
 
 ## Usage
