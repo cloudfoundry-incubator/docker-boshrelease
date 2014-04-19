@@ -25,20 +25,39 @@ export DOCKER_USER="<%= p('docker.user') %>"
 # Group which will own the Docker services
 export DOCKER_GROUP="<%= p('docker.group') %>"
 
-<% if p('docker.debug') %>
-# Enable debug mode
-export DOCKER_DEBUG="-D"
-<% end %>
-
 <% if_p('docker.tcp_address', 'docker.tcp_port') do |address, port| %>
 # TCP Address/Port where Docker daemon will listen to
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
 <% end %>
 
+# Enable debug mode
+export DOCKER_DEBUG="--debug=<%= p('docker.debug') %>"
+
+# Restart previously running containers
+export DOCKER_RESTART="--restart=<%= p('docker.restart') %>"
+
+# Enable CORS headers in the remote API
+export DOCKER_API_ENABLE_CORS="--api-enable-cors=<%= p('docker.api_enable_cors') %>"
+
+# Enable Docker addition of iptables rules
+export DOCKER_IPTABLES="--iptables=<%= p('docker.iptables') %>"
+
+# Enable net.ipv4.ip_forward
+export DOCKER_IPFORWARD="--ip-forward=<%= p('docker.ip_forward') %>"
+
+# Enable inter-container communication
+export DOCKER_ICC="--icc=<%= p('docker.icc') %>"
+
 <% if_p('docker.dns_servers') do |dns_servers| %>
-<% dns_options = dns_servers.map { |dns| "--dns #{dns}" }.join(' ') %>
+<% dns_servers_list = dns_servers.map { |dns_server| "--dns #{dns_server}" }.join(' ') %>
 # Array of DNS servers to be used by Docker
-export DOCKER_DNS="<%= dns_options %>"
+export DOCKER_DNS_SERVERS="<%= dns_servers_list %>"
+<% end %>
+
+<% if_p('docker.dns_domains') do |dns_domains| %>
+<% dns_domains_list = dns_domains.map { |dns_domain| "--dns-search #{dns_domain}" }.join(' ') %>
+# Array of DNS search domains to be used by Docker
+export DOCKER_DNS_DOMAINS="<%= dns_domains_list %>"
 <% end %>
 
 <% if_p('docker.mtu') do |mtu| %>
