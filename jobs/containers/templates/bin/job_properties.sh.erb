@@ -34,24 +34,48 @@ export DOCKER_GROUP="<%= p('docker.group') %>"
 # Name of the Docker image to create/run
 export <%= container['name'] %>_image="<%= container['image'] %>"
 
-<% if container['entrypoint'] %>
-# Overwrite the default entrypoint set by the image
-export <%= container['name'] %>_entrypoint="--entrypoint <%= container['entrypoint'] %>"
-<% end %>
-
 <% if container['command'] %>
 # Command to the run (including arguments)
 export <%= container['name'] %>_command="<%= container['command'] %>"
 <% end %>
 
+# Enable networking for this container
+<% networking = container.has_key?('networking') ? container['networking'] : true %>
+export <%= container['name'] %>_networking="--networking=<%= networking %>"
+
+# Give extended privileges to this container
+<% privileged = container.has_key?('privileged') ? container['privileged'] : false %>
+export <%= container['name'] %>_privileged="--privileged=<%= privileged %>"
+
+<% if container['entrypoint'] %>
+# Overwrite the default entrypoint set by the image
+export <%= container['name'] %>_entrypoint="--entrypoint <%= container['entrypoint'] %>"
+<% end %>
+
+<% if container['workdir'] %>
+# Working directory inside the container
+export <%= container['name'] %>_workdir="--workdir <%= container['workdir'] %>"
+<% end %>
+
+<% if container['user'] %>
+# Username or UID to run the first process
+export <%= container['name'] %>_user="--user <%= container['user'] %>"
+<% end %>
+
 <% if container['cpu_shares'] %>
 # CPU shares (relative weight)
-export <%= container['name'] %>_cpu_shares="-c <%= container['cpu_shares'] %>"
+export <%= container['name'] %>_cpu_shares="--cpu-shares <%= container['cpu_shares'] %>"
 <% end %>
 
 <% if container['memory'] %>
 # Memory limit (format: <number><optional unit>, where unit = b, k, m or g)
-export <%= container['name'] %>_memory="-m <%= container['memory'] %>"
+export <%= container['name'] %>_memory="--memory <%= container['memory'] %>"
+<% end %>
+
+<% unless container['expose_ports'].nil? || container['expose_ports'].empty? %>
+<% exposed_ports = container['expose_ports'].map { |ports| "--expose #{ports}" }.join(' ') %>
+# Expose a port from the container without publishing it to your host
+export <%= container['name'] %>_expose="<%= exposed_ports %>"
 <% end %>
 
 <% unless container['bind_ports'].nil? || container['bind_ports'].empty? %>
@@ -60,10 +84,22 @@ export <%= container['name'] %>_memory="-m <%= container['memory'] %>"
 export <%= container['name'] %>_publish="<%= bind_ports %>"
 <% end %>
 
+<% unless container['volumes'].nil? || container['volumes'].empty? %>
+<% volumes = container['volumes'].map { |vol| "--volume #{vol}" }.join(' ') %>
+# Bind mount a volume
+export <%= container['name'] %>_volumes="<%= volumes %>"
+<% end %>
+
 <% unless container['bind_volumes'].nil? || container['bind_volumes'].empty? %>
-<% bind_volumes = container['bind_volumes'].map { |vol| "--volume $CONTAINERS_STORE_DIR/#{container['name']}:#{vol} "}.join(' ') %>
+<% bind_volumes = container['bind_volumes'].map { |vol| "--volume $CONTAINERS_STORE_DIR/#{container['name']}:#{vol}" }.join(' ') %>
 # Create a bind mount to a directory
-export <%= container['name'] %>_volumes="<%= bind_volumes %>"
+export <%= container['name'] %>_bind_volumes="<%= bind_volumes %>"
+<% end %>
+
+<% unless container['volumes_from'].nil? || container['volumes_from'].empty? %>
+<% volumes_from = container['volumes_from'].map { |container| "--volumes-from #{container}" }.join(' ') %>
+# Mount volumes from the specified container(s)
+export <%= container['name'] %>_volumes_from="<%= volumes_from %>"
 <% end %>
 
 <% unless container['links'].nil? || container['links'].empty? %>
