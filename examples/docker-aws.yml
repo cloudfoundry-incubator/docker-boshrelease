@@ -1,4 +1,4 @@
-<% deployment_name = 'docker-aws' %>
+<% deployment_name = 'docker' %>
 <% os = 'ubuntu' %>
 <% tld = 'microbosh' %>
 <% director_uuid = 'CHANGE-ME' %>
@@ -19,8 +19,8 @@ compilation:
 
 update:
   canaries: 0
-  canary_watch_time: 30000-180000
-  update_watch_time:  30000-180000
+  canary_watch_time: 30000-240000
+  update_watch_time:  30000-240000
   max_in_flight: 32
   serial: false
 
@@ -39,7 +39,7 @@ resource_pools:
     size: 1
     stemcell:
       name: bosh-aws-xen-<%= os %>
-      version: 2005
+      version: latest
     cloud_properties:
       instance_type: m1.xlarge
 
