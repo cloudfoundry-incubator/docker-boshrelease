@@ -1,7 +1,6 @@
-<% deployment_name = 'docker' %>
-<% os = 'ubuntu' %>
-<% tld = 'microbosh' %>
 <% director_uuid = 'CHANGE-ME' %>
+<% deployment_name = 'docker' %>
+<% floating_ip = 'CHANGE-ME' %>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -11,7 +10,7 @@ releases:
    version: latest
 
 compilation:
-  workers: 5
+  workers: 1
   network: default
   reuse_compilation_vms: true
   cloud_properties:
@@ -28,14 +27,20 @@ networks:
   - name: default
     type: dynamic
     cloud_properties:
-      security_groups: ['default']
+      security_groups:
+        - bosh
+        - <%= deployment_name %>
+
+  - name: floating
+    type: vip
+    cloud_properties: {}
 
 resource_pools:
   - name: default
     network: default
     size: 1
     stemcell:
-      name: bosh-openstack-kvm-<%= os %>
+      name: bosh-openstack-kvm-ubuntu
       version: latest
     cloud_properties:
       instance_type: m1.xlarge
@@ -51,6 +56,9 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
+      - name: floating
+        static_ips:
+          - <%= floating_ip %>
     properties:
       containers:
         - name: redis

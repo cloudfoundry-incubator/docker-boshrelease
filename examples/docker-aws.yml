@@ -1,7 +1,6 @@
-<% deployment_name = 'docker' %>
-<% os = 'ubuntu' %>
-<% tld = 'microbosh' %>
 <% director_uuid = 'CHANGE-ME' %>
+<% deployment_name = 'docker' %>
+<% elastic_ip = 'CHANGE-ME' %>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -11,7 +10,7 @@ releases:
    version: latest
 
 compilation:
-  workers: 5
+  workers: 1
   network: default
   reuse_compilation_vms: true
   cloud_properties:
@@ -27,18 +26,21 @@ update:
 networks:
   - name: default
     type: dynamic
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
     cloud_properties:
-      security_groups: ['default']
+      security_groups:
+        - bosh
+        - <%= deployment_name %>
+
+  - name: elastic
+    type: vip
+    cloud_properties: {}
 
 resource_pools:
   - name: default
     network: default
     size: 1
     stemcell:
-      name: bosh-aws-xen-<%= os %>
+      name: bosh-aws-xen-ubuntu
       version: latest
     cloud_properties:
       instance_type: m1.xlarge
@@ -54,6 +56,9 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
+      - name: elastic
+        static_ips:
+          - <%= elastic_ip %>
     properties:
       containers:
         - name: redis

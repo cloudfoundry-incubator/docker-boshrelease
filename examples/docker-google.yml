@@ -1,7 +1,6 @@
-<% deployment_name = 'docker' %>
-<% os = 'ubuntu' %>
-<% tld = 'microbosh' %>
 <% director_uuid = 'CHANGE-ME' %>
+<% deployment_name = 'docker' %>
+<% static_ip = 'CHANGE-ME' %>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -11,7 +10,7 @@ releases:
    version: latest
 
 compilation:
-  workers: 5
+  workers: 1
   network: default
   reuse_compilation_vms: true
   cloud_properties:
@@ -28,16 +27,20 @@ networks:
   - name: default
     type: dynamic
     cloud_properties:
-      ephemeral_external_ip: true
       tags:
+        - bosh
         - <%= deployment_name %>
+
+  - name: static
+    type: vip
+    cloud_properties: {}
 
 resource_pools:
   - name: default
     network: default
     size: 1
     stemcell:
-      name: bosh-google-kvm-<%= os %>
+      name: bosh-google-kvm-ubuntu-trusty
       version: latest
     cloud_properties:
       instance_type: n1-highmem-8
@@ -53,6 +56,9 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
+      - name: static
+        static_ips:
+          - <%= static_ip %>
     properties:
       containers:
         - name: redis
