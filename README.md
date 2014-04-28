@@ -11,7 +11,7 @@ This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_c
 * AWS: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-aws-xen-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-aws-xen-ubuntu-3.8.tgz)
 * OpenStack: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-openstack-kvm-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-openstack-kvm-ubuntu-3.8.tgz)
 * VSphere: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-vsphere-esxi-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-vsphere-esxi-ubuntu-3.8.tgz)
-* GCE: [http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2005-google-kvm-ubuntu.tgz](http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2005-google-kvm-ubuntu.tgz)
+* GCE: [http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2479-google-kvm-ubuntu-trusty.tgz](http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2479-google-kvm-ubuntu-trusty.tgz)
 
 ## Usage
 
@@ -32,6 +32,23 @@ Now create a deployment file (using the files at the [examples](https://github.c
 
 ```
 vi path/to/deployment.yml
+```
+
+Note that the examples requires you to open some ports, so you will need to:
+
+* Create a security group (or the equivalent) named `bosh` with the following ports opened:
+    - TCP `22`, `4222`, `6868`, `25250`, `25555`, `25777` to enable BOSH to communicate with the agents
+    - UDP `53` to enable using the BOSH DNS
+* Create a security group (or the equivalent) named `docker` (or the name of your deployment) with the following ports opened:
+    - TCP `3306` for MySQL
+    - TCP `6379` for Redis
+    - TCP `9200` & `9300` for ElasticSearch
+
+### Deploy using the BOSH deployment manifest
+
+Using the previous created deployment manifest, now we can deploy it:
+
+```
 bosh deployment path/to/deployment.yml
 bosh -n deploy
 ```
