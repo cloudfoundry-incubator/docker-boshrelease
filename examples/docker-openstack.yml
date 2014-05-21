@@ -40,7 +40,7 @@ resource_pools:
     network: default
     size: 1
     stemcell:
-      name: bosh-openstack-kvm-ubuntu
+      name: bosh-openstack-kvm-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
       instance_type: m1.xlarge

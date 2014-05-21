@@ -6,12 +6,7 @@ One of the fastest ways to get [Docker](https://www.docker.io/) and orchestrate 
 
 This is not presently a production ready [Docker](https://www.docker.io/) BOSH release. This is a work in progress.
 
-This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_collections?type=stemcells) with a embedded Linux kernel >= 3.8. At this moment the official stemcells come with Linux kernel 3.0, so for your convenience here there are the links to some unofficial stemcells:
-
-* AWS: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-aws-xen-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-aws-xen-ubuntu-3.8.tgz)
-* OpenStack: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-openstack-kvm-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-openstack-kvm-ubuntu-3.8.tgz)
-* VSphere: [http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-vsphere-esxi-ubuntu-3.8.tgz](http://storage.googleapis.com/bosh-stemcells/bosh-stemcell-2005-vsphere-esxi-ubuntu-3.8.tgz)
-* GCE: [http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2479-google-kvm-ubuntu-trusty.tgz](http://storage.googleapis.com/bosh-stemcells/light-bosh-stemcell-2479-google-kvm-ubuntu-trusty.tgz)
+This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_collections?type=stemcells) with a embedded Linux kernel >= 3.8, so be sure to use one of the public stemcells that come with Ubuntu Trusty.
 
 ## Usage
 
