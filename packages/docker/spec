@@ -2,5 +2,5 @@
 name: docker
 dependencies: {}
 files:
-  - docker/docker-0.10.0
+  - docker/docker-0.11.0
   - docker/aufs-tools_20120411-3_amd64.deb
