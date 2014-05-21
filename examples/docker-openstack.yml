@@ -89,18 +89,22 @@ jobs:
             - "9200:9200"
             - "9300:9300"
           bind_volumes:
-            - "/opt/elasticsearch/data"
+            - "/data"
           dockerfile: |
             FROM dockerfile/java
 
-            RUN wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.tar.gz
-            RUN tar xzf elasticsearch-1.0.1.tar.gz
-            RUN mv elasticsearch-1.0.1 /opt/elasticsearch
-            RUN rm elasticsearch-1.0.1.tar.gz
+            RUN \
+              cd /tmp && \
+              wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.tar.gz && \
+              tar xvzf elasticsearch-1.1.1.tar.gz && \
+              rm -f elasticsearch-1.1.1.tar.gz && \
+              mv /tmp/elasticsearch-1.1.1 /elasticsearch
+
+            WORKDIR /data
+
+            CMD ["/elasticsearch/bin/elasticsearch"]
 
             EXPOSE 9200
             EXPOSE 9300
-
-            ENTRYPOINT ["/opt/elasticsearch/bin/elasticsearch"]
 
 properties: {}
