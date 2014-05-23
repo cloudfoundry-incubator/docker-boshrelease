@@ -85,6 +85,8 @@ jobs:
           image: "bosh/elasticsearch"
           links:
             - mysql:db
+          depends_on:
+            - mysql
           bind_ports:
             - "9200:9200"
             - "9300:9300"

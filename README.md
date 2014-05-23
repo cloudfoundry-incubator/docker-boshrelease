@@ -126,7 +126,13 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>containers[].links</td>
     <td>N</td>
     <td>Array of Strings</td>
-    <td>Links to another containers in the same job (name:alias)</td>
+    <td>Links to others containers in the same job (name:alias)</td>
+  </tr>
+  <tr>
+    <td>containers[].depends_on</td>
+    <td>N</td>
+    <td>Array of Strings</td>
+    <td>Name of others containers in the same job that this container depends on</td>
   </tr>
   <tr>
     <td>containers[].env_vars</td>
