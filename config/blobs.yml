@@ -14,3 +14,8 @@ docker/docker-0.11.0:
   sha: !binary |-
     YTAwNDMwMzhlODZjZjMxNjBhODIyM2EwYWQzMGZiYTg5NmU0MDg2Yw==
   size: 17239732
+docker/docker-1.0.0:
+  object_id: efd9ee03-5c99-4e8b-96e4-ba0290248cd9
+  sha: !binary |-
+    YTYyYmM5NzUxOGY0NTU0NDE4ZTdhNmU4M2IwMmZkZmZlOWVkN2VlNg==
+  size: 17578488
