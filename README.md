@@ -159,12 +159,6 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>Memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)</td>
   </tr>
   <tr>
-    <td>containers[].networking</td>
-    <td>N</td>
-    <td>Boolean</td>
-    <td>Enable/disable networking for this container</td>
-  </tr>
-  <tr>
     <td>containers[].privileged</td>
     <td>N</td>
     <td>Boolean</td>

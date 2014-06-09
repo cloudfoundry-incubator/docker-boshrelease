@@ -39,10 +39,6 @@ export <%= container['name'] %>_image="<%= container['image'] %>"
 export <%= container['name'] %>_command="<%= container['command'] %>"
 <% end %>
 
-# Enable networking for this container
-<% networking = container.has_key?('networking') ? container['networking'] : true %>
-export <%= container['name'] %>_networking="--networking=<%= networking %>"
-
 # Give extended privileges to this container
 <% privileged = container.has_key?('privileged') ? container['privileged'] : false %>
 export <%= container['name'] %>_privileged="--privileged=<%= privileged %>"
