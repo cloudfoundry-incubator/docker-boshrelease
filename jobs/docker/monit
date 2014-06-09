@@ -3,3 +3,11 @@ check process docker with pidfile /var/vcap/sys/run/docker/docker.pid
   start program "/var/vcap/packages/bosh-helpers/monit_debugger docker_ctl '/var/vcap/jobs/docker/bin/docker_ctl start'"
   stop program "/var/vcap/packages/bosh-helpers/monit_debugger docker_ctl '/var/vcap/jobs/docker/bin/docker_ctl stop'" with timeout 60 seconds
   if failed unixsocket /var/vcap/sys/run/docker/docker.sock with timeout 5 seconds for 5 cycles then restart
+<% if_p('logspout.syslog_address', 'logspout.syslog_port') do |syslog_address, syslog_port| %>
+check process logspout with pidfile /var/vcap/sys/run/docker/logspout.pid
+  group vcap
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger logspout_ctl '/var/vcap/jobs/docker/bin/logspout_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger logspout_ctl '/var/vcap/jobs/docker/bin/logspout_ctl stop'" with timeout 60 seconds
+  depends on docker
+<% end %>
+

@@ -1,0 +1,6 @@
+---
+name: logspout
+dependencies: {}
+files:
+  - logspout/logspout-9a0a67fe4b
+

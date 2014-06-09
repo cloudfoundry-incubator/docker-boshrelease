@@ -4,11 +4,13 @@ name: docker
 packages:
   - bosh-helpers
   - docker
+  - logspout
 
 templates:
   bin/cgroupfs-mount: bin/cgroupfs-mount
   bin/docker_ctl: bin/docker_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/logspout_ctl: bin/logspout_ctl
 
 properties:
   docker.user:
@@ -47,3 +49,15 @@ properties:
     description: 'Array of DNS search domains to be used by Docker'
   docker.mtu:
     description: 'Docker Containers network MTU'
+  logspout.debug:
+    description: 'Enable debug mode'
+    default: false
+  logspout.port:
+    description: 'TCP port where Logspout will listen to'
+    default: 8000
+  logspout.syslog_address:
+    description: 'Syslog IP address'
+  logspout.syslog_port:
+    description: 'Syslog UDP port'
+    default: 514
+

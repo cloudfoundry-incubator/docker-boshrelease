@@ -19,3 +19,8 @@ docker/docker-1.0.0:
   sha: !binary |-
     YTYyYmM5NzUxOGY0NTU0NDE4ZTdhNmU4M2IwMmZkZmZlOWVkN2VlNg==
   size: 17578488
+logspout/logspout-9a0a67fe4b:
+  object_id: 806b0eaa-9313-439c-9953-2886109495c7
+  sha: !binary |-
+    NGM3Nzk0YWQ4MDE2NTlmYzM2Yjc0YjJmNWYwMTg1NzJjZjdjNjY0MA==
+  size: 9567640
