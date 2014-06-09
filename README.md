@@ -99,7 +99,7 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>Network ports to expose from the container without publishing it to your host</td>
   </tr>
   <tr>
-    <td>containers[].bind_ports</td>
+    <td>containers[].bind_ports[]</td>
     <td>N</td>
     <td>Array of Strings</td>
     <td>Network ports to map from the container to the host</td>
@@ -111,31 +111,31 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>Volumes to bind mount</td>
   </tr>
   <tr>
-    <td>containers[].bind_volumes</td>
+    <td>containers[].bind_volumes[]</td>
     <td>N</td>
     <td>Array of Strings</td>
     <td>Volume mountpoints to bind to a host directory (provided automatically by CF-BOSH)</td>
   </tr>
   <tr>
-    <td>containers[].volumes_from</td>
+    <td>containers[].volumes_from[]</td>
     <td>N</td>
     <td>Array of Strings</td>
     <td>Mount volumes from the specified container(s)</td>
   </tr>
   <tr>
-    <td>containers[].links</td>
+    <td>containers[].links[]</td>
     <td>N</td>
     <td>Array of Strings</td>
     <td>Links to others containers in the same job (name:alias)</td>
   </tr>
   <tr>
-    <td>containers[].depends_on</td>
+    <td>containers[].depends_on[]</td>
     <td>N</td>
     <td>Array of Strings</td>
     <td>Name of others containers in the same job that this container depends on</td>
   </tr>
   <tr>
-    <td>containers[].env_vars</td>
+    <td>containers[].env_vars[]</td>
     <td>N</td>
     <td>Array of Strings</td>
     <td>Environment variables to pass to the container</td>
