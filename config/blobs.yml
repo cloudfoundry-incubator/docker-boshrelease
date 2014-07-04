@@ -24,3 +24,23 @@ logspout/logspout-9a0a67fe4b:
   sha: !binary |-
     NGM3Nzk0YWQ4MDE2NTlmYzM2Yjc0YjJmNWYwMTg1NzJjZjdjNjY0MA==
   size: 9567640
+ruby/ruby-2.0.0-p481.tar.gz:
+  object_id: 4f7f71bb-8de6-46bb-89ee-25dd7326ea9e
+  sha: !binary |-
+    ZGRlZDdiNzM0OWQ1OWZlYjgzZDRmNzc0YjJkZGVjMjNlZWFiNzk3OA==
+  size: 13586757
+ruby/bundler-1.6.3.gem:
+  object_id: fab3cfc3-1750-4fac-8543-a01c16ebaeb7
+  sha: !binary |-
+    YzhhMDAwZjc1YjZhNmY2MGQ5ZmI3MjdmODA3NmVjOTE3MWUxNGMyMA==
+  size: 293376
+ruby/rubygems-2.3.0.tgz:
+  object_id: 5b5998b4-c06b-458a-ba4f-cac005365cc6
+  sha: !binary |-
+    NjkwMmZmZjc3NDlmYTI2NGI4ZjkwMjBmMzNkYWY5MjE3MDM3NWY3NQ==
+  size: 431240
+ruby/yaml-0.1.6.tar.gz:
+  object_id: f83bdc13-d038-4cda-abe3-b477d3fabbba
+  sha: !binary |-
+    ZjNkNDA0ZTExYmVjM2M0ZWZjZGRmZDE0YzQyZDQ2ZjFhYWJlMGI1ZA==
+  size: 503012
