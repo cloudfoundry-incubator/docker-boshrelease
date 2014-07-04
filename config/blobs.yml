@@ -44,3 +44,8 @@ ruby/yaml-0.1.6.tar.gz:
   sha: !binary |-
     ZjNkNDA0ZTExYmVjM2M0ZWZjZGRmZDE0YzQyZDQ2ZjFhYWJlMGI1ZA==
   size: 503012
+docker/docker-1.1.0:
+  object_id: 58dccc6d-00b9-4668-a056-1b00c47cfd7c
+  sha: !binary |-
+    MTk5MGRjYzg5MmU2NDRmMzU2M2E1Y2E2MzU4YmFiMGU3ZmZkNTMyZg==
+  size: 17636445
