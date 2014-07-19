@@ -1,0 +1,10 @@
+/var/vcap/sys/log/docker/*.log {
+  missingok
+  rotate <%= p('docker.daemon.logrotate.rotate') %>
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  size <%= p('docker.daemon.logrotate.size') %>
+  su <%= p('docker.user') %> <%= p('docker.group') %>
+}

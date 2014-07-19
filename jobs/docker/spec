@@ -11,6 +11,8 @@ templates:
   bin/docker_ctl: bin/docker_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/logspout_ctl: bin/logspout_ctl
+  config/docker_logrotate.cron.erb: config/docker_logrotate.cron
+  config/logrotate.conf.erb: config/logrotate.conf
 
 properties:
   docker.user:
@@ -49,15 +51,23 @@ properties:
     description: 'Array of DNS search domains to be used by Docker'
   docker.mtu:
     description: 'Docker Containers network MTU'
+  docker.daemon.logrotate.frequency:
+    description: 'Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)'
+    default: '0 * * * *'
+  docker.daemon.logrotate.rotate:
+    description: 'Number of times Docker daemon log files are rotated before being removed '
+    default: '7'
+  docker.daemon.logrotate.size:
+    description: 'Size before Docker daemon log files are rotateds'
+    default: '2M'
   logspout.debug:
     description: 'Enable debug mode'
     default: false
   logspout.port:
     description: 'TCP port where Logspout will listen to'
-    default: 8000
+    default: '8000'
   logspout.syslog_address:
     description: 'Syslog IP address'
   logspout.syslog_port:
     description: 'Syslog UDP port'
-    default: 514
-
+    default: '514'

@@ -7,6 +7,8 @@ packages:
 templates:
   bin/containers_ctl.erb: bin/containers_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
+  config/containers_logrotate.cron.erb: config/containers_logrotate.cron
+  config/logrotate.conf.erb: config/logrotate.conf
 
 properties:
   docker.user:
@@ -15,6 +17,15 @@ properties:
   docker.group:
     description: 'Group which will own the Docker services'
     default: 'vcap'
+  docker.containers.logrotate.frequency:
+    description: 'Frequency to run logrotate for Containers log files (crontab five time and date fields)'
+    default: '0 * * * *'
+  docker.containers.logrotate.rotate:
+    description: 'Number of times Containers log files are rotated before being removed '
+    default: '7'
+  docker.containers.logrotate.size:
+    description: 'Size before Containers log files are rotateds'
+    default: '2M'
   containers:
     description: 'Containers Array (see below for details)'
     # containers.name: String containing the name of the container

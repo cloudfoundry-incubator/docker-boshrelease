@@ -1,0 +1,1 @@
+<%= p('docker.containers.logrotate.frequency') %> test -x /usr/sbin/logrotate && /usr/sbin/logrotate --state /var/vcap/sys/tmp/containers/logrotate.status /var/vcap/jobs/containers/config/logrotate.conf >>/var/vcap/sys/log/containers/containers_logrotate_cron.log 2>&1

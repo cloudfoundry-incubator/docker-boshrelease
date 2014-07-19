@@ -31,6 +31,9 @@ case $1 in
       chmod 777 ${CONTAINERS_STORE_DIR}/${container_name}
     fi
 
+    # Enable logrotate crontab
+    (crontab -l | sed /containers.*logrotate/d; cat ${CONTAINERS_CONF_DIR}/containers_logrotate.cron) | sed /^$/d | crontab
+
     # Build the Docker image from Dockerfile
     if [ -a "${CONTAINERS_CONF_DIR}/${container_name}/Dockerfile" ]; then
         image=$(chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock images | grep "$(eval echo "\$${container_name}_image")") || true
