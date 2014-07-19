@@ -63,7 +63,7 @@ export <%= container['name'] %>_user="--user <%= container['user'] %>"
 export <%= container['name'] %>_cpu_shares="--cpu-shares <%= container['cpu_shares'] %>"
 <% end %>
 
-<% if !container['memory'].nil? && !container['memory'].empty? %>
+<% unless container['memory'].nil? || container['memory'].empty? %>
 # Memory limit (format: <number><optional unit>, where unit = b, k, m or g)
 export <%= container['name'] %>_memory="--memory <%= container['memory'] %>"
 <% end %>
@@ -75,7 +75,7 @@ export <%= container['name'] %>_expose="<%= exposed_ports %>"
 <% end %>
 
 <% unless container['bind_ports'].nil? || container['bind_ports'].empty? %>
-<% bind_ports = Array(container['bind_ports']).join(",").split(",").map(&:strip).map { |ports| "--publish #{ports}" }.join(' ') %>
+<% bind_ports = Array(container['bind_ports']).join(',').split(',').map { |ports| "--publish #{ports.strip}" }.join(' ') %>
 # Map a network port to the container
 export <%= container['name'] %>_publish="<%= bind_ports %>"
 <% end %>
@@ -87,7 +87,7 @@ export <%= container['name'] %>_volumes="<%= volumes %>"
 <% end %>
 
 <% unless container['bind_volumes'].nil? || container['bind_volumes'].empty? %>
-<% bind_volumes = Array(container['bind_volumes']).join(",").split(",").map(&:strip).map { |vol| "--volume $CONTAINERS_STORE_DIR/#{container['name']}:#{vol}" }.join(' ') %>
+<% bind_volumes = Array(container['bind_volumes']).join(',').split(',').map { |vol| "--volume $CONTAINERS_STORE_DIR/#{container['name']}:#{vol.strip}" }.join(' ') %>
 # Create a bind mount to a directory
 export <%= container['name'] %>_bind_volumes="<%= bind_volumes %>"
 <% end %>
@@ -105,7 +105,7 @@ export <%= container['name'] %>_links="<%= links %>"
 <% end %>
 
 <% unless container['env_vars'].nil? || container['env_vars'].empty? %>
-<% env_vars = Array(container['env_vars']).join(",").split(",").map(&:strip).map { |var| "--env #{var}" }.join(' ') %>
+<% env_vars = Array(container['env_vars']).join(',').split(',').map { |var| "--env #{var.strip}" }.join(' ') %>
 # Set environment variables
 export <%= container['name'] %>_env="<%= env_vars %>"
 <% end %>
