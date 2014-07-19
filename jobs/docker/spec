@@ -4,13 +4,11 @@ name: docker
 packages:
   - bosh-helpers
   - docker
-  - logspout
 
 templates:
   bin/cgroupfs-mount: bin/cgroupfs-mount
   bin/docker_ctl: bin/docker_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/logspout_ctl: bin/logspout_ctl
   config/docker_logrotate.cron.erb: config/docker_logrotate.cron
   config/logrotate.conf.erb: config/logrotate.conf
 
@@ -60,14 +58,3 @@ properties:
   docker.daemon.logrotate.size:
     description: 'Size before Docker daemon log files are rotateds'
     default: '2M'
-  logspout.debug:
-    description: 'Enable debug mode'
-    default: false
-  logspout.port:
-    description: 'TCP port where Logspout will listen to'
-    default: '8000'
-  logspout.syslog_address:
-    description: 'Syslog IP address'
-  logspout.syslog_port:
-    description: 'Syslog UDP port'
-    default: '514'
