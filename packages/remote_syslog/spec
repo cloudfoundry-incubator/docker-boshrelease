@@ -1,0 +1,5 @@
+---
+name: remote_syslog
+dependencies: {}
+files:
+  - remote_syslog/remote_syslog-pre.0.12_linux_amd64.tar.gz

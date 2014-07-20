@@ -5,19 +5,19 @@
 #
 
 # Directory to store the Docker configuration files
-export DOCKER_CONF_DIR=$JOB_DIR/config
+export DOCKER_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Docker logs
-export DOCKER_LOG_DIR=$LOG_DIR
+export DOCKER_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Docker process IDs
-export DOCKER_PID_DIR=$RUN_DIR
+export DOCKER_PID_DIR=${RUN_DIR}
 
 # Directory to store the Docker data files
-export DOCKER_STORE_DIR=$STORE_DIR
+export DOCKER_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Docker temp files
-export DOCKER_TMP_DIR=$TMP_DIR
+export DOCKER_TMP_DIR=${TMP_DIR}
 
 # User which will own the Docker services
 export DOCKER_USER="<%= p('docker.user') %>"
@@ -63,4 +63,37 @@ export DOCKER_DNS_DOMAINS="<%= dns_domains_list %>"
 <% if_p('docker.mtu') do |mtu| %>
 # Docker Containers network MTU
 export DOCKER_MTU="--mtu <%= mtu %>"
+<% end %>
+
+#
+# Remote Syslog properties
+#
+
+# Directory to store the Remote Syslog configuration files
+export REMOTE_SYSLOG_CONF_DIR=${JOB_DIR}/config
+
+# Directory to store the Remote Syslog logs
+export REMOTE_SYSLOG_LOG_DIR=${LOG_DIR}
+
+# Directory to store the Remote Syslog process IDs
+export REMOTE_SYSLOG_PID_DIR=${RUN_DIR}
+
+# Directory to store the Remote Syslog data files
+export REMOTE_SYSLOG_STORE_DIR=${STORE_DIR}
+
+# Directory to store the Remote Syslog temp files
+export REMOTE_SYSLOG_TMP_DIR=${TMP_DIR}
+
+# User which will own the Remote Syslog services
+export REMOTE_SYSLOG_USER="<%= p('remote_syslog.user') %>"
+
+# Group which will own the Remote Syslog services
+export REMOTE_SYSLOG_GROUP="<%= p('remote_syslog.group') %>"
+
+# How often to check for new files
+export REMOTE_SYSLOG_NEW_FILE_CHECK_INTERVAL="<%= p('remote_syslog.new_file_check_interval') %>"
+
+<% if p('remote_syslog.debug') %>
+# Write a debug file
+export REMOTE_SYSLOG_DEBUG="--debug-log-cfg=${REMOTE_SYSLOG_LOG_DIR}/docker_remote_syslog_debug.log"
 <% end %>

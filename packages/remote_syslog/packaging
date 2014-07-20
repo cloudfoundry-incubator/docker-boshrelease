@@ -1,0 +1,21 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=`grep -c ^processor /proc/cpuinfo`
+
+# We grab the latest versions that are in the directory
+REMOTE_SYSLOG_VERSION=`ls -r remote_syslog/remote_syslog-*.tar.gz | sed 's/remote_syslog\/remote_syslog-\(.*\)_linux_amd64\.tar\.gz/\1/' | head -1`
+
+# Extract Remote Syslog package
+echo "Extracting Remote Syslog ${REMOTE_SYSLOG_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/remote_syslog/remote_syslog-${REMOTE_SYSLOG_VERSION}_linux_amd64.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Remote Syslog ${REMOTE_SYSLOG_VERSION}"
+  exit 1
+fi
+
+# Copy Remote Syslog package
+echo "Copying Remote Syslog..."
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+cp -a ${BOSH_COMPILE_TARGET}/remote_syslog/remote_syslog ${BOSH_INSTALL_TARGET}/bin/

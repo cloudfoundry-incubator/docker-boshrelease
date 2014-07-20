@@ -49,3 +49,8 @@ docker/docker-1.1.0:
   sha: !binary |-
     MTk5MGRjYzg5MmU2NDRmMzU2M2E1Y2E2MzU4YmFiMGU3ZmZkNTMyZg==
   size: 17636445
+remote_syslog/remote_syslog-pre.0.12_linux_amd64.tar.gz:
+  object_id: a98df62f-1f30-471a-833c-c58a5be160b8
+  sha: !binary |-
+    OTkzNDQ1ZGQ5YzFjMWRmMWU3ZmRlODI0MjE3ZDU1MzU1M2ZiZTBiOQ==
+  size: 1839323
