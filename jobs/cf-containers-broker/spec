@@ -1,0 +1,107 @@
+---
+name: cf-containers-broker
+
+packages:
+  - bosh-helpers
+  - ruby
+  - cf-containers-broker
+  - remote_syslog
+
+templates:
+  bin/cf-containers-broker_ctl: bin/cf-containers-broker_ctl
+  bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/remote_syslog_ctl: bin/remote_syslog_ctl
+  config/logrotate.cron.erb: config/logrotate.cron
+  config/logrotate.conf.erb: config/logrotate.conf
+  config/remote_syslog.yml.erb: config/remote_syslog.yml
+  config/settings.yml.erb: config/settings.yml
+  config/unicorn.conf.rb.erb: config/unicorn.conf.rb
+
+properties:
+  cfcontainersbroker.user:
+    description: 'User which will own the CF-Containers-Broker services'
+    default: 'root'
+  cfcontainersbroker.group:
+    description: 'Group which will own the CF-Containers-Broker services'
+    default: 'vcap'
+  cfcontainersbroker.unicorn.worker_processes:
+    description: 'Unicorn worker processes'
+    default: '4'
+  cfcontainersbroker.unicorn.port:
+    description: 'Unicorn listen port'
+    default: '80'
+  cfcontainersbroker.auth_username:
+    description: "Broker's basic auth username"
+  cfcontainersbroker.auth_password:
+    description: "Broker's basic auth password"
+  cfcontainersbroker.cookie_secret:
+    description: 'A unique secret key, used to sign sessions'
+  cfcontainersbroker.session_expiry:
+    description: 'Session expiry time of the session'
+    default: '86400'
+  cfcontainersbroker.cc_api_uri:
+    description: 'URL of the CloudFoundry Cloud Controller'
+  cfcontainersbroker.external_host:
+    description: 'Host used to register the broker. Domain is often the same as system domain'
+  cfcontainersbroker.component_name:
+    description: 'Component name used to register the broker'
+    default: 'cf-containers-broker'
+  cfcontainersbroker.ssl_enabled:
+    description: 'Determines use of https in dashboard url and in callback uri for calls to UAA'
+    default: false
+  cfcontainersbroker.skip_ssl_validation:
+    description: 'Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA'
+    default: true
+  cfcontainersbroker.max_containers:
+    description: 'Max number of containers'
+    default: '0'
+  cfcontainersbroker.services:
+    description: 'Services and plans offered by the broker'
+  cfcontainersbroker.logrotate.frequency:
+    description: 'Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)'
+    default: '0 * * * *'
+  cfcontainersbroker.logrotate.rotate:
+    description: 'Number of times Docker daemon log files are rotated before being removed '
+    default: '7'
+  cfcontainersbroker.logrotate.size:
+    description: 'Size before Docker daemon log files are rotateds'
+    default: '2M'
+  cfcontainersbroker.kubernetes.api_uri:
+    description: 'Kubernetes API URI'
+  cfcontainersbroker.kubernetes.api_version:
+    description: 'Kubernetes API version'
+    default: '/api/v1beta1'
+  cfcontainersbroker.kubernetes.username:
+    description: 'Kubernetes username'
+  cfcontainersbroker.kubernetes.password:
+    description: 'Kubernetes password'
+
+  nats.user:
+    description: 'Username for broker to connect to NATS'
+  nats.password:
+    description: 'Password for broker to connect to NATS'
+  nats.port:
+    description: 'IP port of Cloud Foundry NATS server'
+  nats.machines:
+    description: 'Array of IPs of each NATS cluster member'
+
+  remote_syslog.user:
+    description: 'User which will own the Remote Syslog services'
+    default: 'root'
+  remote_syslog.group:
+    description: 'Group which will own the Remote Syslog services'
+    default: 'vcap'
+  remote_syslog.address:
+    description: 'IP address for Remote Syslog'
+  remote_syslog.port:
+    description: 'TCP port of Remote Syslog'
+    default: '514'
+  remote_syslog.protocol:
+    description: 'Protocol to be used when forwarding logs to a Remote Syslog (tcp|udp|tls)'
+    default: 'udp'
+  remote_syslog.new_file_check_interval:
+    description: 'How often to check for new files'
+    default: '10s'
+  remote_syslog.debug:
+    description: 'Write a debug file'
+    default: false

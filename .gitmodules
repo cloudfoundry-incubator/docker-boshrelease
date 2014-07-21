@@ -1,0 +1,3 @@
+[submodule "src/cf-containers-broker"]
+	path = src/cf-containers-broker
+	url = https://github.com/cf-platform-eng/cf-containers-broker.git

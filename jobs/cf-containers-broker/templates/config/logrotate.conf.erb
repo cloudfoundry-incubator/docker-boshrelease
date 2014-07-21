@@ -1,0 +1,10 @@
+/var/vcap/sys/log/cf-containers-broker/*.log {
+  missingok
+  rotate <%= p('cfcontainersbroker.logrotate.rotate') %>
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  size <%= p('cfcontainersbroker.logrotate.size') %>
+  su <%= p('cfcontainersbroker.user') %> <%= p('cfcontainersbroker.group') %>
+}

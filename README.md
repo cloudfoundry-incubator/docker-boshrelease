@@ -1,12 +1,16 @@
 # Bosh release for Docker
 
-One of the fastest ways to get [Docker](https://www.docker.io/) and orchestrate containers with persistent data on any infrastructure is to deploy this BOSH release.
+One of the fastest ways to get [Docker](https://www.docker.io/) and orchestrate containers with persistent data on any
+infrastructure is to deploy this BOSH release.
 
 ## Disclaimer
 
 This is not presently a production ready [Docker](https://www.docker.io/) BOSH release. This is a work in progress.
+It is suitable for experimentation and may not become supported in the future.
 
-This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_collections?type=stemcells) with a embedded Linux kernel >= 3.8, so be sure to use one of the public stemcells that come with Ubuntu Trusty.
+
+This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_collections?type=stemcells) with a
+embedded Linux kernel >= 3.8, so be sure to use one of the public stemcells that come with Ubuntu Trusty.
 
 ## Usage
 
@@ -23,148 +27,10 @@ bosh upload release releases/docker-6.yml
 
 ### Create a BOSH deployment manifest
 
-Now create a deployment file (using the files at the [examples](https://github.com/cf-platform-eng/docker-boshrelease/tree/master/examples) directory as a starting point) and deploy:
+There are to deployment scenarios for this BOSH release:
 
-```
-vi path/to/deployment.yml
-```
-
-Note that the examples requires you to open some ports, so you will need to:
-
-* Create a security group (or the equivalent) named `bosh` with the following ports opened:
-    - TCP `22`, `4222`, `6868`, `25250`, `25555`, `25777` to enable BOSH to communicate with the agents
-    - UDP `53` to enable using the BOSH DNS
-* Create a security group (or the equivalent) named `docker` (or the name of your deployment) with the following ports opened:
-    - TCP `3306` for MySQL
-    - TCP `6379` for Redis
-    - TCP `9200` & `9300` for ElasticSearch
-
-### Properties format
-
-Containers to be deployed must be specified at the properties section of each job. The format is:
-
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Required</th>
-    <th>Type</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>containers[]</td>
-    <td>Y</td>
-    <td>Array</td>
-    <td>Containers to deploy</td>
-  </tr>
-  <tr>
-    <td>containers[].name</td>
-    <td>Y</td>
-    <td>String</td>
-    <td>Name to assign to the container</td>
-  </tr>
-  <tr>
-    <td>containers[].image</td>
-    <td>Y</td>
-    <td>String</td>
-    <td>Name of the image to create or the image fo fetch and run from the registry</td>
-  </tr>
-  <tr>
-    <td>containers[].dockerfile</td>
-    <td>N</td>
-    <td>String (Literal Style)</td>
-    <td>Contents of the Dockerfile (when you want to build a Docker image)</td>
-  </tr>
-  <tr>
-    <td>containers[].command</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Command to the run the container (including arguments)</td>
-  </tr>
-  <tr>
-    <td>containers[].entrypoint</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Entrypoint for the container (only if you want to override the default entrypoint set by the image)</td>
-  </tr>
-  <tr>
-    <td>containers[].workdir</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Working directory inside the container</td>
-  </tr>
-  <tr>
-    <td>containers[].expose_ports[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Network ports to expose from the container without publishing it to your host</td>
-  </tr>
-  <tr>
-    <td>containers[].bind_ports[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Network ports to map from the container to the host</td>
-  </tr>
-  <tr>
-    <td>containers[].volumes[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Volumes to bind mount</td>
-  </tr>
-  <tr>
-    <td>containers[].bind_volumes[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Volume mountpoints to bind to a host directory (provided automatically by CF-BOSH)</td>
-  </tr>
-  <tr>
-    <td>containers[].volumes_from[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Mount volumes from the specified container(s)</td>
-  </tr>
-  <tr>
-    <td>containers[].links[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Links to others containers in the same job (name:alias)</td>
-  </tr>
-  <tr>
-    <td>containers[].depends_on[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Name of others containers in the same job that this container depends on</td>
-  </tr>
-  <tr>
-    <td>containers[].env_vars[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Environment variables to pass to the container</td>
-  </tr>
-  <tr>
-    <td>containers[].user</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Username or UID to run the first container process</td>
-  </tr>
-  <tr>
-    <td>containers[].cpu_shares</td>
-    <td>N</td>
-    <td>String</td>
-    <td>CPU shares to assign to the container (relative weight)</td>
-  </tr>
-  <tr>
-    <td>containers[].memory</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)</td>
-  </tr>
-  <tr>
-    <td>containers[].privileged</td>
-    <td>N</td>
-    <td>Boolean</td>
-    <td>Enable/disable extended privileges to this container</td>
-  </tr>
-</table>
+* Deploy statically defined Docker containers: see [CONTAINERS.md](CONTAINERS.md) for deployment instructions.
+* Deploy a Docker Service Broker for your Cloud Foundry deployment: see [SERVICE_BROKER.md](SERVICE_BROKER.md) for deployment instructions.
 
 ### Deploy using the BOSH deployment manifest
 

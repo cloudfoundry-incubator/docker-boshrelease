@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+#
+# CF-Containers-Broker properties
+#
+
+# Directory to store the CF-Containers-Broker configuration files
+export CF_CONTAINERS_BROKER_CONF_DIR=$JOB_DIR/config
+
+# Directory to store the CF-Containers-Broker logs
+export CF_CONTAINERS_BROKER_LOG_DIR=$LOG_DIR
+
+# Directory to store the CF-Containers-Broker process IDs
+export CF_CONTAINERS_BROKER_PID_DIR=$RUN_DIR
+
+# Directory to store the CF-Containers-Broker data files
+export CF_CONTAINERS_BROKER_STORE_DIR=$STORE_DIR
+
+# Directory to store the CF-Containers-Broker temp files
+export CF_CONTAINERS_BROKER_TMP_DIR=$TMP_DIR
+
+# User which will own the CF-Containers-Broker services
+export CF_CONTAINERS_BROKER_USER="<%= p('cfcontainersbroker.user') %>"
+
+# Group which will own the CF-Containers-Broker services
+export CF_CONTAINERS_BROKER_GROUP="<%= p('cfcontainersbroker.group') %>"
+
+# CF-Containers-Broker Gemfile
+export BUNDLE_GEMFILE=/var/vcap/packages/cf-containers-broker/Gemfile
+
+# CF-Containers-Broker Rails environment
+export RAILS_ENV=production
+
+# CF-Containers-Broker settings file
+export SETTINGS_PATH=$CF_CONTAINERS_BROKER_CONF_DIR/settings.yml
+
+# Docker UNIX socket
+export DOCKER_URL="unix:///var/vcap/sys/run/docker/docker.sock"
+
+#
+# Remote Syslog properties
+#
+
+# Directory to store the Remote Syslog configuration files
+export REMOTE_SYSLOG_CONF_DIR=${JOB_DIR}/config
+
+# Directory to store the Remote Syslog logs
+export REMOTE_SYSLOG_LOG_DIR=${LOG_DIR}
+
+# Directory to store the Remote Syslog process IDs
+export REMOTE_SYSLOG_PID_DIR=${RUN_DIR}
+
+# Directory to store the Remote Syslog data files
+export REMOTE_SYSLOG_STORE_DIR=${STORE_DIR}
+
+# Directory to store the Remote Syslog temp files
+export REMOTE_SYSLOG_TMP_DIR=${TMP_DIR}
+
+# User which will own the Remote Syslog services
+export REMOTE_SYSLOG_USER="<%= p('remote_syslog.user') %>"
+
+# Group which will own the Remote Syslog services
+export REMOTE_SYSLOG_GROUP="<%= p('remote_syslog.group') %>"
+
+# How often to check for new files
+export REMOTE_SYSLOG_NEW_FILE_CHECK_INTERVAL="<%= p('remote_syslog.new_file_check_interval') %>"
+
+<% if p('remote_syslog.debug') %>
+# Write a debug file
+export REMOTE_SYSLOG_DEBUG="--debug-log-cfg=${REMOTE_SYSLOG_LOG_DIR}/remote_syslog_debug.log"
+<% end %>
