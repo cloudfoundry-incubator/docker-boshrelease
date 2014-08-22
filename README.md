@@ -29,8 +29,8 @@ bosh upload release releases/docker-6.yml
 
 There are to deployment scenarios for this BOSH release:
 
-* Deploy statically defined Docker containers: see [CONTAINERS.md](CONTAINERS.md) for deployment instructions.
-* Deploy a Docker Service Broker for your Cloud Foundry deployment: see [SERVICE_BROKER.md](SERVICE_BROKER.md) for deployment instructions.
+* Deploy statically defined Docker containers: see [CONTAINERS.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/CONTAINERS.md) for deployment instructions.
+* Deploy a Docker Service Broker for your Cloud Foundry deployment: see [SERVICE_BROKER.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/SERVICE_BROKER.md) for deployment instructions.
 
 ### Deploy using the BOSH deployment manifest
 
