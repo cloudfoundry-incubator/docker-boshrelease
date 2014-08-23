@@ -1,20 +1,8 @@
 ---
-docker/docker-0.10.0:
-  object_id: 2f66df0c-312d-4745-873b-ce6a784ea682
-  sha: 382f205bcfc586379af95dc97d49b385cca5851d
-  size: 16970072
 docker/aufs-tools_20120411-3_amd64.deb:
   object_id: 0866debb-d731-4c1c-b442-3294247506e8
   sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
   size: 91762
-docker/docker-0.11.0:
-  object_id: b71c68ee-9350-4032-85fa-09b4c6e94ad7
-  sha: a0043038e86cf3160a8223a0ad30fba896e4086c
-  size: 17239732
-docker/docker-1.0.0:
-  object_id: efd9ee03-5c99-4e8b-96e4-ba0290248cd9
-  sha: a62bc97518f4554418e7a6e83b02fdffe9ed7ee6
-  size: 17578488
 logspout/logspout-9a0a67fe4b:
   object_id: 806b0eaa-9313-439c-9953-2886109495c7
   sha: 4c7794ad801659fc36b74b2f5f018572cf7c6640
@@ -35,10 +23,6 @@ ruby/yaml-0.1.6.tar.gz:
   object_id: f83bdc13-d038-4cda-abe3-b477d3fabbba
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
-docker/docker-1.1.0:
-  object_id: 58dccc6d-00b9-4668-a056-1b00c47cfd7c
-  sha: 1990dcc892e644f3563a5ca6358bab0e7ffd532f
-  size: 17636445
 remote_syslog/remote_syslog-pre.0.12_linux_amd64.tar.gz:
   object_id: a98df62f-1f30-471a-833c-c58a5be160b8
   sha: 993445dd9c1c1df1e7fde824217d553553fbe0b9
