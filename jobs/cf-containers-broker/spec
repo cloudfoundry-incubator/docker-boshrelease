@@ -42,7 +42,7 @@ properties:
   cfcontainersbroker.cc_api_uri:
     description: 'URL of the CloudFoundry Cloud Controller'
   cfcontainersbroker.external_host:
-    description: 'Host used to register the broker. Domain is often the same as system domain'
+    description: 'Host used to register the broker'
   cfcontainersbroker.component_name:
     description: 'Component name used to register the broker'
     default: 'cf-containers-broker'
