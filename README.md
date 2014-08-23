@@ -75,7 +75,17 @@ including your gem version, Ruby version, and operating system. Ideally, a bug r
 4. Commit and push your changes.
 5. Submit a pull request.
 
-### Create new final release
+### Create new release
+
+#### Creating a development release
+
+If you need to create a new development release, you will need to run the `./update` command first to download the
+submodule bits.
+
+Also, you will need [Ruby 2+](https://www.ruby-lang.org) and [bundler](http://bundler.io) installed at your
+workstation in order to bundle all required gems and compile the assets.
+
+#### Creating a final release
 
 If you need to create a new final release, you will need to get read/write API credentials to the [@cloudfoundry-community](https://github.com/cloudfoundry-community) s3 account.
 
