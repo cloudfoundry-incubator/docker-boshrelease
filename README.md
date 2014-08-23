@@ -41,6 +41,22 @@ bosh deployment path/to/deployment.yml
 bosh -n deploy
 ```
 
+### Troubleshooting
+
+One of the most frequent problems when deploying this BOSH release is that Docker is unable to fetch images from the
+[Docker Hub Registry](https://registry.hub.docker.com/). This usually happens when the first DNS nameserver specified
+at the `/etc/resolv.conf` file in the VM is unable to resolve the `index.docker.io` hostname. In order to fix this
+issue the first DNS nameserver must be able to resolve external hostnames. Usually the first DNS nameserver is the
+microBOSH [PowerDNS](https://www.powerdns.com/) IP address, so in order to fix this you must re-deploy microBOSH
+setting a PowerDNS recursor. This can be done updating the `micro_bosh.yml` file with:
+
+```
+apply_spec:
+  properties:
+    dns:
+      recursor: 8.8.8.8
+```
+
 ## Contributing
 
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
