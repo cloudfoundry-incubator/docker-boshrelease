@@ -37,6 +37,10 @@ properties:
   docker.api_enable_cors:
     description: 'Enable CORS headers in the remote API'
     default: false
+  docker.bridge:
+    description: 'Name of the network bridge to attach containers'
+  docker.cidr_prefix:
+    description: 'CIDR notation prefix (first 2 octets) for the network bridges IP'
   docker.iptables:
     description: 'Enable Docker addition of iptables rules'
     default: true

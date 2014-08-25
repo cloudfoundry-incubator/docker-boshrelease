@@ -38,6 +38,17 @@ case $1 in
     # Mount cgroupfs hierarchy
     $JOB_DIR/bin/cgroupfs-mount
 
+    # Create network bridge
+    if [ ! -z ${DOCKER_BRIDGE_NAME} ]; then
+        set +e
+        ip link delete docker0
+        ip link delete ${DOCKER_BRIDGE_NAME}
+        /var/vcap/packages/docker/sbin/brctl addbr ${DOCKER_BRIDGE_NAME}
+        ip addr add ${DOCKER_BRIDGE_CIDR} dev ${DOCKER_BRIDGE_NAME}
+        ip link set dev ${DOCKER_BRIDGE_NAME} up
+        set -e
+    fi
+
     # Start Docker daemon
     exec chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --daemon \
         --group ${DOCKER_GROUP} \
@@ -48,6 +59,7 @@ case $1 in
         ${DOCKER_DEBUG:-} \
         ${DOCKER_RESTART:-} \
         ${DOCKER_API_ENABLE_CORS:-} \
+        ${DOCKER_BRIDGE:-} \
         ${DOCKER_IPTABLES:-} \
         ${DOCKER_IPFORWARD:-} \
         ${DOCKER_ICC:-} \

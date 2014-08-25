@@ -39,6 +39,13 @@ export DOCKER_RESTART="--restart=<%= p('docker.restart') %>"
 # Enable CORS headers in the remote API
 export DOCKER_API_ENABLE_CORS="--api-enable-cors=<%= p('docker.api_enable_cors') %>"
 
+<% if_p('docker.bridge', 'docker.cidr_prefix') do |bridge, cidr_prefix| %>
+# Attach containers to a network bridge
+export DOCKER_BRIDGE="--bridge=<%= bridge %>"
+export DOCKER_BRIDGE_NAME="<%= bridge %>"
+export DOCKER_BRIDGE_CIDR="<%= cidr_prefix %>.<%= index %>.1/24"
+<% end %>
+
 # Enable Docker addition of iptables rules
 export DOCKER_IPTABLES="--iptables=<%= p('docker.iptables') %>"
 
