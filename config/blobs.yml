@@ -31,3 +31,11 @@ docker/docker-1.1.2:
   object_id: 576994ec-462e-4046-b819-40673ddb70b7
   sha: 3a7242ddb8331746e19c1e5f550124afc365d542
   size: 17636446
+docker/autoconf-2.69.tar.gz:
+  object_id: 8e2d0f8a-fb08-4dd6-99a7-0f5fada93c82
+  sha: 562471cbcb0dd0fa42a76665acf0dbb68479b78a
+  size: 1927468
+docker/bridge-utils-1.5.tar.gz:
+  object_id: 7ec3ecd0-b4fa-425c-bf53-acd6200e357e
+  sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
+  size: 33472
