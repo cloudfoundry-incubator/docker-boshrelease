@@ -27,10 +27,6 @@ remote_syslog/remote_syslog-pre.0.12_linux_amd64.tar.gz:
   object_id: a98df62f-1f30-471a-833c-c58a5be160b8
   sha: 993445dd9c1c1df1e7fde824217d553553fbe0b9
   size: 1839323
-docker/docker-1.1.2:
-  object_id: 576994ec-462e-4046-b819-40673ddb70b7
-  sha: 3a7242ddb8331746e19c1e5f550124afc365d542
-  size: 17636446
 docker/autoconf-2.69.tar.gz:
   object_id: 8e2d0f8a-fb08-4dd6-99a7-0f5fada93c82
   sha: 562471cbcb0dd0fa42a76665acf0dbb68479b78a
@@ -39,3 +35,7 @@ docker/bridge-utils-1.5.tar.gz:
   object_id: 7ec3ecd0-b4fa-425c-bf53-acd6200e357e
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
+docker/docker-1.2.0:
+  object_id: 0c2405b8-6b19-462a-9ae1-b980d4d82ec5
+  sha: 540459bc5d9f1cac17fe8654891814314db15e77
+  size: 13398472
