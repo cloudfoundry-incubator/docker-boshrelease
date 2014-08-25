@@ -55,6 +55,7 @@ case $1 in
                     "$(eval echo "\$${container_name}_privileged")" \
                     "$(eval echo "\$${container_name}_entrypoint")" \
                     "$(eval echo "\$${container_name}_workdir")" \
+                    "$(eval echo "\$${container_name}_restart")" \
                     "$(eval echo "\$${container_name}_user")" \
                     "$(eval echo "\$${container_name}_cpu_shares")" \
                     "$(eval echo "\$${container_name}_memory")" \
@@ -63,8 +64,11 @@ case $1 in
                     "$(eval echo "\$${container_name}_volumes")" \
                     "$(eval echo "\$${container_name}_bind_volumes")" \
                     "$(eval echo "\$${container_name}_volumes_from")" \
+                    "$(eval echo "\$${container_name}_devices")" \
                     "$(eval echo "\$${container_name}_links")" \
                     "$(eval echo "\$${container_name}_env")" \
+                    "$(eval echo "\$${container_name}_cap_adds")" \
+                    "$(eval echo "\$${container_name}_cap_drops")" \
                     "$(eval echo "\$${container_name}_image")" \
                     "$(eval echo "\$${container_name}_command")""
     echo "$(date) Running command: ${docker_command}"

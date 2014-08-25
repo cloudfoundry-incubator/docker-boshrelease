@@ -77,61 +77,72 @@ export <%= container['name'] %>_privileged="--privileged=<%= privileged %>"
 
 <% if container['entrypoint'] %>
 # Overwrite the default entrypoint set by the image
-export <%= container['name'] %>_entrypoint="--entrypoint <%= container['entrypoint'] %>"
+export <%= container['name'] %>_entrypoint="--entrypoint=<%= container['entrypoint'] %>"
 <% end %>
 
 <% if container['workdir'] %>
 # Working directory inside the container
-export <%= container['name'] %>_workdir="--workdir <%= container['workdir'] %>"
+export <%= container['name'] %>_workdir="--workdir=<%= container['workdir'] %>"
+<% end %>
+
+<% if container['restart'] %>
+# Restart policy to apply when a container exitsr
+export <%= container['name'] %>_restart="--restart=<%= container['restart'] %>"
 <% end %>
 
 <% if container['user'] %>
 # Username or UID to run the first process
-export <%= container['name'] %>_user="--user <%= container['user'] %>"
+export <%= container['name'] %>_user="--user=<%= container['user'] %>"
 <% end %>
 
 <% if container['cpu_shares'] %>
 # CPU shares (relative weight)
-export <%= container['name'] %>_cpu_shares="--cpu-shares <%= container['cpu_shares'] %>"
+export <%= container['name'] %>_cpu_shares="--cpu-shares=<%= container['cpu_shares'] %>"
 <% end %>
 
 <% unless container['memory'].nil? || container['memory'].empty? %>
 # Memory limit (format: <number><optional unit>, where unit = b, k, m or g)
-export <%= container['name'] %>_memory="--memory <%= container['memory'] %>"
+export <%= container['name'] %>_memory="--memory=<%= container['memory'] %>"
 <% end %>
 
 <% unless container['expose_ports'].nil? || container['expose_ports'].empty? %>
-<% exposed_ports = container['expose_ports'].map { |ports| "--expose #{ports}" }.join(' ') %>
+<% exposed_ports = container['expose_ports'].map { |ports| "--expose=#{ports}" }.join(' ') %>
 # Expose a port from the container without publishing it to your host
 export <%= container['name'] %>_expose="<%= exposed_ports %>"
 <% end %>
 
 <% unless container['bind_ports'].nil? || container['bind_ports'].empty? %>
-<% bind_ports = Array(container['bind_ports']).join(',').split(',').map { |ports| "--publish #{ports.strip}" }.join(' ') %>
+<% bind_ports = Array(container['bind_ports']).join(',').split(',').map { |ports| "--publish=#{ports.strip}" }.join(' ') %>
 # Map a network port to the container
 export <%= container['name'] %>_publish="<%= bind_ports %>"
 <% end %>
 
 <% unless container['volumes'].nil? || container['volumes'].empty? %>
-<% volumes = container['volumes'].map { |vol| "--volume #{vol}" }.join(' ') %>
+<% volumes = container['volumes'].map { |vol| "--volume=#{vol}" }.join(' ') %>
 # Bind mount a volume
 export <%= container['name'] %>_volumes="<%= volumes %>"
 <% end %>
 
 <% unless container['bind_volumes'].nil? || container['bind_volumes'].empty? %>
-<% bind_volumes = Array(container['bind_volumes']).join(',').split(',').map { |vol| "--volume $CONTAINERS_STORE_DIR/#{container['name']}:#{vol.strip}" }.join(' ') %>
+<% bind_volumes = Array(container['bind_volumes']).join(',').split(',').map { |vol| "--volume=$CONTAINERS_STORE_DIR/#{container['name']}:#{vol.strip}" }.join(' ') %>
 # Create a bind mount to a directory
 export <%= container['name'] %>_bind_volumes="<%= bind_volumes %>"
 <% end %>
 
 <% unless container['volumes_from'].nil? || container['volumes_from'].empty? %>
-<% volumes_from = container['volumes_from'].map { |container| "--volumes-from #{container}" }.join(' ') %>
+<% volumes_from = container['volumes_from'].map { |container| "--volumes-from=#{container}" }.join(' ') %>
 # Mount volumes from the specified container(s)
 export <%= container['name'] %>_volumes_from="<%= volumes_from %>"
 <% end %>
 
+<% unless container['devices'].nil? || container['devices'].empty? %>
+<% devices = container['devices'].map { |device| "--device=#{device}" }.join(' ') %>
+# Host devices to add to the container
+export <%= container['name'] %>_devices="<%= devices %>"
+<% end %>
+
 <% unless container['links'].nil? || container['links'].empty? %>
-<% links = container['links'].map { |link| "--link #{link}" }.join(' ') %>
+<% links = container['links'].map { |link| "--link=#{link}" }.join(' ') %>
 # Add link to another container (name:alias)
 export <%= container['name'] %>_links="<%= links %>"
 <% end %>
@@ -140,6 +151,18 @@ export <%= container['name'] %>_links="<%= links %>"
 <% env_vars = Array(container['env_vars']).join(',').split(',').map { |var| "--env #{var.strip}" }.join(' ') %>
 # Set environment variables
 export <%= container['name'] %>_env="<%= env_vars %>"
+<% end %>
+
+<% unless container['cap_adds'].nil? || container['cap_adds'].empty? %>
+<% cap_adds = Array(container['cap_adds']).join(',').split(',').map { |cap_add| "--cap-add=#{cap_add.strip}" }.join(' ') %>
+# Set Linux capabilities to add
+export <%= container['name'] %>_cap_adds="<%= cap_adds %>"
+<% end %>
+
+<% unless container['cap_drops'].nil? || container['cap_drops'].empty? %>
+<% cap_drops = Array(container['cap_drops']).join(',').split(',').map { |cap_drop| "--cap-drop=#{cap_drop.strip}" }.join(' ') %>
+# Set Linux capabilities to drop
+export <%= container['name'] %>_cap_drops="<%= cap_drops %>"
 <% end %>
 
 <% if container['dockerfile'] %>

@@ -77,6 +77,12 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>Working directory inside the container</td>
   </tr>
   <tr>
+    <td>containers[].restart</td>
+    <td>N</td>
+    <td>String</td>
+    <td>Restart policy to apply when a container exits (no, on-failure, always)</td>
+  </tr>
+  <tr>
     <td>containers[].expose_ports[]</td>
     <td>N</td>
     <td>Array of Strings</td>
@@ -105,6 +111,12 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>N</td>
     <td>Array of Strings</td>
     <td>Mount volumes from the specified container(s)</td>
+  </tr>
+  <tr>
+    <td>containers[].devices[]</td>
+    <td>N</td>
+    <td>Array of Strings</td>
+    <td>Host devices to add to the container</td>
   </tr>
   <tr>
     <td>containers[].links[]</td>
@@ -147,5 +159,17 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>N</td>
     <td>Boolean</td>
     <td>Enable/disable extended privileges to this container</td>
+  </tr>
+  <tr>
+    <td>containers[].cap_adds[]</td>
+    <td>N</td>
+    <td>Array of Strings</td>
+    <td>Linux capabilities to add</td>
+  </tr>
+  <tr>
+    <td>containers[].cap_drops[]</td>
+    <td>N</td>
+    <td>Array of Strings</td>
+    <td>Linux capabilities to drop</td>
   </tr>
 </table>

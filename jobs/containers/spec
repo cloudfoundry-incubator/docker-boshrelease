@@ -59,13 +59,17 @@ properties:
     # containers.privileged: Optional boolean to enable/disable extended privileges to this container
     # containers.entrypoint: Optional string containing the entrypoint (only if you want to override the default entrypoint set by the image)
     # containers.workdir: Optional string containing the working directory inside the container
+    # containers.restart: Optional string containing the restart policy to apply when a container exits (no, on-failure, always)
     # containers.cpu_shares: Optional CPU shares to assign to the container (relative weight)
     # containers.user: Optional string containing the username or UID to run the first process
     # containers.memory: Optional memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
     # containers.expose_ports: Optional array of network port to expose from the container without publishing it to your host
     # containers.bind_ports: Optional array of network ports to map to the container
-    # containers.volumes: Optional array of to volumes to bind mount
+    # containers.volumes: Optional array of volumes to bind mount
     # containers.bind_volumes: Optional array of container mountpoints to bind to a host directory
     # containers.volumes_from: Optional array of mount volumes from the specified container(s)
+    # containers.devices: Optional array of host devices to add to the container
     # containers.links: Optional array of links to another containers (name:alias)
     # containers.env_vars: Optional array of environment variables to pass to the container
+    # containers.cap_adds: Optional array of Linux capabilities to add
+    # containers.cap_drops: Optional array of Linux capabilities to drop
