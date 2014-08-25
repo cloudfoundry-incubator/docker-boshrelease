@@ -31,9 +31,6 @@ properties:
   docker.debug:
     description: 'Enable debug mode'
     default: false
-  docker.restart:
-    description: 'Restart previously running containers'
-    default: false
   docker.api_enable_cors:
     description: 'Enable CORS headers in the remote API'
     default: false

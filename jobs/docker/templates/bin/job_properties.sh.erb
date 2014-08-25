@@ -33,9 +33,6 @@ export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
 # Enable debug mode
 export DOCKER_DEBUG="--debug=<%= p('docker.debug') %>"
 
-# Restart previously running containers
-export DOCKER_RESTART="--restart=<%= p('docker.restart') %>"
-
 # Enable CORS headers in the remote API
 export DOCKER_API_ENABLE_CORS="--api-enable-cors=<%= p('docker.api_enable_cors') %>"
 

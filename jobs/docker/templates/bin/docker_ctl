@@ -57,7 +57,6 @@ case $1 in
         --host unix://${DOCKER_PID_DIR}/docker.sock \
         ${DOCKER_TCP:-} \
         ${DOCKER_DEBUG:-} \
-        ${DOCKER_RESTART:-} \
         ${DOCKER_API_ENABLE_CORS:-} \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_IPTABLES:-} \
