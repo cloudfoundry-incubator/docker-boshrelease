@@ -66,15 +66,6 @@ properties:
   cfcontainersbroker.logrotate.size:
     description: 'Size before Docker daemon log files are rotateds'
     default: '2M'
-  cfcontainersbroker.kubernetes.api_uri:
-    description: 'Kubernetes API URI'
-  cfcontainersbroker.kubernetes.api_version:
-    description: 'Kubernetes API version'
-    default: '/api/v1beta1'
-  cfcontainersbroker.kubernetes.username:
-    description: 'Kubernetes username'
-  cfcontainersbroker.kubernetes.password:
-    description: 'Kubernetes password'
 
   nats.user:
     description: 'Username for broker to connect to NATS'
