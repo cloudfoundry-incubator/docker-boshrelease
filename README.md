@@ -57,6 +57,33 @@ apply_spec:
       recursor: 8.8.8.8
 ```
 
+Another issue may be that applications cannot connect to your Docker-based services and raise connection errors. The cause of this may be the new Cloud Foundry Security Groups. It is possible that the default security groups prevent access to the same network range that includes your Docker VM.
+
+Fix the security groups when deploying Cloud Foundry itself via BOSH. Alternately, a quick and dirty solution if testing this BOSH release for the first time is to create an `everything` security group and bind it only to the space you are using now.
+
+Create a temporary file `everything.json`:
+
+```json
+[
+  {
+    "destination": "0.0.0.0-255.255.255.255",
+    "protocol": "all"
+  }
+]
+```
+
+Register the new security group, as an `admin` user:
+
+```
+cf create-security-group everything everything.json
+```
+
+Bind the security group to your current org/space:
+
+```
+cf bind-security-group everything ORG SPACE
+```
+
 ## Contributing
 
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
