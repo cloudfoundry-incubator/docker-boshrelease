@@ -627,8 +627,8 @@ properties:
           supportUrl: 'http://nats.io/community/'
         requires: []
         dashboard_client:
-          id: 'cf-nats-client'
-          secret: 'cf-nats-secret'
+          id: 'nats-dashboard'
+          secret: 'nats-dashboard-secret'
           redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
         plans:
           - id: 'b9310e34-2fa4-11e4-b626-a6c5e4d22fb7'
@@ -671,8 +671,8 @@ properties:
           supportUrl: 'https://github.com/coreos/etcd'
         requires: []
         dashboard_client:
-          id: 'p-etcd-client'
-          secret: 'p-etcd-secret'
+          id: 'etcd-dashboard'
+          secret: 'etcd-dashboard-secret'
           redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
         plans:
           - id: '5d52a2bc-2da1-11e4-852f-a6c5e4d22fb7'
