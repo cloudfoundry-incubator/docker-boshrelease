@@ -681,6 +681,10 @@ properties:
               backend: 'docker'
               image: 'drnic/etcd'
               tag: '0.4.6'
+            credentials:
+              uri:
+                prefix: 'etcd'
+                port: '4001/tcp'
             description: 'Free Trial'
             metadata:
               costs:
