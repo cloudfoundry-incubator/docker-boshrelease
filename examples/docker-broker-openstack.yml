@@ -680,6 +680,8 @@ properties:
               backend: 'docker'
               image: 'drnic/etcd'
               tag: '0.4.6'
+              persistent_volumes:
+                - '/data'
             credentials:
               uri:
                 prefix: 'etcd'
