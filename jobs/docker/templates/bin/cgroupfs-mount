@@ -19,10 +19,12 @@ if [ ! -e /proc/cgroups ]; then
 	exit 0
 fi
 
+## james / dmitriy / alex tests on bosh-lite show this dir is required
 # if we don't even have the directory we need, something else must be wrong
-if [ ! -d /sys/fs/cgroup ]; then
-	exit 0
-fi
+# if [ ! -d /sys/fs/cgroup ]; then
+# 	exit 0
+# fi
+mkdir -p /sys/fs/cgroup
 
 # mount /sys/fs/cgroup if not already done
 if ! mountpoint -q /sys/fs/cgroup; then
