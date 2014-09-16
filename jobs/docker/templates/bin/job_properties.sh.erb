@@ -101,3 +101,17 @@ export REMOTE_SYSLOG_NEW_FILE_CHECK_INTERVAL="<%= p('remote_syslog.new_file_chec
 # Write a debug file
 export REMOTE_SYSLOG_DEBUG="--debug-log-cfg=${REMOTE_SYSLOG_LOG_DIR}/docker_remote_syslog_debug.log"
 <% end %>
+
+# Proxy configuration
+<% if_p('env.http_proxy') do |http_proxy| %>
+export HTTP_PROXY="<%= http_proxy %>"
+export http_proxy="<%= http_proxy %>"
+<% end %>
+<% if_p('env.https_proxy') do |https_proxy| %>
+export HTTPS_PROXY="<%= https_proxy %>"
+export https_proxy="<%= https_proxy %>"
+<% end %>
+<% if_p('env.no_proxy') do |no_proxy| %>
+export NO_PROXY="<%= no_proxy %>"
+export no_proxy="<%= no_proxy %>"
+<% end %>

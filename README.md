@@ -43,6 +43,13 @@ bosh -n deploy
 
 ### Troubleshooting
 
+#### Proxy support
+
+If your vms require a proxy in order to get internet access to fetch the Docker images,  you can set the proxy URIs
+using the `env.http_proxy`, `env.https_proxy` and `env.no_proxy` properties at your deployment manifest.
+
+#### DNS issues
+
 One of the most frequent problems when deploying this BOSH release is that Docker is unable to fetch images from the
 [Docker Hub Registry](https://registry.hub.docker.com/). This usually happens when the first DNS nameserver specified
 at the `/etc/resolv.conf` file in the VM is unable to resolve the `index.docker.io` hostname. In order to fix this
@@ -56,6 +63,8 @@ apply_spec:
     dns:
       recursor: 8.8.8.8
 ```
+
+#### Cloud Foundry Security Groups
 
 Another issue may be that applications cannot connect to your Docker-based services and raise connection errors. The cause of this may be the new Cloud Foundry Security Groups. It is possible that the default security groups prevent access to the same network range that includes your Docker VM.
 
@@ -83,6 +92,8 @@ Bind the security group to your current org/space:
 ```
 cf bind-security-group everything ORG SPACE
 ```
+
+
 
 ## Contributing
 
