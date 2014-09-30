@@ -1,0 +1,61 @@
+---
+packages:
+- name: ruby
+  version: 1
+  sha1: !binary |-
+    MWIwNTI3NzA1YmIzN2VhNTRkNmI5NjAyMmI1MzY5NzZjNjE2YTBiMg==
+  fingerprint: !binary |-
+    NGNkYzZhNGNmZDA5ZTMzMzA2YWZlNzNhZmY2YmM3OWU1NTBjYmFiNg==
+  dependencies: []
+- name: cf-containers-broker
+  version: 2
+  sha1: !binary |-
+    MGQ5YWYwOGMyNTQ2NzIzOGNjNTY1MTRlYzUwMDVlYjMzNThiNWNlYQ==
+  fingerprint: !binary |-
+    NzYxN2UzOGI2ZWVmMzZiMjFhNWRmMTAyNzcyM2JkZTUxMjk3ZTM2Nw==
+  dependencies:
+  - ruby
+- name: docker
+  version: 5
+  sha1: !binary |-
+    NzdlNTMxMTUwNDVlM2Y4OTI4N2I2NTNmYjg3ZDE5NzlhNmMyMDU3OA==
+  fingerprint: !binary |-
+    ZDlmNDZjODBhYTkyNzVjN2U0Y2FhNzVmYjVmOTkzZDJlNGFhZjkyNg==
+  dependencies: []
+- name: remote_syslog
+  version: 1
+  sha1: !binary |-
+    ZmUxMzk4ZGQyNjQ2NTYxODkwZTlmMGE1OWZhYmIyYjRhNGVhMmI5Ng==
+  fingerprint: !binary |-
+    YTJjNTgxYjgwNjIzZmQ5NzYxZWFlNTZlYTgyODU1MWYwNjA3MzA0YQ==
+  dependencies: []
+- name: bosh-helpers
+  version: 1
+  sha1: !binary |-
+    NmY1NjUwMjNkNzM1YTM2ZjkwMGI3MTQyMzNhNjcxYzExZjlhNTIxNQ==
+  fingerprint: !binary |-
+    Mjg0ZDAyZTcwOTYzZTA4OWI1MmUyZDNlZDY4M2E3Yzg0M2VkMDk0Yg==
+  dependencies: []
+jobs:
+- name: cf-containers-broker
+  version: 2
+  fingerprint: !binary |-
+    N2ZlOGUxMjRhZDU0YjljOWNmYmVkYWIxMGIzZDYxODI1M2FmNzc5OQ==
+  sha1: !binary |-
+    MDJiYTA4N2MwMzQ0NTUxYjU5OTdmOGNjYWY3MDg0YWFjYjhhOWRjMg==
+- name: containers
+  version: 6
+  fingerprint: !binary |-
+    NDlhYzIwZTNmZjI4OTUyNjYwYjFlMzQzMzJiMzc1OTA3NGRiZTg5Yw==
+  sha1: !binary |-
+    ZjQ5ZGMzNjliMzViNmJiOGNlN2NkOTFhNzI1NDJmNmY0Mjc1M2ViNQ==
+- name: docker
+  version: 5
+  fingerprint: !binary |-
+    ZmNlMmMwYzA0MTgxMzM1MWZjZWZhZWI2NjFjNjBjYzBlZjYzNzQ4Mg==
+  sha1: !binary |-
+    Njk1MWM2YzkyN2UwNWU4OWEyZmQ5ZTU1ZmE0MTkzMmE5ZThmNWM3MQ==
+commit_hash: dd597b96
+uncommitted_changes: true
+name: docker
+version: 9
