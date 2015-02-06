@@ -8,3 +8,4 @@ blobs
 .idea
 .final_builds/jobs/**/*.tgz
 .final_builds/packages/**/*.tgz
+tmp
