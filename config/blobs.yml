@@ -3,10 +3,6 @@ docker/aufs-tools_20120411-3_amd64.deb:
   object_id: 0866debb-d731-4c1c-b442-3294247506e8
   sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
   size: 91762
-logspout/logspout-9a0a67fe4b:
-  object_id: 806b0eaa-9313-439c-9953-2886109495c7
-  sha: 4c7794ad801659fc36b74b2f5f018572cf7c6640
-  size: 9567640
 ruby/ruby-2.0.0-p481.tar.gz:
   object_id: 4f7f71bb-8de6-46bb-89ee-25dd7326ea9e
   sha: dded7b7349d59feb83d4f774b2ddec23eeab7978
