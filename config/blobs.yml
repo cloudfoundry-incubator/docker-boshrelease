@@ -23,10 +23,6 @@ ruby/yaml-0.1.6.tar.gz:
   object_id: f83bdc13-d038-4cda-abe3-b477d3fabbba
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
-remote_syslog/remote_syslog-pre.0.12_linux_amd64.tar.gz:
-  object_id: a98df62f-1f30-471a-833c-c58a5be160b8
-  sha: 993445dd9c1c1df1e7fde824217d553553fbe0b9
-  size: 1839323
 docker/autoconf-2.69.tar.gz:
   object_id: 8e2d0f8a-fb08-4dd6-99a7-0f5fada93c82
   sha: 562471cbcb0dd0fa42a76665acf0dbb68479b78a
@@ -39,3 +35,7 @@ docker/docker-1.5.0:
   object_id: 0da3620d-e33e-4f72-8d45-d251deedd47c
   sha: eb93ea4baf7acf1fd5e21d9d814b07eea5c0a264
   size: 15005140
+remote_syslog/remote_syslog-0.13_linux_amd64.tar.gz:
+  object_id: 061ddea3-7d77-4841-af60-d4860dbbb0a9
+  sha: e63564142bf6c5063fe97c64a7461aa20e39005c
+  size: 1840213
