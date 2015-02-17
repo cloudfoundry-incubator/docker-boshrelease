@@ -61,4 +61,3 @@ fi
 # Install Bundler package
 echo "Installing Bundler ${BUNDLER_VERSION}..."
 ${BOSH_INSTALL_TARGET}/bin/gem install ${BOSH_COMPILE_TARGET}/ruby/bundler-${BUNDLER_VERSION}.gem --no-ri --no-rdoc
-

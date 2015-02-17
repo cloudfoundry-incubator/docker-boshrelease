@@ -3,18 +3,6 @@ docker/aufs-tools_20120411-3_amd64.deb:
   object_id: 0866debb-d731-4c1c-b442-3294247506e8
   sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
   size: 91762
-ruby/ruby-2.0.0-p481.tar.gz:
-  object_id: 4f7f71bb-8de6-46bb-89ee-25dd7326ea9e
-  sha: dded7b7349d59feb83d4f774b2ddec23eeab7978
-  size: 13586757
-ruby/bundler-1.6.3.gem:
-  object_id: fab3cfc3-1750-4fac-8543-a01c16ebaeb7
-  sha: c8a000f75b6a6f60d9fb727f8076ec9171e14c20
-  size: 293376
-ruby/rubygems-2.3.0.tgz:
-  object_id: 5b5998b4-c06b-458a-ba4f-cac005365cc6
-  sha: 6902fff7749fa264b8f9020f33daf92170375f75
-  size: 431240
 ruby/yaml-0.1.6.tar.gz:
   object_id: f83bdc13-d038-4cda-abe3-b477d3fabbba
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
@@ -35,3 +23,15 @@ remote_syslog/remote_syslog-0.13_linux_amd64.tar.gz:
   object_id: 061ddea3-7d77-4841-af60-d4860dbbb0a9
   sha: e63564142bf6c5063fe97c64a7461aa20e39005c
   size: 1840213
+ruby/bundler-1.8.2.gem:
+  object_id: 68c89fe7-4df4-43aa-806a-3d9b53448d14
+  sha: e9b810268eea94ac5e825b5ae8a2d5fd19fb5905
+  size: 235008
+ruby/ruby-2.1.5.tar.gz:
+  object_id: c0e8a7b1-3021-4184-a2c7-0694f23578b6
+  sha: 9c0a238bd7839a4b51871641945a3da90997b8c2
+  size: 15127433
+ruby/rubygems-2.4.6.tgz:
+  object_id: 6c3e946d-02c9-4391-a4e9-42e25577a2da
+  sha: bf59306c0f6c37551875e70ce8ccfb1cbc60c28b
+  size: 447588
