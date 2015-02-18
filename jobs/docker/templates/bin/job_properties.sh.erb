@@ -30,9 +30,6 @@ export DOCKER_GROUP="<%= p('docker.group') %>"
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
 <% end %>
 
-# Enable debug mode
-export DOCKER_DEBUG="--debug=<%= p('docker.debug') %>"
-
 # Enable CORS headers in the remote API
 export DOCKER_API_ENABLE_CORS="--api-enable-cors=<%= p('docker.api_enable_cors') %>"
 
@@ -43,31 +40,101 @@ export DOCKER_BRIDGE_NAME="<%= bridge %>"
 export DOCKER_BRIDGE_CIDR="<%= cidr_prefix %>.<%= index %>.1/24"
 <% end %>
 
-# Enable Docker addition of iptables rules
-export DOCKER_IPTABLES="--iptables=<%= p('docker.iptables') %>"
-
-# Enable net.ipv4.ip_forward
-export DOCKER_IPFORWARD="--ip-forward=<%= p('docker.ip_forward') %>"
-
-# Enable inter-container communication
-export DOCKER_ICC="--icc=<%= p('docker.icc') %>"
-
-<% if_p('docker.dns_servers') do |dns_servers| %>
-<% dns_servers_list = dns_servers.map { |dns_server| "--dns #{dns_server}" }.join(' ') %>
-# Array of DNS servers to be used by Docker
-export DOCKER_DNS_SERVERS="<%= dns_servers_list %>"
-<% end %>
+# Enable debug mode
+export DOCKER_DEBUG="--debug=<%= p('docker.debug') %>"
 
 <% if_p('docker.dns_domains') do |dns_domains| %>
-<% dns_domains_list = dns_domains.map { |dns_domain| "--dns-search #{dns_domain}" }.join(' ') %>
+<% dns_domains_list = dns_domains.map { |dns_domain| "--dns-search=#{dns_domain}" }.join(' ') %>
 # Array of DNS search domains to be used by Docker
 export DOCKER_DNS_DOMAINS="<%= dns_domains_list %>"
 <% end %>
 
-<% if_p('docker.mtu') do |mtu| %>
-# Docker Containers network MTU
-export DOCKER_MTU="--mtu <%= mtu %>"
+<% if_p('docker.dns_servers') do |dns_servers| %>
+<% dns_servers_list = dns_servers.map { |dns_server| "--dns=#{dns_server}" }.join(' ') %>
+# Array of DNS servers to be used by Docker
+export DOCKER_DNS_SERVERS="<%= dns_servers_list %>"
 <% end %>
+
+<% if_p('docker.exec_driver') do |exec_driver| %>
+# Use a specific exec driver
+export DOCKER_EXEC_DRIVER"--exec-driver=<%= exec_driver %>"
+<% end %>
+
+# Allow unrestricted inter-container and Docker daemon host communication
+export DOCKER_ICC="--icc=<%= p('docker.icc') %>"
+
+<% if_p('docker.insecure_registries') do |insecure_registries| %>
+<% insecure_registries_list = insecure_registries.map { |insecure_registry| "--insecure-registry=#{insecure_registry}" }.join(' ') %>
+# Array of insecure registries
+export DOCKER_INSECURE_REGISTRIES="<%= insecure_registries_list %>"
+<% end %>
+
+# Enable net.ipv4.ip_forward and IPv6 forwarding
+export DOCKER_IPFORWARD="--ip-forward=<%= p('docker.ip_forward') %>"
+
+# Enable IP masquerading for bridge's IP range
+export DOCKER_IPMASQ="--ip-masq=<%= p('docker.ip_masq') %>"
+
+# Enable Docker addition of iptables rules
+export DOCKER_IPTABLES="--iptables=<%= p('docker.iptables') %>"
+
+# Enable IPv6 networking
+export DOCKER_IPV6="--ipv6=<%= p('docker.ipv6') %>"
+
+# Set the logging level
+export DOCKER_LOG_LEVEL="--log-level=<%= p('docker.log_level') %>"
+
+<% if_p('docker.labels') do |labels| %>
+<% labels_list = labels.map { |label| "--label=#{label}" }.join(' ') %>
+# Array of key=value labels for the daemon
+export DOCKER_LABELS="<%= labels_list %>"
+<% end %>
+
+<% if_p('docker.mtu') do |mtu| %>
+# Set the containers network MTU
+export DOCKER_MTU="--mtu=<%= mtu %>"
+<% end %>
+
+<% if_p('docker.registry_mirrors') do |registry_mirrors| %>
+<% registry_mirrors_list = registry_mirrors.map { |registry_mirror| "--registry-mirror=#{registry_mirror}" }.join(' ') %>
+# Array of preferred Docker registry mirrors
+export DOCKER_REGISTRY_MIRRORS="<%= registry_mirrors_list %>"
+<% end %>
+
+# Enable selinux support
+export DOCKER_SELINUX_ENABLED="--selinux-enabled=<%= p('docker.selinux_enable') %>"
+
+<% if_p('docker.storage_driver') do |storage_driver| %>
+# Use a specific storage driver
+export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
+<% end %>
+
+<% if_p('docker.storage_options') do |storage_options| %>
+<% storage_options_list = storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>
+# Array of storage driver options
+export DOCKER_STORAGE_OPTIONS="<%= storage_options_list %>"
+<% end %>
+
+# Use TLS
+export DOCKER_TLS="--tls=<%= p('docker.tls') %>"
+
+<% if_p('docker.tls_cacert') do |tls_cacert| %>
+# Trust only remotes providing a certificate signed by the CA given here
+export DOCKER_TLS_CACERT="--tlscacert=${DOCKER_CONF_DIR}/docker.cacert"
+<% end %>
+
+<% if_p('docker.tls_cert') do |tls_cert| %>
+# Path to TLS certificate file
+export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
+<% end %>
+
+<% if_p('docker.tls_key') do |tls_key| %>
+# Path to TLS key file
+export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
+<% end %>
+
+# Use TLS and verify the remote
+export DOCKER_TLS_VERIFY="--tlsverify=<%= p('docker.tls_verify') %>"
 
 #
 # Remote Syslog properties

@@ -6,13 +6,6 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
 export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-  hostname $hostname
-else
-  hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 case $1 in
 
   start)
@@ -36,7 +29,7 @@ case $1 in
     (crontab -l | sed /docker.*logrotate/d; cat ${DOCKER_CONF_DIR}/docker_logrotate.cron) | sed /^$/d | crontab
 
     # Mount cgroupfs hierarchy
-    $JOB_DIR/bin/cgroupfs-mount
+    ${JOB_DIR}/bin/cgroupfs-mount
 
     # Create network bridge
     if [ ! -z ${DOCKER_BRIDGE_NAME} ]; then
@@ -51,20 +44,35 @@ case $1 in
 
     # Start Docker daemon
     exec chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --daemon \
-        --group ${DOCKER_GROUP} \
-        --pidfile ${DOCKER_PID_FILE} \
-        --graph ${DOCKER_STORE_DIR}/docker \
-        --host unix://${DOCKER_PID_DIR}/docker.sock \
-        ${DOCKER_TCP:-} \
-        ${DOCKER_DEBUG:-} \
         ${DOCKER_API_ENABLE_CORS:-} \
         ${DOCKER_BRIDGE:-} \
-        ${DOCKER_IPTABLES:-} \
-        ${DOCKER_IPFORWARD:-} \
-        ${DOCKER_ICC:-} \
-        ${DOCKER_DNS_SERVERS:-} \
+        ${DOCKER_DEBUG:-} \
         ${DOCKER_DNS_DOMAINS:-} \
+        ${DOCKER_DNS_SERVERS:-} \
+        ${DOCKER_EXEC_DRIVER:-} \
+        --group ${DOCKER_GROUP} \
+        --graph ${DOCKER_STORE_DIR}/docker \
+        --host unix://${DOCKER_PID_DIR}/docker.sock \
+        ${DOCKER_ICC:-} \
+        ${DOCKER_INSECURE_REGISTRIES:-} \
+        ${DOCKER_IPFORWARD:-} \
+        ${DOCKER_IPMASQ:-} \
+        ${DOCKER_IPTABLES:-} \
+        ${DOCKER_IPV6:-} \
+        ${DOCKER_LOG_LEVEL:-} \
+        ${DOCKER_LABELS:-} \
         ${DOCKER_MTU:-} \
+        --pidfile ${DOCKER_PID_FILE} \
+        ${DOCKER_REGISTRY_MIRRORS:-} \
+        ${DOCKER_STORAGE_DRIVER:-} \
+        ${DOCKER_STORAGE_OPTIONS:-} \
+        ${DOCKER_SELINUX_ENABLED:-} \
+        ${DOCKER_TCP:-} \
+        ${DOCKER_TLS:-} \
+        ${DOCKER_TLS_CACERT:-} \
+        ${DOCKER_TLS_CERT:-} \
+        ${DOCKER_TLS_KEY:-} \
+        ${DOCKER_TLS_VERIFY:-} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
