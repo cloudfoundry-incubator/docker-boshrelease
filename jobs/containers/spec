@@ -15,44 +15,45 @@ templates:
 
 properties:
   docker.user:
-    description: 'User which will own the Docker services'
-    default: 'root'
+    description: "User which will own the Docker services"
+    default: "root"
   docker.group:
-    description: 'Group which will own the Docker services'
-    default: 'vcap'
+    description: "Group which will own the Docker services"
+    default: "vcap"
+
   docker.containers.logrotate.frequency:
-    description: 'Frequency to run logrotate for Containers log files (crontab five time and date fields)'
-    default: '0 * * * *'
+    description: "Frequency to run logrotate for Containers log files (crontab five time and date fields)"
+    default: "0 * * * *"
   docker.containers.logrotate.rotate:
-    description: 'Number of times Containers log files are rotated before being removed '
-    default: '7'
+    description: "Number of times Containers log files are rotated before being removed"
+    default: "7"
   docker.containers.logrotate.size:
-    description: 'Size before Containers log files are rotateds'
-    default: '2M'
+    description: "Size before Containers log files are rotateds"
+    default: "10M"
 
   remote_syslog.user:
-    description: 'User which will own the Remote Syslog services'
-    default: 'root'
+    description: "User which will own the Remote Syslog services"
+    default: "root"
   remote_syslog.group:
-    description: 'Group which will own the Remote Syslog services'
-    default: 'vcap'
+    description: "Group which will own the Remote Syslog services"
+    default: "vcap"
   remote_syslog.address:
-    description: 'IP address for Remote Syslog'
+    description: "IP address for Remote Syslog"
   remote_syslog.port:
-    description: 'TCP port of Remote Syslog'
-    default: '514'
+    description: "TCP port of Remote Syslog"
+    default: "514"
   remote_syslog.protocol:
-    description: 'Protocol to be used when forwarding logs to a Remote Syslog (tcp|udp|tls)'
-    default: 'udp'
+    description: "Protocol to be used when forwarding logs to a Remote Syslog (tcp|udp|tls)"
+    default: "udp"
   remote_syslog.new_file_check_interval:
-    description: 'How often to check for new files'
-    default: '10s'
+    description: "How often to check for new files"
+    default: "10s"
   remote_syslog.debug:
-    description: 'Write a debug file'
+    description: "Write a debug file"
     default: false
 
   containers:
-    description: 'Containers Array (see below for details)'
+    description: "Containers Array (see below for details)"
     # containers.name: String containing the name of the container
     # containers.image: String containing the name of the image to create/run
     # containers.command: Optional String containing the command to the run (including arguments)
@@ -63,6 +64,7 @@ properties:
     # containers.cpu_shares: Optional CPU shares to assign to the container (relative weight)
     # containers.user: Optional string containing the username or UID to run the first process
     # containers.memory: Optional memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
+    # containers.memory_swap: Optional total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)
     # containers.expose_ports: Optional array of network port to expose from the container without publishing it to your host
     # containers.bind_ports: Optional array of network ports to map to the container
     # containers.volumes: Optional array of volumes to bind mount
@@ -73,3 +75,4 @@ properties:
     # containers.env_vars: Optional array of environment variables to pass to the container
     # containers.cap_adds: Optional array of Linux capabilities to add
     # containers.cap_drops: Optional array of Linux capabilities to drop
+    # containers.mac_address: Optional container MAC address

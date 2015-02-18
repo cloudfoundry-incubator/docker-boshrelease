@@ -6,13 +6,6 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'containers' 'containers_remote_syslog'
 export REMOTE_SYSLOG_PID_FILE=${REMOTE_SYSLOG_PID_DIR}/remote_syslog.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-  hostname $hostname
-else
-  hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 case $1 in
 
   start)

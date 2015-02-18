@@ -105,6 +105,11 @@ export <%= container['name'] %>_cpu_shares="--cpu-shares=<%= container['cpu_shar
 export <%= container['name'] %>_memory="--memory=<%= container['memory'] %>"
 <% end %>
 
+<% unless container['memory_swap'].nil? || container['memory_swap'].empty? %>
+# Total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)
+export <%= container['name'] %>_memory_swap="--memory-swap=<%= container['memory_swap'] %>"
+<% end %>
+
 <% unless container['expose_ports'].nil? || container['expose_ports'].empty? %>
 <% exposed_ports = container['expose_ports'].map { |ports| "--expose=#{ports}" }.join(' ') %>
 # Expose a port from the container without publishing it to your host
@@ -124,7 +129,7 @@ export <%= container['name'] %>_volumes="<%= volumes %>"
 <% end %>
 
 <% unless container['bind_volumes'].nil? || container['bind_volumes'].empty? %>
-<% bind_volumes = Array(container['bind_volumes']).join(',').split(',').map { |vol| "--volume=$CONTAINERS_STORE_DIR/#{container['name']}:#{vol.strip}" }.join(' ') %>
+<% bind_volumes = Array(container['bind_volumes']).join(',').split(',').map { |vol| "--volume=${CONTAINERS_STORE_DIR}/#{container['name']}:#{vol.strip}" }.join(' ') %>
 # Create a bind mount to a directory
 export <%= container['name'] %>_bind_volumes="<%= bind_volumes %>"
 <% end %>
@@ -163,6 +168,11 @@ export <%= container['name'] %>_cap_adds="<%= cap_adds %>"
 <% cap_drops = Array(container['cap_drops']).join(',').split(',').map { |cap_drop| "--cap-drop=#{cap_drop.strip}" }.join(' ') %>
 # Set Linux capabilities to drop
 export <%= container['name'] %>_cap_drops="<%= cap_drops %>"
+<% end %>
+
+<% unless container['mac_address'].nil? || container['mac_address'].empty? %>
+# Container MAC address
+export <%= container['name'] %>_mac_address="--mac-address=<%= container['mac_address'] %>"
 <% end %>
 
 <% if container['dockerfile'] %>
