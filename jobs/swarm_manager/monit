@@ -1,0 +1,11 @@
+check process swarm_manager with pidfile /var/vcap/sys/run/swarm_manager/swarm_manager.pid
+  group vcap
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger swarm_manager_ctl '/var/vcap/jobs/swarm_manager/bin/swarm_manager_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger swarm_manager_ctl '/var/vcap/jobs/swarm_manager/bin/swarm_manager_ctl stop'"
+
+<% if_p('remote_syslog.address', 'remote_syslog.port', 'remote_syslog.protocol') do |address, port, protocol| %>
+check process swarm_manager_remote_syslog with pidfile /var/vcap/sys/run/swarm_manager/remote_syslog.pid
+  group vcap
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger swarm_manager_remote_syslog_ctl '/var/vcap/jobs/swarm_manager/bin/remote_syslog_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger swarm_manager_remote_syslog_ctl '/var/vcap/jobs/swarm_manager/bin/remote_syslog_ctl stop'"
+<% end %>

@@ -1,0 +1,100 @@
+---
+name: swarm_manager
+
+packages:
+  - bosh-helpers
+  - remote_syslog
+  - swarm
+
+templates:
+  bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/remote_syslog_ctl: bin/remote_syslog_ctl
+  bin/swarm_manager_ctl: bin/swarm_manager_ctl
+  config/docker.cacert.erb: config/docker.cacert
+  config/docker.cert.erb: config/docker.cert
+  config/docker.key.erb: config/docker.key
+  config/logrotate.conf.erb: config/logrotate.conf
+  config/remote_syslog.yml.erb: config/remote_syslog.yml
+  config/swarm_manager_logrotate.cron.erb: config/swarm_manager_logrotate.cron
+
+properties:
+  swarm_manager.user:
+    description: "User which will own the Swarm Manager services"
+    default: "root"
+  swarm_manager.group:
+    description: "Group which will own the Swarm Manager services"
+    default: "vcap"
+  swarm_manager.listen_address:
+    description: "Listen address"
+    default: "0.0.0.0"
+  swarm_manager.port:
+    description: "Listen port"
+    default: "2375"
+  swarm_manager.strategy:
+    description: "Placement strategy to use [binpacking, random]"
+    default: "binpacking"
+  swarm_manager.heartbeat:
+    description: "Time in second between each heartbeat"
+    default: "25"
+  swarm_manager.overcommit:
+    description: "Overcommit to apply on resources"
+    default: "0.05"
+  swarm_manager.api_enable_cors:
+    description: "Enable CORS headers in the remote API"
+    default: false
+  swarm_manager.debug:
+    description: "Enable debug mode"
+    default: false
+  swarm_manager.log_level:
+    description: "Log level (options: debug, info, warn, error, fatal, panic)"
+    default: "info"
+  swarm_manager.docker_nodes:
+    description: "Array of Docker nodes"
+    default: []
+
+  swarm_manager.logrotate.frequency:
+    description: "Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)"
+    default: "0 * * * *"
+  swarm_manager.logrotate.rotate:
+    description: "Number of times Docker daemon log files are rotated before being removed"
+    default: "7"
+  swarm_manager.logrotate.size:
+    description: "Size before Docker daemon log files are rotated"
+    default: "10M"
+
+  docker.tcp_port:
+    description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
+    default: "4243"
+  docker.tls:
+    description: "Use TLS"
+    default: false
+  docker.tls_cacert:
+    description: "Trust only remotes providing a certificate signed by the CA given here"
+  docker.tls_cert:
+    description: "TLS certificate file"
+  docker.tls_key:
+    description: "TLS key file"
+  docker.tls_verify:
+    description: "Use TLS and verify the remote"
+    default: false
+
+  remote_syslog.user:
+    description: "User which will own the Remote Syslog services"
+    default: "root"
+  remote_syslog.group:
+    description: "Group which will own the Remote Syslog services"
+    default: "vcap"
+  remote_syslog.address:
+    description: "IP address for Remote Syslog"
+  remote_syslog.port:
+    description: "TCP port of Remote Syslog"
+    default: "514"
+  remote_syslog.protocol:
+    description: "Protocol to be used when forwarding logs to a Remote Syslog (tcp|udp|tls)"
+    default: "udp"
+  remote_syslog.new_file_check_interval:
+    description: "How often to check for new files"
+    default: "10s"
+  remote_syslog.debug:
+    description: "Write a debug file"
+    default: false
