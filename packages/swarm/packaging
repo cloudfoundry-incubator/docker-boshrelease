@@ -1,0 +1,23 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=`grep -c ^processor /proc/cpuinfo`
+
+# Golang package must be a dependency
+export GOROOT=$(readlink -nf /var/vcap/packages/golang)
+export PATH=${GOROOT}/bin:$PATH
+
+mkdir -p ${BOSH_COMPILE_TARGET}/gocode/src/github.com/docker
+ln -s ${BOSH_COMPILE_TARGET}/swarm ${BOSH_COMPILE_TARGET}/gocode/src/github.com/docker/
+export GOPATH=${BOSH_COMPILE_TARGET}/gocode/:${BOSH_COMPILE_TARGET}/swarm/Godeps/_workspace
+
+# Compile Swarm components
+echo "Compiling Swarm components..."
+cd ${BOSH_COMPILE_TARGET}/gocode/src/github.com/docker/swarm/
+CGO_ENABLED=0 go install -v -a -tags netgo -ldflags "-w"
+
+# Copy Swarm binaries
+echo "Copying Swarm binaries..."
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+cp -a ${BOSH_COMPILE_TARGET}/gocode/bin/* ${BOSH_INSTALL_TARGET}/bin

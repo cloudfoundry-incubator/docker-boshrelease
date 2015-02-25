@@ -1,3 +1,6 @@
 [submodule "src/cf-containers-broker"]
 	path = src/cf-containers-broker
 	url = https://github.com/cf-platform-eng/cf-containers-broker.git
+[submodule "src/swarm"]
+	path = src/swarm
+	url = https://github.com/docker/swarm.git

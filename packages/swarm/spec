@@ -1,0 +1,6 @@
+---
+name: swarm
+dependencies:
+  - golang
+files:
+  - swarm/**/*
