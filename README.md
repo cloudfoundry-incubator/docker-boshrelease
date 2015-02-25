@@ -8,10 +8,6 @@ infrastructure is to deploy this BOSH release.
 This is not presently a production ready [Docker](https://www.docker.io/) BOSH release. This is a work in progress.
 It is suitable for experimentation and may not become supported in the future.
 
-
-This BOSH release needs a [BOSH stemcell](http://bosh_artifacts.cfapps.io/file_collections?type=stemcells) with a
-embedded Linux kernel >= 3.8, so be sure to use one of the public stemcells that come with Ubuntu Trusty.
-
 ## Usage
 
 ### Upload the BOSH release
@@ -27,10 +23,11 @@ bosh upload release releases/docker-9.yml
 
 ### Create a BOSH deployment manifest
 
-There are to deployment scenarios for this BOSH release:
+There are 3 deployment scenarios for this BOSH release:
 
 * Deploy statically defined Docker containers: see [CONTAINERS.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/CONTAINERS.md) for deployment instructions.
 * Deploy a Docker Service Broker for your Cloud Foundry deployment: see [SERVICE_BROKER.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/SERVICE_BROKER.md) for deployment instructions.
+* Deploy a Docker [Swarm](https://github.com/docker/swarm) cluster: see [SWARM.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/SWARM.md) for deployment instructions.
 
 ### Deploy using the BOSH deployment manifest
 
@@ -66,9 +63,13 @@ apply_spec:
 
 #### Cloud Foundry Security Groups
 
-Another issue may be that applications cannot connect to your Docker-based services and raise connection errors. The cause of this may be the new Cloud Foundry Security Groups. It is possible that the default security groups prevent access to the same network range that includes your Docker VM.
+Another issue may be that applications cannot connect to your Docker-based services and raise connection errors.
+The cause of this may be the new Cloud Foundry Security Groups. It is possible that the default security groups prevent
+access to the same network range that includes your Docker VM.
 
-Fix the security groups when deploying Cloud Foundry itself via BOSH. Alternately, a quick and dirty solution if testing this BOSH release for the first time is to create an `everything` security group and bind it only to the space you are using now.
+Fix the security groups when deploying Cloud Foundry itself via BOSH. Alternately, a quick and dirty solution if
+testing this BOSH release for the first time is to create an `everything` security group and bind it only to the space
+you are using now.
 
 Create a temporary file `everything.json`:
 
@@ -93,8 +94,6 @@ Bind the security group to your current org/space:
 cf bind-security-group everything ORG SPACE
 ```
 
-
-
 ## Contributing
 
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
@@ -111,7 +110,6 @@ Here are some ways *you* can contribute:
 * by closing [issues](https://github.com/cf-platform-eng/docker-boshrelease/issues)
 * by reviewing patches
 
-
 ### Submitting an Issue
 We use the [GitHub issue tracker](https://github.com/cf-platform-eng/docker-boshrelease/issues) to track bugs and features.
 Before submitting a bug report or feature request, check to make sure it hasn't already been submitted. You can indicate
@@ -119,7 +117,6 @@ support for an existing issue by voting it up. When submitting a bug report, ple
 [Gist](http://gist.github.com/) that includes a stack trace and any details that may be necessary to reproduce the bug,
 including your gem version, Ruby version, and operating system. Ideally, a bug report should include a pull request with
  failing specs.
-
 
 ### Submitting a Pull Request
 
@@ -170,4 +167,4 @@ git push origin master --tags
 ## Copyright
 
 See [LICENSE](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/LICENSE) for details.
-Copyright (c) 2014 [Pivotal Software, Inc](http://www.gopivotal.com/).
+Copyright (c) 2014-2015 [Pivotal Software, Inc](http://www.pivotal.io/).
