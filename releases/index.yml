@@ -18,4 +18,6 @@ builds:
     version: 8
   a2016aac3cd43ae8dd384c468300e380734c806e:
     version: 9
+  6ac385bd-b93c-49fc-a9c1-9bdd970d6216:
+    version: '10'
 format-version: '2'
