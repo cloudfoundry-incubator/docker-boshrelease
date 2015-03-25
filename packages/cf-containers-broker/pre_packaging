@@ -5,7 +5,7 @@ set -u # report the usage of uninitialized variables
   cd ${BUILD_DIR}/cf-containers-broker
 
   # Cache gems
-  bundle package --all
+  BUNDLE_WITHOUT=development:test bundle package --all
 
   # Precompile assets
   RAILS_ENV=assets bundle exec rake assets:precompile
