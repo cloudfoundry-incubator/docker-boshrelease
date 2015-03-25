@@ -9,3 +9,9 @@ blobs
 .final_builds/jobs/**/*.tgz
 .final_builds/packages/**/*.tgz
 tmp
+releases/**/*.tgz
+.DS_Store
+*.swp
+*~
+*#
+#*
