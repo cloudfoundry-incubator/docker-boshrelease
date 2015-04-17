@@ -761,7 +761,7 @@ properties:
             name: 'free'
             container:
               backend: 'docker'
-              image: 'dockerfile/rethinkdb'
+              image: 'rethinkdb'
               tag: 'latest'
               persistent_volumes:
                 - '/data'
