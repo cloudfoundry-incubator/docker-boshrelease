@@ -62,7 +62,7 @@ jobs:
     properties:
       containers:
         - name: redis
-          image: "dockerfile/redis"
+          image: "redis"
           command: "--dir /var/lib/redis/ --appendonly yes"
           bind_ports:
             - "6379:6379"
