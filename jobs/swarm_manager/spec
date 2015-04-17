@@ -31,8 +31,8 @@ properties:
     description: "Listen port"
     default: "2375"
   swarm_manager.strategy:
-    description: "Placement strategy to use [binpacking, random]"
-    default: "binpacking"
+    description: "Placement strategy to use [spread, binpack, random]"
+    default: "spread"
   swarm_manager.heartbeat:
     description: "Time in second between each heartbeat"
     default: "25"
