@@ -25,6 +25,8 @@ export CF_CONTAINERS_BROKER_USER="<%= p('cfcontainersbroker.user') %>"
 # Group which will own the CF-Containers-Broker services
 export CF_CONTAINERS_BROKER_GROUP="<%= p('cfcontainersbroker.group') %>"
 
+export CF_CONTAINERS_FETCH_IMAGES=<%= p('cfcontainersbroker.fetch_images') ? 'true' : '' %>
+
 # CF-Containers-Broker Gemfile
 export BUNDLE_GEMFILE=/var/vcap/packages/cf-containers-broker/Gemfile
 

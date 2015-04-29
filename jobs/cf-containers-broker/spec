@@ -55,6 +55,9 @@ properties:
   cfcontainersbroker.max_containers:
     description: 'Max number of containers'
     default: '0'
+  cfcontainersbroker.fetch_images:
+    description: 'Fetch new/updated container images on restart'
+    default: true
   cfcontainersbroker.services:
     description: 'Services and plans offered by the broker'
   cfcontainersbroker.logrotate.frequency:
