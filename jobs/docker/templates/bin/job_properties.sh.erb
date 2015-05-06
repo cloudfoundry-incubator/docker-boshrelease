@@ -134,7 +134,7 @@ export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
 <% end %>
 
 # Use TLS and verify the remote
-export DOCKER_TLS_VERIFY="--tlsverify=<%= p('docker.tls_verify') %>"
+export DOCKER_TLS_VERIFY_OPTION="--tlsverify=<%= p('docker.tls_verify') %>"
 
 #
 # Remote Syslog properties
