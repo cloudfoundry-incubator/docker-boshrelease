@@ -78,14 +78,23 @@ case $1 in
     ;;
 
   stop)
-    # Stop Docker daemon
-    kill_and_wait ${DOCKER_PID_FILE}
-
-    # Hack: Seems Docker is not releasing the mountpoint for its store dir
-    mounted=$(cat /proc/mounts | grep ${DOCKER_STORE_DIR}/docker)
-    if [ ! -z "${mounted}" ]; then
-        umount ${DOCKER_STORE_DIR}/docker
+    # Stop Docker containers
+    echo -n "Stopping docker containers: "
+    containers="$(chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --host unix://${DOCKER_PID_DIR}/docker.sock ps -q)"
+    if [[ ! -z $containers ]]; then
+      echo ${containers}
+      for container in $containers
+      do
+        echo -n "Stopping docker container... "
+        chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --host unix://${DOCKER_PID_DIR}/docker.sock stop ${container}
+      done
+    else
+      echo "Nothing to do."
     fi
+
+    # Stop Docker daemon
+    echo -n "Stopping docker daemon..."
+    kill_and_wait ${DOCKER_PID_FILE}
     ;;
 
   *)
