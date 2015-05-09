@@ -1,0 +1,64 @@
+---
+packages:
+- name: bosh-helpers
+  version: 55717f488eb12fd47c95fd524ab1cd6304c7ce7e
+  fingerprint: 55717f488eb12fd47c95fd524ab1cd6304c7ce7e
+  sha1: 973f73130608dcfc48af8f948601a3015c9e4594
+  dependencies: []
+- name: cf-containers-broker
+  version: e349f1c2b6a70cf83e62740737e7de51525c52c5
+  fingerprint: e349f1c2b6a70cf83e62740737e7de51525c52c5
+  sha1: 9449eb1b8b3461cc3729e33252d2231567b80ebe
+  dependencies:
+  - ruby
+- name: docker
+  version: 88892c10d791121cbc0582e2a68cfb00b4721d7b
+  fingerprint: 88892c10d791121cbc0582e2a68cfb00b4721d7b
+  sha1: 33d8e804f43b03504600ce4bef29d4f84afd7d47
+  dependencies: []
+- name: golang
+  version: 6effe697df6912a3f44070c5443946bdfed82623
+  fingerprint: 6effe697df6912a3f44070c5443946bdfed82623
+  sha1: 2fb81907785506054b24c04437ccfb4d4fcc8ec3
+  dependencies: []
+- name: remote_syslog
+  version: 89692d361000e340f4a84518a14db23717665a99
+  fingerprint: 89692d361000e340f4a84518a14db23717665a99
+  sha1: 506b34a639fdde1b4063392c624dbf6d993fd0be
+  dependencies: []
+- name: ruby
+  version: d1629f30f2d54b15f06ecb5da716edcf3cc85002
+  fingerprint: d1629f30f2d54b15f06ecb5da716edcf3cc85002
+  sha1: 3acb8ff5da326ef7d72bdff5816af97e3e251920
+  dependencies: []
+- name: swarm
+  version: ddfe58940b0fd6a3b3d923399da3681fc63d372c
+  fingerprint: ddfe58940b0fd6a3b3d923399da3681fc63d372c
+  sha1: 4ac6ba753b6a6e8bd94c7a573889a84add1a1aed
+  dependencies:
+  - golang
+jobs:
+- name: cf-containers-broker
+  version: 4211e664b52f549fbd4f64b2bf740789a7f3f32d
+  fingerprint: 4211e664b52f549fbd4f64b2bf740789a7f3f32d
+  sha1: 0f87c2019882bc6661288bc1163c0fe06e84ae2a
+- name: containers
+  version: 115a7d1f394cd404f64eea08be8833d67f25157f
+  fingerprint: 115a7d1f394cd404f64eea08be8833d67f25157f
+  sha1: 23596b82c5cbdd3f9ebc5ecbeb4f1b4737b6b1b8
+- name: docker
+  version: ec5c31fb7d3455e6fc46206f8c7d8143e77a2701
+  fingerprint: ec5c31fb7d3455e6fc46206f8c7d8143e77a2701
+  sha1: 0ff8f5e6857d4dde0805f7b8cb8d0619c7a60916
+- name: swarm_manager
+  version: 29f5e1d43b7f7c7f8e4b000bedab9a741f9c922d
+  fingerprint: 29f5e1d43b7f7c7f8e4b000bedab9a741f9c922d
+  sha1: 017304c0624375d0d66802f8e6b63daa83f6850f
+license:
+  version: b05c781702eb7beb67f8590ba3b577efb5c5a575
+  fingerprint: b05c781702eb7beb67f8590ba3b577efb5c5a575
+  sha1: 11ec6df045edb8a56cb43a81b441fae9cfb617b6
+commit_hash: '36417643'
+uncommitted_changes: true
+name: docker
+version: '13'
