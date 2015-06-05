@@ -10,7 +10,6 @@ case $1 in
 
   start)
     pid_guard ${SWARM_MANAGER_PID_FILE} ${JOB_NAME}
-    echo $$ > ${SWARM_MANAGER_PID_FILE}
 
     # Create Swarm Manager user & group
     create_group ${SWARM_MANAGER_GROUP}
@@ -24,11 +23,13 @@ case $1 in
     (crontab -l | sed /swarm_manager.*logrotate/d; cat ${SWARM_MANAGER_CONF_DIR}/swarm_manager_logrotate.cron) | sed /^$/d | crontab
 
     # Start Swarm Manager daemon
+    echo $$ > ${SWARM_MANAGER_PID_FILE}
     exec chpst -u ${SWARM_MANAGER_USER}:${SWARM_MANAGER_GROUP} swarm \
         ${SWARM_MANAGER_DEBUG:-} \
         ${SWARM_MANAGER_LOG_LEVEL:-} \
         manage \
         --rootdir=${SWARM_MANAGER_ROOT_DIR} \
+        --host unix://${SWARM_MANAGER_PID_DIR}/swarm_manager.sock \
         ${SWARM_MANAGER_HOST:-} \
         ${SWARM_MANAGER_STRATEGY:-} \
         ${SWARM_MANAGER_HEARTBEAT:-} \

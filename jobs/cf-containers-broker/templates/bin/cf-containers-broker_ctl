@@ -17,7 +17,6 @@ case $1 in
 
   start)
     pid_guard ${CF_CONTAINERS_BROKER_PID_FILE} ${JOB_NAME}
-    echo $$ > ${CF_CONTAINERS_BROKER_PID_FILE}
 
     # Create CF-Containers-Broker user & group
     create_group ${CF_CONTAINERS_BROKER_GROUP}
@@ -37,9 +36,6 @@ case $1 in
           >>${CF_CONTAINERS_BROKER_LOG_DIR}/fetch_containers_images.stdout.log \
           2>>${CF_CONTAINERS_BROKER_LOG_DIR}/fetch_containers_images.stderr.log
     fi
-
-    # We remove the PID file (own process) to prevent a collision with Unicorn
-    rm -fr ${CF_CONTAINERS_BROKER_PID_FILE}
 
     # Start CF-Containers-Broker
     exec chpst -u ${CF_CONTAINERS_BROKER_USER}:${CF_CONTAINERS_BROKER_GROUP} \
