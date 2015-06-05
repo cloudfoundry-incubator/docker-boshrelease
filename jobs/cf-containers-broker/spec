@@ -18,6 +18,9 @@ templates:
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
 properties:
+  broker.external_ip:
+    description: 'External IP of docker VM'
+    default: nil
   broker.user:
     description: 'User which will own the CF-Containers-Broker services'
     default: 'root'
@@ -50,6 +53,12 @@ properties:
   broker.skip_ssl_validation:
     description: 'Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA'
     default: true
+  broker.monit_dependency:
+    description: 'Monit dependency for cf-containers-broker monit script'
+    default: 'docker'
+  broker.docker_url:
+    description: 'Sets the socket URL how to reach docker'
+    default: 'unix:///var/vcap/sys/run/docker/docker.sock'
   broker.max_containers:
     description: 'Max number of containers'
     default: '0'
