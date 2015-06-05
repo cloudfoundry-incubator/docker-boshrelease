@@ -18,57 +18,67 @@ templates:
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
 properties:
-  cfcontainersbroker.user:
+  broker.external_ip:
+    description: 'External IP of docker VM'
+    default: nil
+  broker.user:
     description: 'User which will own the CF-Containers-Broker services'
     default: 'root'
-  cfcontainersbroker.group:
+  broker.group:
     description: 'Group which will own the CF-Containers-Broker services'
     default: 'vcap'
-  cfcontainersbroker.unicorn.worker_processes:
+  broker.unicorn.worker_processes:
     description: 'Unicorn worker processes'
     default: '4'
-  cfcontainersbroker.unicorn.port:
+  broker.unicorn.port:
     description: 'Unicorn listen port'
     default: '80'
-  cfcontainersbroker.auth_username:
+  broker.username:
     description: "Broker's basic auth username"
-  cfcontainersbroker.auth_password:
+  broker.password:
     description: "Broker's basic auth password"
-  cfcontainersbroker.cookie_secret:
+  broker.cookie_secret:
     description: 'A unique secret key, used to sign sessions'
-  cfcontainersbroker.session_expiry:
+  broker.session_expiry:
     description: 'Session expiry time of the session'
     default: '86400'
-  cfcontainersbroker.cc_api_uri:
-    description: 'URL of the CloudFoundry Cloud Controller'
-  cfcontainersbroker.external_host:
+  broker.host:
     description: 'Host used to register the broker'
-  cfcontainersbroker.component_name:
+  broker.component_name:
     description: 'Component name used to register the broker'
     default: 'cf-containers-broker'
-  cfcontainersbroker.ssl_enabled:
+  broker.ssl_enabled:
     description: 'Determines use of https in dashboard url and in callback uri for calls to UAA'
     default: false
-  cfcontainersbroker.skip_ssl_validation:
+  broker.skip_ssl_validation:
     description: 'Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA'
     default: true
-  cfcontainersbroker.max_containers:
+  broker.monit_dependency:
+    description: 'Monit dependency for cf-containers-broker monit script'
+    default: 'docker'
+  broker.docker_url:
+    description: 'Sets the socket URL how to reach docker'
+    default: 'unix:///var/vcap/sys/run/docker/docker.sock'
+  broker.max_containers:
     description: 'Max number of containers'
     default: '0'
-  cfcontainersbroker.fetch_images:
+  broker.fetch_images:
     description: 'Fetch new/updated container images on restart'
     default: true
-  cfcontainersbroker.services:
+  broker.services:
     description: 'Services and plans offered by the broker'
-  cfcontainersbroker.logrotate.frequency:
+  broker.logrotate.frequency:
     description: 'Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)'
     default: '0 * * * *'
-  cfcontainersbroker.logrotate.rotate:
+  broker.logrotate.rotate:
     description: 'Number of times Docker daemon log files are rotated before being removed '
     default: '7'
-  cfcontainersbroker.logrotate.size:
+  broker.logrotate.size:
     description: 'Size before Docker daemon log files are rotateds'
     default: '2M'
+
+  cf.api_url:
+    description: 'URL of the CloudFoundry Cloud Controller'
 
   nats.user:
     description: 'Username for broker to connect to NATS'
