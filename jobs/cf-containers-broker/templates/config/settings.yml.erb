@@ -1,11 +1,11 @@
 production:
   log_path: '/var/vcap/sys/log/cf-containers-broker/cf-containers-broker.log'
-  auth_username: '<%= p('cfcontainersbroker.auth_username') %>'
-  auth_password: '<%= p('cfcontainersbroker.auth_password') %>'
-  cookie_secret: <%= p('cfcontainersbroker.cookie_secret') %>
-  session_expiry: <%= p('cfcontainersbroker.session_expiry') %>
+  auth_username: '<%= p('broker.username') %>'
+  auth_password: '<%= p('broker.password') %>'
+  cookie_secret: <%= p('broker.cookie_secret') %>
+  session_expiry: <%= p('broker.session_expiry') %>
 
-  cc_api_uri: <%= p('cfcontainersbroker.cc_api_uri') %>
+  cc_api_uri: <%= p('cf.api_url') %>
   <%
     def openstruct_to_hash(os)
       os.marshal_dump.map do |key, element|
@@ -17,19 +17,19 @@ production:
     external_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
    %>
   external_ip: <%= external_ip %>
-  external_host: <%= p('cfcontainersbroker.external_host') %>
-  external_port: <%= p('cfcontainersbroker.unicorn.port') %>
-  component_name: <%= p('cfcontainersbroker.component_name') %>
+  external_host: <%= p('broker.host') %>
+  external_port: <%= p('broker.unicorn.port') %>
+  component_name: <%= p('broker.component_name') %>
 
-  ssl_enabled: <%= p('cfcontainersbroker.ssl_enabled') %>
-  skip_ssl_validation: <%= p('cfcontainersbroker.skip_ssl_validation') %>
+  ssl_enabled: <%= p('broker.ssl_enabled') %>
+  skip_ssl_validation: <%= p('broker.skip_ssl_validation') %>
 
   host_directory: /var/vcap/store/cf-containers-broker/
-  max_containers: <%= p('cfcontainersbroker.max_containers') %>
+  max_containers: <%= p('broker.max_containers') %>
 
   message_bus_servers:
   <% p('nats.machines').each do |ip| %>
     - nats://<%= p('nats.user') %>:<%= p('nats.password') %>@<%= ip %>:<%= p('nats.port') %>
   <% end %>
 
-  services: <%= JSON.pretty_generate(p('cfcontainersbroker.services')) %>
+  services: <%= JSON.pretty_generate(p('broker.services')) %>
