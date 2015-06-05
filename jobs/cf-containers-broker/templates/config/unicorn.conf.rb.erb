@@ -2,13 +2,13 @@
 
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
-worker_processes <%= p('cfcontainersbroker.unicorn.worker_processes') %>
+worker_processes <%= p('broker.unicorn.worker_processes') %>
 
 # Help ensure your application will always spawn in the "current" directory
 working_directory '/var/vcap/packages/cf-containers-broker'
 
 # listen on a TCP port
-listen <%= p('cfcontainersbroker.unicorn.port') %>, :tcp_nopush => true
+listen <%= p('broker.unicorn.port') %>, :tcp_nopush => true
 
 # location of the pid file
 pid '/var/vcap/sys/run/cf-containers-broker/cf-containers-broker.pid'

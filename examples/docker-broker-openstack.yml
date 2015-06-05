@@ -40,6 +40,15 @@ networks:
     cloud_properties: {}
 
 resource_pools:
+  - name : errand
+    network: default
+    size: 1
+    stemcell:
+      name: bosh-openstack-kvm-ubuntu-trusty-go_agent
+      version: latest
+    cloud_properties:
+      instance_type: m1.small
+
   - name: default
     network: default
     size: 1
@@ -64,6 +73,22 @@ jobs:
         static_ips:
           - <%= floating_ip %>
 
+  - name: broker-registrar
+    template: broker-registrar
+    instances: 1
+    resource_pool: errand
+    lifecycle: errand
+    networks:
+      - name: default
+
+  - name: broker-deregistrar
+    template: broker-deregistrar
+    instances: 1
+    resource_pool: errand
+    lifecycle: errand
+    networks:
+      - name: default
+
 properties:
   nats:
     user: nats
@@ -72,12 +97,17 @@ properties:
     machines:
       - 0.core.default.cf.microbosh
 
-  cfcontainersbroker:
-    auth_username: 'containers'
-    auth_password: 'containers'
+  cf:
+    api_url: "<%= protocol %>://api.<%= root_domain %>"
+    admin_username: 'admin'
+    admin_password: 'admin'
+
+  broker:
+    name: cf-containers-broker
+    host: "cf-containers-broker.<%= root_domain %>"
+    username: 'containers'
+    password: 'containers'
     cookie_secret: 'e7247dae-a252-4393-afa3-2219c1c02efd'
-    cc_api_uri: "<%= protocol %>://api.<%= root_domain %>"
-    external_host: "cf-containers-broker.<%= root_domain %>"
     component_name: 'cf-containers-broker'
     max_containers: 20
 
