@@ -30,8 +30,8 @@ export DOCKER_GROUP="<%= p('docker.group') %>"
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
 <% end %>
 
-# Enable CORS headers in the remote API
-export DOCKER_API_ENABLE_CORS="--api-enable-cors=<%= p('docker.api_enable_cors') %>"
+# Set CORS headers in the remote API
+export DOCKER_API_CORS_HEADER="--api-enable-cors=<%= p('docker.api_cors_header') %>"
 
 <% if_p('docker.bridge', 'docker.cidr_prefix') do |bridge, cidr_prefix| %>
 # Attach containers to a network bridge
@@ -42,6 +42,22 @@ export DOCKER_BRIDGE_CIDR="<%= cidr_prefix %>.<%= index %>.1/24"
 
 # Enable debug mode
 export DOCKER_DEBUG="--debug=<%= p('docker.debug') %>"
+
+<% if_p('docker.default_gateway') do |default_gateway| %>
+# Container default gateway IPv4 address
+export DOCKER_DEFAULT_GATEWAY="<%= default_gateway %>"
+<% end %>
+
+<% if_p('docker.default_gateway_v6') do |default_gateway_v6| %>
+# Container default gateway IPv6 address
+export DOCKER_DEFAULT_GATEWAY_V6="<%= default_gateway_v6 %>"
+<% end %>
+
+<% if_p('docker.default_ulimits') do |default_ulimits| %>
+<% default_ulimits_list = default_ulimits.map { |default_ulimit| "--default-ulimit=#{default_ulimit}" }.join(' ') %>
+# Set default ulimits for containers
+export DOCKER_DEFAULT_ULIMITS="<%= default_ulimits_list %>"
+<% end %>
 
 <% if_p('docker.dns_domains') do |dns_domains| %>
 <% dns_domains_list = dns_domains.map { |dns_domain| "--dns-search=#{dns_domain}" }.join(' ') %>
@@ -58,6 +74,12 @@ export DOCKER_DNS_SERVERS="<%= dns_servers_list %>"
 <% if_p('docker.exec_driver') do |exec_driver| %>
 # Use a specific exec driver
 export DOCKER_EXEC_DRIVER"--exec-driver=<%= exec_driver %>"
+<% end %>
+
+<% if_p('docker.exec_options') do |exec_options| %>
+<% exec_options_list = exec_options.map { |exec_option| "--exec-opt=#{exec_option}" }.join(' ') %>
+# Set exec driver options
+export DOCKER_EXEC_OPTIONS="<%= exec_options_list %>"
 <% end %>
 
 # Allow unrestricted inter-container and Docker daemon host communication
@@ -135,6 +157,9 @@ export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
 
 # Use TLS and verify the remote
 export DOCKER_TLS_VERIFY_OPTION="--tlsverify=<%= p('docker.tls_verify') %>"
+
+# Use userland proxy for loopback traffic
+export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('docker.userland_proxy') %>"
 
 #
 # Remote Syslog properties

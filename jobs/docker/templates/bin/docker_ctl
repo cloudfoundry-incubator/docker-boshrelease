@@ -44,12 +44,16 @@ case $1 in
 
     # Start Docker daemon
     exec chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --daemon \
-        ${DOCKER_API_ENABLE_CORS:-} \
+        ${DOCKER_API_CORS_HEADER:-} \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG:-} \
+        ${DOCKER_DEFAULT_GATEWAY:-} \
+        ${DOCKER_DEFAULT_GATEWAY_V6:-} \
+        ${DOCKER_DEFAULT_ULIMITS:-} \
         ${DOCKER_DNS_DOMAINS:-} \
         ${DOCKER_DNS_SERVERS:-} \
         ${DOCKER_EXEC_DRIVER:-} \
+        ${DOCKER_EXEC_OPTIONS:-} \
         --group ${DOCKER_GROUP} \
         --graph ${DOCKER_STORE_DIR}/docker \
         --host unix://${DOCKER_PID_DIR}/docker.sock \
@@ -73,6 +77,7 @@ case $1 in
         ${DOCKER_TLS_CERT:-} \
         ${DOCKER_TLS_KEY:-} \
         ${DOCKER_TLS_VERIFY_OPTION:-} \
+        ${DOCKER_USERLAND_PROXY:-} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;

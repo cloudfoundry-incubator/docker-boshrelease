@@ -31,8 +31,8 @@ properties:
   docker.tcp_port:
     description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "4243"
-  docker.api_enable_cors:
-    description: "Enable CORS headers in the remote API"
+  docker.api_cors_header:
+    description: "Set CORS headers in the remote API"
     default: false
   docker.bridge:
     description: "Name of the network bridge to attach containers (defaults to docker0)"
@@ -41,12 +41,20 @@ properties:
   docker.debug:
     description: "Enable debug mode"
     default: false
+  docker.default_gateway:
+    description: "Container default gateway IPv4 address"
+  docker.default_gateway_v6:
+    description: "Container default gateway IPv6 address"
+  docker.default_ulimits:
+    description: "Array of default ulimits for containers"
   docker.dns_servers:
     description: "Array of DNS servers to be used by Docker"
   docker.dns_domains:
     description: "Array of DNS search domains to be used by Docker"
   docker.exec_driver:
     description: "Use a specific exec driver"
+  docker.exec_options:
+    description: "Array of exec driver options"
   docker.icc:
     description: "Allow unrestricted inter-container and Docker daemon host communication"
     default: true
@@ -92,6 +100,9 @@ properties:
   docker.tls_verify:
     description: "Use TLS and verify the remote"
     default: false
+  docker.userland_proxy:
+    description: "Use userland proxy for loopback traffic"
+    default: true
 
   docker.daemon.logrotate.frequency:
     description: "Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)"
