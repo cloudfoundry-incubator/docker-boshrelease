@@ -15,10 +15,6 @@ docker/bridge-utils-1.5.tar.gz:
   object_id: 7ec3ecd0-b4fa-425c-bf53-acd6200e357e
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
-remote_syslog/remote_syslog-0.13_linux_amd64.tar.gz:
-  object_id: 061ddea3-7d77-4841-af60-d4860dbbb0a9
-  sha: e63564142bf6c5063fe97c64a7461aa20e39005c
-  size: 1840213
 ruby/bundler-1.8.2.gem:
   object_id: 68c89fe7-4df4-43aa-806a-3d9b53448d14
   sha: e9b810268eea94ac5e825b5ae8a2d5fd19fb5905
@@ -39,3 +35,7 @@ docker/docker-1.7.0:
   object_id: 5d7fc4c8-a823-435a-8fbc-b975c7706b14
   sha: c8fe8d5c9dd583877a012ed285fb67cc5c18927c
   size: 16257966
+remote_syslog/remote_syslog-0.14_linux_amd64.tar.gz:
+  object_id: 53ad141b-66dd-4403-a93f-2c900ddb1827
+  sha: c0562f6d13e5eafece5c030c835f21fcf12fccdb
+  size: 1849384

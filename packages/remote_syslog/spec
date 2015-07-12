@@ -2,4 +2,4 @@
 name: remote_syslog
 dependencies: {}
 files:
-  - remote_syslog/remote_syslog-0.13_linux_amd64.tar.gz
+  - remote_syslog/remote_syslog-0.14_linux_amd64.tar.gz
