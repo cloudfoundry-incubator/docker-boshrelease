@@ -155,6 +155,12 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>Memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)</td>
   </tr>
   <tr>
+    <td>containers[].memory_swap</td>
+    <td>N</td>
+    <td>String</td>
+    <td>Total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)</td>
+  </tr>
+  <tr>
     <td>containers[].privileged</td>
     <td>N</td>
     <td>Boolean</td>
@@ -171,5 +177,29 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>N</td>
     <td>Array of Strings</td>
     <td>Linux capabilities to drop</td>
+  </tr>
+  <tr>
+    <td>containers[].mac_address</td>
+    <td>N</td>
+    <td>String</td>
+    <td>Container MAC address</td>
+  </tr>
+  <tr>
+    <td>containers[].hostname</td>
+    <td>N</td>
+    <td>String</td>
+    <td>Container host name</td>
+  </tr>
+  <tr>
+    <td>containers[].labels[]</td>
+    <td>N</td>
+    <td>Array of Strings</td>
+    <td>Labels meta data</td>
+  </tr>
+  <tr>
+    <td>containers[].ulimits[]</td>
+    <td>N</td>
+    <td>Array of Strings</td>
+    <td>Ulimit options</td>
   </tr>
 </table>
