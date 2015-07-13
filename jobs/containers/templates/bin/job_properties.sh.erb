@@ -175,6 +175,23 @@ export <%= container['name'] %>_cap_drops="<%= cap_drops %>"
 export <%= container['name'] %>_mac_address="--mac-address=<%= container['mac_address'] %>"
 <% end %>
 
+<% unless container['hostname'].nil? || container['hostname'].empty? %>
+# Container host name
+export <%= container['name'] %>_hostname="--hostname=<%= container['hostname'] %>"
+<% end %>
+
+<% unless container['labels'].nil? || container['labels'].empty? %>
+<% labels = Array(container['labels']).join(',').split(',').map { |label| "--label=#{label.strip}" }.join(' ') %>
+# Set meta data on a container
+export <%= container['name'] %>_labels="<%= labels %>"
+<% end %>
+
+<% unless container['ulimits'].nil? || container['ulimits'].empty? %>
+<% ulimits = Array(container['ulimits']).join(',').split(',').map { |ulimit| "--ulimit=#{ulimit.strip}" }.join(' ') %>
+# Set Ulimit options
+export <%= container['name'] %>_ulimits="<%= ulimits %>"
+<% end %>
+
 <% if container['dockerfile'] %>
 # Dockerfile
 mkdir -p "${CONTAINERS_CONF_DIR}"/<%= container['name'] %>

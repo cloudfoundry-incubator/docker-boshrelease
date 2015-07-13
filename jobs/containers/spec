@@ -76,3 +76,6 @@ properties:
     # containers.cap_adds: Optional array of Linux capabilities to add
     # containers.cap_drops: Optional array of Linux capabilities to drop
     # containers.mac_address: Optional container MAC address
+    # containers.hostname: Optional container host name
+    # containers.labels: Optional array of container labels meta data
+    # containers.ulimits: Optional array of Ulimit options

@@ -68,6 +68,9 @@ case $1 in
                     "$(eval echo "\$${container_name}_cap_adds")" \
                     "$(eval echo "\$${container_name}_cap_drops")" \
                     "$(eval echo "\$${container_name}_mac_address")" \
+                    "$(eval echo "\$${container_name}_hostname")" \
+                    "$(eval echo "\$${container_name}_labels")" \
+                    "$(eval echo "\$${container_name}_ulimits")" \
                     "$(eval echo "\$${container_name}_image")" \
                     "$(eval echo "\$${container_name}_command")""
     echo "$(date) Running command: ${docker_command}"
