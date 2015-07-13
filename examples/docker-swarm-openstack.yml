@@ -41,7 +41,6 @@ networks:
 resource_pools:
   - name: default
     network: default
-    size: <%= num_docker_nodes + 1 %>
     stemcell:
       name: bosh-openstack-kvm-ubuntu-trusty-go_agent
       version: latest

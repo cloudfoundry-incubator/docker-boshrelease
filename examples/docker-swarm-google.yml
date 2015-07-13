@@ -17,7 +17,8 @@ compilation:
   network: default
   reuse_compilation_vms: true
   cloud_properties:
-    instance_type: n1-standard-8
+    machine_type: n1-standard-8
+    preemptible: true
 
 update:
   canaries: 0
@@ -30,6 +31,7 @@ networks:
   - name: default
     type: dynamic
     cloud_properties:
+      ephemeral_external_ip: true
       tags:
         - bosh
         - <%= deployment_name %>
@@ -41,12 +43,11 @@ networks:
 resource_pools:
   - name: default
     network: default
-    size: <%= num_docker_nodes + 1 %>
     stemcell:
-      name: bosh-google-kvm-ubuntu-trusty
+      name: bosh-google-kvm-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
-      instance_type: n1-highmem-8
+      machine_type: n1-highmem-8
 
 jobs:
   - name: docker

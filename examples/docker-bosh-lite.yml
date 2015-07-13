@@ -1,5 +1,7 @@
-<% director_uuid = 'CHANGE-ME' %>
-<% deployment_name = 'docker' %>
+<%
+director_uuid = 'CHANGE-ME'
+deployment_name = 'docker'
+%>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -75,6 +77,40 @@ jobs:
             - "/var/lib/redis"
           entrypoint: "redis-server"
           memory: "256m"
-          cpu_shares: 1
           env_vars:
             - "EXAMPLE_VAR=1"
+
+        - name: mysql
+          image: "google/mysql"
+          bind_ports:
+            - "3306:3306"
+          bind_volumes:
+            - "/mysql"
+
+        - name: elasticsearch
+          image: "bosh/elasticsearch"
+          links:
+            - mysql:db
+          depends_on:
+            - mysql
+          bind_ports:
+            - "9200:9200"
+            - "9300:9300"
+          bind_volumes:
+            - "/data"
+          dockerfile: |
+            FROM java:7
+
+            RUN \
+              cd /tmp && \
+              wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.tar.gz && \
+              tar xvzf elasticsearch-1.1.1.tar.gz && \
+              rm -f elasticsearch-1.1.1.tar.gz && \
+              mv /tmp/elasticsearch-1.1.1 /elasticsearch
+
+            WORKDIR /data
+
+            CMD ["/elasticsearch/bin/elasticsearch"]
+
+            EXPOSE 9200
+            EXPOSE 9300

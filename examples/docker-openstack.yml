@@ -1,6 +1,8 @@
-<% director_uuid = 'CHANGE-ME' %>
-<% deployment_name = 'docker' %>
-<% floating_ip = 'CHANGE-ME' %>
+<%
+director_uuid = 'CHANGE-ME'
+deployment_name = 'docker'
+floating_ip = 'CHANGE-ME'
+%>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -38,7 +40,6 @@ networks:
 resource_pools:
   - name: default
     network: default
-    size: 1
     stemcell:
       name: bosh-openstack-kvm-ubuntu-trusty-go_agent
       version: latest
@@ -70,7 +71,6 @@ jobs:
             - "/var/lib/redis"
           entrypoint: "redis-server"
           memory: "256m"
-          cpu_shares: 1
           env_vars:
             - "EXAMPLE_VAR=1"
 
@@ -93,7 +93,7 @@ jobs:
           bind_volumes:
             - "/data"
           dockerfile: |
-            FROM dockerfile/java
+            FROM java:7
 
             RUN \
               cd /tmp && \

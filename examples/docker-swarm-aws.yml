@@ -41,7 +41,6 @@ networks:
 resource_pools:
   - name: default
     network: default
-    size: <%= num_docker_nodes + 1 %>
     stemcell:
       name: bosh-aws-xen-ubuntu-trusty-go_agent
       version: latest

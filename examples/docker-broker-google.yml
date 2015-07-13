@@ -18,7 +18,8 @@ compilation:
   network: default
   reuse_compilation_vms: true
   cloud_properties:
-    instance_type: n1-standard-8
+    machine_type: n1-standard-8
+    preemptible: true
 
 update:
   canaries: 0
@@ -41,23 +42,22 @@ networks:
     cloud_properties: {}
 
 resource_pools:
-  - name : errand
-    network: default
-    size: 1
-    stemcell:
-      name: bosh-google-kvm-ubuntu-trusty
-      version: latest
-    cloud_properties:
-      instance_type: n1-standard-8
-
   - name: default
     network: default
     size: 1
     stemcell:
-      name: bosh-google-kvm-ubuntu-trusty
+      name: bosh-google-kvm-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
-      instance_type: n1-highmem-8
+      machine_type: n1-highmem-8
+
+  - name: errand
+    network: default
+    stemcell:
+      name: bosh-google-kvm-ubuntu-trusty-go_agent
+      version: latest
+    cloud_properties:
+      machine_type: n1-standard-2
 
 jobs:
   - name: broker
@@ -105,7 +105,9 @@ properties:
 
   broker:
     name: cf-containers-broker
+    protocol: http
     host: "cf-containers-broker.<%= root_domain %>"
+    port: 80
     username: 'containers'
     password: 'containers'
     cookie_secret: 'e7247dae-a252-4393-afa3-2219c1c02efd'
