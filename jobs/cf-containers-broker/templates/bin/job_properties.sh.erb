@@ -36,8 +36,8 @@ export RAILS_ENV=production
 # CF-Containers-Broker settings file
 export SETTINGS_PATH=$CF_CONTAINERS_BROKER_CONF_DIR/settings.yml
 
-# Docker UNIX socket
-export DOCKER_URL="unix:///var/vcap/sys/run/docker/docker.sock"
+# Docker URL
+export DOCKER_URL="<%= p('cfcontainersbroker.docker_url') %>"
 
 #
 # Remote Syslog properties
