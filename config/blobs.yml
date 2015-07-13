@@ -15,18 +15,10 @@ docker/bridge-utils-1.5.tar.gz:
   object_id: 7ec3ecd0-b4fa-425c-bf53-acd6200e357e
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
-ruby/bundler-1.8.2.gem:
-  object_id: 68c89fe7-4df4-43aa-806a-3d9b53448d14
-  sha: e9b810268eea94ac5e825b5ae8a2d5fd19fb5905
-  size: 235008
 ruby/ruby-2.1.5.tar.gz:
   object_id: c0e8a7b1-3021-4184-a2c7-0694f23578b6
   sha: 9c0a238bd7839a4b51871641945a3da90997b8c2
   size: 15127433
-ruby/rubygems-2.4.6.tgz:
-  object_id: 6c3e946d-02c9-4391-a4e9-42e25577a2da
-  sha: bf59306c0f6c37551875e70ce8ccfb1cbc60c28b
-  size: 447588
 golang/go1.4.2.linux-amd64.tar.gz:
   object_id: 75231f93-1e7a-469a-b03f-9fdcdc047f2a
   sha: 5020af94b52b65cc9b6f11d50a67e4bae07b0aff
@@ -39,3 +31,11 @@ remote_syslog/remote_syslog-0.14_linux_amd64.tar.gz:
   object_id: 53ad141b-66dd-4403-a93f-2c900ddb1827
   sha: c0562f6d13e5eafece5c030c835f21fcf12fccdb
   size: 1849384
+ruby/bundler-1.10.5.gem:
+  object_id: fb4186be-5978-49f7-86b5-42f3eae22d57
+  sha: d8a934e1fcc000eb89c87697e8b73f8812bd498c
+  size: 251392
+ruby/rubygems-2.4.8.tgz:
+  object_id: 91185f59-c451-43da-8623-dbdbdcb619bf
+  sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
+  size: 447712
