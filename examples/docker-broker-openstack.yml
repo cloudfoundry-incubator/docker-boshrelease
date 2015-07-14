@@ -78,6 +78,7 @@ jobs:
     lifecycle: errand
     networks:
       - name: default
+        default: [dns, gateway]
 
   - name: broker-deregistrar
     template: broker-deregistrar
@@ -86,6 +87,7 @@ jobs:
     lifecycle: errand
     networks:
       - name: default
+        default: [dns, gateway]
 
 properties:
   nats:
