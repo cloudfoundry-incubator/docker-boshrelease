@@ -29,6 +29,7 @@ case $1 in
         ${SWARM_MANAGER_LOG_LEVEL:-} \
         manage \
         --rootdir=${SWARM_MANAGER_ROOT_DIR} \
+        --host unix://${SWARM_MANAGER_PID_DIR}/swarm_manager.sock \
         ${SWARM_MANAGER_HOST:-} \
         ${SWARM_MANAGER_STRATEGY:-} \
         ${SWARM_MANAGER_HEARTBEAT:-} \

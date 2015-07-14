@@ -50,6 +50,9 @@ properties:
   broker.skip_ssl_validation:
     description: 'Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA'
     default: true
+  broker.docker_url:
+    description: 'Docker URL (IP/Socket)'
+    default: 'unix:///var/vcap/sys/run/docker/docker.sock'
   broker.max_containers:
     description: 'Max number of containers'
     default: '0'
