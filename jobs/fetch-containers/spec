@@ -1,0 +1,17 @@
+---
+name: fetch-containers
+
+packages:
+  - ruby
+  - cf-containers-broker
+
+templates:
+  bin/run.erb: bin/run
+  config/settings.yml.erb: config/settings.yml
+
+properties:
+  fetch_containers.docker_url:
+    description: 'Docker URL (IP/Socket)'
+
+  broker.services:
+    description: 'Services and plans offered by the broker'

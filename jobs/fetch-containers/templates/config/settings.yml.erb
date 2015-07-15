@@ -1,0 +1,6 @@
+production:
+  log_path: '/var/vcap/sys/log/dummy.log'
+  cookie_secret: random-cookie
+  session_expiry: 86400
+
+  services: <%= JSON.pretty_generate(p('broker.services')) %>
