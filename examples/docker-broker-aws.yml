@@ -71,6 +71,14 @@ jobs:
         static_ips:
           - <%= elastic_ip %>
 
+  - name: fetch-containers
+    template: fetch-containers
+    instances: 1
+    resource_pool: errand
+    lifecycle: errand
+    networks:
+      - name: default
+
   - name: broker-registrar
     template: broker-registrar
     instances: 1
@@ -101,6 +109,9 @@ properties:
     api_url: "<%= protocol %>://api.<%= root_domain %>"
     admin_username: 'admin'
     admin_password: 'admin'
+
+  fetch_containers:
+    docker_url: tcp://<%= elastic_ip %>:2375
 
   broker:
     name: cf-containers-broker
