@@ -23,10 +23,6 @@ golang/go1.4.2.linux-amd64.tar.gz:
   object_id: 75231f93-1e7a-469a-b03f-9fdcdc047f2a
   sha: 5020af94b52b65cc9b6f11d50a67e4bae07b0aff
   size: 62442704
-docker/docker-1.7.0:
-  object_id: 5d7fc4c8-a823-435a-8fbc-b975c7706b14
-  sha: c8fe8d5c9dd583877a012ed285fb67cc5c18927c
-  size: 16257966
 remote_syslog/remote_syslog-0.14_linux_amd64.tar.gz:
   object_id: 53ad141b-66dd-4403-a93f-2c900ddb1827
   sha: c0562f6d13e5eafece5c030c835f21fcf12fccdb
@@ -39,3 +35,7 @@ ruby/rubygems-2.4.8.tgz:
   object_id: 91185f59-c451-43da-8623-dbdbdcb619bf
   sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
   size: 447712
+docker/docker-1.7.1:
+  object_id: 3ac68298-45b6-48f7-a4bf-6795680e87f3
+  sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
+  size: 16296881
