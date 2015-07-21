@@ -18,7 +18,7 @@ To use this BOSH release, first upload it to your BOSH:
 bosh target BOSH_HOST
 git clone https://github.com/cf-platform-eng/docker-boshrelease.git
 cd docker-boshrelease
-bosh upload release releases/docker/docker-14.yml
+bosh upload release releases/docker/docker-15.yml
 ```
 
 ### Create a BOSH deployment manifest

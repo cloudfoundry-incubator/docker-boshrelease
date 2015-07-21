@@ -1,0 +1,82 @@
+---
+packages:
+- name: bosh-helpers
+  version: 55717f488eb12fd47c95fd524ab1cd6304c7ce7e
+  fingerprint: 55717f488eb12fd47c95fd524ab1cd6304c7ce7e
+  sha1: 973f73130608dcfc48af8f948601a3015c9e4594
+  dependencies: []
+- name: broker-registrar
+  version: 46213225d775263932e072a461e524baf0994967
+  fingerprint: 46213225d775263932e072a461e524baf0994967
+  sha1: 0e0e0f6f2e735bf4003d007022a4e730b77ffba2
+  dependencies:
+  - ruby
+- name: cf-containers-broker
+  version: cf3a65fcc5d23a958fcc98dcfa61b9cc0070aa99
+  fingerprint: cf3a65fcc5d23a958fcc98dcfa61b9cc0070aa99
+  sha1: b61caf0af3162e6fa2df56a4774b89fd4ae0f3a8
+  dependencies:
+  - ruby
+- name: docker
+  version: 7045c600f2d494b25a81a9dbe2e6cedb41a59880
+  fingerprint: 7045c600f2d494b25a81a9dbe2e6cedb41a59880
+  sha1: 239d9f4feead979bfae7e3206cf6e1d6da7196d8
+  dependencies: []
+- name: golang
+  version: 6effe697df6912a3f44070c5443946bdfed82623
+  fingerprint: 6effe697df6912a3f44070c5443946bdfed82623
+  sha1: 2fb81907785506054b24c04437ccfb4d4fcc8ec3
+  dependencies: []
+- name: remote_syslog
+  version: 058f109050e53969590f7707db92e1efa2a01654
+  fingerprint: 058f109050e53969590f7707db92e1efa2a01654
+  sha1: a5b8acf73998b9eb839a81fc405afa5909f7f664
+  dependencies: []
+- name: ruby
+  version: 3806993d2569cfc8327d742f1938fe876ac0b50a
+  fingerprint: 3806993d2569cfc8327d742f1938fe876ac0b50a
+  sha1: a25b24f562488623c40b88575953b0d573dbfc94
+  dependencies: []
+- name: swarm
+  version: ddfe58940b0fd6a3b3d923399da3681fc63d372c
+  fingerprint: ddfe58940b0fd6a3b3d923399da3681fc63d372c
+  sha1: 4ac6ba753b6a6e8bd94c7a573889a84add1a1aed
+  dependencies:
+  - golang
+jobs:
+- name: broker-deregistrar
+  version: 30015fee8a0532ac7e5b72080dca95e85b810eda
+  fingerprint: 30015fee8a0532ac7e5b72080dca95e85b810eda
+  sha1: cf7dfedc4221dc197d6616677f41fc2b6353ade4
+- name: broker-registrar
+  version: 9f566e65b9c68b62521b77ea3105afe9f654396b
+  fingerprint: 9f566e65b9c68b62521b77ea3105afe9f654396b
+  sha1: d82a908bf2bb391379cfa208a8d7b4094587193e
+- name: cf-containers-broker
+  version: 8c4db583e4d0e63fcfb886d27859326ebb504639
+  fingerprint: 8c4db583e4d0e63fcfb886d27859326ebb504639
+  sha1: b4c97ee89926f89552bf8c076ae4c527a258771e
+- name: containers
+  version: 1b7f0e2b719b15a8b57cdb3c2f117d18a0a01a11
+  fingerprint: 1b7f0e2b719b15a8b57cdb3c2f117d18a0a01a11
+  sha1: e5c0d3f17ae680a8add98b74a3ba6221c753b8ee
+- name: docker
+  version: 6f5a5e5023af438d9130979d49a35199d5b6a8c5
+  fingerprint: 6f5a5e5023af438d9130979d49a35199d5b6a8c5
+  sha1: 188b64173dbdec7c051470c7d997c02ea7f18f8a
+- name: fetch-containers
+  version: 2e76a0aee38bdcd6a26594433e0d8524294f863b
+  fingerprint: 2e76a0aee38bdcd6a26594433e0d8524294f863b
+  sha1: 7f8047f7244f0a65043dc86d3d9c4165998c7a00
+- name: swarm_manager
+  version: 4ac6833be0354b15aa8062cbfc66f87dcaaeb7f9
+  fingerprint: 4ac6833be0354b15aa8062cbfc66f87dcaaeb7f9
+  sha1: 1115cf6f42e35938a1549867b8fade41eeba3d81
+license:
+  version: b05c781702eb7beb67f8590ba3b577efb5c5a575
+  fingerprint: b05c781702eb7beb67f8590ba3b577efb5c5a575
+  sha1: 11ec6df045edb8a56cb43a81b441fae9cfb617b6
+commit_hash: 7fef8aba
+uncommitted_changes: true
+name: docker
+version: '15'
