@@ -26,6 +26,7 @@ production:
 
   host_directory: /var/vcap/store/cf-containers-broker/
   max_containers: <%= p('broker.max_containers') %>
+  allocate_docker_host_ports: <%= p('broker.allocate_docker_host_ports') %>
 
   message_bus_servers:
   <% p('nats.machines').each do |ip| %>

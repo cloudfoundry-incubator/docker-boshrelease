@@ -56,6 +56,9 @@ properties:
   broker.max_containers:
     description: 'Max number of containers'
     default: '0'
+  broker.allocate_docker_host_ports:
+    description: 'Allocate Docker host ports when creating a container'
+    default: true
   broker.fetch_images:
     description: 'Fetch new/updated container images on restart'
     default: true
