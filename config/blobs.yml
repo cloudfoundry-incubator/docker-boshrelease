@@ -35,7 +35,7 @@ ruby/rubygems-2.4.8.tgz:
   object_id: 91185f59-c451-43da-8623-dbdbdcb619bf
   sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
   size: 447712
-docker/docker-1.7.1:
-  object_id: 3ac68298-45b6-48f7-a4bf-6795680e87f3
-  sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
-  size: 16296881
+docker/docker-1.8.1:
+  object_id: 80e5ddfa-fe85-4ba9-bedd-582f3d2259df
+  sha: 9a711e6b98a388b12091cf716c5996b67a2e223a
+  size: 21595292
