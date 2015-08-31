@@ -33,7 +33,6 @@ case $1 in
         ${SWARM_MANAGER_HOST:-} \
         ${SWARM_MANAGER_STRATEGY:-} \
         ${SWARM_MANAGER_HEARTBEAT:-} \
-        ${SWARM_MANAGER_OVERCOMMIT:-} \
         ${SWARM_MANAGER_API_ENABLE_CORS:-} \
         ${SWARM_MANAGER_TLS:-} \
         ${SWARM_MANAGER_TLS_CACERT:-} \

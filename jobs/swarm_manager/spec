@@ -35,10 +35,7 @@ properties:
     default: "spread"
   swarm_manager.heartbeat:
     description: "Time in second between each heartbeat"
-    default: "25"
-  swarm_manager.overcommit:
-    description: "Overcommit to apply on resources"
-    default: "0.05"
+    default: "20s"
   swarm_manager.api_enable_cors:
     description: "Enable CORS headers in the remote API"
     default: false
