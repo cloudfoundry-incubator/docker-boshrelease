@@ -31,7 +31,7 @@ export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
 <% end %>
 
 # Set CORS headers in the remote API
-export DOCKER_API_CORS_HEADER="--api-enable-cors=<%= p('docker.api_cors_header') %>"
+export DOCKER_API_CORS_HEADER="--api-cors-header=<%= p('docker.api_cors_header') %>"
 
 <% if_p('docker.bridge', 'docker.cidr_prefix') do |bridge, cidr_prefix| %>
 # Attach containers to a network bridge
@@ -45,12 +45,12 @@ export DOCKER_DEBUG="--debug=<%= p('docker.debug') %>"
 
 <% if_p('docker.default_gateway') do |default_gateway| %>
 # Container default gateway IPv4 address
-export DOCKER_DEFAULT_GATEWAY="<%= default_gateway %>"
+export DOCKER_DEFAULT_GATEWAY="--default-gateway=<%= default_gateway %>"
 <% end %>
 
 <% if_p('docker.default_gateway_v6') do |default_gateway_v6| %>
 # Container default gateway IPv6 address
-export DOCKER_DEFAULT_GATEWAY_V6="<%= default_gateway_v6 %>"
+export DOCKER_DEFAULT_GATEWAY_V6="--default-gateway-v6=<%= default_gateway_v6 %>"
 <% end %>
 
 <% if_p('docker.default_ulimits') do |default_ulimits| %>
@@ -156,7 +156,9 @@ export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
 <% end %>
 
 # Use TLS and verify the remote
-export DOCKER_TLS_VERIFY_OPTION="--tlsverify=<%= p('docker.tls_verify') %>"
+<% if p('docker.tls_verify', false) %>
+export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
+<% end %>
 
 # Use userland proxy for loopback traffic
 export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('docker.userland_proxy') %>"

@@ -43,7 +43,7 @@ case $1 in
     fi
 
     # Start Docker daemon
-    exec chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --daemon \
+    exec chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker daemon \
         ${DOCKER_API_CORS_HEADER:-} \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG:-} \
