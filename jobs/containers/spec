@@ -58,6 +58,7 @@ properties:
     # containers.image: String containing the name of the image to create/run
     # containers.command: Optional String containing the command to the run (including arguments)
     # containers.privileged: Optional boolean to enable/disable extended privileges to this container
+    # containers.net : Optional container network strategy, possible values are bridge (default), none (no network), host (use host network)
     # containers.entrypoint: Optional string containing the entrypoint (only if you want to override the default entrypoint set by the image)
     # containers.workdir: Optional string containing the working directory inside the container
     # containers.restart: Optional string containing the restart policy to apply when a container exits (no, on-failure, always)

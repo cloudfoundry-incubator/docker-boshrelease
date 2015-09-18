@@ -75,6 +75,12 @@ export <%= container['name'] %>_command="<%= container['command'] %>"
 <% privileged = container.has_key?('privileged') ? container['privileged'] : false %>
 export <%= container['name'] %>_privileged="--privileged=<%= privileged %>"
 
+# Set docker net stategy (none / host / bridge)
+<% unless container['net'].nil? || container['net'].empty? %>
+export <%= container['name'] %>_net="--net=<%= container['net'] %>"
+<% end %>
+
+
 <% if container['entrypoint'] %>
 # Overwrite the default entrypoint set by the image
 export <%= container['name'] %>_entrypoint="--entrypoint=<%= container['entrypoint'] %>"

@@ -167,6 +167,12 @@ Containers to be deployed must be specified at the properties section of each jo
     <td>Enable/disable extended privileges to this container</td>
   </tr>
   <tr>
+    <td>containers[].net</td>
+    <td>N</td>
+    <td>String</td>
+    <td>container network strategy. Optional container network strategy, possible values are bridge (default), none (no network), host (use host network)</td>
+  </tr>
+  <tr>
     <td>containers[].cap_adds[]</td>
     <td>N</td>
     <td>Array of Strings</td>
