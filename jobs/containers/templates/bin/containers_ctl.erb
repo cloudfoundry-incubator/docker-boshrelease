@@ -50,7 +50,7 @@ case $1 in
                     run --detach \
                     --name ${container_name} \
                     "$(eval echo "\$${container_name}_privileged")" \
-                    "$(eval echo "\$${container_name}_net")" \                    
+                    "$(eval echo "\$${container_name}_net")" \
                     "$(eval echo "\$${container_name}_entrypoint")" \
                     "$(eval echo "\$${container_name}_workdir")" \
                     "$(eval echo "\$${container_name}_restart")" \
