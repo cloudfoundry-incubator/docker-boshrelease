@@ -26,7 +26,7 @@ properties:
     default: 'vcap'
   broker.unicorn.worker_processes:
     description: 'Unicorn worker processes'
-    default: '4'
+    default: '1'
   broker.unicorn.port:
     description: 'Unicorn listen port'
     default: '80'
