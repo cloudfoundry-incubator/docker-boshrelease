@@ -110,8 +110,11 @@ properties:
     admin_username: 'admin'
     admin_password: 'admin'
 
+  docker:
+    #tcp_address: 0.0.0.0 <- Uncomment this line if you plan to use the fetch-containers errand
+
   fetch_containers:
-    docker_url: tcp://<%= elastic_ip %>:2375
+    docker_url: tcp://<%= elastic_ip %>:4243
 
   broker:
     name: cf-containers-broker
