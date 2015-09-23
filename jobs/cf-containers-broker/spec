@@ -25,7 +25,7 @@ properties:
     description: 'Group which will own the CF-Containers-Broker services'
     default: 'vcap'
   broker.unicorn.worker_processes:
-    description: 'Unicorn worker processes'
+    description: 'Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.fetch_images property'
     default: '1'
   broker.unicorn.port:
     description: 'Unicorn listen port'
