@@ -71,8 +71,8 @@ jobs:
         static_ips:
           - <%= floating_ip %>
 
-  - name: fetch-containers
-    template: fetch-containers
+  - name: fetch-containers-images
+    template: fetch-containers-images
     instances: 1
     resource_pool: errand
     lifecycle: errand
@@ -113,7 +113,7 @@ properties:
   docker:
     #tcp_address: 0.0.0.0 <- Uncomment this line if you plan to use the fetch-containers errand
 
-  fetch_containers:
+  fetch_containers_images:
     docker_url: tcp://<%= floating_ip %>:4243
 
   broker:

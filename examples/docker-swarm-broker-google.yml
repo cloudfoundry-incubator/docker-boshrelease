@@ -83,8 +83,8 @@ jobs:
       - name: default
         default: [dns, gateway]
 
-  - name: fetch-containers
-    template: fetch-containers
+  - name: fetch-containers-images
+    template: fetch-containers-images
     instances: 1
     resource_pool: errand
     lifecycle: errand
@@ -129,7 +129,7 @@ properties:
     admin_username: 'admin'
     admin_password: 'admin'
 
-  fetch_containers:
+  fetch_containers_images:
     docker_url: tcp://<%= static_ip %>:2375
 
   broker:

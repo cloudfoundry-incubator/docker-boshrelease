@@ -1,5 +1,5 @@
 ---
-name: fetch-containers
+name: fetch-containers-images
 
 packages:
   - ruby
@@ -10,7 +10,7 @@ templates:
   config/settings.yml.erb: config/settings.yml
 
 properties:
-  fetch_containers.docker_url:
+  fetch_containers_images.docker_url:
     description: 'Docker URL (IP/Socket)'
 
   broker.services:
