@@ -58,6 +58,18 @@ resource_pools:
     cloud_properties: {}
 
 jobs:
+  - name: docker
+    templates:
+      - name: docker
+    instances: <%= num_docker_nodes %>
+    resource_pool: default
+    persistent_disk: 65536
+    networks:
+      - name: default
+        default: [dns, gateway]
+    update:
+      serial: true
+
   - name: broker
     templates:
       - name: cf-containers-broker
@@ -69,16 +81,6 @@ jobs:
         default: [dns, gateway]
         static_ips:
           - 10.244.8.2
-
-  - name: docker
-    templates:
-      - name: docker
-    instances: <%= num_docker_nodes %>
-    resource_pool: default
-    persistent_disk: 65536
-    networks:
-      - name: default
-        default: [dns, gateway]
 
   - name: broker-registrar
     template: broker-registrar

@@ -58,6 +58,18 @@ resource_pools:
       instance_type: m1.small
 
 jobs:
+  - name: docker
+    templates:
+      - name: docker
+    instances: <%= num_docker_nodes %>
+    resource_pool: default
+    persistent_disk: 65536
+    networks:
+      - name: default
+        default: [dns, gateway]
+    update:
+      serial: true
+
   - name: broker
     templates:
       - name: cf-containers-broker
@@ -70,16 +82,6 @@ jobs:
       - name: elastic
         static_ips:
           - <%= elastic_ip %>
-
-  - name: docker
-    templates:
-      - name: docker
-    instances: <%= num_docker_nodes %>
-    resource_pool: default
-    persistent_disk: 65536
-    networks:
-      - name: default
-        default: [dns, gateway]
 
   - name: broker-registrar
     template: broker-registrar

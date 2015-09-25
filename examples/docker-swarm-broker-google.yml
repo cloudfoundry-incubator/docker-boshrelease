@@ -60,6 +60,18 @@ resource_pools:
       machine_type: n1-standard-2
 
 jobs:
+  - name: docker
+    templates:
+      - name: docker
+    instances: <%= num_docker_nodes %>
+    resource_pool: default
+    persistent_disk: 65536
+    networks:
+      - name: default
+        default: [dns, gateway]
+    update:
+      serial: true
+
   - name: broker
     templates:
       - name: cf-containers-broker
@@ -72,16 +84,6 @@ jobs:
       - name: static
         static_ips:
           - <%= static_ip %>
-
-  - name: docker
-    templates:
-      - name: docker
-    instances: <%= num_docker_nodes %>
-    resource_pool: default
-    persistent_disk: 65536
-    networks:
-      - name: default
-        default: [dns, gateway]
 
   - name: fetch-containers-images
     template: fetch-containers-images
