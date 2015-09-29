@@ -163,6 +163,9 @@ export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
 # Use userland proxy for loopback traffic
 export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('docker.userland_proxy') %>"
 
+# Maximum number of open files
+export DOCKER_ULIMIT_NOFILE=<%= p('docker.ulimit.nofile') %>
+
 #
 # Remote Syslog properties
 #

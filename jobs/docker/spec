@@ -103,6 +103,9 @@ properties:
   docker.userland_proxy:
     description: "Use userland proxy for loopback traffic"
     default: true
+  docker.ulimit.nofile:
+    description: "Maximum number of open files"
+    default: 8192
 
   docker.daemon.logrotate.frequency:
     description: "Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)"
