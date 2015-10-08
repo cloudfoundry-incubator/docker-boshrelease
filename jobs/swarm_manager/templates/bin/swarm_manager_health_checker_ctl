@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+
+# Setup common env vars and folders
+source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'swarm_manager' 'swarm_manager_health_checker'
+export PID_FILE="$RUN_DIR/swarm_manager_health_checker.pid"
+
+case $1 in
+
+    start)
+        pid_guard ${PID_FILE} "swarm_manager_health_checker"
+        echo $$ > ${PID_FILE}
+
+        exec chpst -u vcap:vcap ${JOB_DIR}/bin/swarm_manager_health_checker \
+             >>${LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
+             2>>${LOG_DIR}/${OUTPUT_LABEL}.stderr.log
+        ;;
+
+    stop)
+        kill_and_wait ${PID_FILE}
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+
+esac
+exit 0
