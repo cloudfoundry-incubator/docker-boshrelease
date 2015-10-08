@@ -23,8 +23,18 @@ def total_containers
   json_from_url('http://localhost:2375/containers/json').length
 end
 
+def expected_nodes
+  <%= p('swarm_manager.docker_nodes').length %>.to_i
+end
+
+def number_of_nodes
+  json_from_url('http://localhost:2375/info')['DriverStatus']
+    .select { |s| s[0] =~ /Nodes/  }.flatten.last.to_i
+end
+
 def stale?
-  info_total_containers != total_containers
+  info_total_containers != total_containers ||
+  expected_nodes != number_of_nodes
 end
 
 server.mount_proc '/' do |req, res|
