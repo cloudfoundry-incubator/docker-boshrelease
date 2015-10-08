@@ -10,6 +10,8 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/remote_syslog_ctl: bin/remote_syslog_ctl
   bin/swarm_manager_ctl: bin/swarm_manager_ctl
+  bin/swarm_manager_health_checker_ctl: bin/swarm_manager_health_checker_ctl
+  bin/swarm_manager_health_checker: bin/swarm_manager_health_checker
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key

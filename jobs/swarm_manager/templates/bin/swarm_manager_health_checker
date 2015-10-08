@@ -1,0 +1,44 @@
+#!/var/vcap/packages/ruby/bin/ruby
+require 'json'
+require 'open-uri'
+require 'webrick'
+
+server = WEBrick::HTTPServer.new(Port: 9999, DoNotReverseLookup: true)
+trap('INT') { server.shutdown }
+
+def json_from_url(url)
+  begin
+    JSON.parse(open(url).read)
+  rescue
+    # return fresh when connection errors
+    return { 'Containers' => 1 }
+  end
+end
+
+def info_total_containers
+  json_from_url('http://localhost:2375/info')['Containers']
+end
+
+def total_containers
+  json_from_url('http://localhost:2375/containers/json').length
+end
+
+def expected_nodes
+  <%= p('swarm_manager.docker_nodes').length %>.to_i
+end
+
+def number_of_nodes
+  json_from_url('http://localhost:2375/info')['DriverStatus']
+    .select { |s| s[0] =~ /Nodes/  }.flatten.last.to_i
+end
+
+def stale?
+  info_total_containers != total_containers ||
+  expected_nodes != number_of_nodes
+end
+
+server.mount_proc '/' do |req, res|
+  res.body = stale? ? "stale" : "fresh"
+end
+
+server.start
