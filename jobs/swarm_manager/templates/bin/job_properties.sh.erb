@@ -25,25 +25,29 @@ export SWARM_MANAGER_USER="<%= p('swarm_manager.user') %>"
 # Group which will own the Swarm Manager services
 export SWARM_MANAGER_GROUP="<%= p('swarm_manager.group') %>"
 
-# Swarm Manager root directory
-export SWARM_MANAGER_ROOT_DIR=${SWARM_MANAGER_STORE_DIR}/.swarm
-
-export SWARM_MANAGER_HOST="--host=<%= p('swarm_manager.listen_address') %>:<%= p('swarm_manager.port') %>"
-
-# Placement strategy to use
-export SWARM_MANAGER_STRATEGY="--strategy=<%= p('swarm_manager.strategy') %>"
-
-# Time in second between each heartbeat
-export SWARM_MANAGER_HEARTBEAT="--heartbeat=<%= p('swarm_manager.heartbeat') %>"
-
-# Enable CORS headers in the remote API
-export SWARM_MANAGER_ENABLE_CORS="--api-enable-cors=<%= p('swarm_manager.api_enable_cors') %>"
-
 # Enable debug mode
 export SWARM_MANAGER_DEBUG="--debug=<%= p('swarm_manager.debug') %>"
 
 # Log level
 export SWARM_MANAGER_LOG_LEVEL="--log-level=<%= p('swarm_manager.log_level') %>"
+
+# IP:Port to listen on
+export SWARM_MANAGER_HOST="--host=<%= p('swarm_manager.listen_address') %>:<%= p('swarm_manager.port') %>"
+
+# Placement strategy to use
+export SWARM_MANAGER_STRATEGY="--strategy=<%= p('swarm_manager.strategy') %>"
+
+# Filters to use
+export SWARM_MANAGER_FILTERS="<%= p('swarm_manager.filters', []).map { |filter| "--filter=#{filter}" }.join(' ') %>"
+
+# Time in second between each heartbeat
+export SWARM_MANAGER_HEARTBEAT="--heartbeat=<%= p('swarm_manager.heartbeat') %>"
+
+# Enable CORS headers in the remote API
+export SWARM_MANAGER_API_ENABLE_CORS="--api-enable-cors=<%= p('swarm_manager.api_enable_cors') %>"
+
+# Overcommit to apply on resources
+export SWARM_MANAGER_OVERCOMMIT="--cluster-opt=swarm.overcommit=<%= p('swarm_manager.overcommit') %>"
 
 # Use TLS
 export SWARM_MANAGER_TLS="--tls=<%= p('docker.tls') %>"
@@ -63,8 +67,8 @@ export SWARM_MANAGER_TLS_CERT="--tlscert=${SWARM_MANAGER_CONF_DIR}/docker.cert"
 export SWARM_MANAGER_TLS_KEY="--tlskey=${SWARM_MANAGER_CONF_DIR}/docker.key"
 <% end %>
 
-# Use TLS and verify the remote
 <% if p('docker.tls_verify', false) %>
+# Use TLS and verify the remote
 export SWARM_MANAGER_TLS_VERIFY="--tlsverify=true"
 <% end %>
 

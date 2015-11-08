@@ -12,34 +12,28 @@ case $1 in
     pid_guard ${SWARM_MANAGER_PID_FILE} ${JOB_NAME}
     echo $$ > ${SWARM_MANAGER_PID_FILE}
 
-    # Create Swarm Manager user & group
-    create_group ${SWARM_MANAGER_GROUP}
-    create_user ${SWARM_MANAGER_USER} ${SWARM_MANAGER_GROUP}
-
-    # Create Swarm Manager root dir
-    mkdir -p {SWARM_MANAGER_ROOT_DIR}
-    chown ${SWARM_MANAGER_USER}:${SWARM_MANAGER_GROUP} {SWARM_MANAGER_ROOT_DIR}
-
     # Enable logrotate crontab
     (crontab -l | sed /swarm_manager.*logrotate/d; cat ${SWARM_MANAGER_CONF_DIR}/swarm_manager_logrotate.cron) | sed /^$/d | crontab
 
     # Start Swarm Manager daemon
-    exec chpst -u ${SWARM_MANAGER_USER}:${SWARM_MANAGER_GROUP} swarm \
-        ${SWARM_MANAGER_DEBUG:-} \
-        ${SWARM_MANAGER_LOG_LEVEL:-} \
+    exec /var/vcap/packages/swarm/bin/swarm \
+        ${SWARM_MANAGER_DEBUG} \
+        ${SWARM_MANAGER_LOG_LEVEL} \
         manage \
-        --rootdir=${SWARM_MANAGER_ROOT_DIR} \
+        --cluster-driver="swarm" \
         --host unix://${SWARM_MANAGER_PID_DIR}/swarm_manager.sock \
-        ${SWARM_MANAGER_HOST:-} \
-        ${SWARM_MANAGER_STRATEGY:-} \
-        ${SWARM_MANAGER_HEARTBEAT:-} \
-        ${SWARM_MANAGER_API_ENABLE_CORS:-} \
-        ${SWARM_MANAGER_TLS:-} \
+        ${SWARM_MANAGER_HOST} \
+        ${SWARM_MANAGER_STRATEGY} \
+        ${SWARM_MANAGER_FILTERS} \
+        ${SWARM_MANAGER_HEARTBEAT} \
+        ${SWARM_MANAGER_API_ENABLE_CORS} \
+        ${SWARM_MANAGER_OVERCOMMIT} \
+        ${SWARM_MANAGER_TLS} \
         ${SWARM_MANAGER_TLS_CACERT:-} \
         ${SWARM_MANAGER_TLS_CERT:-} \
         ${SWARM_MANAGER_TLS_KEY:-} \
         ${SWARM_MANAGER_TLS_VERIFY:-} \
-        ${SWARM_MANAGER_NODES:-} \
+        ${SWARM_MANAGER_NODES} \
         >>${SWARM_MANAGER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${SWARM_MANAGER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
