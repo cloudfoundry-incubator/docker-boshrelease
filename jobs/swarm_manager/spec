@@ -59,3 +59,11 @@ properties:
   docker.tls_verify:
     description: "Use TLS and verify the remote"
     default: false
+
+  env.http_proxy:
+    description: "HTTP proxy that Docker should use"
+  env.https_proxy:
+    description: "HTTPS proxy that Docker should use"
+  env.no_proxy:
+    description: "List of comma-separated hosts that Docker should skip connecting to the proxy"
+
