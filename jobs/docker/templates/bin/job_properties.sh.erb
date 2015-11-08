@@ -48,41 +48,44 @@ export DOCKER_DEFAULT_GATEWAY_V6="--default-gateway-v6=<%= default_gateway_v6 %>
 <% end %>
 
 <% if_p('docker.default_ulimits') do |default_ulimits| %>
-<% default_ulimits_list = default_ulimits.map { |default_ulimit| "--default-ulimit=#{default_ulimit}" }.join(' ') %>
 # Set default ulimits for containers
-export DOCKER_DEFAULT_ULIMITS="<%= default_ulimits_list %>"
+export DOCKER_DEFAULT_ULIMITS="<%= default_ulimits.map { |default_ulimit| "--default-ulimit=#{default_ulimit}" }.join(' ') %>"
 <% end %>
 
-<% if_p('docker.dns_domains') do |dns_domains| %>
-<% dns_domains_list = dns_domains.map { |dns_domain| "--dns-search=#{dns_domain}" }.join(' ') %>
-# Array of DNS search domains to be used by Docker
-export DOCKER_DNS_DOMAINS="<%= dns_domains_list %>"
-<% end %>
+# Do not contact legacy registries
+export DOCKER_DISABLE_LEGACY_REGISTRY="--disable-legacy-registry=<%= p('docker.disable_legacy_registry') %>"
 
 <% if_p('docker.dns_servers') do |dns_servers| %>
-<% dns_servers_list = dns_servers.map { |dns_server| "--dns=#{dns_server}" }.join(' ') %>
-# Array of DNS servers to be used by Docker
-export DOCKER_DNS_SERVERS="<%= dns_servers_list %>"
+# DNS servers to be used
+export DOCKER_DNS_SERVERS="<%= dns_servers.map { |dns_server| "--dns=#{dns_server}" }.join(' ') %>"
 <% end %>
 
-<% if_p('docker.exec_driver') do |exec_driver| %>
-# Use a specific exec driver
-export DOCKER_EXEC_DRIVER"--exec-driver=<%= exec_driver %>"
+<% if_p('docker.dns_options') do |dns_options| %>
+# DNS options to be used
+export DOCKER_DNS_OPTIONS="<%= dns_options.map { |dns_option| "--dns-opt=#{dns_option}" }.join(' ') %>"
+<% end %>
+
+<% if_p('docker.dns_search') do |domains| %>
+# DNS search domains to be used
+export DOCKER_DNS_SEARCH="<%= domains.map { |domain| "--dns-search=#{domain}" }.join(' ') %>"
 <% end %>
 
 <% if_p('docker.exec_options') do |exec_options| %>
-<% exec_options_list = exec_options.map { |exec_option| "--exec-opt=#{exec_option}" }.join(' ') %>
 # Set exec driver options
-export DOCKER_EXEC_OPTIONS="<%= exec_options_list %>"
+export DOCKER_EXEC_OPTIONS="<%= exec_options.map { |exec_option| "--exec-opt=#{exec_option}" }.join(' ') %>"
 <% end %>
 
 # Allow unrestricted inter-container and Docker daemon host communication
 export DOCKER_ICC="--icc=<%= p('docker.icc') %>"
 
 <% if_p('docker.insecure_registries') do |insecure_registries| %>
-<% insecure_registries_list = insecure_registries.map { |insecure_registry| "--insecure-registry=#{insecure_registry}" }.join(' ') %>
-# Array of insecure registries
-export DOCKER_INSECURE_REGISTRIES="<%= insecure_registries_list %>"
+# Insecure registries
+export DOCKER_INSECURE_REGISTRIES="<%= insecure_registries.map { |insecure_registry| "--insecure-registry=#{insecure_registry}" }.join(' ') %>"
+<% end %>
+
+<% if_p('docker.ip') do |ip| %>
+# Default IP when binding container ports
+export DOCKER_IP="--ip=<%= ip %>"
 <% end %>
 
 # Enable net.ipv4.ip_forward and IPv6 forwarding
@@ -97,13 +100,22 @@ export DOCKER_IPTABLES="--iptables=<%= p('docker.iptables') %>"
 # Enable IPv6 networking
 export DOCKER_IPV6="--ipv6=<%= p('docker.ipv6') %>"
 
+<% if_p('docker.labels') do |labels| %>
+# Daemon labels
+export DOCKER_LABELS="<%= labels.map { |label| "--label=#{label}" }.join(' ') %>"
+<% end %>
+
 # Set the logging level
 export DOCKER_LOG_LEVEL="--log-level=<%= p('docker.log_level') %>"
 
-<% if_p('docker.labels') do |labels| %>
-<% labels_list = labels.map { |label| "--label=#{label}" }.join(' ') %>
-# Array of key=value labels for the daemon
-export DOCKER_LABELS="<%= labels_list %>"
+<% if_p('docker.log_driver') do |log_driver| %>
+# Default driver for container logs
+export DOCKER_LOG_DRIVER="--log-driver=<%= log_driver %>"
+<% end %>
+
+<% if_p('docker.log_options') do |log_options| %>
+# Log driver options
+export DOCKER_LOG_OPTIONS="<%= log_options.map { |log_option| "--log-opt=#{log_option}" }.join(' ') %>"
 <% end %>
 
 <% if_p('docker.mtu') do |mtu| %>
@@ -112,9 +124,8 @@ export DOCKER_MTU="--mtu=<%= mtu %>"
 <% end %>
 
 <% if_p('docker.registry_mirrors') do |registry_mirrors| %>
-<% registry_mirrors_list = registry_mirrors.map { |registry_mirror| "--registry-mirror=#{registry_mirror}" }.join(' ') %>
-# Array of preferred Docker registry mirrors
-export DOCKER_REGISTRY_MIRRORS="<%= registry_mirrors_list %>"
+# Preferred Docker registry mirrors
+export DOCKER_REGISTRY_MIRRORS="<%= registry_mirrors.map { |registry_mirror| "--registry-mirror=#{registry_mirror}" }.join(' ') %>"
 <% end %>
 
 # Enable selinux support
@@ -126,9 +137,8 @@ export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
 <% end %>
 
 <% if_p('docker.storage_options') do |storage_options| %>
-<% storage_options_list = storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>
-# Array of storage driver options
-export DOCKER_STORAGE_OPTIONS="<%= storage_options_list %>"
+# Storage driver options
+export DOCKER_STORAGE_OPTIONS="<%= storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>"
 <% end %>
 
 # Use TLS
@@ -149,8 +159,8 @@ export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
 export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
 <% end %>
 
-# Use TLS and verify the remote
 <% if p('docker.tls_verify', false) %>
+# Use TLS and verify the remote
 export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
 <% end %>
 

@@ -36,12 +36,15 @@ properties:
     description: "Container default gateway IPv6 address"
   docker.default_ulimits:
     description: "Array of default ulimits for containers"
+  docker.disable_legacy_registry:
+    description: "Do not contact legacy registries"
+    default: false
   docker.dns_servers:
-    description: "Array of DNS servers to be used by Docker"
-  docker.dns_domains:
-    description: "Array of DNS search domains to be used by Docker"
-  docker.exec_driver:
-    description: "Use a specific exec driver"
+    description: "Array of DNS servers to be used"
+  docker.dns_options:
+    description: "Array of DNS options to be used"
+  docker.dns_search:
+    description: "Array of DNS search domains to be used"
   docker.exec_options:
     description: "Array of exec driver options"
   docker.icc:
@@ -49,11 +52,13 @@ properties:
     default: true
   docker.insecure_registries:
     description: "Array of insecure registries (no certificate verification for HTTPS and enable HTTP fallback)"
+  docker.ip:
+    description: "Default IP when binding container ports"
   docker.ip_forward:
     description: "Enable net.ipv4.ip_forward and IPv6 forwarding"
     default: true
   docker.ip_masq:
-    description: "Enable IP masquerading for bridge's IP range"
+    description: "Enable IP masquerading"
     default: true
   docker.iptables:
     description: "Enable Docker's addition of iptables rules"
@@ -61,11 +66,15 @@ properties:
   docker.ipv6:
     description: "Enable IPv6 networking"
     default: false
+  docker.labels:
+    description: "Array of key=value labels for the daemon"
   docker.log_level:
     description: "Set the logging level (debug, info, warn, error, fatal)"
     default: "info"
-  docker.labels:
-    description: "Array of key=value labels for the daemon"
+  docker.log_driver:
+    description: "Default driver for container logs"
+  docker.log_options:
+    description: "Array of log driver options"
   docker.mtu:
     description: "Set the containers network MTU (if no value is provided: default to the default route MTU or 1500 if no default route is available)"
   docker.registry_mirrors:

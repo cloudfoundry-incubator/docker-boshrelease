@@ -38,58 +38,59 @@ case $1 in
     fi
 
     # Start Docker daemon
-    exec docker daemon \
-        ${DOCKER_API_CORS_HEADER:-} \
+    exec /var/vcap/packages/docker/bin/docker daemon \
+        ${DOCKER_API_CORS_HEADER} \
         ${DOCKER_BRIDGE:-} \
-        ${DOCKER_DEBUG:-} \
+        ${DOCKER_DEBUG} \
         ${DOCKER_DEFAULT_GATEWAY:-} \
         ${DOCKER_DEFAULT_GATEWAY_V6:-} \
         ${DOCKER_DEFAULT_ULIMITS:-} \
-        ${DOCKER_DNS_DOMAINS:-} \
+        ${DOCKER_DISABLE_LEGACY_REGISTRY} \
         ${DOCKER_DNS_SERVERS:-} \
-        ${DOCKER_EXEC_DRIVER:-} \
+        ${DOCKER_DNS_OPTIONS:-} \
+        ${DOCKER_DNS_SEARCH:-} \
         ${DOCKER_EXEC_OPTIONS:-} \
         --group vcap \
         --graph ${DOCKER_STORE_DIR}/docker \
         --host unix://${DOCKER_PID_DIR}/docker.sock \
-        ${DOCKER_ICC:-} \
+        ${DOCKER_ICC} \
         ${DOCKER_INSECURE_REGISTRIES:-} \
-        ${DOCKER_IPFORWARD:-} \
-        ${DOCKER_IPMASQ:-} \
-        ${DOCKER_IPTABLES:-} \
-        ${DOCKER_IPV6:-} \
-        ${DOCKER_LOG_LEVEL:-} \
+        ${DOCKER_IP:-} \
+        ${DOCKER_IPFORWARD} \
+        ${DOCKER_IPMASQ} \
+        ${DOCKER_IPTABLES} \
+        ${DOCKER_IPV6} \
         ${DOCKER_LABELS:-} \
+        ${DOCKER_LOG_LEVEL} \
+        ${DOCKER_LOG_DRIVER:-} \
+        ${DOCKER_LOG_OPTIONS:-} \
         ${DOCKER_MTU:-} \
         --pidfile ${DOCKER_PID_FILE} \
         ${DOCKER_REGISTRY_MIRRORS:-} \
+        ${DOCKER_SELINUX_ENABLED} \
         ${DOCKER_STORAGE_DRIVER:-} \
         ${DOCKER_STORAGE_OPTIONS:-} \
-        ${DOCKER_SELINUX_ENABLED:-} \
         ${DOCKER_TCP:-} \
-        ${DOCKER_TLS:-} \
+        ${DOCKER_TLS} \
         ${DOCKER_TLS_CACERT:-} \
         ${DOCKER_TLS_CERT:-} \
         ${DOCKER_TLS_KEY:-} \
         ${DOCKER_TLS_VERIFY_OPTION:-} \
-        ${DOCKER_USERLAND_PROXY:-} \
+        ${DOCKER_USERLAND_PROXY} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
 
   stop)
     # Stop Docker containers
-    echo -n "Stopping docker containers: "
-    containers="$(docker --host unix://${DOCKER_PID_DIR}/docker.sock ps -q)"
+    echo "Stopping docker containers..."
+    containers="$(/var/vcap/packages/docker/bin/docker --host unix://${DOCKER_PID_DIR}/docker.sock ps -q)"
     if [[ ! -z $containers ]]; then
-      echo ${containers}
       for container in $containers
       do
-        echo -n "Stopping docker container... "
-        docker --host unix://${DOCKER_PID_DIR}/docker.sock stop ${container}
+        echo "Stopping docker container ${container}"
+        /var/vcap/packages/docker/bin/docker --host unix://${DOCKER_PID_DIR}/docker.sock stop ${container}
       done
-    else
-      echo "Nothing to do."
     fi
 
     # Stop Docker daemon
