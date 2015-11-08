@@ -14,8 +14,6 @@ templates:
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key
-  config/docker_logrotate.cron.erb: config/docker_logrotate.cron
-  config/logrotate.conf.erb: config/logrotate.conf
   config/remote_syslog.yml.erb: config/remote_syslog.yml
 
 properties:
@@ -106,16 +104,6 @@ properties:
   docker.ulimit.nofile:
     description: "Maximum number of open files"
     default: 8192
-
-  docker.daemon.logrotate.frequency:
-    description: "Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)"
-    default: "0 * * * *"
-  docker.daemon.logrotate.rotate:
-    description: "Number of times Docker daemon log files are rotated before being removed"
-    default: "7"
-  docker.daemon.logrotate.size:
-    description: "Size before Docker daemon log files are rotated"
-    default: "10M"
 
   remote_syslog.user:
     description: "User which will own the Remote Syslog services"

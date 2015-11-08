@@ -25,9 +25,6 @@ case $1 in
       chmod 770 ${DOCKER_STORE_DIR}/docker
     fi
 
-    # Enable logrotate crontab
-    (crontab -l | sed /docker.*logrotate/d; cat ${DOCKER_CONF_DIR}/docker_logrotate.cron) | sed /^$/d | crontab
-
     # Set ulimits
     ulimit -n ${DOCKER_ULIMIT_NOFILE}
 
