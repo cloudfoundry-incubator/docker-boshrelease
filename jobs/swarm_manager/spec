@@ -13,9 +13,7 @@ templates:
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key
-  config/logrotate.conf.erb: config/logrotate.conf
   config/remote_syslog.yml.erb: config/remote_syslog.yml
-  config/swarm_manager_logrotate.cron.erb: config/swarm_manager_logrotate.cron
 
 properties:
   swarm_manager.user:
@@ -54,16 +52,6 @@ properties:
   swarm_manager.docker_nodes:
     description: "Array of Docker nodes"
     default: []
-
-  swarm_manager.logrotate.frequency:
-    description: "Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)"
-    default: "0 * * * *"
-  swarm_manager.logrotate.rotate:
-    description: "Number of times Docker daemon log files are rotated before being removed"
-    default: "7"
-  swarm_manager.logrotate.size:
-    description: "Size before Docker daemon log files are rotated"
-    default: "10M"
 
   docker.tcp_port:
     description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"

@@ -12,9 +12,6 @@ case $1 in
     pid_guard ${SWARM_MANAGER_PID_FILE} ${JOB_NAME}
     echo $$ > ${SWARM_MANAGER_PID_FILE}
 
-    # Enable logrotate crontab
-    (crontab -l | sed /swarm_manager.*logrotate/d; cat ${SWARM_MANAGER_CONF_DIR}/swarm_manager_logrotate.cron) | sed /^$/d | crontab
-
     # Start Swarm Manager daemon
     exec /var/vcap/packages/swarm/bin/swarm \
         ${SWARM_MANAGER_DEBUG} \
