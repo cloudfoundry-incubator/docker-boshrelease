@@ -9,8 +9,6 @@ templates:
   bin/containers_ctl.erb: bin/containers_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/remote_syslog_ctl: bin/remote_syslog_ctl
-  config/containers_logrotate.cron.erb: config/containers_logrotate.cron
-  config/logrotate.conf.erb: config/logrotate.conf
   config/remote_syslog.yml.erb: config/remote_syslog.yml
 
 properties:
@@ -20,16 +18,6 @@ properties:
   docker.group:
     description: "Group which will own the Docker services"
     default: "vcap"
-
-  docker.containers.logrotate.frequency:
-    description: "Frequency to run logrotate for Containers log files (crontab five time and date fields)"
-    default: "0 * * * *"
-  docker.containers.logrotate.rotate:
-    description: "Number of times Containers log files are rotated before being removed"
-    default: "7"
-  docker.containers.logrotate.size:
-    description: "Size before Containers log files are rotateds"
-    default: "10M"
 
   remote_syslog.user:
     description: "User which will own the Remote Syslog services"
