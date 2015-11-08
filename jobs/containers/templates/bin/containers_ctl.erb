@@ -14,27 +14,21 @@ case $1 in
     pid_guard ${CONTAINER_PID_FILE} ${JOB_NAME}
     echo $$ > ${CONTAINER_PID_FILE}
 
-    # Create Docker user & group
-    create_group ${DOCKER_GROUP}
-    create_user ${DOCKER_USER} ${DOCKER_GROUP}
-
     # Stop and remove previously Docker Container if exists
-    chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock stop ${container_name} || true
-    chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock rm ${container_name} || true
+    docker -H unix:///var/vcap/sys/run/docker/docker.sock stop ${container_name} || true
+    docker -H unix:///var/vcap/sys/run/docker/docker.sock rm ${container_name} || true
 
     # Create Container persistent disk path
     if [ ! -d ${CONTAINERS_STORE_DIR}/${container_name} ]; then
       mkdir -p ${CONTAINERS_STORE_DIR}/${container_name}
-      chown ${DOCKER_USER}:${DOCKER_GROUP} ${CONTAINERS_STORE_DIR}/${container_name}
       chmod 777 ${CONTAINERS_STORE_DIR}/${container_name}
     fi
 
     # Build the Docker image from Dockerfile
     if [ -a "${CONTAINERS_CONF_DIR}/${container_name}/Dockerfile" ]; then
-        image=$(chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock images | grep "$(eval echo "\$${container_name}_image")") || true
+        image=$(docker -H unix:///var/vcap/sys/run/docker/docker.sock images | grep "$(eval echo "\$${container_name}_image")") || true
         if [ -z "${image}" ]; then
-            chown -R ${DOCKER_USER}:${DOCKER_GROUP} ${CONTAINERS_CONF_DIR}/${container_name}
-            chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker \
+            docker \
                 -H unix:///var/vcap/sys/run/docker/docker.sock \
                 build -t "$(eval echo "\$${container_name}_image")" ${CONTAINERS_CONF_DIR}/${container_name} \
                 >>${LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
@@ -72,19 +66,19 @@ case $1 in
                     "$(eval echo "\$${container_name}_image")" \
                     "$(eval echo "\$${container_name}_command")""
     echo "$(date) Running command: ${docker_command}"
-    chpst -u ${DOCKER_USER}:${DOCKER_GROUP} ${docker_command} \
+    ${docker_command} \
         >>${LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${LOG_DIR}/${OUTPUT_LABEL}.stderr.log
 
     # Grab Container process pid
-    pid_process=$(chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock inspect -f '{{ .State.Pid }}' ${container_name})
+    pid_process=$(docker -H unix:///var/vcap/sys/run/docker/docker.sock inspect -f '{{ .State.Pid }}' ${container_name})
     echo $pid_process > ${CONTAINER_PID_FILE}
     ;;
 
   stop)
     # Stop and remove Docker Container
-    chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock stop ${container_name} || true
-    chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker -H unix:///var/vcap/sys/run/docker/docker.sock rm ${container_name} || true
+    docker -H unix:///var/vcap/sys/run/docker/docker.sock stop ${container_name} || true
+    docker -H unix:///var/vcap/sys/run/docker/docker.sock rm ${container_name} || true
     ;;
 
   *)

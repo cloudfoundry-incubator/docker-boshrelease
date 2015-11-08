@@ -19,12 +19,6 @@ export CONTAINERS_STORE_DIR=${STORE_DIR}
 # Directory to store the Containers temp files
 export CONTAINERS_TMP_DIR=${TMP_DIR}
 
-# User which will own the Docker services
-export DOCKER_USER="<%= p('docker.user') %>"
-
-# Group which will own the Docker services
-export DOCKER_GROUP="<%= p('docker.group') %>"
-
 <% p('containers').each do |container| %>
 #
 # "<%= container['name'] %>" properties

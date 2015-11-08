@@ -9,13 +9,6 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
 
 properties:
-  docker.user:
-    description: "User which will own the Docker services"
-    default: "root"
-  docker.group:
-    description: "Group which will own the Docker services"
-    default: "vcap"
-
   containers:
     description: "Containers Array (see below for details)"
     # containers.name: String containing the name of the container
