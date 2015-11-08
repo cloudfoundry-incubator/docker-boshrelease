@@ -19,12 +19,6 @@ export DOCKER_STORE_DIR=${STORE_DIR}
 # Directory to store the Docker temp files
 export DOCKER_TMP_DIR=${TMP_DIR}
 
-# User which will own the Docker services
-export DOCKER_USER="<%= p('docker.user') %>"
-
-# Group which will own the Docker services
-export DOCKER_GROUP="<%= p('docker.group') %>"
-
 <% if_p('docker.tcp_address', 'docker.tcp_port') do |address, port| %>
 # TCP Address/Port where Docker daemon will listen to
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"

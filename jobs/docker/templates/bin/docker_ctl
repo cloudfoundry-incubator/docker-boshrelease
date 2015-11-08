@@ -14,14 +14,9 @@ case $1 in
     # Install aufs-tools
     dpkg -i /var/vcap/packages/docker/aufs-tools_20120411-3_amd64.deb
 
-    # Create Docker user & group
-    create_group ${DOCKER_GROUP}
-    create_user ${DOCKER_USER} ${DOCKER_GROUP}
-
     # Create docker data store
     if [ ! -d ${DOCKER_STORE_DIR}/docker ]; then
       mkdir -p ${DOCKER_STORE_DIR}/docker
-      chown ${DOCKER_USER}:${DOCKER_GROUP} ${DOCKER_STORE_DIR}/docker
       chmod 770 ${DOCKER_STORE_DIR}/docker
     fi
 
@@ -43,7 +38,7 @@ case $1 in
     fi
 
     # Start Docker daemon
-    exec chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker daemon \
+    exec docker daemon \
         ${DOCKER_API_CORS_HEADER:-} \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG:-} \
@@ -54,7 +49,7 @@ case $1 in
         ${DOCKER_DNS_SERVERS:-} \
         ${DOCKER_EXEC_DRIVER:-} \
         ${DOCKER_EXEC_OPTIONS:-} \
-        --group ${DOCKER_GROUP} \
+        --group vcap \
         --graph ${DOCKER_STORE_DIR}/docker \
         --host unix://${DOCKER_PID_DIR}/docker.sock \
         ${DOCKER_ICC:-} \
@@ -85,13 +80,13 @@ case $1 in
   stop)
     # Stop Docker containers
     echo -n "Stopping docker containers: "
-    containers="$(chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --host unix://${DOCKER_PID_DIR}/docker.sock ps -q)"
+    containers="$(docker --host unix://${DOCKER_PID_DIR}/docker.sock ps -q)"
     if [[ ! -z $containers ]]; then
       echo ${containers}
       for container in $containers
       do
         echo -n "Stopping docker container... "
-        chpst -u ${DOCKER_USER}:${DOCKER_GROUP} docker --host unix://${DOCKER_PID_DIR}/docker.sock stop ${container}
+        docker --host unix://${DOCKER_PID_DIR}/docker.sock stop ${container}
       done
     else
       echo "Nothing to do."

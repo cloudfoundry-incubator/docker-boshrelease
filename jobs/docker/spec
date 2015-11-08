@@ -14,12 +14,6 @@ templates:
   config/docker.key.erb: config/docker.key
 
 properties:
-  docker.user:
-    description: "User which will own the Docker services"
-    default: "root"
-  docker.group:
-    description: "Group which will own the Docker services"
-    default: "vcap"
   docker.tcp_address:
     description: "TCP address where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "127.0.0.1"
