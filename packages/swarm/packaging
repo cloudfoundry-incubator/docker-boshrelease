@@ -1,23 +1,17 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-# Detect # of CPUs so make jobs can be parallelized
-CPUS=`grep -c ^processor /proc/cpuinfo`
-
-# Golang package must be a dependency
+# Set Golang dependency
 export GOROOT=$(readlink -nf /var/vcap/packages/golang)
-export PATH=${GOROOT}/bin:$PATH
+export PATH=${GOROOT}/bin:${PATH}
 
-mkdir -p ${BOSH_COMPILE_TARGET}/gocode/src/github.com/docker
-ln -s ${BOSH_COMPILE_TARGET}/swarm ${BOSH_COMPILE_TARGET}/gocode/src/github.com/docker/
-export GOPATH=${BOSH_COMPILE_TARGET}/gocode/:${BOSH_COMPILE_TARGET}/swarm/Godeps/_workspace
+# Build Docker Swarm package
+echo "Building Docker Swarm..."
+PACKAGE_NAME=github.com/docker/swarm
+mkdir -p ${BOSH_INSTALL_TARGET}/src/${PACKAGE_NAME}
+cp -a ${BOSH_COMPILE_TARGET}/${PACKAGE_NAME}/* ${BOSH_INSTALL_TARGET}/src/${PACKAGE_NAME}
+export GOPATH=${BOSH_INSTALL_TARGET}:${BOSH_INSTALL_TARGET}/src/${PACKAGE_NAME}/Godeps/_workspace
+go install ${PACKAGE_NAME}
 
-# Compile Swarm components
-echo "Compiling Swarm components..."
-cd ${BOSH_COMPILE_TARGET}/gocode/src/github.com/docker/swarm/
-CGO_ENABLED=0 go install -v -a -tags netgo -ldflags "-w"
-
-# Copy Swarm binaries
-echo "Copying Swarm binaries..."
-mkdir -p ${BOSH_INSTALL_TARGET}/bin
-cp -a ${BOSH_COMPILE_TARGET}/gocode/bin/* ${BOSH_INSTALL_TARGET}/bin
+# Clean up src & pkg artifacts
+rm -rf ${BOSH_INSTALL_TARGET}/pkg ${BOSH_INSTALL_TARGET}/src
