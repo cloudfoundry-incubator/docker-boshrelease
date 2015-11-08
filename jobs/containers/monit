@@ -1,9 +1,3 @@
-<% if_p('remote_syslog.address', 'remote_syslog.port', 'remote_syslog.protocol') do |address, port, protocol| %>
-check process containers_remote_syslog with pidfile /var/vcap/sys/run/containers/remote_syslog.pid
-  group vcap
-  start program "/var/vcap/packages/bosh-helpers/monit_debugger containers_remote_syslog_ctl '/var/vcap/jobs/containers/bin/remote_syslog_ctl start'"
-  stop program "/var/vcap/packages/bosh-helpers/monit_debugger containers_remote_syslog_ctl '/var/vcap/jobs/containers/bin/remote_syslog_ctl stop'"
-<% end %>
 <% p('containers').each do |container| %>
 <% depends_on = ['docker'].concat(Array(container.fetch('depends_on', []))) %>
 check process <%= container['name'] %> with pidfile /var/vcap/sys/run/containers/<%= container['name'] %>.pid

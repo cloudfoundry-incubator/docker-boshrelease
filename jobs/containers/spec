@@ -3,13 +3,10 @@ name: containers
 
 packages:
   - bosh-helpers
-  - remote_syslog
 
 templates:
   bin/containers_ctl.erb: bin/containers_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/remote_syslog_ctl: bin/remote_syslog_ctl
-  config/remote_syslog.yml.erb: config/remote_syslog.yml
 
 properties:
   docker.user:
@@ -18,27 +15,6 @@ properties:
   docker.group:
     description: "Group which will own the Docker services"
     default: "vcap"
-
-  remote_syslog.user:
-    description: "User which will own the Remote Syslog services"
-    default: "root"
-  remote_syslog.group:
-    description: "Group which will own the Remote Syslog services"
-    default: "vcap"
-  remote_syslog.address:
-    description: "IP address for Remote Syslog"
-  remote_syslog.port:
-    description: "TCP port of Remote Syslog"
-    default: "514"
-  remote_syslog.protocol:
-    description: "Protocol to be used when forwarding logs to a Remote Syslog (tcp|udp|tls)"
-    default: "udp"
-  remote_syslog.new_file_check_interval:
-    description: "How often to check for new files"
-    default: "10s"
-  remote_syslog.debug:
-    description: "Write a debug file"
-    default: false
 
   containers:
     description: "Containers Array (see below for details)"
