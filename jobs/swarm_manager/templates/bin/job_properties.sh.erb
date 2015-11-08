@@ -74,36 +74,3 @@ export SWARM_MANAGER_TLS_VERIFY="--tlsverify=true"
 
 # Docker nodes
 export SWARM_MANAGER_NODES="nodes://<%= p('swarm_manager.docker_nodes').map { |node| "#{node}:#{p('docker.tcp_port')}" }.join(',') %>"
-
-#
-# Remote Syslog properties
-#
-
-# Directory to store the Remote Syslog configuration files
-export REMOTE_SYSLOG_CONF_DIR=${JOB_DIR}/config
-
-# Directory to store the Remote Syslog logs
-export REMOTE_SYSLOG_LOG_DIR=${LOG_DIR}
-
-# Directory to store the Remote Syslog process IDs
-export REMOTE_SYSLOG_PID_DIR=${RUN_DIR}
-
-# Directory to store the Remote Syslog data files
-export REMOTE_SYSLOG_STORE_DIR=${STORE_DIR}
-
-# Directory to store the Remote Syslog temp files
-export REMOTE_SYSLOG_TMP_DIR=${TMP_DIR}
-
-# User which will own the Remote Syslog services
-export REMOTE_SYSLOG_USER="<%= p('remote_syslog.user') %>"
-
-# Group which will own the Remote Syslog services
-export REMOTE_SYSLOG_GROUP="<%= p('remote_syslog.group') %>"
-
-# How often to check for new files
-export REMOTE_SYSLOG_NEW_FILE_CHECK_INTERVAL="<%= p('remote_syslog.new_file_check_interval') %>"
-
-<% if p('remote_syslog.debug') %>
-# Write a debug file
-export REMOTE_SYSLOG_DEBUG="--debug-log-cfg=${REMOTE_SYSLOG_LOG_DIR}/swarm_manager_remote_syslog_debug.log"
-<% end %>
