@@ -13,12 +13,6 @@ templates:
   config/docker.key.erb: config/docker.key
 
 properties:
-  swarm_manager.user:
-    description: "User which will own the Swarm Manager services"
-    default: "root"
-  swarm_manager.group:
-    description: "Group which will own the Swarm Manager services"
-    default: "vcap"
   swarm_manager.debug:
     description: "Enable debug mode"
     default: false

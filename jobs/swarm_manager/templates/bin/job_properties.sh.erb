@@ -19,12 +19,6 @@ export SWARM_MANAGER_STORE_DIR=${STORE_DIR}
 # Directory to store the Swarm Manager temp files
 export SWARM_MANAGER_TMP_DIR=${TMP_DIR}
 
-# User which will own the Swarm Manager services
-export SWARM_MANAGER_USER="<%= p('swarm_manager.user') %>"
-
-# Group which will own the Swarm Manager services
-export SWARM_MANAGER_GROUP="<%= p('swarm_manager.group') %>"
-
 # Enable debug mode
 export SWARM_MANAGER_DEBUG="--debug=<%= p('swarm_manager.debug') %>"
 
