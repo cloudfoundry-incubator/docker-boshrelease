@@ -1,9 +1,3 @@
-<% if_p('remote_syslog.address', 'remote_syslog.port', 'remote_syslog.protocol') do |address, port, protocol| %>
-check process docker_remote_syslog with pidfile /var/vcap/sys/run/docker/remote_syslog.pid
-  group vcap
-  start program "/var/vcap/packages/bosh-helpers/monit_debugger docker_remote_syslog_ctl '/var/vcap/jobs/docker/bin/remote_syslog_ctl start'"
-  stop program "/var/vcap/packages/bosh-helpers/monit_debugger docker_remote_syslog_ctl '/var/vcap/jobs/docker/bin/remote_syslog_ctl stop'"
-<% end %>
 check process docker with pidfile /var/vcap/sys/run/docker/docker.pid
   group vcap
   start program "/var/vcap/packages/bosh-helpers/monit_debugger docker_ctl '/var/vcap/jobs/docker/bin/docker_ctl start'"
