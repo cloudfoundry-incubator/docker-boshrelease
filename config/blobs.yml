@@ -15,10 +15,6 @@ docker/bridge-utils-1.5.tar.gz:
   object_id: 7ec3ecd0-b4fa-425c-bf53-acd6200e357e
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
-remote_syslog/remote_syslog-0.14_linux_amd64.tar.gz:
-  object_id: 53ad141b-66dd-4403-a93f-2c900ddb1827
-  sha: c0562f6d13e5eafece5c030c835f21fcf12fccdb
-  size: 1849384
 docker/docker-1.9.0:
   object_id: 5fb14fb3-1370-4a15-80b2-a71eb56dbefd
   sha: bf0d17521cc01324029fa9679f66d0066e09b8c6
