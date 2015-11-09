@@ -23,9 +23,6 @@ case $1 in
     create_group ${CF_CONTAINERS_BROKER_GROUP}
     create_user ${CF_CONTAINERS_BROKER_USER} ${CF_CONTAINERS_BROKER_GROUP}
 
-    # Enable logrotate crontab
-    (crontab -l | sed /cf-containers-broker.*logrotate/d; cat ${CF_CONTAINERS_BROKER_CONF_DIR}/logrotate.cron) | sed /^$/d | crontab
-
     # Set limitations on system resources
     ulimit -c unlimited
     ulimit -v unlimited

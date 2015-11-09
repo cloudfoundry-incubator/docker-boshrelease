@@ -11,8 +11,6 @@ templates:
   bin/cf-containers-broker_ctl: bin/cf-containers-broker_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/remote_syslog_ctl: bin/remote_syslog_ctl
-  config/logrotate.cron.erb: config/logrotate.cron
-  config/logrotate.conf.erb: config/logrotate.conf
   config/remote_syslog.yml.erb: config/remote_syslog.yml
   config/settings.yml.erb: config/settings.yml
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
@@ -64,15 +62,6 @@ properties:
     default: true
   broker.services:
     description: 'Services and plans offered by the broker'
-  broker.logrotate.frequency:
-    description: 'Frequency to run logrotate for Docker daemon log files (crontab five time and date fields)'
-    default: '0 * * * *'
-  broker.logrotate.rotate:
-    description: 'Number of times Docker daemon log files are rotated before being removed '
-    default: '7'
-  broker.logrotate.size:
-    description: 'Size before Docker daemon log files are rotateds'
-    default: '2M'
 
   cf.api_url:
     description: 'URL of the CloudFoundry Cloud Controller'
