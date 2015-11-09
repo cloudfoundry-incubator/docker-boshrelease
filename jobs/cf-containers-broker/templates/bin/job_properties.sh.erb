@@ -33,3 +33,22 @@ export SETTINGS_PATH=$CF_CONTAINERS_BROKER_CONF_DIR/settings.yml
 
 # Docker UNIX socket
 export DOCKER_URL="<%= p('broker.docker_url') %>"
+
+#
+# Route Registrar properties
+#
+
+# Directory to store the Route Registrar configuration files
+export ROUTE_REGISTRAR_CONF_DIR=${JOB_DIR}/config
+
+# Directory to store the Route Registrar log files
+export ROUTE_REGISTRAR_LOG_DIR=${LOG_DIR}
+
+# Directory to store the Route Registrar process IDs
+export ROUTE_REGISTRAR_PID_DIR=${RUN_DIR}
+
+# Directory to store the Route Registrar data files
+export ROUTE_REGISTRAR_STORE_DIR=${STORE_DIR}
+
+# Directory to store the Route Registrar temp files
+export ROUTE_REGISTRAR_TMP_DIR=${TMP_DIR}

@@ -2,3 +2,11 @@ check process cf-containers-broker with pidfile /var/vcap/sys/run/cf-containers-
   group vcap
   start program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker_ctl '/var/vcap/jobs/cf-containers-broker/bin/cf-containers-broker_ctl start'"
   stop program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker_ctl '/var/vcap/jobs/cf-containers-broker/bin/cf-containers-broker_ctl stop'"
+
+<% if_p('nats.machines') do %>
+check process cf-containers-broker-route-registrar with pidfile /var/vcap/sys/run/cf-containers-broker/route-registrar.pid
+  group vcap
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker-route-registrar_ctl '/var/vcap/jobs/cf-containers-broker/bin/route-registrar_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker-route-registrar_ctl '/var/vcap/jobs/cf-containers-broker/bin/route-registrar_ctl stop'"
+  depends on cf-containers-broker
+<% end %>

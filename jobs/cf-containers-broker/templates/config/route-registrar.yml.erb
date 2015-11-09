@@ -1,0 +1,26 @@
+---
+<%
+  def openstruct_to_hash(os)
+    os.marshal_dump.map do |key, element|
+      element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+    end.reduce(&:merge)
+  end
+
+  networks = openstruct_to_hash(spec.networks)
+  external_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+%>
+external_host: <%= p('broker.host') %>
+external_ip: <%= p('broker.external_ip', external_ip) %>
+port: <%= p('broker.unicorn.port') %>
+
+message_bus_servers:
+  <% p('nats.machines', []).each do |server| %>
+  - host: <%= server %>:<%= p('nats.port') %>
+    <% if_p('nats.user', 'nats.password') do |nats_user, nats_password| %>
+    user: <%= nats_user %>
+    password: <%= nats_password %>
+    <% end %>
+  <% end %>
+
+health_checker:
+  name: "cf-containers-broker"

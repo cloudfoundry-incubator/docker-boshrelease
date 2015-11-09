@@ -15,11 +15,9 @@ production:
 
     networks = openstruct_to_hash(spec.networks)
     external_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
-   %>
+  %>
   external_ip: <%= external_ip %>
   external_host: <%= p('broker.host') %>
-  external_port: <%= p('broker.unicorn.port') %>
-  component_name: <%= p('broker.component_name') %>
 
   ssl_enabled: <%= p('broker.ssl_enabled') %>
   skip_ssl_validation: <%= p('broker.skip_ssl_validation') %>
@@ -27,10 +25,5 @@ production:
   host_directory: /var/vcap/store/cf-containers-broker/
   max_containers: <%= p('broker.max_containers') %>
   allocate_docker_host_ports: <%= p('broker.allocate_docker_host_ports') %>
-
-  message_bus_servers:
-  <% p('nats.machines').each do |ip| %>
-    - nats://<%= p('nats.user') %>:<%= p('nats.password') %>@<%= ip %>:<%= p('nats.port') %>
-  <% end %>
 
   services: <%= JSON.pretty_generate(p('broker.services')) %>

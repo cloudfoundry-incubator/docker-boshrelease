@@ -4,64 +4,67 @@ name: cf-containers-broker
 packages:
   - bosh-helpers
   - cf-containers-broker
+  - route-registrar
   - ruby
 
 templates:
   bin/cf-containers-broker_ctl: bin/cf-containers-broker_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/route-registrar_ctl.erb: bin/route-registrar_ctl
+  config/route-registrar.yml.erb: config/route-registrar.yml
   config/settings.yml.erb: config/settings.yml
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
 properties:
   broker.unicorn.worker_processes:
-    description: 'Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.fetch_images property'
-    default: '1'
+    description: "Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.fetch_images property"
+    default: "1"
   broker.unicorn.port:
-    description: 'Unicorn listen port'
-    default: '80'
+    description: "Unicorn listen port"
+    default: "80"
   broker.username:
     description: "Broker's basic auth username"
   broker.password:
     description: "Broker's basic auth password"
   broker.cookie_secret:
-    description: 'A unique secret key, used to sign sessions'
+    description: "A unique secret key, used to sign sessions"
   broker.session_expiry:
-    description: 'Session expiry time of the session'
-    default: '86400'
+    description: "Session expiry time of the session"
+    default: "86400"
+  broker.external_ip:
+    description: "External IP address used to register the broker"
   broker.host:
-    description: 'Host used to register the broker'
-  broker.component_name:
-    description: 'Component name used to register the broker'
-    default: 'cf-containers-broker'
+    description: "Host used to register the broker"
   broker.ssl_enabled:
-    description: 'Determines use of https in dashboard url and in callback uri for calls to UAA'
+    description: "Determines use of https in dashboard url and in callback uri for calls to UAA"
     default: false
   broker.skip_ssl_validation:
-    description: 'Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA'
+    description: "Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA"
     default: true
   broker.docker_url:
-    description: 'Docker URL (IP/Socket)'
-    default: 'unix:///var/vcap/sys/run/docker/docker.sock'
+    description: "Docker URL (IP/Socket)"
+    default: "unix:///var/vcap/sys/run/docker/docker.sock"
   broker.max_containers:
-    description: 'Max number of containers'
+    description: "Max number of containers"
     default: '0'
   broker.allocate_docker_host_ports:
-    description: 'Allocate Docker host ports when creating a container'
+    description: "Allocate Docker host ports when creating a container"
     default: true
   broker.fetch_images:
-    description: 'Fetch new/updated container images on restart'
+    description: "Fetch new/updated container images on restart"
     default: true
   broker.services:
-    description: 'Services and plans offered by the broker'
+    description: "Services and plans offered by the broker"
 
   cf.api_url:
-    description: 'URL of the CloudFoundry Cloud Controller'
+    description: "URL of the CloudFoundry Cloud Controller"
 
   nats.user:
-    description: 'Username for broker to connect to NATS'
+    description: "Username for broker to connect to NATS"
   nats.password:
-    description: 'Password for broker to connect to NATS'
+    description: "Password for broker to connect to NATS"
   nats.port:
-    description: 'IP port of Cloud Foundry NATS server'
+    description: "IP port of Cloud Foundry NATS server"
+    default: 4222
   nats.machines:
-    description: 'Array of IPs of each NATS cluster member'
+    description: "Array of IPs of each NATS cluster member"
