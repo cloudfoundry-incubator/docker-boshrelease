@@ -2,10 +2,3 @@ check process cf-containers-broker with pidfile /var/vcap/sys/run/cf-containers-
   group vcap
   start program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker_ctl '/var/vcap/jobs/cf-containers-broker/bin/cf-containers-broker_ctl start'"
   stop program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker_ctl '/var/vcap/jobs/cf-containers-broker/bin/cf-containers-broker_ctl stop'"
-
-<% if_p('remote_syslog.address', 'remote_syslog.port', 'remote_syslog.protocol') do |address, port, protocol| %>
-check process cf-containers-broker_remote_syslog with pidfile /var/vcap/sys/run/cf-containers-broker/remote_syslog.pid
-  group vcap
-  start program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker_remote_syslog_ctl '/var/vcap/jobs/cf-containers-broker/bin/remote_syslog_ctl start'"
-  stop program "/var/vcap/packages/bosh-helpers/monit_debugger cf-containers-broker_remote_syslog_ctl '/var/vcap/jobs/cf-containers-broker/bin/remote_syslog_ctl stop'"
-<% end %>

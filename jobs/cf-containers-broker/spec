@@ -5,13 +5,10 @@ packages:
   - bosh-helpers
   - ruby
   - cf-containers-broker
-  - remote_syslog
 
 templates:
   bin/cf-containers-broker_ctl: bin/cf-containers-broker_ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/remote_syslog_ctl: bin/remote_syslog_ctl
-  config/remote_syslog.yml.erb: config/remote_syslog.yml
   config/settings.yml.erb: config/settings.yml
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
@@ -74,24 +71,3 @@ properties:
     description: 'IP port of Cloud Foundry NATS server'
   nats.machines:
     description: 'Array of IPs of each NATS cluster member'
-
-  remote_syslog.user:
-    description: 'User which will own the Remote Syslog services'
-    default: 'root'
-  remote_syslog.group:
-    description: 'Group which will own the Remote Syslog services'
-    default: 'vcap'
-  remote_syslog.address:
-    description: 'IP address for Remote Syslog'
-  remote_syslog.port:
-    description: 'TCP port of Remote Syslog'
-    default: '514'
-  remote_syslog.protocol:
-    description: 'Protocol to be used when forwarding logs to a Remote Syslog (tcp|udp|tls)'
-    default: 'udp'
-  remote_syslog.new_file_check_interval:
-    description: 'How often to check for new files'
-    default: '10s'
-  remote_syslog.debug:
-    description: 'Write a debug file'
-    default: false
