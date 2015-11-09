@@ -19,12 +19,7 @@ export CF_CONTAINERS_BROKER_STORE_DIR=$STORE_DIR
 # Directory to store the CF-Containers-Broker temp files
 export CF_CONTAINERS_BROKER_TMP_DIR=$TMP_DIR
 
-# User which will own the CF-Containers-Broker services
-export CF_CONTAINERS_BROKER_USER="<%= p('broker.user') %>"
-
-# Group which will own the CF-Containers-Broker services
-export CF_CONTAINERS_BROKER_GROUP="<%= p('broker.group') %>"
-
+# Fetch new/updated container images on restart
 export CF_CONTAINERS_FETCH_IMAGES=<%= p('broker.fetch_images') ? 'true' : '' %>
 
 # CF-Containers-Broker Gemfile

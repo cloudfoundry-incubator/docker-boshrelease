@@ -13,12 +13,6 @@ templates:
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
 properties:
-  broker.user:
-    description: 'User which will own the CF-Containers-Broker services'
-    default: 'root'
-  broker.group:
-    description: 'Group which will own the CF-Containers-Broker services'
-    default: 'vcap'
   broker.unicorn.worker_processes:
     description: 'Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.fetch_images property'
     default: '1'
