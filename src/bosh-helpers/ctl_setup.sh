@@ -31,32 +31,6 @@ do
   chmod 775 ${dir}
 done
 
-# Add all packages /bin & /sbin into $PATH
-for package_bin_dir in $(ls -d $HOME/packages/*/*bin)
-do
-  export PATH=${package_bin_dir}:$PATH
-done
-
-# Add all packages /lib into $LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-''}
-for package_library_dir in $(ls -d $HOME/packages/*/lib)
-do
-  export LD_LIBRARY_PATH=${package_library}:$LD_LIBRARY_PATH
-done
-
-# Setup Java home and add it into $PATH
-if [ -d $HOME/packages/java/jdk ]; then
-  export JAVA_HOME="$HOME/packages/java/jdk"
-  export PATH=$JAVA_HOME/bin:$PATH
-fi
-
-# setup CLASSPATH for all jars/ folders within packages
-export CLASSPATH=${CLASSPATH:-''}
-for package_jar_dir in $(ls -d /var/vcap/packages/*/*/*.jar)
-do
-  export CLASSPATH=${package_jar_dir}:$CLASSPATH
-done
-
 # Load job properties
 if [ -f $JOB_DIR/bin/job_properties.sh ]; then
   source $JOB_DIR/bin/job_properties.sh

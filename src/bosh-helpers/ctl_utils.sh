@@ -197,9 +197,23 @@ public_hostname() {
   public_hostname=""
 
   # AWS EC2
-  if ec2_hostname="$( curl -sSf --connect-timeout 1 http://169.254.169.254/latest/meta-data/public-hostname 2> /dev/null)"; then
+  if ec2_hostname="$(curl -sSf --connect-timeout 1 http://169.254.169.254/latest/meta-data/public-hostname 2> /dev/null)"; then
     public_hostname=$ec2_hostname
   fi
 
   echo $public_hostname
+}
+
+public_ip_address() {
+  public_ip_address=""
+
+  # AWS
+  if ec2_public_ip_address="$(curl -sSf --connect-timeout 1 http://169.254.169.254/latest/meta-data/public-ipv4 2> /dev/null)"; then
+    public_ip_address=$ec2_public_ip_address
+  # Google Compute Engine
+  elif gce_public_ip_address="$(curl -sSf --connect-timeout 1 -H "Metadata-Flavor: Google" http://169.254.169.254/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip 2> /dev/null)"; then
+    public_ip_address=$gce_public_ip_address
+  fi
+
+  echo $public_ip_address
 }
