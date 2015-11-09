@@ -6,6 +6,8 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'cf-containers-broker'
 export CF_CONTAINERS_BROKER_PID_FILE=${CF_CONTAINERS_BROKER_PID_DIR}/cf-containers-broker.pid
 
+export PATH=/var/vcap/packages/cf-containers-broker/bin:/var/vcap/packages/ruby/bin:$PATH
+
 case $1 in
 
   start)

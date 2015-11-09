@@ -3,8 +3,8 @@ name: cf-containers-broker
 
 packages:
   - bosh-helpers
-  - ruby
   - cf-containers-broker
+  - ruby
 
 templates:
   bin/cf-containers-broker_ctl: bin/cf-containers-broker_ctl
