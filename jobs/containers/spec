@@ -11,29 +11,49 @@ templates:
 properties:
   containers:
     description: "Containers Array (see below for details)"
-    # containers.name: String containing the name of the container
-    # containers.image: String containing the name of the image to create/run
-    # containers.command: Optional String containing the command to the run (including arguments)
-    # containers.privileged: Optional boolean to enable/disable extended privileges to this container
-    # containers.net : Optional container network strategy, possible values are bridge (default), none (no network), host (use host network)
-    # containers.entrypoint: Optional string containing the entrypoint (only if you want to override the default entrypoint set by the image)
-    # containers.workdir: Optional string containing the working directory inside the container
-    # containers.restart: Optional string containing the restart policy to apply when a container exits (no, on-failure, always)
-    # containers.cpu_shares: Optional CPU shares to assign to the container (relative weight)
-    # containers.user: Optional string containing the username or UID to run the first process
-    # containers.memory: Optional memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
-    # containers.memory_swap: Optional total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)
-    # containers.expose_ports: Optional array of network port to expose from the container without publishing it to your host
-    # containers.bind_ports: Optional array of network ports to map to the container
-    # containers.volumes: Optional array of volumes to bind mount
-    # containers.bind_volumes: Optional array of container mountpoints to bind to a host directory
-    # containers.volumes_from: Optional array of mount volumes from the specified container(s)
-    # containers.devices: Optional array of host devices to add to the container
-    # containers.links: Optional array of links to another containers (name:alias)
-    # containers.env_vars: Optional array of environment variables to pass to the container
-    # containers.cap_adds: Optional array of Linux capabilities to add
-    # containers.cap_drops: Optional array of Linux capabilities to drop
-    # containers.mac_address: Optional container MAC address
-    # containers.hostname: Optional container host name
-    # containers.labels: Optional array of container labels meta data
-    # containers.ulimits: Optional array of Ulimit options
+    example: |
+      containers.name: String containing the name of the container
+      containers.image: String containing the name of the image to create/run
+      containers.command: Optional String containing the command to the run (including arguments)
+      containers.blkio_weight: Optional string containg the Block IO (relative weight)
+      containers.cap_adds: Optional array of Linux capabilities to add
+      containers.cap_drops: Optional array of Linux capabilities to drop
+      containers.cpu_period: Optional string containg the CPU CFS (Completely Fair Scheduler) period limit
+      containers.cpu_quota: Optional string containg the CPU CFS (Completely Fair Scheduler) quota limit
+      containers.cpu_shares: Optional string containg the CPU shares to assign to the container (relative weight)
+      containers.devices: Optional array of host devices to add to the container
+      containers.disable_content_trust: Optional boolean to skip image verification
+      containers.dns: Optional array of strings to set custom DNS servers
+      containers.dns_options: Optional array of strings to set custom DNS servers
+      containers.dns_search: Optional array of strings to set custom DNS search domains
+      containers.entrypoint: Optional string containing the entrypoint (only if you want to override the default entrypoint set by the image)
+      containers.env_vars: Optional array of environment variables to pass to the container
+      containers.expose_ports: Optional array of network port to expose from the container without publishing it to your host
+      containers.group_adds: Optional array of additional groups to join
+      containers.hostname: Optional string containing the container host name
+      containers.kernel_memory: Optional string containing the kernel memory limit
+      containers.labels: Optional array of container labels meta data
+      containers.links: Optional array of links to another containers (name:alias)
+      containers.log_driver: Optional string containing the log driver for the container
+      containers.log_options: Optional array of log driver options
+      containers.lxc_options: Optional array of custom lxc options
+      containers.mac_address: Optional string containing the container MAC address
+      containers.memory: Optional string containing the memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
+      containers.memory_reservation: Optional string containing the memory soft limit
+      containers.memory_swap: Optional string containing the total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)
+      containers.memory_swappiness: Optional string containing the tuning container memory swappiness
+      containers.net: Optional string containing the network for the container
+      containers.oom_kill_disable: Optional boolean to disable OOM Killer
+      containers.privileged: Optional boolean to enable/disable extended privileges to this container
+      containers.bind_ports: Optional array of network ports to map to the container
+      containers.read_only: Optional boolean to mount the container's root filesystem as read only
+      containers.restart: Optional string containing the restart policy to apply when a container exits (no, on-failure, always)
+      containers.security_options: Optional array of security options
+      containers.stop_signal: Optional string containing the signal to stop a container, SIGTERM by default
+      containers.ulimits: Optional array of Ulimit options
+      containers.user: Optional string containing the username or UID to run the first process
+      containers.volumes: Optional array of volumes to bind mount
+      containers.bind_volumes: Optional array of container mountpoints to bind to a host directory
+      containers.volumes_from: Optional array of mount volumes from the specified container(s)
+      containers.volume_driver: Optional string containing the volume driver for the container
+      containers.workdir: Optional string containing the working directory inside the container

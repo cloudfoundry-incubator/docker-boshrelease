@@ -15,8 +15,8 @@ case $1 in
     echo $$ > ${CONTAINER_PID_FILE}
 
     # Stop and remove previously Docker Container if exists
-    docker -H unix:///var/vcap/sys/run/docker/docker.sock stop ${container_name} || true
-    docker -H unix:///var/vcap/sys/run/docker/docker.sock rm ${container_name} || true
+    ${DOCKER_COMMAND} stop ${container_name} || true
+    ${DOCKER_COMMAND} rm ${container_name} || true
 
     # Create Container persistent disk path
     if [ ! -d ${CONTAINERS_STORE_DIR}/${container_name} ]; then
@@ -26,10 +26,9 @@ case $1 in
 
     # Build the Docker image from Dockerfile
     if [ -a "${CONTAINERS_CONF_DIR}/${container_name}/Dockerfile" ]; then
-        image=$(docker -H unix:///var/vcap/sys/run/docker/docker.sock images | grep "$(eval echo "\$${container_name}_image")") || true
+        image=$(${DOCKER_COMMAND} images | grep "$(eval echo "\$${container_name}_image")") || true
         if [ -z "${image}" ]; then
-            docker \
-                -H unix:///var/vcap/sys/run/docker/docker.sock \
+            ${DOCKER_COMMAND} \
                 build -t "$(eval echo "\$${container_name}_image")" ${CONTAINERS_CONF_DIR}/${container_name} \
                 >>${LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
                 2>>${LOG_DIR}/${OUTPUT_LABEL}.stderr.log
@@ -37,48 +36,67 @@ case $1 in
     fi
 
     # Start Docker container
-    docker_command="docker --host unix:///var/vcap/sys/run/docker/docker.sock \
-                    run --detach \
-                    --name ${container_name} \
-                    "$(eval echo "\$${container_name}_privileged")" \
-                    "$(eval echo "\$${container_name}_net")" \
-                    "$(eval echo "\$${container_name}_entrypoint")" \
-                    "$(eval echo "\$${container_name}_workdir")" \
-                    "$(eval echo "\$${container_name}_restart")" \
-                    "$(eval echo "\$${container_name}_user")" \
-                    "$(eval echo "\$${container_name}_cpu_shares")" \
-                    "$(eval echo "\$${container_name}_memory")" \
-                    "$(eval echo "\$${container_name}_memory_swap")" \
-                    "$(eval echo "\$${container_name}_expose")" \
-                    "$(eval echo "\$${container_name}_publish")" \
-                    "$(eval echo "\$${container_name}_volumes")" \
-                    "$(eval echo "\$${container_name}_bind_volumes")" \
-                    "$(eval echo "\$${container_name}_volumes_from")" \
-                    "$(eval echo "\$${container_name}_devices")" \
-                    "$(eval echo "\$${container_name}_links")" \
-                    "$(eval echo "\$${container_name}_env")" \
-                    "$(eval echo "\$${container_name}_cap_adds")" \
-                    "$(eval echo "\$${container_name}_cap_drops")" \
-                    "$(eval echo "\$${container_name}_mac_address")" \
-                    "$(eval echo "\$${container_name}_hostname")" \
-                    "$(eval echo "\$${container_name}_labels")" \
-                    "$(eval echo "\$${container_name}_ulimits")" \
-                    "$(eval echo "\$${container_name}_image")" \
-                    "$(eval echo "\$${container_name}_command")""
-    echo "$(date) Running command: ${docker_command}"
-    ${docker_command} \
+    docker_options="run --detach \
+      --name ${container_name} \
+      "$(eval echo "\$${container_name}_blkio_weight")" \
+      "$(eval echo "\$${container_name}_cap_adds")" \
+      "$(eval echo "\$${container_name}_cap_drops")" \
+      "$(eval echo "\$${container_name}_cpu_period")" \
+      "$(eval echo "\$${container_name}_cpu_quota")" \
+      "$(eval echo "\$${container_name}_cpu_shares")" \
+      "$(eval echo "\$${container_name}_devices")" \
+      "$(eval echo "\$${container_name}_disable_content_trust")" \
+      "$(eval echo "\$${container_name}_dns")" \
+      "$(eval echo "\$${container_name}_dns_options")" \
+      "$(eval echo "\$${container_name}_dns_search")" \
+      "$(eval echo "\$${container_name}_entrypoint")" \
+      "$(eval echo "\$${container_name}_env")" \
+      "$(eval echo "\$${container_name}_expose")" \
+      "$(eval echo "\$${container_name}_group_adds")" \
+      "$(eval echo "\$${container_name}_hostname")" \
+      "$(eval echo "\$${container_name}_kernel_memory")" \
+      "$(eval echo "\$${container_name}_labels")" \
+      "$(eval echo "\$${container_name}_links")" \
+      "$(eval echo "\$${container_name}_log_driver")" \
+      "$(eval echo "\$${container_name}_log_options")" \
+      "$(eval echo "\$${container_name}_lxc_options")" \
+      "$(eval echo "\$${container_name}_mac_address")" \
+      "$(eval echo "\$${container_name}_memory")" \
+      "$(eval echo "\$${container_name}_memory_reservation")" \
+      "$(eval echo "\$${container_name}_memory_swap")" \
+      "$(eval echo "\$${container_name}_memory_swappiness")" \
+      "$(eval echo "\$${container_name}_net")" \
+      "$(eval echo "\$${container_name}_oom_kill_disable")" \
+      "$(eval echo "\$${container_name}_privileged")" \
+      "$(eval echo "\$${container_name}_publish")" \
+      "$(eval echo "\$${container_name}_read_only")" \
+      "$(eval echo "\$${container_name}_restart")" \
+      "$(eval echo "\$${container_name}_security_options")" \
+      "$(eval echo "\$${container_name}_stop_signal")" \
+      "$(eval echo "\$${container_name}_ulimits")" \
+      "$(eval echo "\$${container_name}_user")" \
+      "$(eval echo "\$${container_name}_volumes")" \
+      "$(eval echo "\$${container_name}_bind_volumes")" \
+      "$(eval echo "\$${container_name}_volumes_from")" \
+      "$(eval echo "\$${container_name}_volume_driver")" \
+      "$(eval echo "\$${container_name}_workdir")" \
+      "$(eval echo "\$${container_name}_image")" \
+      "$(eval echo "\$${container_name}_command")" \
+    "
+    echo "$(date) Running Docker command with options: ${docker_options}"
+    ${DOCKER_COMMAND}  ${docker_options} \
         >>${LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${LOG_DIR}/${OUTPUT_LABEL}.stderr.log
 
     # Grab Container process pid
-    pid_process=$(docker -H unix:///var/vcap/sys/run/docker/docker.sock inspect -f '{{ .State.Pid }}' ${container_name})
+    pid_process=$(${DOCKER_COMMAND} inspect -f '{{ .State.Pid }}' ${container_name})
     echo $pid_process > ${CONTAINER_PID_FILE}
     ;;
 
   stop)
     # Stop and remove Docker Container
-    docker -H unix:///var/vcap/sys/run/docker/docker.sock stop ${container_name} || true
-    docker -H unix:///var/vcap/sys/run/docker/docker.sock rm ${container_name} || true
+    ${DOCKER_COMMAND} stop ${container_name} || true
+    ${DOCKER_COMMAND} rm ${container_name} || true
     ;;
 
   *)
