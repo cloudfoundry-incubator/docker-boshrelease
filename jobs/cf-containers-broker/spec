@@ -68,3 +68,11 @@ properties:
     default: 4222
   nats.machines:
     description: "Array of IPs of each NATS cluster member"
+
+  env.http_proxy:
+    description: "HTTP proxy"
+  env.https_proxy:
+    description: "HTTPS proxy"
+  env.no_proxy:
+    description: "List of comma-separated hosts to skip connecting to the proxy"
+
