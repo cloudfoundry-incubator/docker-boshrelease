@@ -21,8 +21,8 @@ compilation:
 
 update:
   canaries: 0
-  canary_watch_time: 30000-240000
-  update_watch_time:  30000-240000
+  canary_watch_time: 30000-60000
+  update_watch_time: 30000-60000
   max_in_flight: 32
   serial: false
 
@@ -74,8 +74,5 @@ properties:
   docker:
     tcp_address: 0.0.0.0
 
-  swarm_manager:
-    docker_nodes:
-      <% num_docker_nodes.times do |i| %>
-      <%= "- #{i}.docker.default.#{deployment_name}.microbosh\n" %>
-      <% end %>
+  swarm:
+    discovery: "nodes://<%= num_docker_nodes.times.map { |i| "#{i}.docker.default.#{deployment_name}.microbosh:4243" }.join(',') %>"

@@ -18,36 +18,23 @@ compilation:
 
 update:
   canaries: 0
-  canary_watch_time: 30000-240000
-  update_watch_time:  30000-240000
+  canary_watch_time: 30000-60000
+  update_watch_time: 30000-60000
   max_in_flight: 32
   serial: false
 
 networks:
   - name: default
+    type: manual
     subnets:
-      # network with static ip used for web
-      - range: 10.244.8.0/30
-        reserved: [10.244.8.1]
-        static: [10.244.8.2]
-        cloud_properties: {}
-      # networks for dynamic ips (db, workers, compilation vms)
-      - range: 10.244.8.4/30
-        reserved: [10.244.8.5]
-        static: [10.244.8.6]
-        cloud_properties: {}
-      - range: 10.244.8.8/30
-        reserved: [10.244.8.9]
-        cloud_properties: {}
-      - range: 10.244.8.12/30
-        reserved: [10.244.8.13]
-        cloud_properties: {}
-      - range: 10.244.8.16/30
-        reserved: [10.244.8.17]
-        cloud_properties: {}
-      - range: 10.244.8.20/30
-        reserved: [10.244.8.21]
-        cloud_properties: {}
+      - cloud_properties: {}
+        range: 10.244.0.0/24
+        reserved:
+          - 10.244.0.1
+        static:
+          - 10.244.0.2
+          - 10.244.0.3
+          - 10.244.0.4
 
 resource_pools:
   - name: default
@@ -61,14 +48,15 @@ jobs:
   - name: docker
     templates:
       - name: docker
-    instances: 1
+    instances: 2
     resource_pool: default
     persistent_disk: 65536
     networks:
       - name: default
         default: [dns, gateway]
         static_ips:
-          - 10.244.8.2
+          - 10.244.0.2
+          - 10.244.0.3
 
   - name: swarm
     templates:
@@ -79,12 +67,11 @@ jobs:
       - name: default
         default: [dns, gateway]
         static_ips:
-          - 10.244.8.6
+          - 10.244.0.4
 
 properties:
   docker:
     tcp_address: 0.0.0.0
 
-  swarm_manager:
-    docker_nodes:
-      - 10.244.8.2
+  swarm:
+    discovery: "nodes://10.244.0.2:4243,10.244.0.3:4243"
