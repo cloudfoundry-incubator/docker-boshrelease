@@ -59,6 +59,8 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
+    update:
+      serial: true
 
   - name: swarm
     templates:

@@ -57,6 +57,8 @@ jobs:
         static_ips:
           - 10.244.0.2
           - 10.244.0.3
+    update:
+      serial: true
 
   - name: swarm
     templates:
