@@ -17,7 +17,7 @@ templates:
 
 properties:
   broker.unicorn.worker_processes:
-    description: "Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.fetch_images property"
+    description: "Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.allocate_docker_host_ports property"
     default: "1"
   broker.unicorn.port:
     description: "Unicorn listen port"
