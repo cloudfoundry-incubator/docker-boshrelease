@@ -1,0 +1,43 @@
+---
+name: swarm_agent
+
+packages:
+  - bosh-helpers
+  - swarm
+
+templates:
+  bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/swarm_agent_ctl: bin/swarm_agent_ctl
+
+properties:
+  swarm_agent.debug:
+    description: "Enable debug mode"
+    default: false
+  swarm_agent.log_level:
+    description: "Log level (options: debug, info, warn, error, fatal, panic)"
+    default: "info"
+  swarm_agent.advertise:
+    description: "Address of the Docker Engine joining the cluster. Swarm manager(s) MUST be able to reach the Docker Engine at this address."
+  swarm_agent.heartbeat:
+    description: "Time in second between each heartbeat"
+    default: "20s"
+  swarm_agent.ttl:
+    description: "Sets the expiration of an ephemeral node"
+    default: "60s"
+
+  swarm.discovery_options:
+    description: "Swarm discovery options"
+    default: []
+  swarm.discovery:
+    description: "Swarm discovery string (ie: consul://<ip>/<path>, etcd://<ip1>,<ip2>/<path>, zk://<ip1>,<ip2>/<path>, [nodes://]<ip1>,<ip2>"
+
+  docker.tcp_port:
+    description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
+    default: "4243"
+
+  env.http_proxy:
+    description: "HTTP proxy that Docker should use"
+  env.https_proxy:
+    description: "HTTPS proxy that Docker should use"
+  env.no_proxy:
+    description: "List of comma-separated hosts that Docker should skip connecting to the proxy"

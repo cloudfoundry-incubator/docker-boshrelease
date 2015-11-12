@@ -31,6 +31,14 @@ properties:
   swarm_manager.filters:
     description: "Filters to use [health, port, dependency, affinity, constraint]"
     default: ["health", "port", "dependency", "affinity", "constraint"]
+  swarm_manager.replication:
+    description: "Enable Swarm manager replication"
+    default: false
+  swarm_manager.replication_ttl:
+    description: "Leader lock release time on failure"
+    default: "30s"
+  swarm_manager.advertise:
+    description: "Address of the Swarm Manager joining the cluster. Other Swarm Manager(s) MUST be able to reach the Swarm Manager at this address."
   swarm_manager.heartbeat:
     description: "Time in second between each heartbeat"
     default: "20s"
@@ -40,13 +48,13 @@ properties:
   swarm_manager.overcommit:
     description: "Overcommit to apply on resources"
     default: "0.5"
-  swarm_manager.docker_nodes:
-    description: "Array of Docker nodes"
-    default: []
 
-  docker.tcp_port:
-    description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
-    default: "4243"
+  swarm.discovery_options:
+    description: "Swarm discovery options"
+    default: []
+  swarm.discovery:
+    description: "Swarm discovery string (ie: consul://<ip>/<path>, etcd://<ip1>,<ip2>/<path>, zk://<ip1>,<ip2>/<path>, [nodes://]<ip1>,<ip2>"
+
   docker.tls:
     description: "Use TLS"
     default: false
@@ -66,4 +74,3 @@ properties:
     description: "HTTPS proxy that Docker should use"
   env.no_proxy:
     description: "List of comma-separated hosts that Docker should skip connecting to the proxy"
-

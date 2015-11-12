@@ -34,6 +34,25 @@ export SWARM_MANAGER_STRATEGY="--strategy=<%= p('swarm_manager.strategy') %>"
 # Filters to use
 export SWARM_MANAGER_FILTERS="<%= p('swarm_manager.filters', []).map { |filter| "--filter=#{filter}" }.join(' ') %>"
 
+# Enable Swarm manager replication
+export SWARM_MANAGER_REPLICATION="--replication=<%= p('swarm_manager.replication') %>"
+
+# Leader lock release time on failure
+export SWARM_MANAGER_REPLICATION_TTL="--replication-ttl=<%= p('swarm_manager.replication_ttl') %>"
+
+<%
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
+
+networks = openstruct_to_hash(spec.networks)
+default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+%>
+# Address of the Swarm Manager joining the cluster
+export SWARM_MANAGER_ADVERTISE="--advertise=<%= "#{p('swarm_manager.advertise', default_ip)}:#{p('swarm_manager.port')}" %>"
+
 # Time in second between each heartbeat
 export SWARM_MANAGER_HEARTBEAT="--heartbeat=<%= p('swarm_manager.heartbeat') %>"
 
@@ -66,8 +85,13 @@ export SWARM_MANAGER_TLS_KEY="--tlskey=${SWARM_MANAGER_CONF_DIR}/docker.key"
 export SWARM_MANAGER_TLS_VERIFY="--tlsverify=true"
 <% end %>
 
-# Docker nodes
-export SWARM_MANAGER_NODES="nodes://<%= p('swarm_manager.docker_nodes').map { |node| "#{node}:#{p('docker.tcp_port')}" }.join(',') %>"
+<% if_p('swarm.discovery_options') do |discovery_options| %>
+# Swarm discovery options
+export SWARM_MANAGER_DISCOVERY_OPTIONS="<%= discovery_options.map { |discovery_option| "--discovery-opt=#{discovery_option}" }.join(' ') %>"
+<% end %>
+
+# Swarm discovery
+export SWARM_MANAGER_DISCOVERY="<%= p('swarm.discovery') %>"
 
 # Proxy configuration
 <% if_p('env.http_proxy') do |http_proxy| %>

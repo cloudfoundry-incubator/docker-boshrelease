@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+
+# Setup common env vars and folders
+source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'swarm_agent'
+export SWARM_AGENT_PID_FILE=${SWARM_AGENT_PID_DIR}/swarm_agent.pid
+
+case $1 in
+
+  start)
+    pid_guard ${SWARM_AGENT_PID_FILE} ${JOB_NAME}
+    echo $$ > ${SWARM_AGENT_PID_FILE}
+
+    # Start Swarm Agent daemon
+    exec /var/vcap/packages/swarm/bin/swarm \
+        ${SWARM_AGENT_DEBUG} \
+        ${SWARM_AGENT_LOG_LEVEL} \
+        join \
+        ${SWARM_AGENT_ADVERTISE} \
+        ${SWARM_AGENT_HEARTBEAT} \
+        ${SWARM_AGENT_TTL} \
+        ${SWARM_AGENT_DISCOVERY_OPTIONS:-} \
+        ${SWARM_AGENT_DISCOVERY} \
+        >>${SWARM_AGENT_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
+        2>>${SWARM_AGENT_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
+    ;;
+
+  stop)
+    # Stop Swarm Agent daemon
+    kill_and_wait ${SWARM_AGENT_PID_FILE}
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+
+esac
+exit 0
