@@ -7,10 +7,10 @@
   end
 
   networks = openstruct_to_hash(spec.networks)
-  external_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+  default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
 %>
 external_host: <%= p('broker.host') %>
-external_ip: <%= p('broker.external_ip', external_ip) %>
+external_ip: <%= p('broker.external_ip', default_ip) %>
 port: <%= p('broker.unicorn.port') %>
 
 message_bus_servers:
