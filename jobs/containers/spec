@@ -21,6 +21,7 @@ properties:
       containers.cpu_period: Optional string containg the CPU CFS (Completely Fair Scheduler) period limit
       containers.cpu_quota: Optional string containg the CPU CFS (Completely Fair Scheduler) quota limit
       containers.cpu_shares: Optional string containg the CPU shares to assign to the container (relative weight)
+      containers.depends_on: Optional array of names of others containers in the same job that this container depends on
       containers.devices: Optional array of host devices to add to the container
       containers.disable_content_trust: Optional boolean to skip image verification
       containers.dns: Optional array of strings to set custom DNS servers

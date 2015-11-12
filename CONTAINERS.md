@@ -6,7 +6,7 @@ See [Managing Stateful Docker Containers with Cloud Foundry BOSH](http://blog.pi
 
 ## Example
 
-Create a deployment file using as a starting point one the files `docker-<Iaas>.yml` located at the
+Create a deployment file using as a starting point one the `docker-<Iaas>.yml` files located at the
 [examples](https://github.com/cf-platform-eng/docker-boshrelease/tree/master/examples) directory:
 
 ```
@@ -27,185 +27,53 @@ Note that the examples requires you to open some ports, so you will need to:
 
 Containers to be deployed must be specified at the properties section of each job. The format is:
 
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Required</th>
-    <th>Type</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>containers[]</td>
-    <td>Y</td>
-    <td>Array</td>
-    <td>Containers to deploy</td>
-  </tr>
-  <tr>
-    <td>containers[].name</td>
-    <td>Y</td>
-    <td>String</td>
-    <td>Name to assign to the container</td>
-  </tr>
-  <tr>
-    <td>containers[].image</td>
-    <td>Y</td>
-    <td>String</td>
-    <td>Name of the image to create or the image fo fetch and run from the registry</td>
-  </tr>
-  <tr>
-    <td>containers[].dockerfile</td>
-    <td>N</td>
-    <td>String (Literal Style)</td>
-    <td>Contents of the Dockerfile (when you want to build a Docker image)</td>
-  </tr>
-  <tr>
-    <td>containers[].command</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Command to the run the container (including arguments)</td>
-  </tr>
-  <tr>
-    <td>containers[].entrypoint</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Entrypoint for the container (only if you want to override the default entrypoint set by the image)</td>
-  </tr>
-  <tr>
-    <td>containers[].workdir</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Working directory inside the container</td>
-  </tr>
-  <tr>
-    <td>containers[].restart</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Restart policy to apply when a container exits (no, on-failure, always)</td>
-  </tr>
-  <tr>
-    <td>containers[].expose_ports[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Network ports to expose from the container without publishing it to your host</td>
-  </tr>
-  <tr>
-    <td>containers[].bind_ports[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Network ports to map from the container to the host</td>
-  </tr>
-  <tr>
-    <td>containers[].volumes[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Volumes to bind mount</td>
-  </tr>
-  <tr>
-    <td>containers[].bind_volumes[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Volume mountpoints to bind to a host directory (provided automatically by CF-BOSH)</td>
-  </tr>
-  <tr>
-    <td>containers[].volumes_from[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Mount volumes from the specified container(s)</td>
-  </tr>
-  <tr>
-    <td>containers[].devices[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Host devices to add to the container</td>
-  </tr>
-  <tr>
-    <td>containers[].links[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Links to others containers in the same job (name:alias)</td>
-  </tr>
-  <tr>
-    <td>containers[].depends_on[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Name of others containers in the same job that this container depends on</td>
-  </tr>
-  <tr>
-    <td>containers[].env_vars[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Environment variables to pass to the container</td>
-  </tr>
-  <tr>
-    <td>containers[].user</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Username or UID to run the first container process</td>
-  </tr>
-  <tr>
-    <td>containers[].cpu_shares</td>
-    <td>N</td>
-    <td>String</td>
-    <td>CPU shares to assign to the container (relative weight)</td>
-  </tr>
-  <tr>
-    <td>containers[].memory</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)</td>
-  </tr>
-  <tr>
-    <td>containers[].memory_swap</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)</td>
-  </tr>
-  <tr>
-    <td>containers[].privileged</td>
-    <td>N</td>
-    <td>Boolean</td>
-    <td>Enable/disable extended privileges to this container</td>
-  </tr>
-  <tr>
-    <td>containers[].net</td>
-    <td>N</td>
-    <td>String</td>
-    <td>container network strategy. Optional container network strategy, possible values are bridge (default), none (no network), host (use host network)</td>
-  </tr>
-  <tr>
-    <td>containers[].cap_adds[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Linux capabilities to add</td>
-  </tr>
-  <tr>
-    <td>containers[].cap_drops[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Linux capabilities to drop</td>
-  </tr>
-  <tr>
-    <td>containers[].mac_address</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Container MAC address</td>
-  </tr>
-  <tr>
-    <td>containers[].hostname</td>
-    <td>N</td>
-    <td>String</td>
-    <td>Container host name</td>
-  </tr>
-  <tr>
-    <td>containers[].labels[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Labels meta data</td>
-  </tr>
-  <tr>
-    <td>containers[].ulimits[]</td>
-    <td>N</td>
-    <td>Array of Strings</td>
-    <td>Ulimit options</td>
-  </tr>
-</table>
+| Field | Required | Type | Description
+|:------|:--------:|:---- |:-----------
+| containers[] | Y | Array  | Containers to deploy
+| containers[].name | Y | String | Name to assign to the container
+| containers[].image | Y | String | Name of the image to create or the image fo fetch and run from the registry
+| containers[].dockerfile | N | String (Literal Style) | Contents of the Dockerfile (when you want to build a Docker image)
+| containers[].command | N | String | Command to the run the container (including arguments)
+| containers[].blkio_weight | N | String | Block IO (relative weight)
+| containers[].cap_adds[] | N | Array of Strings | Linux capabilities to add
+| containers[].cap_drops[] | N | Array of Strings | Linux capabilities to drop
+| containers[].period | N | String | CPU CFS (Completely Fair Scheduler) period limit
+| containers[].cpu_quota | N | String | CPU CFS (Completely Fair Scheduler) quota limit
+| containers[].cpu_shares | N | String | CPU shares to assign to the container (relative weight)
+| containers[].depends_on[] | N | Array of Strings | Name of others containers in the same job that this container depends on
+| containers[].devices[] | N | Array of Strings | Host devices to add to the container
+| containers[].disable_content_trust | N | Boolean | Skip image verification
+| containers[].dns[] | N | Array of Strings | DNS servers to add to the container
+| containers[].dns_options[] | N | Array of Strings | DNS options to add to the container
+| containers[].dns_search[] | N | Array of Strings | DNS search domains to add to the container
+| containers[].entrypoint | N | String | Entrypoint for the container (only if you want to override the default entrypoint set by the image)
+| containers[].env_vars[] | N | Array of Strings | Environment variables to pass to the container
+| containers[].expose_ports[] | N | Array of Strings | Network ports to expose from the container without publishing it to your host
+| containers[].group_adds[] | N | Array of Strings | Groups to join
+| containers[].hostname | N | String | Container host name
+| containers[].kernel_memory | N | String | Kernel memory limit
+| containers[].labels[] | N | Array of Strings | Labels meta data
+| containers[].links[] | N | Array of Strings | Links to others containers in the same job (name:alias)
+| containers[].log_driver | N | String | Log driver for the container
+| containers[].log_options[] | N | Array of Strings | Log driver options
+| containers[].lxc_options[] | N | Array of Strings | LXC options
+| containers[].mac_address | N | String  | Container MAC address
+| containers[].memory | N | String | Memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
+| containers[].memory_reservation | N | String | Memory soft limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)
+| containers[].memory_swap | N | String | Total memory usage (memory + swap), set '-1' to disable swap (format: <number><optional unit>, where unit = b, k, m or g)
+| containers[].memory_swappiness | N | String | Memory swappiness
+| containers[].net | N | String | Container network strategy, possible values are bridge (default), none (no network), host (use host network)
+| containers[].oom_kill_disable | N | Boolean | Disable OOM Killer
+| containers[].privileged | N | Boolean | Enable/disable extended privileges to this container
+| containers[].bind_ports[] | N | Array of Strings | Network ports to map from the container to the host
+| containers[].read_only | N | Boolean | Mount the container's root filesystem as read only
+| containers[].restart | N | String | Restart policy to apply when a container exits (no, on-failure, always)
+| containers[].ecurity_options[] | N | Array of Strings | Security options
+| containers[].stop_signal | N | String | Signal to stop a container, SIGTERM by default
+| containers[].ulimits[] | N | Array of Strings | Ulimit options
+| containers[].user | N | String | Username or UID to run the first container process
+| containers[].volumes[] | N | Array of Strings | Volumes to bind mount
+| containers[].bind_volumes[] | N | Array of Strings | Volume mountpoints to bind to a host directory (provided automatically by CF-BOSH)
+| containers[].volumes_from[]  | N | Array of Strings | Mount volumes from the specified container(s)
+| containers[].volume_driver | N | String | Volume driver for the container
+| containers[].workdir | N | String | Working directory inside the container
