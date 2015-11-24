@@ -16,7 +16,7 @@ To use this BOSH release, first upload it to your BOSH:
 
 ```
 bosh target BOSH_HOST
-git clone https://github.com/cf-platform-eng/docker-boshrelease.git
+git clone https://github.com/cloudfoundry-community/docker-boshrelease.git
 cd docker-boshrelease
 bosh upload release releases/docker/docker-23.yml
 ```
@@ -25,9 +25,9 @@ bosh upload release releases/docker/docker-23.yml
 
 There are 3 deployment scenarios for this BOSH release:
 
-* Deploy statically defined Docker containers: see [CONTAINERS.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/CONTAINERS.md) for deployment instructions.
-* Deploy a Docker Service Broker for your Cloud Foundry deployment: see [SERVICE_BROKER.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/SERVICE_BROKER.md) for deployment instructions.
-* Deploy a Docker [Swarm](https://github.com/docker/swarm) cluster: see [SWARM.md](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/SWARM.md) for deployment instructions.
+* Deploy statically defined Docker containers: see [CONTAINERS.md](https://github.com/cloudfoundry-community/docker-boshrelease/blob/master/CONTAINERS.md) for deployment instructions.
+* Deploy a Docker Service Broker for your Cloud Foundry deployment: see [SERVICE_BROKER.md](https://github.com/cloudfoundry-community/docker-boshrelease/blob/master/SERVICE_BROKER.md) for deployment instructions.
+* Deploy a Docker [Swarm](https://github.com/docker/swarm) cluster: see [SWARM.md](https://github.com/cloudfoundry-community/docker-boshrelease/blob/master/SWARM.md) for deployment instructions.
 
 ### Deploy using the BOSH deployment manifest
 
@@ -107,11 +107,11 @@ Here are some ways *you* can contribute:
 * by writing specifications
 * by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
 * by refactoring code
-* by closing [issues](https://github.com/cf-platform-eng/docker-boshrelease/issues)
+* by closing [issues](https://github.com/cloudfoundry-community/docker-boshrelease/issues)
 * by reviewing patches
 
 ### Submitting an Issue
-We use the [GitHub issue tracker](https://github.com/cf-platform-eng/docker-boshrelease/issues) to track bugs and features.
+We use the [GitHub issue tracker](https://github.com/cloudfoundry-community/docker-boshrelease/issues) to track bugs and features.
 Before submitting a bug report or feature request, check to make sure it hasn't already been submitted. You can indicate
 support for an existing issue by voting it up. When submitting a bug report, please include a
 [Gist](http://gist.github.com/) that includes a stack trace and any details that may be necessary to reproduce the bug,
