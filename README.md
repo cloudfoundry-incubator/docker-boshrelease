@@ -166,4 +166,4 @@ git push origin master --tags
 
 ## Copyright
 
-Copyright (c) 2014-2015 [Pivotal Software, Inc](https://pivotal.io/). See [LICENSE](https://github.com/cf-platform-eng/docker-boshrelease/blob/master/LICENSE) for details.
+Copyright (c) 2014-2015 [Pivotal Software, Inc](https://pivotal.io/). See [LICENSE](https://github.com/cloudfoundry-community/docker-boshrelease/blob/master/LICENSE) for details.
