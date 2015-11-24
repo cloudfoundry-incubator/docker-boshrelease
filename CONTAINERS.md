@@ -7,7 +7,7 @@ See [Managing Stateful Docker Containers with Cloud Foundry BOSH](http://blog.pi
 ## Example
 
 Create a deployment file using as a starting point one the `docker-<Iaas>.yml` files located at the
-[examples](https://github.com/cf-platform-eng/docker-boshrelease/tree/master/examples) directory:
+[examples](https://github.com/cloudfoundry-community/docker-boshrelease/tree/master/examples) directory:
 
 ```
 vi path/to/deployment.yml

@@ -5,7 +5,7 @@ In this scenario you can deploy a Docker [Swarm](https://github.com/docker/swarm
 ## Example
 
 Create a deployment file using as a starting point one the `docker-swarm-<Iaas>.yml` files  located at the
-[examples](https://github.com/cf-platform-eng/docker-boshrelease/tree/master/examples) directory:
+[examples](https://github.com/cloudfoundry-community/docker-boshrelease/tree/master/examples) directory:
 
 ```
 vi path/to/deployment.yml

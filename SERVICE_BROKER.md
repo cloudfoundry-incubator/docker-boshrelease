@@ -6,7 +6,7 @@ See [Docker Service Broker for Cloud Foundry](http://blog.pivotal.io/cloud-found
 
 ## Example
 
-Create a deployment file using as a starting point one the `docker-broker-<Iaas>.yml` files located at the [examples](https://github.com/cf-platform-eng/docker-boshrelease/tree/master/examples) directory.
+Create a deployment file using as a starting point one the `docker-broker-<Iaas>.yml` files located at the [examples](https://github.com/cloudfoundry-community/docker-boshrelease/tree/master/examples) directory.
 
 ```
 vi path/to/deployment.yml
@@ -22,4 +22,4 @@ Note that the examples requires you to open some ports, so you will need to:
 
 ## Properties format
 
-Refer to the [Containers Service Broker for Cloud Foundry](https://github.com/cf-platform-eng/cf-containers-broker#usage) repository for details about how to configure the service broker.
+Refer to the [Containers Service Broker for Cloud Foundry](https://github.com/cloudfoundry-community/cf-containers-broker#usage) repository for details about how to configure the service broker.
