@@ -25,6 +25,13 @@ case $1 in
           2>>${CF_CONTAINERS_BROKER_LOG_DIR}/fetch_containers_images.stderr.log
     fi
 
+    # Update Containers
+    if [[ "${CF_CONTAINERS_UPDATE_CONTAINERS}X" != "X" ]]; then
+      bundle exec update_all_containers \
+          >>${CF_CONTAINERS_BROKER_LOG_DIR}/update_containers.stdout.log \
+          2>>${CF_CONTAINERS_BROKER_LOG_DIR}/update_containers.stderr.log
+    fi
+
     # We remove the PID file (own process) to prevent a collision with Unicorn
     rm -fr ${CF_CONTAINERS_BROKER_PID_FILE}
 

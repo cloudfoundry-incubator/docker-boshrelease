@@ -53,6 +53,9 @@ properties:
   broker.fetch_images:
     description: "Fetch new/updated container images on restart"
     default: true
+  broker.update_containers:
+    description: "Restart all containers with latest configuration/image on restart"
+    default: true
   broker.services:
     description: "Services and plans offered by the broker"
 
