@@ -47,7 +47,7 @@ make install
 
 # Extract docker package
 echo "Extracting docker ${DOCKER_VERSION}..."
-tar xzvf ${BOSH_COMPILE_TARGET}/docker/docker-${DOCKER_VERSION}.tgz 
+tar xzvf ${BOSH_COMPILE_TARGET}/docker/docker-${DOCKER_VERSION}.tgz
 if [[ $? != 0 ]] ; then
   echo "Failed extracting docker ${DOCKER_VERSION}"
   exit 1
