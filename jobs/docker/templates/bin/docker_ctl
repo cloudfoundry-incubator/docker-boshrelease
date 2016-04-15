@@ -5,6 +5,7 @@ set -e # exit immediately if a simple command exits with a non-zero status
 # Setup common env vars and folders
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
 export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
+export PATH="/var/vcap/packages/docker/bin:$PATH"
 
 case $1 in
 
@@ -38,7 +39,7 @@ case $1 in
     fi
 
     # Start Docker daemon
-    exec /var/vcap/packages/docker/bin/docker daemon \
+    exec docker daemon \
         ${DOCKER_API_CORS_HEADER} \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG} \

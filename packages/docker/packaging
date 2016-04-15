@@ -8,7 +8,7 @@ CPUS=`grep -c ^processor /proc/cpuinfo`
 AUFS_TOOLS_VERSION=`ls -r docker/aufs-tools_*.deb | sed 's/docker\/aufs-tools_\(.*\).deb/\1/' | head -1`
 AUTOCONF_VERSION=`ls -r docker/autoconf-*.tar.gz | sed 's/docker\/autoconf-\(.*\)\.tar\.gz/\1/' | head -1`
 BRIDGE_UTILS_VERSION=`ls -r docker/bridge-utils-*.tar.gz | sed 's/docker\/bridge-utils-\(.*\)\.tar\.gz/\1/' | head -1`
-DOCKER_VERSION=`ls -r docker/docker-* | sed 's/docker\/docker-\(.*\)/\1/' | head -1`
+DOCKER_VERSION=`ls -r docker/docker-*.tgz | sed 's/docker\/docker-\(.*\)\.tgz/\1/' | head -1`
 
 # Extract Autoconf package
 echo "Extracting Autoconf ${AUTOCONF_VERSION}..."
@@ -45,8 +45,15 @@ autoconf
 make -j${CPUS}
 make install
 
-# Copy Docker package
-echo "Copying Docker ${DOCKER_VERSION}..."
+# Extract docker package
+echo "Extracting docker ${DOCKER_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/docker/docker-${DOCKER_VERSION}.tgz 
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting docker ${DOCKER_VERSION}"
+  exit 1
+fi
+
+echo "Copying docker ${DOCKER_VERSION} binaries..."
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
-cp -a ${BOSH_COMPILE_TARGET}/docker/docker-${DOCKER_VERSION} ${BOSH_INSTALL_TARGET}/bin/docker
-chmod +x ${BOSH_INSTALL_TARGET}/bin/docker
+cp docker/* ${BOSH_INSTALL_TARGET}/bin
+chmod +x ${BOSH_INSTALL_TARGET}/bin/*
