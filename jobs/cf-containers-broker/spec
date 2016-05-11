@@ -59,6 +59,9 @@ properties:
   broker.services:
     description: "Services and plans offered by the broker"
 
+  cf.api_url:
+    description: "URL of the CloudFoundry Cloud Controller"
+
   nats.user:
     description: "Username for broker to connect to NATS"
   nats.password:
