@@ -5,7 +5,6 @@ production:
   cookie_secret: <%= p('broker.cookie_secret') %>
   session_expiry: <%= p('broker.session_expiry') %>
 
-  cc_api_uri: <%= p('cf.api_url') %>
   <%
     def openstruct_to_hash(os)
       os.marshal_dump.map do |key, element|
