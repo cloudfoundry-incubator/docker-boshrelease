@@ -1,0 +1,96 @@
+---
+packages:
+- name: bosh-helpers
+  version: f469b9d9cd643a3e706ca661deea572de6e522b4
+  fingerprint: f469b9d9cd643a3e706ca661deea572de6e522b4
+  sha1: 5df13f0babb1316ce02fd9f5d131930028a86432
+  dependencies: []
+- name: broker-registrar
+  version: 46213225d775263932e072a461e524baf0994967
+  fingerprint: 46213225d775263932e072a461e524baf0994967
+  sha1: d0dd27558a596115655e15ae76ec44f930c9bed9
+  dependencies:
+  - ruby
+- name: cf-containers-broker
+  version: 0876194f52cc409e4d55b4163f86910d8a2ade5d
+  fingerprint: 0876194f52cc409e4d55b4163f86910d8a2ade5d
+  sha1: d40f458be6763aed6823d889bc403614597e2cd0
+  dependencies:
+  - ruby
+- name: docker
+  version: cef2cbc7b3e2898f19426f4a78556ecff9eb9bb0
+  fingerprint: cef2cbc7b3e2898f19426f4a78556ecff9eb9bb0
+  sha1: 8d738e2c504c14f957d1b4d4beed2a59e5aeebe6
+  dependencies: []
+- name: flannel
+  version: 8d0657c328133f9800822819e2cdcb7eeada2158
+  fingerprint: 8d0657c328133f9800822819e2cdcb7eeada2158
+  sha1: 4eadaf913d60cae60254ae8540b562e3e6265b0b
+  dependencies: []
+- name: golang
+  version: 5519bcd760fbf15e8c2a0562da4cf2e00d846df9
+  fingerprint: 5519bcd760fbf15e8c2a0562da4cf2e00d846df9
+  sha1: bb0794448fc3d70da2f265d87c3937050327a7a4
+  dependencies: []
+- name: route-registrar
+  version: 3b2cf70c426b6e95afea6948553cd71c03bd9dc1
+  fingerprint: 3b2cf70c426b6e95afea6948553cd71c03bd9dc1
+  sha1: 27f7cd8771f11e1e43bdc98d45be61efff4be56e
+  dependencies:
+  - golang
+- name: ruby
+  version: 1702980750298e853f3ccc6521e0d91cb6a5bf94
+  fingerprint: 1702980750298e853f3ccc6521e0d91cb6a5bf94
+  sha1: 4f4f192c3d4c93f2311f7cb3591843ac0b19b739
+  dependencies: []
+- name: swarm
+  version: 3e4c43661469549053bbcdc1138207783e2e2bc6
+  fingerprint: 3e4c43661469549053bbcdc1138207783e2e2bc6
+  sha1: 797cc41aee10c92aeee4364dbfbd06a544c25954
+  dependencies:
+  - golang
+jobs:
+- name: broker-deregistrar
+  version: 30015fee8a0532ac7e5b72080dca95e85b810eda
+  fingerprint: 30015fee8a0532ac7e5b72080dca95e85b810eda
+  sha1: 0ad17be07672430e42cdb1113eba3945192dd525
+- name: broker-registrar
+  version: 9f566e65b9c68b62521b77ea3105afe9f654396b
+  fingerprint: 9f566e65b9c68b62521b77ea3105afe9f654396b
+  sha1: ca22195c4c444ffce2aecb4d3a4062b8149d5493
+- name: cf-containers-broker
+  version: 2acdad2995af45881ec85918adf255cc5354f3ba
+  fingerprint: 2acdad2995af45881ec85918adf255cc5354f3ba
+  sha1: 41fb79571cff76eda0917fb1b21fe824e2fc0f2c
+- name: containers
+  version: 63fa40969758c5f216b4d9e509f1858a7dcb96eb
+  fingerprint: 63fa40969758c5f216b4d9e509f1858a7dcb96eb
+  sha1: 3a28ae6addb8638551815e31ca690591a2b7eab6
+- name: docker
+  version: 98dddf0a5c30233be5c3a26892fbf954f37c3894
+  fingerprint: 98dddf0a5c30233be5c3a26892fbf954f37c3894
+  sha1: a26b70fe8d90d058de4a6cba36e6f9ef289f57a9
+- name: fetch-containers-images
+  version: 2a2383438213837b558a454a2de1075bab583dd6
+  fingerprint: 2a2383438213837b558a454a2de1075bab583dd6
+  sha1: dbbf7fb12e87f88ce03592b66853190e1f54f570
+- name: flannel
+  version: df30443b915cae8fc799f586d35a57abbe191eeb
+  fingerprint: df30443b915cae8fc799f586d35a57abbe191eeb
+  sha1: e70d9f26f9edf82b516652bfd2112a91cf881441
+- name: swarm_agent
+  version: 493bbf3db426240352c4dbca51cf698ff9ec7e01
+  fingerprint: 493bbf3db426240352c4dbca51cf698ff9ec7e01
+  sha1: cef2c96a2f25cf95b61f410beb3ffc74e1f56fce
+- name: swarm_manager
+  version: f30efd794e1d00e30839e8f03ad5d06f5ad22f20
+  fingerprint: f30efd794e1d00e30839e8f03ad5d06f5ad22f20
+  sha1: a62a7ac96672b9acba2d1a35e93c541014f38167
+license:
+  version: 4a3214509eb201b52b50f689236649f51118016b
+  fingerprint: 4a3214509eb201b52b50f689236649f51118016b
+  sha1: 583a67390ac0cbfb31cb09152a4dd6efbbcb5ab9
+commit_hash: fe153a95
+uncommitted_changes: true
+name: docker
+version: '28'
