@@ -105,6 +105,11 @@ properties:
     description: "Maximum number of open files"
     default: 8192
 
+  docker.flannel:
+    description: "Enable flannel support"
+    default: false
+
+
   env.http_proxy:
     description: "HTTP proxy that Docker should use"
   env.https_proxy:

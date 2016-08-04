@@ -1,0 +1,17 @@
+---
+name: flannel
+packages:
+- flannel
+templates:
+  bin/ctl: bin/ctl
+  bin/monit_debugger: bin/monit_debugger
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+properties:
+  apiserver.ip:
+    description: ip of api server
+
+  kubernetes.master:
+    description: master
+    default: false

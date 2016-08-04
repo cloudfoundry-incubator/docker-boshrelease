@@ -1,0 +1,5 @@
+check process flannel
+  with pidfile /var/vcap/sys/run/flannel/flannel.pid
+  start program "/var/vcap/jobs/flannel/bin/monit_debugger flannel_ctl '/var/vcap/jobs/flannel/bin/ctl start'"
+  stop program "/var/vcap/jobs/flannel/bin/monit_debugger flannel_ctl '/var/vcap/jobs/flannel/bin/ctl stop'"
+  group vcap

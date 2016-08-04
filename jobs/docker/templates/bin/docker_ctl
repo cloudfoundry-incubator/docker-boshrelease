@@ -78,6 +78,7 @@ case $1 in
         ${DOCKER_TLS_KEY:-} \
         ${DOCKER_TLS_VERIFY_OPTION:-} \
         ${DOCKER_USERLAND_PROXY} \
+        ${DOCKER_FLANNEL:-} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
