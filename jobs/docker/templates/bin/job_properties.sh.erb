@@ -167,7 +167,7 @@ export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('docker.userland_proxy') %>
 # Maximum number of open files
 export DOCKER_ULIMIT_NOFILE=<%= p('docker.ulimit.nofile') %>
 
-<% if_p('docker.flannel') do |flannel| %>
+<% if p('docker.flannel', false) %>
 source /run/flannel/subnet.env
 export DOCKER_FLANNEL="--bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}"
 <% end %>
