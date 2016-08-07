@@ -10,4 +10,6 @@ builds:
     version: '27'
   de0623c5-3ad4-4bb0-ac87-997b4ae5ff8b:
     version: '28'
+  7aad9082-46b4-4a4b-8e64-d23ffc2ccca2:
+    version: 28.0.1
 format-version: '2'
