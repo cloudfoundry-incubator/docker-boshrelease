@@ -24,9 +24,6 @@ export DOCKER_TMP_DIR=${TMP_DIR}
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
 <% end %>
 
-# Set CORS headers in the remote API
-export DOCKER_API_CORS_HEADER="--api-cors-header=<%= p('docker.api_cors_header') %>"
-
 <% if_p('docker.bridge', 'docker.cidr_prefix') do |bridge, cidr_prefix| %>
 # Attach containers to a network bridge
 export DOCKER_BRIDGE="--bridge=<%= bridge %>"

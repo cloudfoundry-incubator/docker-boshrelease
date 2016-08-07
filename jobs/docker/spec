@@ -20,9 +20,6 @@ properties:
   docker.tcp_port:
     description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "4243"
-  docker.api_cors_header:
-    description: "Set CORS headers in the remote API"
-    default: false
   docker.bridge:
     description: "Name of the network bridge to attach containers (defaults to docker0)"
   docker.cidr_prefix:

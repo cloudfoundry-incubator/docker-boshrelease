@@ -40,7 +40,6 @@ case $1 in
 
     # Start Docker daemon
     exec docker daemon \
-        ${DOCKER_API_CORS_HEADER} \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG} \
         ${DOCKER_DEFAULT_GATEWAY:-} \
