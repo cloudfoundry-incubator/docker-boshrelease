@@ -1,6 +1,6 @@
 ---
 name: docker
-dependencies: {}
+dependencies: []
 files:
   - docker/aufs-tools_20120411-3_amd64.deb
   - docker/autoconf-2.69.tar.gz
