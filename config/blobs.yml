@@ -11,14 +11,6 @@ docker/bridge-utils-1.5.tar.gz:
   object_id: 3253d1aa-0846-43b6-a22e-48f7a7905a47
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
-docker/docker-1.9.0:
-  object_id: 95bb02cd-1df9-4c75-80d0-441fcc0c508d
-  sha: bf0d17521cc01324029fa9679f66d0066e09b8c6
-  size: 30186828
-docker/docker-1.9.1:
-  object_id: 0ec63964-9bbb-4276-8048-cfa6b58f1ed9
-  sha: 424920b09c24d7c7876cc35d8aabd2aa52b8e39e
-  size: 30222575
 golang/go1.5.1.linux-amd64.tar.gz:
   object_id: 3c26a347-ae52-4ccb-b0e3-f22e3e863c7c
   sha: 46eecd290d8803887dec718c691cc243f2175fe0
@@ -39,10 +31,6 @@ ruby/yaml-0.1.6.tar.gz:
   object_id: c6eb17c4-f0e5-41fe-8114-8a3cb67f6327
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
-docker/docker-1.10.2:
-  object_id: a973d226-b5fa-4121-90d7-ff794ee9b139
-  sha: 7cd5c77dffa05a9d6b57d0fd9da6f40f6c9044bf
-  size: 34892323
 docker/docker-1.11.0.tgz:
   object_id: b62c5fed-c9a5-4342-8dc0-fc860b49f6e0
   sha: 242b6a3e6def6719f5002a4d3d5b35e587036c4e
