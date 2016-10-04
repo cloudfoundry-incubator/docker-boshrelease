@@ -20,12 +20,14 @@ case $1 in
     mkdir -p /dev/net
     mknod /dev/net/tun c 10 200 || true
 
-    <% if properties.kubernetes.master %> \
-    /var/vcap/packages/etcd/etcdctl set /coreos.com/network/config '{"Network":"10.100.0.0/16"}'
+    <% if_p('flannel.ip-range') do |range| %>
+    curl -XPUT http://<%= p('apiserver.ip') %>:4001/v2/keys/coreos.com/network/config \
+      -d value='{"Network": "<%= range %>"}'
     <% end %>
+
     exec /var/vcap/packages/flannel/bin/flanneld \
-         -etcd-endpoints="http://<%= properties.apiserver.ip %>:4001"\
-         >>$LOG_DIR/$JOB_NAME.log 2>&1
+      -etcd-endpoints="http://<%= properties.apiserver.ip %>:4001" \
+      >>$LOG_DIR/$JOB_NAME.log 2>&1
 
     ;;
 

@@ -12,6 +12,5 @@ properties:
   apiserver.ip:
     description: ip of api server
 
-  kubernetes.master:
-    description: master
-    default: false
+  flannel.ip-range
+    description: ip range of flannel overlay network
