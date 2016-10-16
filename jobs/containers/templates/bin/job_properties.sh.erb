@@ -93,6 +93,11 @@ export <%= container['name'] %>_dns_search="<%= Array(container['dns_search']).j
 export <%= container['name'] %>_entrypoint="--entrypoint=<%= container['entrypoint'] %>"
 <% end %>
 
+<% unless container['env_file'].nil? || container['env_file'].empty? %>
+# Set environment variables files
+export <%= container['name'] %>_env="<%= Array(container['env_file']).join(',').split(',').map { |file| "--env-file #{file}" }.join(' ') %>"
+<% end %>
+
 <% unless container['env_vars'].nil? || container['env_vars'].empty? %>
 # Set environment variables
 export <%= container['name'] %>_env="<%= Array(container['env_vars']).join(',').split(',').map { |var| "--env #{var}" }.join(' ') %>"
