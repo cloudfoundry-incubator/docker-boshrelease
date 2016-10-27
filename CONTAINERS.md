@@ -47,6 +47,7 @@ Containers to be deployed must be specified at the properties section of each jo
 | containers[].dns_options[] | N | Array of Strings | DNS options to add to the container
 | containers[].dns_search[] | N | Array of Strings | DNS search domains to add to the container
 | containers[].entrypoint | N | String | Entrypoint for the container (only if you want to override the default entrypoint set by the image)
+| containers[].env_file | N | Array of Strings | Paths of files containing environment variables to pass to the container
 | containers[].env_vars[] | N | Array of Strings | Environment variables to pass to the container
 | containers[].expose_ports[] | N | Array of Strings | Network ports to expose from the container without publishing it to your host
 | containers[].group_adds[] | N | Array of Strings | Groups to join

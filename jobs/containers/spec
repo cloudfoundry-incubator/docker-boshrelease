@@ -28,6 +28,7 @@ properties:
       containers.dns_options: Optional array of strings to set custom DNS servers
       containers.dns_search: Optional array of strings to set custom DNS search domains
       containers.entrypoint: Optional string containing the entrypoint (only if you want to override the default entrypoint set by the image)
+      containers.env_file: Optional paths to files of environment variables to pass to the container
       containers.env_vars: Optional array of environment variables to pass to the container
       containers.expose_ports: Optional array of network port to expose from the container without publishing it to your host
       containers.group_adds: Optional array of additional groups to join
