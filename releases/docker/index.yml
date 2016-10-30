@@ -12,4 +12,6 @@ builds:
     version: '28'
   7aad9082-46b4-4a4b-8e64-d23ffc2ccca2:
     version: 28.0.1
+  7273d761-6fb5-43e4-b358-97e1379de540:
+    version: 28.0.2
 format-version: '2'
