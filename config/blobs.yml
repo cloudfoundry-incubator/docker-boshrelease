@@ -31,11 +31,11 @@ ruby/yaml-0.1.6.tar.gz:
   object_id: c6eb17c4-f0e5-41fe-8114-8a3cb67f6327
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
-docker/docker-1.11.0.tgz:
-  object_id: b62c5fed-c9a5-4342-8dc0-fc860b49f6e0
-  sha: 242b6a3e6def6719f5002a4d3d5b35e587036c4e
-  size: 20520756
 flannel/flannel-0.5.5-linux-amd64.tar.gz:
   object_id: fee79737-4dad-4420-9f27-3180796bcc4a
   sha: fab60fdf23b029fa39badc008fe951bce5046caa
   size: 3489977
+docker/docker-1.12.0.tgz:
+  object_id: 72f4fd48-a828-4265-8afc-22ff52fd2bb5
+  sha: 92839410a37ed1940b7a93dcd21fd9aa85d673a1
+  size: 28818570
