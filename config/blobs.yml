@@ -39,3 +39,7 @@ flannel/flannel-0.5.5-linux-amd64.tar.gz:
   object_id: fee79737-4dad-4420-9f27-3180796bcc4a
   sha: fab60fdf23b029fa39badc008fe951bce5046caa
   size: 3489977
+docker/docker-1.13.1.tgz:
+  object_id: 2f2af923-48da-4e73-82e1-14f4dedd678e
+  sha: 0ff46d8eea0c694f349e1d40cdc10200a1a19e2c
+  size: 27851024
