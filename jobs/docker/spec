@@ -113,3 +113,5 @@ properties:
     description: "HTTPS proxy that Docker should use"
   env.no_proxy:
     description: "List of comma-separated hosts that Docker should skip connecting to the proxy"
+  shell.script:
+    description: "Shell script for extension as installing drivers" 
