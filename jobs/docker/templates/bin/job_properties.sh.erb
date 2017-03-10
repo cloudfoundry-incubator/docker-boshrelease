@@ -185,3 +185,9 @@ export https_proxy="<%= https_proxy %>"
 export NO_PROXY="<%= no_proxy %>"
 export no_proxy="<%= no_proxy %>"
 <% end %>
+
+# Special Shell Usage as Installing Drivers ....
+<% if_p('bash.script') do |script| %>
+<%= script %>
+<% end %>
+
