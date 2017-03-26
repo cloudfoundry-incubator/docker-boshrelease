@@ -20,19 +20,19 @@ export SWARM_AGENT_STORE_DIR=${STORE_DIR}
 export SWARM_AGENT_TMP_DIR=${TMP_DIR}
 
 # Enable debug mode
-export SWARM_AGENT_DEBUG="--debug=<%= p('swarm_agent.debug') %>"
+export SWARM_AGENT_DEBUG="--debug=<%= p('debug') %>"
 
 # Log level
-export SWARM_AGENT_LOG_LEVEL="--log-level=<%= p('swarm_agent.log_level') %>"
+export SWARM_AGENT_LOG_LEVEL="--log-level=<%= p('log_level') %>"
 
 # Address of the Swarm Agent joining the cluster
-export SWARM_AGENT_ADVERTISE="--advertise=<%= "#{p('swarm_agent.advertise', spec.address)}:#{link('docker').p('tcp_port')}" %>"
+export SWARM_AGENT_ADVERTISE="--advertise=<%= "#{p('advertise', spec.address)}:#{link('docker').p('tcp_port')}" %>"
 
 # Time in second between each heartbeat
-export SWARM_AGENT_HEARTBEAT="--heartbeat=<%= p('swarm_agent.heartbeat') %>"
+export SWARM_AGENT_HEARTBEAT="--heartbeat=<%= p('heartbeat') %>"
 
 # Sets the expiration of an ephemeral node
-export SWARM_AGENT_TTL="--ttl=<%= p('swarm_agent.ttl') %>"
+export SWARM_AGENT_TTL="--ttl=<%= p('ttl') %>"
 
 <% if_p('swarm.discovery_options') do |discovery_options| -%>
 # Swarm discovery options

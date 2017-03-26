@@ -7,25 +7,25 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/swarm_agent_ctl: bin/swarm_agent_ctl
+  bin/ctl: bin/ctl
 
 consumes:
 - name: docker
   type: docker-tcp
 
 properties:
-  swarm_agent.debug:
+  debug:
     description: "Enable debug mode"
     default: false
-  swarm_agent.log_level:
+  log_level:
     description: "Log level (options: debug, info, warn, error, fatal, panic)"
     default: "info"
-  swarm_agent.advertise:
+  advertise:
     description: "Address of the Docker Engine joining the cluster. Swarm manager(s) MUST be able to reach the Docker Engine at this address."
-  swarm_agent.heartbeat:
+  heartbeat:
     description: "Time in second between each heartbeat"
     default: "20s"
-  swarm_agent.ttl:
+  ttl:
     description: "Sets the expiration of an ephemeral node"
     default: "60s"
 
