@@ -36,7 +36,7 @@ networks = openstruct_to_hash(spec.networks)
 default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
 %>
 # Address of the Swarm Agent joining the cluster
-export SWARM_AGENT_ADVERTISE="--advertise=<%= "#{p('swarm_agent.advertise', default_ip)}:#{p('docker.tcp_port')}" %>"
+export SWARM_AGENT_ADVERTISE="--advertise=<%= "#{p('swarm_agent.advertise', default_ip)}:#{p('tcp_port')}" %>"
 
 # Time in second between each heartbeat
 export SWARM_AGENT_HEARTBEAT="--heartbeat=<%= p('swarm_agent.heartbeat') %>"

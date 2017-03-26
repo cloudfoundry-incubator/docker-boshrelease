@@ -14,95 +14,95 @@ templates:
   config/docker.key.erb: config/docker.key
 
 properties:
-  docker.tcp_address:
+  tcp_address:
     description: "TCP address where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "127.0.0.1"
-  docker.tcp_port:
+  tcp_port:
     description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "4243"
-  docker.bridge:
+  bridge:
     description: "Name of the network bridge to attach containers (defaults to docker0)"
-  docker.cidr_prefix:
+  cidr_prefix:
     description: "CIDR notation prefix (first 2 octets) for the network bridges IP"
-  docker.debug:
+  debug:
     description: "Enable debug mode"
     default: false
-  docker.default_gateway:
+  default_gateway:
     description: "Container default gateway IPv4 address"
-  docker.default_gateway_v6:
+  default_gateway_v6:
     description: "Container default gateway IPv6 address"
-  docker.default_ulimits:
+  default_ulimits:
     description: "Array of default ulimits for containers"
-  docker.disable_legacy_registry:
+  disable_legacy_registry:
     description: "Do not contact legacy registries"
     default: false
-  docker.dns_servers:
+  dns_servers:
     description: "Array of DNS servers to be used"
-  docker.dns_options:
+  dns_options:
     description: "Array of DNS options to be used"
-  docker.dns_search:
+  dns_search:
     description: "Array of DNS search domains to be used"
-  docker.exec_options:
+  exec_options:
     description: "Array of exec driver options"
-  docker.icc:
+  icc:
     description: "Allow unrestricted inter-container and Docker daemon host communication"
     default: true
-  docker.insecure_registries:
+  insecure_registries:
     description: "Array of insecure registries (no certificate verification for HTTPS and enable HTTP fallback)"
-  docker.ip:
+  ip:
     description: "Default IP when binding container ports"
-  docker.ip_forward:
+  ip_forward:
     description: "Enable net.ipv4.ip_forward and IPv6 forwarding"
     default: true
-  docker.ip_masq:
+  ip_masq:
     description: "Enable IP masquerading"
     default: true
-  docker.iptables:
+  iptables:
     description: "Enable Docker's addition of iptables rules"
     default: true
-  docker.ipv6:
+  ipv6:
     description: "Enable IPv6 networking"
     default: false
-  docker.labels:
+  labels:
     description: "Array of key=value labels for the daemon"
-  docker.log_level:
+  log_level:
     description: "Set the logging level (debug, info, warn, error, fatal)"
     default: "info"
-  docker.log_driver:
+  log_driver:
     description: "Default driver for container logs"
-  docker.log_options:
+  log_options:
     description: "Array of log driver options"
-  docker.mtu:
+  mtu:
     description: "Set the containers network MTU (if no value is provided: default to the default route MTU or 1500 if no default route is available)"
-  docker.registry_mirrors:
+  registry_mirrors:
     description: "Array of preferred Docker registry mirrors"
-  docker.selinux_enable:
+  selinux_enable:
     description: "Enable selinux support"
     default: false
-  docker.storage_driver:
+  storage_driver:
     description: "Use a specific storage driver"
-  docker.storage_options:
+  storage_options:
     description: "Array of storage driver options"
-  docker.tls:
+  tls:
     description: "Use TLS"
     default: false
-  docker.tls_cacert:
+  tls_cacert:
     description: "Trust only remotes providing a certificate signed by the CA given here"
-  docker.tls_cert:
+  tls_cert:
     description: "TLS certificate file"
-  docker.tls_key:
+  tls_key:
     description: "TLS key file"
-  docker.tls_verify:
+  tls_verify:
     description: "Use TLS and verify the remote"
     default: false
-  docker.userland_proxy:
+  userland_proxy:
     description: "Use userland proxy for loopback traffic"
     default: true
-  docker.ulimit.nofile:
+  ulimit.nofile:
     description: "Maximum number of open files"
     default: 8192
 
-  docker.flannel:
+  flannel:
     description: "Enable flannel support"
     default: false
 
