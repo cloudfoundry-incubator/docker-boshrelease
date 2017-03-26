@@ -7,7 +7,7 @@ packages:
 
 templates:
   bin/cgroupfs-mount: bin/cgroupfs-mount
-  bin/docker_ctl: bin/docker_ctl
+  bin/ctl: bin/ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert

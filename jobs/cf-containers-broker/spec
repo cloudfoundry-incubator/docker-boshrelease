@@ -8,7 +8,7 @@ packages:
   - ruby
 
 templates:
-  bin/cf-containers-broker_ctl: bin/cf-containers-broker_ctl
+  bin/ctl: bin/ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/route-registrar_ctl.erb: bin/route-registrar_ctl
   config/route-registrar.yml.erb: config/route-registrar.yml
