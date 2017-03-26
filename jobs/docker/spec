@@ -13,6 +13,12 @@ templates:
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key
 
+provides:
+- name: docker
+  type: docker-tcp
+  provides:
+  - tcp_port
+
 properties:
   tcp_address:
     description: "TCP address where Docker daemon will listen to (if not set, TCP will not be available)"

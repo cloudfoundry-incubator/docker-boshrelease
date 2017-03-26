@@ -9,6 +9,10 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/swarm_agent_ctl: bin/swarm_agent_ctl
 
+consumes:
+- name: docker
+  type: docker-tcp
+
 properties:
   swarm_agent.debug:
     description: "Enable debug mode"
@@ -30,10 +34,6 @@ properties:
     default: []
   swarm.discovery:
     description: "Swarm discovery string (ie: consul://<ip>/<path>, etcd://<ip1>,<ip2>/<path>, zk://<ip1>,<ip2>/<path>, [nodes://]<ip1>,<ip2>"
-
-  docker.tcp_port:
-    description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
-    default: "4243"
 
   env.http_proxy:
     description: "HTTP proxy that Docker should use"

@@ -25,18 +25,8 @@ export SWARM_AGENT_DEBUG="--debug=<%= p('swarm_agent.debug') %>"
 # Log level
 export SWARM_AGENT_LOG_LEVEL="--log-level=<%= p('swarm_agent.log_level') %>"
 
-<%
-def openstruct_to_hash(os)
-  os.marshal_dump.map do |key, element|
-    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-  end.reduce(&:merge)
-end
-
-networks = openstruct_to_hash(spec.networks)
-default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
-%>
 # Address of the Swarm Agent joining the cluster
-export SWARM_AGENT_ADVERTISE="--advertise=<%= "#{p('swarm_agent.advertise', default_ip)}:#{p('tcp_port')}" %>"
+export SWARM_AGENT_ADVERTISE="--advertise=<%= "#{p('swarm_agent.advertise', spec.address)}:#{link('docker').p('tcp_port')}" %>"
 
 # Time in second between each heartbeat
 export SWARM_AGENT_HEARTBEAT="--heartbeat=<%= p('swarm_agent.heartbeat') %>"
@@ -44,24 +34,24 @@ export SWARM_AGENT_HEARTBEAT="--heartbeat=<%= p('swarm_agent.heartbeat') %>"
 # Sets the expiration of an ephemeral node
 export SWARM_AGENT_TTL="--ttl=<%= p('swarm_agent.ttl') %>"
 
-<% if_p('swarm.discovery_options') do |discovery_options| %>
+<% if_p('swarm.discovery_options') do |discovery_options| -%>
 # Swarm discovery options
 export SWARM_AGENT_DISCOVERY_OPTIONS="<%= discovery_options.map { |discovery_option| "--discovery-opt=#{discovery_option}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Swarm discovery
 export SWARM_AGENT_DISCOVERY="<%= p('swarm.discovery') %>"
 
 # Proxy configuration
-<% if_p('env.http_proxy') do |http_proxy| %>
+<% if_p('env.http_proxy') do |http_proxy| -%>
 export HTTP_PROXY="<%= http_proxy %>"
 export http_proxy="<%= http_proxy %>"
-<% end %>
-<% if_p('env.https_proxy') do |https_proxy| %>
+<% end -%>
+<% if_p('env.https_proxy') do |https_proxy| -%>
 export HTTPS_PROXY="<%= https_proxy %>"
 export https_proxy="<%= https_proxy %>"
-<% end %>
-<% if_p('env.no_proxy') do |no_proxy| %>
+<% end -%>
+<% if_p('env.no_proxy') do |no_proxy| -%>
 export NO_PROXY="<%= no_proxy %>"
 export no_proxy="<%= no_proxy %>"
-<% end %>
+<% end -%>
