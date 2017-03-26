@@ -15,49 +15,60 @@ templates:
   config/settings.yml.erb: config/settings.yml
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
+provides:
+- name: cf-containers-broker
+  type: cf-containers-broker
+  properties:
+  - username
+  - password
+  - port
+  - services
+
 properties:
-  broker.unicorn.worker_processes:
-    description: "Unicorn worker processes. If the number of worker processes > 1 then you must disable the broker.allocate_docker_host_ports property"
-    default: "1"
-  broker.unicorn.port:
+  port:
     description: "Unicorn listen port"
     default: "80"
-  broker.username:
+  username:
     description: "Broker's basic auth username"
-  broker.password:
+  password:
     description: "Broker's basic auth password"
-  broker.cookie_secret:
+
+  services:
+    description: "Services and plans offered by the broker"
+
+  unicorn.worker_processes:
+    description: "Unicorn worker processes. If the number of worker processes > 1 then you must disable the allocate_docker_host_ports property"
+    default: "1"
+  cookie_secret:
     description: "A unique secret key, used to sign sessions"
-  broker.session_expiry:
+  session_expiry:
     description: "Session expiry time of the session"
     default: "86400"
-  broker.external_ip:
+  external_ip:
     description: "External IP address used to register the broker"
-  broker.host:
+  host:
     description: "Host used to register the broker"
-  broker.ssl_enabled:
+  ssl_enabled:
     description: "Determines use of https in dashboard url and in callback uri for calls to UAA"
     default: false
-  broker.skip_ssl_validation:
+  skip_ssl_validation:
     description: "Determines whether dashboard verifies SSL certificates when communicating with Cloud Controller and UAA"
     default: true
-  broker.docker_url:
+  docker_url:
     description: "Docker URL (IP/Socket)"
     default: "unix:///var/vcap/sys/run/docker/docker.sock"
-  broker.max_containers:
+  max_containers:
     description: "Max number of containers"
     default: '0'
-  broker.allocate_docker_host_ports:
+  allocate_docker_host_ports:
     description: "Allocate Docker host ports when creating a container"
     default: true
-  broker.fetch_images:
+  fetch_images:
     description: "Fetch new/updated container images on restart"
     default: true
-  broker.update_containers:
+  update_containers:
     description: "Restart all containers with latest configuration/image on restart"
     default: true
-  broker.services:
-    description: "Services and plans offered by the broker"
 
   cf.api_url:
     description: "URL of the CloudFoundry Cloud Controller"
@@ -78,4 +89,3 @@ properties:
     description: "HTTPS proxy"
   env.no_proxy:
     description: "List of comma-separated hosts to skip connecting to the proxy"
-
