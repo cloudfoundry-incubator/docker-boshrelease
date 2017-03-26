@@ -17,7 +17,7 @@ templates:
 
 provides:
 - name: cf-containers-broker
-  type: cf-containers-broker
+  type: servicebroker
   properties:
   - username
   - password
