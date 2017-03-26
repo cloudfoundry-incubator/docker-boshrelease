@@ -1,0 +1,52 @@
+---
+- type: replace
+  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/services/-
+  value:
+    name: 'mongodb26'
+    id: '23eefc93-6814-4db8-bbf0-eaa6c3c5fecc'
+    description: 'MongoDB 2.6 service for application development and testing'
+    bindable: true
+    tags:
+      - 'mongodb26'
+      - 'mongodb'
+      - 'document'
+    metadata:
+      displayName: 'MongoDB 2.6'
+      imageUrl: 'data:image/png;base64,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'
+      longDescription: 'A MongoDB 2.6 service for development and testing running inside a Docker container'
+      providerDisplayName: 'Pivotal Software'
+      documentationUrl: 'http://docs.run.pivotal.io'
+      supportUrl: 'http://support.run.pivotal.io/home'
+    dashboard_client:
+      id: 'p-mongodb26-client'
+      secret: 'p-mongodb26-secret'
+      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+    plans:
+      - id: '6d8024b1-7deb-4dc7-a72a-33ec3f7a1bfc'
+        name: 'free'
+        container:
+          backend: 'docker'
+          image: 'frodenas/mongodb'
+          tag: '2.6'
+          command: '--smallfiles --httpinterface'
+          persistent_volumes:
+            - '/data'
+        credentials:
+          username:
+            key: 'MONGODB_USERNAME'
+          password:
+            key: 'MONGODB_PASSWORD'
+          dbname:
+            key: 'MONGODB_DBNAME'
+          uri:
+            prefix: 'mongodb'
+            port: '27017/tcp'
+        description: 'Free Trial'
+        metadata:
+          costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+          bullets:
+            - 'Dedicated 2.6 MongoDB server'
+            - 'MongoDB 2.6 running inside a Docker container'
