@@ -21,23 +21,34 @@ provides:
   properties:
   - username
   - password
+  - protocol
   - port
+  - external_host
+  - name
   - services
 
 properties:
-  port:
-    description: "Unicorn listen port"
-    default: "80"
   username:
     description: "Broker's basic auth username"
   password:
     description: "Broker's basic auth password"
+  protocol:
+    description: HTTP protocol to use to access broker
+    default: http
+  port:
+    description: "Unicorn listen port"
+    default: "80"
 
-  external_host:
-    description: Explicit host for dashboard URLs and service broker registration
-
+  name:
+    description: "Register broker with this name"
+    default: docker
   services:
     description: "Services and plans offered by the broker"
+
+  external_host:
+    description: "Explicit host for dashboard URLs and service broker registration"
+  cf.api_url:
+    description: "URL of the CloudFoundry Cloud Controller for user auth to dashboards"
 
   unicorn.worker_processes:
     description: "Unicorn worker processes. If the number of worker processes > 1 then you must disable the allocate_docker_host_ports property"
@@ -49,8 +60,6 @@ properties:
     default: "86400"
   external_ip:
     description: "External IP address used to register the broker"
-  host:
-    description: "Host used to register the broker"
   ssl_enabled:
     description: "Determines use of https in dashboard url and in callback uri for calls to UAA"
     default: false
@@ -72,9 +81,6 @@ properties:
   update_containers:
     description: "Restart all containers with latest configuration/image on restart"
     default: true
-
-  cf.api_url:
-    description: "URL of the CloudFoundry Cloud Controller"
 
   nats.user:
     description: "Username for broker to connect to NATS"

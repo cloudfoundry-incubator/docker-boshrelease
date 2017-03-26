@@ -4,9 +4,9 @@ production:
   cookie_secret: <%= p('cookie_secret') %>
   session_expiry: <%= p('session_expiry') %>
 
-  cc_api_uri: <%= p('cf.api_url') %>
+  cc_api_uri: <%= p('cf.api_url', 'https://api.unknown.cloudfoundry') %>
+  external_host: <%= p('external_host', spec.address) %>
   external_ip: <%= p('external_ip', spec.address) %>
-  external_host: <%= p('host', spec.address) %>
 
   ssl_enabled: <%= p('ssl_enabled') %>
   skip_ssl_validation: <%= p('skip_ssl_validation') %>

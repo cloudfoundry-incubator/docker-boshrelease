@@ -1,16 +1,6 @@
 ---
-<%
-  def openstruct_to_hash(os)
-    os.marshal_dump.map do |key, element|
-      element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-    end.reduce(&:merge)
-  end
-
-  networks = openstruct_to_hash(spec.networks)
-  default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
-%>
-external_host: <%= p('external_host') %>
-external_ip: <%= p('external_ip', default_ip) %>
+external_host: <%= p('external_host', spec.address) %>
+external_ip: <%= p('external_ip', spec.address) %>
 port: <%= p('port') %>
 
 message_bus_servers:
