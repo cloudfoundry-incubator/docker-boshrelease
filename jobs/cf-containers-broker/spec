@@ -33,6 +33,9 @@ properties:
   password:
     description: "Broker's basic auth password"
 
+  external_host:
+    description: Explicit host for dashboard URLs and service broker registration
+
   services:
     description: "Services and plans offered by the broker"
 

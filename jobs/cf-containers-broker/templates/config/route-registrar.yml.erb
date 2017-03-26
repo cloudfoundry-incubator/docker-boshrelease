@@ -9,9 +9,9 @@
   networks = openstruct_to_hash(spec.networks)
   default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
 %>
-external_host: <%= p('broker.host') %>
-external_ip: <%= p('broker.external_ip', default_ip) %>
-port: <%= p('broker.unicorn.port') %>
+external_host: <%= p('external_host') %>
+external_ip: <%= p('external_ip', default_ip) %>
+port: <%= p('port') %>
 
 message_bus_servers:
   <% p('nats.machines', []).each do |server| %>

@@ -20,10 +20,10 @@ export CF_CONTAINERS_BROKER_STORE_DIR=$STORE_DIR
 export CF_CONTAINERS_BROKER_TMP_DIR=$TMP_DIR
 
 # Fetch new/updated container images on restart
-export CF_CONTAINERS_FETCH_IMAGES=<%= p('broker.fetch_images') ? 'true' : '' %>
+export CF_CONTAINERS_FETCH_IMAGES=<%= p('fetch_images') ? 'true' : '' %>
 #
 # Restart containers with latest image/config on restart
-export CF_CONTAINERS_UPDATE_CONTAINERS=<%= p('broker.update_containers') ? 'true' : '' %>
+export CF_CONTAINERS_UPDATE_CONTAINERS=<%= p('update_containers') ? 'true' : '' %>
 
 # CF-Containers-Broker Gemfile
 export BUNDLE_GEMFILE=/var/vcap/packages/cf-containers-broker/Gemfile
@@ -35,7 +35,7 @@ export RAILS_ENV=production
 export SETTINGS_PATH=$CF_CONTAINERS_BROKER_CONF_DIR/settings.yml
 
 # Docker UNIX socket
-export DOCKER_URL="<%= p('broker.docker_url') %>"
+export DOCKER_URL="<%= p('docker_url') %>"
 
 #
 # Route Registrar properties

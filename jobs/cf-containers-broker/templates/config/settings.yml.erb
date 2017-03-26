@@ -1,30 +1,21 @@
 production:
-  log_path: '/var/vcap/sys/log/cf-containers-broker/cf-containers-broker.log'
-  auth_username: '<%= p('broker.username') %>'
-  auth_password: '<%= p('broker.password') %>'
-  cookie_secret: <%= p('broker.cookie_secret') %>
-  session_expiry: <%= p('broker.session_expiry') %>
+  auth_username: <%= p('username') %>
+  auth_password: <%= p('password') %>
+  cookie_secret: <%= p('cookie_secret') %>
+  session_expiry: <%= p('session_expiry') %>
 
   cc_api_uri: <%= p('cf.api_url') %>
-  <%
-    def openstruct_to_hash(os)
-      os.marshal_dump.map do |key, element|
-        element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-      end.reduce(&:merge)
-    end
+  external_ip: <%= p('external_ip', spec.address) %>
+  external_host: <%= p('host', spec.address) %>
 
-    networks = openstruct_to_hash(spec.networks)
-    default_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
-  %>
-  external_ip: <%= p('broker.external_ip', default_ip) %>
-  external_host: <%= p('broker.host') %>
-
-  ssl_enabled: <%= p('broker.ssl_enabled') %>
-  skip_ssl_validation: <%= p('broker.skip_ssl_validation') %>
+  ssl_enabled: <%= p('ssl_enabled') %>
+  skip_ssl_validation: <%= p('skip_ssl_validation') %>
 
   host_directory: /var/vcap/store/cf-containers-broker/
-  max_containers: <%= p('broker.max_containers') %>
-  allocate_docker_host_ports: <%= p('broker.allocate_docker_host_ports') %>
-  container_env_var_dir: '/var/vcap/store/cf-containers-broker/envdir'
+  max_containers: <%= p('max_containers') %>
+  allocate_docker_host_ports: <%= p('allocate_docker_host_ports') %>
 
-  services: <%= JSON.pretty_generate(p('broker.services')) %>
+  container_env_var_dir: '/var/vcap/store/cf-containers-broker/envdir'
+  log_path: '/var/vcap/sys/log/cf-containers-broker/cf-containers-broker.log'
+
+  services: <%= JSON.pretty_generate(p('services')) %>
