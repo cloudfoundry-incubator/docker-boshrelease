@@ -20,7 +20,6 @@
     dashboard_client:
       id: 'p-postgresql93-client'
       secret: 'p-postgresql93-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
     plans:
       - id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
         name: 'free'

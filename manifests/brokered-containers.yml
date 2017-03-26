@@ -1,10 +1,10 @@
 ---
-name: broker-example
+name: broker-containers
 
 instance_groups:
 - name: docker-broker
+  azs: [z1]
   instances: 1
-  resource_pool: default
   persistent_disk: 65536
   vm_type: default
   stemcell: default
@@ -30,6 +30,11 @@ variables:
 releases:
  - name: docker
    version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
 
 update:
   canaries: 0

@@ -17,7 +17,7 @@ services:
     dashboard_client:
       id: 'p-couchdb16-client'
       secret: 'p-couchdb16-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '3a35568d-aea9-447f-9e39-363c2e9da193'
         name: 'free'
@@ -64,7 +64,7 @@ services:
     dashboard_client:
       id: 'p-neo4j21-client'
       secret: 'p-neo4j21-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '8f1028b9-68ad-4e6c-bd5a-dbbafd622ffb'
         name: 'free'
@@ -103,7 +103,7 @@ services:
     dashboard_client:
       id: 'p-arangodb22-client'
       secret: 'p-arangodb22-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '01a3df74-0718-48ca-8b30-a9f79e8bec94'
         name: 'free'
@@ -150,7 +150,7 @@ services:
     dashboard_client:
       id: 'p-rabbitmq33-client'
       secret: 'p-rabbitmq33-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '6d3d7e5a-c7ce-4f80-99ca-7cc52445d355'
         name: 'free'
@@ -194,7 +194,7 @@ services:
     dashboard_client:
       id: 'p-memcached14-client'
       secret: 'p-memcached14-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: 'febbe2ce-1461-419f-a237-3b35cb43fe09'
         name: '128Mb'
@@ -284,7 +284,7 @@ services:
     dashboard_client:
       id: 'p-elasticsearch13-client'
       secret: 'p-elasticsearch13-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: 'cff75095-36b7-4e91-91e4-4d27b7bd8867'
         name: 'free'
@@ -324,7 +324,7 @@ services:
     dashboard_client:
       id: 'p-logstash14-client'
       secret: 'p-logstash14-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '5218782d-7fab-4534-92b8-434204d88c7b'
         name: 'free'
@@ -361,7 +361,7 @@ services:
     dashboard_client:
       id: 'nats-dashboard'
       secret: 'nats-dashboard-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: 'b9310e34-2fa4-11e4-b626-a6c5e4d22fb7'
         name: 'free'
@@ -405,7 +405,7 @@ services:
     dashboard_client:
       id: 'etcd-dashboard'
       secret: 'etcd-dashboard-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '5d52a2bc-2da1-11e4-852f-a6c5e4d22fb7'
         name: 'free'
@@ -447,7 +447,7 @@ services:
     dashboard_client:
       id: 'consul-dashboard'
       secret: 'consul-dashboard-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '2cb83bb4-2df9-11e4-a506-a6c5e4d22fb7'
         name: 'free'
@@ -488,7 +488,7 @@ services:
     dashboard_client:
       id: 'rethinkdb-dashboard'
       secret: 'rethinkdb-dashboard-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
+
     plans:
       - id: '6194d79a-2e5b-11e4-af5d-a6c5e4d22fb7'
         name: 'free'

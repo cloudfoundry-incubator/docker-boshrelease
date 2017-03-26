@@ -20,7 +20,6 @@
     dashboard_client:
       id: 'p-mysql56-client'
       secret: 'p-mysql56-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
     plans:
       - id: 'd42fc3cc-1341-4aa3-866e-01bc5243dc2e'
         name: 'free'

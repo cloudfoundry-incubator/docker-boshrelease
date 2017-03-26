@@ -20,7 +20,6 @@
     dashboard_client:
       id: 'p-redis28-client'
       secret: 'p-redis28-secret'
-      redirect_uri: "<%= protocol %>://cf-containers-broker.<%= root_domain %>/manage/auth/cloudfoundry/callback"
     plans:
       - id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
         name: 'free'
