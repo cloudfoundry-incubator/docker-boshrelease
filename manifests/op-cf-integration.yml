@@ -1,5 +1,13 @@
 ---
 - type: replace
+  path: /releases/-
+  value:
+    name: broker-registrar
+    version: 2.0.0
+    url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=2.0.0
+    sha1: 83b61f06e43c27845deb59597504e55ee887897e
+
+- type: replace
   path: /instance_groups/-
   value:
     name: broker-registrar
@@ -10,7 +18,7 @@
     networks: [{name: default}]
     jobs:
     - name: broker-registrar
-      release: docker
+      release: broker-registrar
 
 - type: replace
   path: /instance_groups/-
@@ -23,4 +31,4 @@
     networks: [{name: default}]
     jobs:
     - name: broker-deregistrar
-      release: docker
+      release: broker-registrar
