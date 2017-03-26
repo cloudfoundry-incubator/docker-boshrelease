@@ -1,9 +1,6 @@
 [submodule "src/cf-containers-broker"]
 	path = src/cf-containers-broker
 	url = https://github.com/cf-platform-eng/cf-containers-broker.git
-[submodule "src/broker-registrar"]
-	path = src/broker-registrar
-	url = https://github.com/pivotal-cf/broker-registrar.git
 [submodule "src/github.com/docker/swarm"]
 	path = src/github.com/docker/swarm
 	url = https://github.com/docker/swarm.git
