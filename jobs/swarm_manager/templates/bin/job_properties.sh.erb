@@ -55,44 +55,45 @@ export SWARM_MANAGER_OVERCOMMIT="--cluster-opt=swarm.overcommit=<%= p('overcommi
 # Use TLS
 export SWARM_MANAGER_TLS="--tls=<%= link('docker').p('tls') %>"
 
-<% link('docker').if_p('tls_cacert') do |tls_cacert| %>
+<% link('docker').if_p('tls_cacert') do |tls_cacert| -%>
 # Trust only remotes providing a certificate signed by the CA given here
 export SWARM_MANAGER_TLS_CACERT="--tlscacert=${SWARM_MANAGER_CONF_DIR}/docker.cacert"
-<% end %>
+<% end -%>
 
-<% link('docker').if_p('tls_cert') do |tls_cert| %>
+<% link('docker').if_p('tls_cert') do |tls_cert| -%>
 # Path to TLS certificate file
 export SWARM_MANAGER_TLS_CERT="--tlscert=${SWARM_MANAGER_CONF_DIR}/docker.cert"
-<% end %>
+<% end -%>
 
-<% link('docker').if_p('tls_key') do |tls_key| %>
+<% link('docker').if_p('tls_key') do |tls_key| -%>
 # Path to TLS key file
 export SWARM_MANAGER_TLS_KEY="--tlskey=${SWARM_MANAGER_CONF_DIR}/docker.key"
-<% end %>
+<% end -%>
 
-<% link('docker').if p('tls_verify', false) %>
+<% link('docker').if p('tls_verify', false) -%>
 # Use TLS and verify the remote
 export SWARM_MANAGER_TLS_VERIFY="--tlsverify=true"
-<% end %>
+<% end -%>
 
-<% if_p('swarm.discovery_options') do |discovery_options| %>
+<% if_p('swarm.discovery_options') do |discovery_options| -%>
 # Swarm discovery options
 export SWARM_MANAGER_DISCOVERY_OPTIONS="<%= discovery_options.map { |discovery_option| "--discovery-opt=#{discovery_option}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Swarm discovery
-export SWARM_MANAGER_DISCOVERY="<%= p('swarm.discovery') %>"
+<% docker_nodes = link('docker').instances.map {|i| "nodes://#{i.address}:4243"}.join(",") -%>
+export SWARM_MANAGER_DISCOVERY="<%= p('swarm.discovery', docker_nodes) %>"
 
 # Proxy configuration
-<% if_p('env.http_proxy') do |http_proxy| %>
+<% if_p('env.http_proxy') do |http_proxy| -%>
 export HTTP_PROXY="<%= http_proxy %>"
 export http_proxy="<%= http_proxy %>"
-<% end %>
-<% if_p('env.https_proxy') do |https_proxy| %>
+<% end -%>
+<% if_p('env.https_proxy') do |https_proxy| -%>
 export HTTPS_PROXY="<%= https_proxy %>"
 export https_proxy="<%= https_proxy %>"
-<% end %>
-<% if_p('env.no_proxy') do |no_proxy| %>
+<% end -%>
+<% if_p('env.no_proxy') do |no_proxy| -%>
 export NO_PROXY="<%= no_proxy %>"
 export no_proxy="<%= no_proxy %>"
-<% end %>
+<% end -%>

@@ -57,7 +57,7 @@ properties:
     description: "Swarm discovery options"
     default: []
   swarm.discovery:
-    description: "Swarm discovery string (ie: consul://<ip>/<path>, etcd://<ip1>,<ip2>/<path>, zk://<ip1>,<ip2>/<path>, [nodes://]<ip1>,<ip2>"
+    description: "Defaults to BOSH links. Override with swarm discovery string (ie: consul://<ip>/<path>, etcd://<ip1>,<ip2>/<path>, zk://<ip1>,<ip2>/<path>, [nodes://]<ip1>,<ip2>"
 
   env.http_proxy:
     description: "HTTP proxy that Docker should use"

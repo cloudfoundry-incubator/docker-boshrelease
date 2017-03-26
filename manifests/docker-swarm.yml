@@ -1,0 +1,41 @@
+name: docker-swarm
+
+instance_groups:
+- name: docker
+  instances: 3
+  azs: [z1, z2, z3]
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  update: {serial: true}
+  jobs:
+  - name: docker
+    release: docker
+    properties:
+      tcp_address: 0.0.0.0
+
+- name: swarm
+  instances: 1
+  azs: [z1, z2, z3]
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: swarm_manager
+    release: docker
+
+releases:
+ - name: docker
+   version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 32
+  serial: false
