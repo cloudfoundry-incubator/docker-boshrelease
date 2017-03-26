@@ -12,6 +12,10 @@ templates:
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key
 
+consumes:
+- name: docker
+  type: docker-tcp
+
 properties:
   swarm_manager.debug:
     description: "Enable debug mode"
@@ -54,19 +58,6 @@ properties:
     default: []
   swarm.discovery:
     description: "Swarm discovery string (ie: consul://<ip>/<path>, etcd://<ip1>,<ip2>/<path>, zk://<ip1>,<ip2>/<path>, [nodes://]<ip1>,<ip2>"
-
-  docker.tls:
-    description: "Use TLS"
-    default: false
-  docker.tls_cacert:
-    description: "Trust only remotes providing a certificate signed by the CA given here"
-  docker.tls_cert:
-    description: "TLS certificate file"
-  docker.tls_key:
-    description: "TLS key file"
-  docker.tls_verify:
-    description: "Use TLS and verify the remote"
-    default: false
 
   env.http_proxy:
     description: "HTTP proxy that Docker should use"
