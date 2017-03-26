@@ -20,37 +20,37 @@ export SWARM_MANAGER_STORE_DIR=${STORE_DIR}
 export SWARM_MANAGER_TMP_DIR=${TMP_DIR}
 
 # Enable debug mode
-export SWARM_MANAGER_DEBUG="--debug=<%= p('swarm_manager.debug') %>"
+export SWARM_MANAGER_DEBUG="--debug=<%= p('debug') %>"
 
 # Log level
-export SWARM_MANAGER_LOG_LEVEL="--log-level=<%= p('swarm_manager.log_level') %>"
+export SWARM_MANAGER_LOG_LEVEL="--log-level=<%= p('log_level') %>"
 
 # IP:Port to listen on
-export SWARM_MANAGER_HOST="--host=<%= p('swarm_manager.listen_address') %>:<%= p('swarm_manager.port') %>"
+export SWARM_MANAGER_HOST="--host=<%= p('listen_address') %>:<%= p('port') %>"
 
 # Placement strategy to use
-export SWARM_MANAGER_STRATEGY="--strategy=<%= p('swarm_manager.strategy') %>"
+export SWARM_MANAGER_STRATEGY="--strategy=<%= p('strategy') %>"
 
 # Filters to use
-export SWARM_MANAGER_FILTERS="<%= p('swarm_manager.filters', []).map { |filter| "--filter=#{filter}" }.join(' ') %>"
+export SWARM_MANAGER_FILTERS="<%= p('filters', []).map { |filter| "--filter=#{filter}" }.join(' ') %>"
 
 # Enable Swarm manager replication
-export SWARM_MANAGER_REPLICATION="--replication=<%= p('swarm_manager.replication') %>"
+export SWARM_MANAGER_REPLICATION="--replication=<%= p('replication') %>"
 
 # Leader lock release time on failure
-export SWARM_MANAGER_REPLICATION_TTL="--replication-ttl=<%= p('swarm_manager.replication_ttl') %>"
+export SWARM_MANAGER_REPLICATION_TTL="--replication-ttl=<%= p('replication_ttl') %>"
 
 # Address of the Swarm Manager joining the cluster
-export SWARM_MANAGER_ADVERTISE="--advertise=<%= "#{p('swarm_manager.advertise', spec.address)}:#{p('swarm_manager.port')}" %>"
+export SWARM_MANAGER_ADVERTISE="--advertise=<%= "#{p('advertise', spec.address)}:#{p('port')}" %>"
 
 # Time in second between each heartbeat
-export SWARM_MANAGER_HEARTBEAT="--heartbeat=<%= p('swarm_manager.heartbeat') %>"
+export SWARM_MANAGER_HEARTBEAT="--heartbeat=<%= p('heartbeat') %>"
 
 # Enable CORS headers in the remote API
-export SWARM_MANAGER_API_ENABLE_CORS="--api-enable-cors=<%= p('swarm_manager.api_enable_cors') %>"
+export SWARM_MANAGER_API_ENABLE_CORS="--api-enable-cors=<%= p('api_enable_cors') %>"
 
 # Overcommit to apply on resources
-export SWARM_MANAGER_OVERCOMMIT="--cluster-opt=swarm.overcommit=<%= p('swarm_manager.overcommit') %>"
+export SWARM_MANAGER_OVERCOMMIT="--cluster-opt=swarm.overcommit=<%= p('overcommit') %>"
 
 # Use TLS
 export SWARM_MANAGER_TLS="--tls=<%= link('docker').p('tls') %>"

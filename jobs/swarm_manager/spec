@@ -7,7 +7,7 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/swarm_manager_ctl: bin/swarm_manager_ctl
+  bin/ctl: bin/ctl
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key
@@ -17,39 +17,39 @@ consumes:
   type: docker-tcp
 
 properties:
-  swarm_manager.debug:
+  debug:
     description: "Enable debug mode"
     default: false
-  swarm_manager.log_level:
+  log_level:
     description: "Log level (options: debug, info, warn, error, fatal, panic)"
     default: "info"
-  swarm_manager.listen_address:
+  listen_address:
     description: "Listen address"
     default: "0.0.0.0"
-  swarm_manager.port:
+  port:
     description: "Listen port"
     default: "2375"
-  swarm_manager.strategy:
+  strategy:
     description: "Placement strategy to use [spread, binpack, random]"
     default: "spread"
-  swarm_manager.filters:
+  filters:
     description: "Filters to use [health, port, dependency, affinity, constraint]"
     default: ["health", "port", "dependency", "affinity", "constraint"]
-  swarm_manager.replication:
+  replication:
     description: "Enable Swarm manager replication"
     default: false
-  swarm_manager.replication_ttl:
+  replication_ttl:
     description: "Leader lock release time on failure"
     default: "30s"
-  swarm_manager.advertise:
+  advertise:
     description: "Address of the Swarm Manager joining the cluster. Other Swarm Manager(s) MUST be able to reach the Swarm Manager at this address."
-  swarm_manager.heartbeat:
+  heartbeat:
     description: "Time in second between each heartbeat"
     default: "20s"
-  swarm_manager.api_enable_cors:
+  api_enable_cors:
     description: "Enable CORS headers in the remote API"
     default: false
-  swarm_manager.overcommit:
+  overcommit:
     description: "Overcommit to apply on resources"
     default: "0.5"
 
