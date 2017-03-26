@@ -19,71 +19,71 @@ export DOCKER_STORE_DIR=${STORE_DIR}
 # Directory to store the Docker temp files
 export DOCKER_TMP_DIR=${TMP_DIR}
 
-<% if_p('tcp_address', 'tcp_port') do |address, port| %>
+<% if_p('tcp_address', 'tcp_port') do |address, port| -%>
 # TCP Address/Port where Docker daemon will listen to
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
-<% end %>
+<% end -%>
 
-<% if_p('bridge', 'cidr_prefix') do |bridge, cidr_prefix| %>
+<% if_p('bridge', 'cidr_prefix') do |bridge, cidr_prefix| -%>
 # Attach containers to a network bridge
 export DOCKER_BRIDGE="--bridge=<%= bridge %>"
 export DOCKER_BRIDGE_NAME="<%= bridge %>"
 export DOCKER_BRIDGE_CIDR="<%= cidr_prefix %>.<%= index %>.1/24"
-<% end %>
+<% end -%>
 
 # Enable debug mode
 export DOCKER_DEBUG="--debug=<%= p('debug') %>"
 
-<% if_p('default_gateway') do |default_gateway| %>
+<% if_p('default_gateway') do |default_gateway| -%>
 # Container default gateway IPv4 address
 export DOCKER_DEFAULT_GATEWAY="--default-gateway=<%= default_gateway %>"
-<% end %>
+<% end -%>
 
-<% if_p('default_gateway_v6') do |default_gateway_v6| %>
+<% if_p('default_gateway_v6') do |default_gateway_v6| -%>
 # Container default gateway IPv6 address
 export DOCKER_DEFAULT_GATEWAY_V6="--default-gateway-v6=<%= default_gateway_v6 %>"
-<% end %>
+<% end -%>
 
-<% if_p('default_ulimits') do |default_ulimits| %>
+<% if_p('default_ulimits') do |default_ulimits| -%>
 # Set default ulimits for containers
 export DOCKER_DEFAULT_ULIMITS="<%= default_ulimits.map { |default_ulimit| "--default-ulimit=#{default_ulimit}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Do not contact legacy registries
 export DOCKER_DISABLE_LEGACY_REGISTRY="--disable-legacy-registry=<%= p('disable_legacy_registry') %>"
 
-<% if_p('dns_servers') do |dns_servers| %>
+<% if_p('dns_servers') do |dns_servers| -%>
 # DNS servers to be used
 export DOCKER_DNS_SERVERS="<%= dns_servers.map { |dns_server| "--dns=#{dns_server}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
-<% if_p('dns_options') do |dns_options| %>
+<% if_p('dns_options') do |dns_options| -%>
 # DNS options to be used
 export DOCKER_DNS_OPTIONS="<%= dns_options.map { |dns_option| "--dns-opt=#{dns_option}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
-<% if_p('dns_search') do |domains| %>
+<% if_p('dns_search') do |domains| -%>
 # DNS search domains to be used
 export DOCKER_DNS_SEARCH="<%= domains.map { |domain| "--dns-search=#{domain}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
-<% if_p('exec_options') do |exec_options| %>
+<% if_p('exec_options') do |exec_options| -%>
 # Set exec driver options
 export DOCKER_EXEC_OPTIONS="<%= exec_options.map { |exec_option| "--exec-opt=#{exec_option}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Allow unrestricted inter-container and Docker daemon host communication
 export DOCKER_ICC="--icc=<%= p('icc') %>"
 
-<% if_p('insecure_registries') do |insecure_registries| %>
+<% if_p('insecure_registries') do |insecure_registries| -%>
 # Insecure registries
 export DOCKER_INSECURE_REGISTRIES="<%= insecure_registries.map { |insecure_registry| "--insecure-registry=#{insecure_registry}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
-<% if_p('ip') do |ip| %>
+<% if_p('ip') do |ip| -%>
 # Default IP when binding container ports
 export DOCKER_IP="--ip=<%= ip %>"
-<% end %>
+<% end -%>
 
 # Enable net.ipv4.ip_forward and IPv6 forwarding
 export DOCKER_IPFORWARD="--ip-forward=<%= p('ip_forward') %>"
@@ -97,91 +97,91 @@ export DOCKER_IPTABLES="--iptables=<%= p('iptables') %>"
 # Enable IPv6 networking
 export DOCKER_IPV6="--ipv6=<%= p('ipv6') %>"
 
-<% if_p('labels') do |labels| %>
+<% if_p('labels') do |labels| -%>
 # Daemon labels
 export DOCKER_LABELS="<%= labels.map { |label| "--label=#{label}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Set the logging level
 export DOCKER_LOG_LEVEL="--log-level=<%= p('log_level') %>"
 
-<% if_p('log_driver') do |log_driver| %>
+<% if_p('log_driver') do |log_driver| -%>
 # Default driver for container logs
 export DOCKER_LOG_DRIVER="--log-driver=<%= log_driver %>"
-<% end %>
+<% end -%>
 
-<% if_p('log_options') do |log_options| %>
+<% if_p('log_options') do |log_options| -%>
 # Log driver options
 export DOCKER_LOG_OPTIONS="<%= log_options.map { |log_option| "--log-opt=#{log_option}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
-<% if_p('mtu') do |mtu| %>
+<% if_p('mtu') do |mtu| -%>
 # Set the containers network MTU
 export DOCKER_MTU="--mtu=<%= mtu %>"
-<% end %>
+<% end -%>
 
-<% if_p('registry_mirrors') do |registry_mirrors| %>
+<% if_p('registry_mirrors') do |registry_mirrors| -%>
 # Preferred Docker registry mirrors
 export DOCKER_REGISTRY_MIRRORS="<%= registry_mirrors.map { |registry_mirror| "--registry-mirror=#{registry_mirror}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Enable selinux support
 export DOCKER_SELINUX_ENABLED="--selinux-enabled=<%= p('selinux_enable') %>"
 
-<% if_p('storage_driver') do |storage_driver| %>
+<% if_p('storage_driver') do |storage_driver| -%>
 # Use a specific storage driver
 export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
-<% end %>
+<% end -%>
 
-<% if_p('storage_options') do |storage_options| %>
+<% if_p('storage_options') do |storage_options| -%>
 # Storage driver options
 export DOCKER_STORAGE_OPTIONS="<%= storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>"
-<% end %>
+<% end -%>
 
 # Use TLS
 export DOCKER_TLS="--tls=<%= p('tls') %>"
 
-<% if_p('tls_cacert') do |tls_cacert| %>
+<% if_p('tls_cacert') do |tls_cacert| -%>
 # Trust only remotes providing a certificate signed by the CA given here
 export DOCKER_TLS_CACERT="--tlscacert=${DOCKER_CONF_DIR}/docker.cacert"
-<% end %>
+<% end -%>
 
-<% if_p('tls_cert') do |tls_cert| %>
+<% if_p('tls_cert') do |tls_cert| -%>
 # Path to TLS certificate file
 export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
-<% end %>
+<% end -%>
 
-<% if_p('tls_key') do |tls_key| %>
+<% if_p('tls_key') do |tls_key| -%>
 # Path to TLS key file
 export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
-<% end %>
+<% end -%>
 
-<% if p('tls_verify', false) %>
+<% if p('tls_verify', false) -%>
 # Use TLS and verify the remote
 export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
-<% end %>
+<% end -%>
 
 # Use userland proxy for loopback traffic
 export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('userland_proxy') %>"
 
 # Maximum number of open files
-export DOCKER_ULIMIT_NOFILE=<%= p('ulimit.nofile') %>
+export DOCKER_ULIMIT_NOFILE=<%= p('ulimit.nofile') -%>
 
-<% if p('flannel', false) %>
+<% if p('flannel', false) -%>
 source /run/flannel/subnet.env
 export DOCKER_FLANNEL="--bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}"
-<% end %>
+<% end -%>
 
 # Proxy configuration
-<% if_p('env.http_proxy') do |http_proxy| %>
+<% if_p('env.http_proxy') do |http_proxy| -%>
 export HTTP_PROXY="<%= http_proxy %>"
 export http_proxy="<%= http_proxy %>"
-<% end %>
-<% if_p('env.https_proxy') do |https_proxy| %>
+<% end -%>
+<% if_p('env.https_proxy') do |https_proxy| -%>
 export HTTPS_PROXY="<%= https_proxy %>"
 export https_proxy="<%= https_proxy %>"
-<% end %>
-<% if_p('env.no_proxy') do |no_proxy| %>
+<% end -%>
+<% if_p('env.no_proxy') do |no_proxy| -%>
 export NO_PROXY="<%= no_proxy %>"
 export no_proxy="<%= no_proxy %>"
-<% end %>
+<% end -%>
