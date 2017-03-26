@@ -1,0 +1,39 @@
+---
+name: broker-example
+
+instance_groups:
+- name: docker-broker
+  instances: 1
+  resource_pool: default
+  persistent_disk: 65536
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: docker
+    release: docker
+  - name: cf-containers-broker
+    release: docker
+    properties:
+      username: broker
+      password: ((broker_password))
+      cookie_secret: ((broker_cookie_secret))
+      max_containers: 20
+      services: []
+
+variables:
+- name: broker_password
+  type: password
+- name: broker_cookie_secret
+  type: password
+
+releases:
+ - name: docker
+   version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 32
+  serial: false

@@ -1,0 +1,26 @@
+---
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: broker-registrar
+    instances: 1
+    lifecycle: errand
+    vm_type: default
+    stemcell: default
+    networks: [{name: default}]
+    jobs:
+    - name: broker-registrar
+      release: docker
+
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: broker-deregistrar
+    instances: 1
+    lifecycle: errand
+    vm_type: default
+    stemcell: default
+    networks: [{name: default}]
+    jobs:
+    - name: broker-deregistrar
+      release: docker
