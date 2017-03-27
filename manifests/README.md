@@ -14,7 +14,7 @@ bosh2 int manifests/containers-example.yml
 ## Brokered containers
 
 ```
-bosh2 deploy manifests/brokered-containers.yml --vars-store=tmp/creds.yml \
+bosh2 deploy manifests/broker-containers.yml --vars-store=tmp/creds.yml \
   -o manifests/brokered-services/mysql56.yml \
   -o manifests/brokered-services/redis28.yml
 ```
@@ -28,7 +28,7 @@ Once deployed, you can dynamically provision new Docker containers using the Ser
 You can also integrate your service broker with your Cloud Foundry.
 
 ```
-bosh2 deploy manifests/brokered-containers.yml --vars-store=tmp/creds.yml \
+bosh2 deploy manifests/broker-containers.yml --vars-store=tmp/creds.yml \
   -o manifests/brokered-services/mysql56.yml \
   -o manifests/brokered-services/redis28.yml \
   -o manifests/op-cf-integration.yml

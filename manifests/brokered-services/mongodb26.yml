@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: 'p-mongodb26-client'
-      secret: 'p-mongodb26-secret'
+      id: ((uaa_client))
+      secret: ((uaa_client_secret))
     plans:
       - id: '6d8024b1-7deb-4dc7-a72a-33ec3f7a1bfc'
         name: 'free'

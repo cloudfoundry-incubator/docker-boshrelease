@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: 'p-postgresql93-client'
-      secret: 'p-postgresql93-secret'
+      id: ((uaa_client))
+      secret: ((uaa_client_secret))
     plans:
       - id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
         name: 'free'

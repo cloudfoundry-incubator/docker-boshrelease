@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: 'p-redis28-client'
-      secret: 'p-redis28-secret'
+      id: ((uaa_client))
+      secret: ((uaa_client_secret))
     plans:
       - id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
         name: 'free'
