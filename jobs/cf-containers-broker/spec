@@ -21,7 +21,7 @@ provides:
   properties:
   - username
   - password
-  - protocol
+  - ssl_enabled
   - port
   - external_host
   - name
@@ -32,9 +32,6 @@ properties:
     description: "Broker's basic auth username"
   password:
     description: "Broker's basic auth password"
-  protocol:
-    description: HTTP protocol to use to access broker
-    default: http
   port:
     description: "Unicorn listen port"
     default: "80"
