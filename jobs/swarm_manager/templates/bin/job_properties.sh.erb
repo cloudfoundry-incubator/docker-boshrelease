@@ -70,7 +70,7 @@ export SWARM_MANAGER_TLS_CERT="--tlscert=${SWARM_MANAGER_CONF_DIR}/docker.cert"
 export SWARM_MANAGER_TLS_KEY="--tlskey=${SWARM_MANAGER_CONF_DIR}/docker.key"
 <% end -%>
 
-<% link('docker').if p('tls_verify', false) -%>
+<% if link('docker').p('tls_verify', false) -%>
 # Use TLS and verify the remote
 export SWARM_MANAGER_TLS_VERIFY="--tlsverify=true"
 <% end -%>

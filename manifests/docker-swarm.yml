@@ -1,4 +1,6 @@
 name: docker-swarm
+# TODO add TLS certs
+# TODO docker-swarm-sanity-test job
 
 instance_groups:
 - name: docker

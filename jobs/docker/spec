@@ -16,7 +16,7 @@ templates:
 provides:
 - name: docker
   type: docker-tcp
-  provides:
+  properties:
   - tcp_port
   - tls
   - tls_cacert
