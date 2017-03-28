@@ -1,2 +1,2 @@
-* Use external broker-registrar release
-  * Add `consumes` to `type: servicebroker`
+* TLS for `manifests/swarm/docker-swarm.yml`
+* ruby 2.3.3 + rubygems
