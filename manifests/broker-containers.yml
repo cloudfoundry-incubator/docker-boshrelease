@@ -14,6 +14,10 @@ instance_groups:
     release: docker
   - name: cf-containers-broker
     release: docker
+    provides:
+      cf-containers-broker:
+        as: servicebroker
+        shared: true
     properties:
       username: broker
       password: ((broker_password))
