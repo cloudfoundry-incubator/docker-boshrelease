@@ -27,6 +27,9 @@ case $1 in
     # Mount cgroupfs hierarchy
     ${JOB_DIR}/bin/cgroupfs-mount
 
+    # Setup ssh env vars
+    ${JOB_DIR}/bin/setup-user-env
+
     # Create network bridge
     if [ ! -z ${DOCKER_BRIDGE_NAME} ]; then
         set +e

@@ -9,6 +9,8 @@ packages:
 templates:
   bin/cgroupfs-mount: bin/cgroupfs-mount
   bin/ctl: bin/ctl
+  bin/envrc: bin/envrc
+  bin/setup-user-env: bin/setup-user-env
   bin/job_properties.sh.erb: bin/job_properties.sh
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert

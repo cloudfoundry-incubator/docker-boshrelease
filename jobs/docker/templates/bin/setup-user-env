@@ -1,0 +1,15 @@
+#!/bin/bash
+
+checkenv() {
+  trap "exit 0" INT TERM QUIT
+
+  command=". ${JOB_DIR}/bin/envrc"
+  for profile in /root/.profile /etc/skel/.profile; do
+    # toolbelt.auto is disabled; stripping envrc from .profiles
+    if ! grep -q "^${command}\$" ${profile} >/dev/null 2>&1; then
+      echo "${command}" >> ${profile}
+    fi
+  done
+}
+
+checkenv
