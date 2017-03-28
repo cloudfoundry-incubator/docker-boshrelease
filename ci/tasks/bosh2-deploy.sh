@@ -14,7 +14,7 @@ if [[ "${delete_deployment_first:-false}" != "false" ]]; then
   bosh2 -n delete-deployment
 fi
 
-release_name=${release_name:-docker-boshrelease}
+release_name=${release_name:-docker}
 release_version=$(cat candidate-release/version)
 bosh2 upload-release candidate-release/*.tgz
 

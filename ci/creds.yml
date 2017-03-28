@@ -13,6 +13,10 @@ meta:
   docker_password: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:password" ))
 
   vault-addr: https://10.58.111.42:8200
-  vault-prefix: secret/microbosh/vsphere/cloud-config
-
   bosh-lite-testflight-vault-prefix: secret/bosh-lites/lite49
+
+  bosh-lite-testflight:
+    internal_ip: (( vault secret/bosh-lites/lite49 "/env:ip" ))
+    admin_password: (( vault secret/bosh-lites/lite49 "/users/admin:password" ))
+    director_ssl:
+      ca: (( vault secret/bosh-lites/lite49 "/certs:rootCA.pem" ))
