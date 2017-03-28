@@ -46,9 +46,11 @@ Each of your services will be now available in the service catalog/marketplace:
 cf marketplace
 ```
 
-## Docker swarm
+## Docker Swarm
+
+The docker swarm deployment includes automatic generation of TLS certificates that are shared between docker + swarm manager:
 
 ```
 export BOSH_DEPLOYMENT=docker-swarm
-bosh2 deploy manifests/swarm/docker-swarm.yml
+bosh2 deploy manifests/swarm/docker-swarm.yml --vars-store=tmp/creds.yml
 ```
