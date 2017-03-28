@@ -7,6 +7,7 @@ image_resource:
 inputs:
 - name: boshrelease-ci
 - name: candidate-release
+- name: version
 
 outputs:
 - name: manifest

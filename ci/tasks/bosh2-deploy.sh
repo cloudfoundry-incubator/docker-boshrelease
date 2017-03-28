@@ -15,7 +15,7 @@ if [[ "${delete_deployment_first:-false}" != "false" ]]; then
 fi
 
 release_name=${release_name:-docker}
-release_version=$(cat candidate-release/version)
+release_version="$(cat version/number)"
 bosh2 upload-release candidate-release/*.tgz
 
 cd boshrelease-ci
