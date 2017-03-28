@@ -81,7 +81,7 @@ export SWARM_MANAGER_DISCOVERY_OPTIONS="<%= discovery_options.map { |discovery_o
 <% end -%>
 
 # Swarm discovery
-<% docker_nodes = link('docker').instances.map {|i| "nodes://#{i.address}:4243"}.join(",") -%>
+<% docker_nodes = link('docker').instances.map {|i| "#{i.address}:4243"}.join(",") -%>
 export SWARM_MANAGER_DISCOVERY="<%= p('swarm.discovery', docker_nodes) %>"
 
 # Proxy configuration
