@@ -1,0 +1,34 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source: {repository: dingotiles/dingo-postgresql-release-pipeline}
+
+inputs:
+- name: boshrelease-ci
+- name: etcd
+- name: simple-remote-syslog
+- name: candidate-release
+- name: director-state
+
+outputs:
+- name: manifest
+
+params:
+  delete_deployment_first: false
+  manifest_path:
+  deployment_name:
+
+  cf_system_domain:
+  cf_admin_username: admin
+  cf_admin_password:
+  cf_skip_ssl_validation: false
+
+  docker_image_image: dingotiles/dingo-postgresql95
+  docker_image_tag:
+  docker_image_source: upstream
+
+  test_errand:
+
+run:
+  path: boshrelease-ci/ci/tasks/bosh2-deploy.sh

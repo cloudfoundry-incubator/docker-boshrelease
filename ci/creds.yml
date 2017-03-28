@@ -1,7 +1,7 @@
 ---
 meta:
   pipeline-branch: links-and-cloud-config
-  github-token: (( vault "secret/cfcommunity-boshreleases" "/github:token" ))
+  github-release-access-token: (( vault "secret/cfcommunity-boshreleases" "/github:token" ))
   github-private-key: (( vault "secret/cfcommunity-boshreleases" "/github:private_key" ))
 
   cfcommunity-aws-access: (( vault "secret/cfcommunity-boshreleases" "/aws/cfcommunity:access" ))
@@ -11,3 +11,8 @@ meta:
   docker_email: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:email" ))
   docker_username: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:username" ))
   docker_password: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:password" ))
+
+  vault-addr: https://10.58.111.42:8200
+  vault-prefix: secret/microbosh/vsphere/cloud-config
+
+  bosh-lite-testflight-vault-prefix: secret/bosh-lites/lite49
