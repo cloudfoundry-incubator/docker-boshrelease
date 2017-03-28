@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: ((uaa_client))
-      secret: ((uaa_client_secret))
+      id: docker-broker-postgresql93
+      secret: ((docker_broker_postgresql93_secret))
     plans:
       - id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
         name: 'free'
@@ -47,3 +47,9 @@
           bullets:
             - 'Dedicated PostgreSQL 9.3 server'
             - 'PostgreSQL 9.3 running inside a Docker container'
+
+- type: replace
+  path: /variables/-
+  value:
+    name: docker_broker_postgresql93_secret
+    type: password

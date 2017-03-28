@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: ((uaa_client))
-      secret: ((uaa_client_secret))
+      id: docker-broker-redis28
+      secret: ((docker_broker_redis28_secret))
     plans:
       - id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
         name: 'free'
@@ -41,3 +41,10 @@
           bullets:
             - 'Dedicated Redis 2.8 server'
             - 'Redis 2.8 running inside a Docker container'
+
+
+- type: replace
+  path: /variables/-
+  value:
+    name: docker_broker_redis28_secret
+    type: password

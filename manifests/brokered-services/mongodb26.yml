@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: ((uaa_client))
-      secret: ((uaa_client_secret))
+      id: docker-broker-mongodb26
+      secret: ((docker_broker_mongodb26_secret))
     plans:
       - id: '6d8024b1-7deb-4dc7-a72a-33ec3f7a1bfc'
         name: 'free'
@@ -49,3 +49,9 @@
           bullets:
             - 'Dedicated 2.6 MongoDB server'
             - 'MongoDB 2.6 running inside a Docker container'
+
+- type: replace
+  path: /variables/-
+  value:
+    name: docker_broker_mongodb26_secret
+    type: password

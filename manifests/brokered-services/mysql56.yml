@@ -18,8 +18,8 @@
       documentationUrl: 'http://docs.run.pivotal.io'
       supportUrl: 'http://support.run.pivotal.io/home'
     dashboard_client:
-      id: ((uaa_client))
-      secret: ((uaa_client_secret))
+      id: docker-broker-mysql56
+      secret: ((docker_broker_mysql56_secret))
     plans:
       - id: 'd42fc3cc-1341-4aa3-866e-01bc5243dc2e'
         name: 'free'
@@ -47,3 +47,9 @@
           bullets:
             - 'Dedicated MySQL 5.6 server'
             - 'MySQL 5.6 running inside a Docker container'
+
+- type: replace
+  path: /variables/-
+  value:
+    name: docker_broker_mysql56_secret
+    type: password
