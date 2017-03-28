@@ -10,7 +10,7 @@ There are three basic use cases supported by the Docker BOSH release:
 
 ```
 export BOSH_DEPLOYMENT=containers-example
-bosh2 int manifests/containers/example.yml
+bosh2 deploy manifests/containers/example.yml
 ```
 
 ## Brokered containers
@@ -50,5 +50,5 @@ cf marketplace
 
 ```
 export BOSH_DEPLOYMENT=docker-swarm
-bosh2 deploy manifests/docker-swarm.yml
+bosh2 deploy manifests/swarm/docker-swarm.yml
 ```
