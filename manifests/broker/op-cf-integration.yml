@@ -36,16 +36,16 @@
           password: ((cf_admin_password))
           skip_ssl_validation: ((cf_skip_ssl_validation))
 
-- type: replace
-  path: /instance_groups/-
-  value:
-    name: broker-deregistrar
-    instances: 1
-    azs: [z1]
-    lifecycle: errand
-    vm_type: default
-    stemcell: default
-    networks: [{name: default}]
-    jobs:
-    - name: broker-deregistrar
-      release: broker-registrar
+# - type: replace
+#   path: /instance_groups/-
+#   value:
+#     name: broker-deregistrar
+#     instances: 1
+#     azs: [z1]
+#     lifecycle: errand
+#     vm_type: default
+#     stemcell: default
+#     networks: [{name: default}]
+#     jobs:
+#     - name: broker-deregistrar
+#       release: broker-registrar

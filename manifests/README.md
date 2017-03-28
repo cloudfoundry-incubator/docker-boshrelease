@@ -28,6 +28,18 @@ The first time you run this it will automatically generate a root CA and TLS cer
 
 ## Brokered containers
 
+Simplest way to add service brokers to your Cloud Foundry. For the example below, the resulting marketplace will look like:
+
+```
+$ cf marketplace
+
+service   plans   description
+mysql56   free    MySQL 5.6 service for application development and testing
+redis28   free    Redis 2.8 service for application development and testing
+```
+
+The example above was created using the following deployment:
+
 ```
 export BOSH_DEPLOYMENT=docker-broker
 bosh2 deploy manifests/broker/docker-broker.yml \
@@ -39,6 +51,16 @@ bosh2 deploy manifests/broker/docker-broker.yml \
 See `manifests/broker/services/*.yml` for example service catalogs you can include in your service broker deployment.
 
 Once deployed, you can dynamically provision new Docker containers using the Service Broker API.
+
+Users can now provision new services, each running inside a Docker container, using the `cf create-service` command:
+
+```
+$ cf create-service redis28 free redis1
+$ cf create-service redis28 free redis2
+$ cf create-service mysql56 free mysql1
+```
+
+![cf-create-service-ctop](broker/cf-create-service-ctop.gif)
 
 ### Integration with Cloud Foundry
 
