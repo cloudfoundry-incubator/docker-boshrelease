@@ -6,8 +6,6 @@ image_resource:
 
 inputs:
 - name: boshrelease-ci
-- name: etcd
-- name: simple-remote-syslog
 - name: candidate-release
 - name: director-state
 

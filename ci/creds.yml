@@ -5,7 +5,7 @@ meta:
   github-private-key: (( vault "secret/cfcommunity-boshreleases" "/github:private_key" ))
 
   cfcommunity-aws-access: (( vault "secret/cfcommunity-boshreleases" "/aws/cfcommunity:access" ))
-  cfcommunity-aws-secret: (( vault "secret/cfcommunity-boshreleases" "/aws/cfcommunity:access" ))
+  cfcommunity-aws-secret: (( vault "secret/cfcommunity-boshreleases" "/aws/cfcommunity:secret" ))
   cfcommunity-aws-region: us-east-1
 
   docker_email: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:email" ))
