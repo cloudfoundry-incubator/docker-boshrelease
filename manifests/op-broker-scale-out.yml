@@ -1,7 +1,0 @@
----
-- type: replace
-  path: /releases/-
-  value:
-    name: cf-subway
-    version: latest
-  
