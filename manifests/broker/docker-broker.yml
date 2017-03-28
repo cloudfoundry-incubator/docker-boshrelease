@@ -1,8 +1,8 @@
 ---
-name: broker-containers
+name: docker-broker
 
 instance_groups:
-- name: docker-broker
+- name: docker
   azs: [z1]
   instances: 1
   persistent_disk: 65536

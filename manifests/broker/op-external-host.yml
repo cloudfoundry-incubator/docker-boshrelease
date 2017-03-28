@@ -1,8 +1,8 @@
 ---
 - type: replace
-  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/external_host?
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/external_host?
   value: ((broker_external_host))
 
 - type: replace
-  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/port?
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/port?
   value: ((broker_port))

@@ -1,6 +1,6 @@
 ---
 - type: replace
-  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/services/-
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
   value:
     name: 'mongodb26'
     id: '23eefc93-6814-4db8-bbf0-eaa6c3c5fecc'

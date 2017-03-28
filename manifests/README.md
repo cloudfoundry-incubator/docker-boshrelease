@@ -13,16 +13,30 @@ export BOSH_DEPLOYMENT=containers-example
 bosh2 deploy manifests/containers/example.yml
 ```
 
+By default above Docker daemon is only available locally via a `$DOCKER_SOCK` socket.
+
+To expose the Docker daemon externally via TCP port, include the `op-public-tls.yml` operator patch file:
+
+```
+export BOSH_DEPLOYMENT=containers-example
+bosh2 deploy manifests/containers/example.yml \
+  -o manifests/op-public-tls.yml \
+  --vars-store tmp/creds.yml
+```
+
+The first time you run this it will automatically generate a root CA and TLS certificate and store it in `tmp/creds.yml`.
+
 ## Brokered containers
 
 ```
-export BOSH_DEPLOYMENT=broker-containers
-bosh2 deploy manifests/broker/broker-containers.yml --vars-store=tmp/creds.yml \
+export BOSH_DEPLOYMENT=docker-broker
+bosh2 deploy manifests/broker/docker-broker.yml \
+  --vars-store tmp/creds.yml \
   -o manifests/services/mysql56.yml \
   -o manifests/services/redis28.yml
 ```
 
-See `manifests/brokered-services/*.yml` for example service catalogs you can include in your service broker deployment.
+See `manifests/broker/services/*.yml` for example service catalogs you can include in your service broker deployment.
 
 Once deployed, you can dynamically provision new Docker containers using the Service Broker API.
 
@@ -31,8 +45,8 @@ Once deployed, you can dynamically provision new Docker containers using the Ser
 You can also integrate your service broker with your Cloud Foundry.
 
 ```
-export BOSH_DEPLOYMENT=broker-containers
-bosh2 deploy manifests/broker/broker-containers.yml --vars-store=tmp/creds.yml \
+export BOSH_DEPLOYMENT=docker-broker
+bosh2 deploy manifests/broker/docker-broker.yml --vars-store tmp/creds.yml \
   -o manifests/services/mysql56.yml \
   -o manifests/services/redis28.yml \
   -o manifests/op-cf-integration.yml
@@ -52,5 +66,5 @@ The docker swarm deployment includes automatic generation of TLS certificates th
 
 ```
 export BOSH_DEPLOYMENT=docker-swarm
-bosh2 deploy manifests/swarm/docker-swarm.yml --vars-store=tmp/creds.yml
+bosh2 deploy manifests/swarm/docker-swarm.yml --vars-store tmp/creds.yml
 ```

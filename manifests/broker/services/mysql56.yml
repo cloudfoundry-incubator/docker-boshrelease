@@ -1,6 +1,6 @@
 ---
 - type: replace
-  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/services/-
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
   value:
     name: 'mysql56'
     id: '24736f4a-72b8-4298-96f7-b48c4045ddfd'

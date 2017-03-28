@@ -1,6 +1,6 @@
 ---
 - type: replace
-  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/services/-
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
   value:
     name: 'postgresql93'
     id: '2fd814ac-d1f7-4d4a-a4f7-d386cd8fd8e3'

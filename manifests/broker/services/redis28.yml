@@ -1,6 +1,6 @@
 ---
 - type: replace
-  path: /instance_groups/name=docker-broker/jobs/name=cf-containers-broker/properties/services/-
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
   value:
     id: '3101b971-1044-4816-a7ac-9ded2e028079'
     name: 'redis28'
