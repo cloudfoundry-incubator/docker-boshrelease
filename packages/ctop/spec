@@ -1,0 +1,4 @@
+---
+name: ctop
+dependencies: []
+files: [ctop/ctop-*-linux-amd64]

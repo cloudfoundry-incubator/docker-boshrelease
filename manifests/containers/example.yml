@@ -2,7 +2,7 @@
 name: containers-example
 
 instance_groups:
-- name: containers
+- name: docker
   azs: [z1]
   instances: 1
   persistent_disk: 65536

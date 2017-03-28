@@ -4,6 +4,7 @@ name: docker
 packages:
   - bosh-helpers
   - docker
+  - ctop
 
 templates:
   bin/cgroupfs-mount: bin/cgroupfs-mount
