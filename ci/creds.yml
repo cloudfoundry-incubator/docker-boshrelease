@@ -1,0 +1,13 @@
+---
+meta:
+  pipeline-branch: links-and-cloud-config
+  github-token: (( vault "secret/cfcommunity-boshreleases" "/github:token" ))
+  github-private-key: (( vault "secret/cfcommunity-boshreleases" "/github:private_key" ))
+
+  cfcommunity-aws-access: (( vault "secret/cfcommunity-boshreleases" "/aws/cfcommunity:access" ))
+  cfcommunity-aws-secret: (( vault "secret/cfcommunity-boshreleases" "/aws/cfcommunity:access" ))
+  cfcommunity-aws-region: us-east-1
+
+  docker_email: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:email" ))
+  docker_username: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:username" ))
+  docker_password: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:password" ))

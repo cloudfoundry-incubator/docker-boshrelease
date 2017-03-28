@@ -1,0 +1,66 @@
+---
+resources:
+- name: boshrelease
+  type: git
+  source:
+    uri: git@github.com:cloudfoundry-community/docker-boshrelease.git
+    branch: (( grab meta.pipeline-branch ))
+    private_key: (( grab meta.github-private-key ))
+
+- name: boshrelease-trigger
+  type: git
+  source:
+    uri: git@github.com:cloudfoundry-community/docker-boshrelease.git
+    branch: (( grab meta.pipeline-branch ))
+    private_key: (( grab meta.github-private-key ))
+    paths: [config/blobs.yml, packages/**/*, packages/*, jobs/*, jobs/**/*, src/**/*, src/*]
+
+- name: boshrelease-ci
+  type: git
+  source:
+    uri: git@github.com:cloudfoundry-community/docker-boshrelease.git
+    branch: (( grab meta.pipeline-branch ))
+    private_key: (( grab meta.github-private-key ))
+
+- name: version
+  type: semver
+  source:
+    driver: git
+    initial_version: 30.0.0
+    uri: git@github.com:cloudfoundry-community/docker-boshrelease.git
+    branch: version
+    file: version
+    private_key: (( grab meta.github-private-key ))
+
+- name: candidate-release
+  type: s3
+  source:
+    bucket: docker-boshrelease
+    regexp: docker-(.*).tgz
+    access_key_id: (( grab meta.cfcommunity-aws-access ))
+    secret_access_key: (( grab meta.cfcommunity-aws-secret ))
+    region_name: (( grab meta.cfcommunity-aws-region ))
+
+jobs:
+- name: rc
+  public: true
+  serial_groups: [version]
+  plan:
+  - aggregate:
+    - {get: boshrelease}
+    - {get: boshrelease-trigger, trigger: true, params: {skip_download: true}}
+    - {get: version, params: {pre: rc}}
+  - put: version
+    params: {file: version/number}
+
+- name: bosh-rc
+  public: true
+  plan:
+  - aggregate:
+    - {get: boshrelease-ci}
+    - {get: boshrelease, passed: [rc], trigger: true}
+    - {get: version, passed: [rc], trigger: true}
+  - task: create-candidate-release
+    file: boshrelease-ci/ci/tasks/create-candidate-release.yml
+  - put: candidate-release
+    params: {file: candidate-release/docker-*.tgz}
