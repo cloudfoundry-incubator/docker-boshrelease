@@ -74,15 +74,12 @@ jobs:
     - {get: boshrelease, passed: [bosh-rc], trigger: true}
     - {get: version, passed: [bosh-rc], trigger: true}
     - {get: candidate-release, passed: [bosh-rc], trigger: true}
-  - task: director-creds
-    file: boshrelease-ci/ci/tasks/director-creds.yml
-    params:
-      VAULT_ADDR: (( grab meta.vault-addr ))
-      VAULT_SKIP_VERIFY: 1
-      VAULT_PREFIX: (( grab meta.bosh-lite-testflight-vault-prefix ))
-      GITHUB_TOKEN: (( grab meta.github-release-access-token ))
   - task: bosh2-deploy
     file: boshrelease-ci/ci/tasks/bosh2-deploy.yml
     params:
-      deployment_name: containers-example
+      BOSH_ENVIRONMENT: (( grab meta.bosh-lite-testflight.bosh_environment ))
+      BOSH_CA_CERT: (( grab meta.bosh-lite-testflight.bosh_ca_cert ))
+      BOSH_CLIENT: (( grab meta.bosh-lite-testflight.bosh_client ))
+      BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
+      BOSH_DEPLOYMENT: containers-example
       manifest_path: manifests/containers/example.yml

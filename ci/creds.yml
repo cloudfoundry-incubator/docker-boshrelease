@@ -12,11 +12,8 @@ meta:
   docker_username: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:username" ))
   docker_password: (( vault "secret/cfcommunity-boshreleases" "/docker_hub:password" ))
 
-  vault-addr: https://10.58.111.42:8200
-  bosh-lite-testflight-vault-prefix: secret/bosh-lites/lite49
-
   bosh-lite-testflight:
-    internal_ip: (( vault secret/bosh-lites/lite49 "/env:ip" ))
-    admin_password: (( vault secret/bosh-lites/lite49 "/users/admin:password" ))
-    director_ssl:
-      ca: (( vault secret/bosh-lites/lite49 "/certs:rootCA.pem" ))
+    bosh_environment: (( vault "secret/bosh-lites/lite49" "/env:ip" ))
+    bosh_ca_cert: (( vault "secret/bosh-lites/lite49" "/certs:rootCA.pem" ))
+    bosh_client: admin
+    bosh_client_secret: (( vault "secret/bosh-lites/lite49" "/users/admin:password" ))

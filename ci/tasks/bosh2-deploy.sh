@@ -4,11 +4,11 @@ set -e
 
 manifest_dir=$(pwd)/manifest
 
-export BOSH_ENVIRONMENT=`bosh2 int director-state/director-creds.yml --path /internal_ip`
-export BOSH_CA_CERT="$(bosh2 int director-state/director-creds.yml --path /director_ssl/ca)"
-export BOSH_CLIENT=admin
-export BOSH_CLIENT_SECRET=`bosh2 int director-state/director-creds.yml --path /admin_password`
-export BOSH_DEPLOYMENT=$deployment_name
+export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
+export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
+export BOSH_CLIENT=${BOSH_CLIENT:?required}
+export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
+export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
 
 if [[ "${delete_deployment_first:-false}" != "false" ]]; then
   bosh2 -n delete-deployment
@@ -32,7 +32,7 @@ cat > tmp/deployment.yml <<YAML
 ---
 - type: replace
   path: /name
-  value: ${deployment_name:?required}
+  value: ${BOSH_DEPLOYMENT:?required}
 YAML
 
 cat > tmp/vars.yml <<YAML

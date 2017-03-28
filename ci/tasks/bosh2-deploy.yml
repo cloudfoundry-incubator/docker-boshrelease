@@ -7,24 +7,19 @@ image_resource:
 inputs:
 - name: boshrelease-ci
 - name: candidate-release
-- name: director-state
 
 outputs:
 - name: manifest
 
 params:
+  BOSH_ENVIRONMENT:
+  BOSH_CA_CERT:
+  BOSH_CLIENT:
+  BOSH_CLIENT_SECRET:
+  BOSH_DEPLOYMENT:
+
   delete_deployment_first: false
   manifest_path:
-  deployment_name:
-
-  cf_system_domain:
-  cf_admin_username: admin
-  cf_admin_password:
-  cf_skip_ssl_validation: false
-
-  docker_image_image: dingotiles/dingo-postgresql95
-  docker_image_tag:
-  docker_image_source: upstream
 
   test_errand:
 
