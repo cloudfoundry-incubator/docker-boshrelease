@@ -61,7 +61,3 @@ bosh2 int ${base_manifest:?required} \
     > $manifest_dir/manifest.yml
 
 bosh2 -n deploy $manifest_dir/manifest.yml
-
-if [[ "${test_errand:-X}" != "X" ]]; then
-  bosh2 run-errand ${test_errand}
-fi

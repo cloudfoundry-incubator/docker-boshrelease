@@ -25,4 +25,4 @@
 
 - type: replace
   path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/external_host?
-  value: ((broker_route_name))
+  value: ((broker_route_uri))
