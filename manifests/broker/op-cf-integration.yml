@@ -9,14 +9,6 @@
     # sha1: 83b61f06e43c27845deb59597504e55ee887897e
 
 - type: replace
-  path: /releases/-
-  value:
-    name: routing
-    version: 0.147.0
-    url: https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.147.0
-    sha1: 526af8e02a170b424f80148eed95f373bf831a6a
-
-- type: replace
   path: /instance_groups/-
   value:
     name: broker-registrar
