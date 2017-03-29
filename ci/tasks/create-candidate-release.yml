@@ -12,9 +12,5 @@ inputs:
 outputs:
 - name: candidate-release
 
-params:
-  aws_access_key_id:
-  aws_secret_access_key:
-
 run:
   path: ./boshrelease-ci/ci/tasks/create-candidate-release.sh
