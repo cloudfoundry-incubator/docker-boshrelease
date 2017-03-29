@@ -63,10 +63,6 @@ instance_groups:
             EXPOSE 9200
             EXPOSE 9300
 
-releases:
- - name: docker
-   version: latest
-
 stemcells:
 - alias: default
   os: ubuntu-trusty
@@ -78,3 +74,9 @@ update:
   update_watch_time: 1000-60000
   max_in_flight: 32
   serial: false
+
+releases:
+- name: docker
+  version: 30.0.0-rc.3
+  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.3/docker-30.0.0-rc.3.tgz
+  sha1: 2cbd5d0a9cfdfacede55d0231a75893f824f32dd

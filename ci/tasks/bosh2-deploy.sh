@@ -39,9 +39,10 @@ cat > tmp/vars.yml <<YAML
 YAML
 
 set -x
-bosh2 int ${manifest_path:?required}       \
-  -o           tmp/deployment.yml              \
-  -o           tmp/versions.yml                \
+bosh2 int ${manifest_path:?required} \
+  -o           manifests/op-dev.yml  \
+  -o           tmp/deployment.yml    \
+  -o           tmp/versions.yml      \
   --vars-store tmp/creds.yml \
   --vars-file  tmp/vars.yml  \
   --var-errs \
