@@ -41,6 +41,15 @@ resources:
     secret_access_key: (( grab meta.cfcommunity-aws-secret ))
     region_name: (( grab meta.cfcommunity-aws-region ))
 
+- name: github-release-prerelease
+  type: github-release
+  source:
+    access_token: (( grab meta.github-release-access-token ))
+    user: cloudfoundry-community
+    repository: docker-boshrelease
+    drafts: true
+    pre_release: true
+
 jobs:
 - name: rc
   public: true
@@ -128,3 +137,46 @@ jobs:
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-docker-swarm
       manifest_path: manifests/swarm/docker-swarm.yml
+
+- name: shipit-rc
+  serial_groups: [version]
+  public: true
+  plan:
+  - aggregate:
+    - {get: boshrelease-ci}
+    - {get: boshrelease, passed: [testflight-containers, testflight-broker, testflight-swarm]}
+    - {get: candidate-release, passed: [testflight-containers, testflight-broker, testflight-swarm]}
+    - {get: version, passed: [testflight-containers, testflight-broker, testflight-swarm]}
+  - task: create-final-release
+    file: boshrelease-ci/ci/tasks/finalize-release.yml
+    params:
+      aws_access_key_id: (( grab meta.cfcommunity-aws-access ))
+      aws_secret_access_key: (( grab meta.cfcommunity-aws-secret ))
+  - put: boshrelease
+    params:
+      repository: final-release-repo
+      rebase: true
+  - task: create-release-notes
+    file: boshrelease-ci/ci/tasks/create-release-notes.yml
+  - put: version
+    params: {file: version/number}
+  - task: generate-commitish
+    config:
+      platform: linux
+      image: docker:///dingotiles/dingo-postgresql-release-pipeline
+      inputs: [{name: boshrelease}]
+      outputs: [{name: generated-commitish}]
+      run:
+        path: sh
+        args:
+        - -c
+        - |
+          git -C boshrelease rev-parse HEAD > generated-commitish/commitish
+  - put: github-release-prerelease
+    params:
+      name: release-notes/release-name
+      tag: release-notes/release-name
+      body: release-notes/notes.md
+      commitish: generated-commitish/commitish
+      globs:
+      - final-release-tarball/*.tgz

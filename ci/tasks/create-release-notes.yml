@@ -1,0 +1,15 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source: {repository: dingotiles/dingo-postgresql-release-pipeline}
+
+inputs:
+- name: boshrelease-ci
+- name: version
+
+outputs:
+- name: release-notes
+
+run:
+  path: ./boshrelease-ci/ci/tasks/create-release-notes.sh
