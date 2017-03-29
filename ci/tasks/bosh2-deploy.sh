@@ -35,7 +35,11 @@ cat > tmp/deployment.yml <<YAML
 YAML
 
 cat > tmp/vars.yml <<YAML
---- {}
+---
+cf_api_url: ${cf_api_url:-}
+cf_skip_ssl_validation: ${cf_skip_ssl_validation:-}
+cf_admin_username: ${cf_admin_username:-}
+cf_admin_password: ${cf_admin_password:-}
 YAML
 
 op_patch_files_flags=""

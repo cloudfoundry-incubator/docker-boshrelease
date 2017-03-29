@@ -23,7 +23,10 @@ params:
   base_manifest:
   op_patch_files: "" # comma separated list of relative files
 
-  test_errand:
+  cf_api_url:
+  cf_skip_ssl_validation:
+  cf_admin_username: admin
+  cf_admin_password:
 
 run:
   path: boshrelease-ci/ci/tasks/bosh2-deploy.sh
