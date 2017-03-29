@@ -4,14 +4,11 @@ name: cf-containers-broker
 packages:
   - bosh-helpers
   - cf-containers-broker
-  - route-registrar
   - ruby
 
 templates:
   bin/ctl: bin/ctl
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/route-registrar_ctl.erb: bin/route-registrar_ctl
-  config/route-registrar.yml.erb: config/route-registrar.yml
   config/settings.yml.erb: config/settings.yml
   config/unicorn.conf.rb.erb: config/unicorn.conf.rb
 
@@ -78,16 +75,6 @@ properties:
   update_containers:
     description: "Restart all containers with latest configuration/image on restart"
     default: true
-
-  nats.user:
-    description: "Username for broker to connect to NATS"
-  nats.password:
-    description: "Password for broker to connect to NATS"
-  nats.port:
-    description: "IP port of Cloud Foundry NATS server"
-    default: 4222
-  nats.machines:
-    description: "Array of IPs of each NATS cluster member"
 
   env.http_proxy:
     description: "HTTP proxy"
