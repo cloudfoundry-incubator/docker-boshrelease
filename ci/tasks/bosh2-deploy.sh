@@ -14,11 +14,11 @@ if [[ "${delete_deployment_first:-false}" != "false" ]]; then
   bosh2 -n delete-deployment
 fi
 
-release_name=${release_name:-docker}
-release_version="$(cat version/number)"
 bosh2 upload-release candidate-release/*.tgz
 
 cd boshrelease-ci
+release_name=$(bosh2 int config/final.yml --path /final_name)
+
 mkdir -p tmp
 
 cat > tmp/versions.yml <<YAML
