@@ -102,3 +102,22 @@ jobs:
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-docker-broker
       manifest_path: manifests/broker/docker-broker.yml
+
+- name: testflight-swarm
+  public: true
+  serial_groups: [deployment-swarm]
+  plan:
+  - aggregate:
+    - {get: boshrelease-ci}
+    - {get: boshrelease, passed: [bosh-rc], trigger: true}
+    - {get: version, passed: [bosh-rc], trigger: true}
+    - {get: candidate-release, passed: [bosh-rc], trigger: true}
+  - task: bosh2-deploy
+    file: boshrelease-ci/ci/tasks/bosh2-deploy.yml
+    params:
+      BOSH_ENVIRONMENT: (( grab meta.bosh-lite-testflight.bosh_environment ))
+      BOSH_CA_CERT: (( grab meta.bosh-lite-testflight.bosh_ca_cert ))
+      BOSH_CLIENT: (( grab meta.bosh-lite-testflight.bosh_client ))
+      BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
+      BOSH_DEPLOYMENT: testflight-docker-swarm
+      manifest_path: manifests/swarm/docker-swarm.yml
