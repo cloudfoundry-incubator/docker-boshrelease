@@ -22,27 +22,27 @@
       id: docker-broker-consul03
       secret: ((docker_broker_consul03_secret))
     plans:
-        id: '2cb83bb4-2df9-11e4-a506-a6c5e4d22fb7'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'progrium/consul'
-          tag: 'latest'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          uri:
-            uri: 'consul'
-            port: '8500/tcp'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated Consul server v0.3.1'
-            - 'Consul server running inside a Docker container'
+    - id: '2cb83bb4-2df9-11e4-a506-a6c5e4d22fb7'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'progrium/consul'
+        tag: 'latest'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        uri:
+          uri: 'consul'
+          port: '8500/tcp'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated Consul server v0.3.1'
+          - 'Consul server running inside a Docker container'
 
 - type: replace
   path: /variables/-

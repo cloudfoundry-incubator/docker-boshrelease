@@ -21,75 +21,75 @@
       id: docker-broker-memcached14
       secret: ((docker_broker_memcached14_secret))
     plans:
-        id: 'febbe2ce-1461-419f-a237-3b35cb43fe09'
-        name: '128Mb'
-        max_containers: 8
-        container:
-          backend: 'docker'
-          image: 'frodenas/memcached'
-          tag: '1.4'
-          memory: '128m'
-        credentials:
-          username:
-            key: 'MEMCACHED_USERNAME'
-          password:
-            key: 'MEMCACHED_PASSWORD'
-        description: '128 Mb Memory - Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - '128 Mb Memory'
-            - 'Dedicated Memcached 1.4 server'
-            - 'Memcached 1.4 running inside a Docker container'
-        id: '0d1bb839-ba7b-4163-af09-b5f4f610cf1e'
-        name: '512Mb'
-        max_containers: 2
-        container:
-          backend: 'docker'
-          image: 'frodenas/memcached'
-          tag: '1.4'
-          memory: '512m'
-        credentials:
-          username:
-            key: 'MEMCACHED_USERNAME'
-          password:
-            key: 'MEMCACHED_PASSWORD'
-        description: '512 Mb Memory - Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - '512 Mb Memory'
-            - 'Dedicated Memcached 1.4 server'
-            - 'Memcached 1.4 running inside a Docker container'
-        id: '49ca90b5-90f1-4f32-9161-44585cee63d2'
-        name: '1Gb'
-        max_containers: 1
-        container:
-          backend: 'docker'
-          image: 'frodenas/memcached'
-          tag: '1.4'
-          memory: '1g'
-        credentials:
-          username:
-            key: 'MEMCACHED_USERNAME'
-          password:
-            key: 'MEMCACHED_PASSWORD'
-        description: '1 Gb Memory - Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - '1 Gb Memory'
-            - 'Dedicated Memcached 1.4 server'
-            - 'Memcached 1.4 running inside a Docker container'
+    - id: 'febbe2ce-1461-419f-a237-3b35cb43fe09'
+      name: '128Mb'
+      max_containers: 8
+      container:
+        backend: 'docker'
+        image: 'frodenas/memcached'
+        tag: '1.4'
+        memory: '128m'
+      credentials:
+        username:
+          key: 'MEMCACHED_USERNAME'
+        password:
+          key: 'MEMCACHED_PASSWORD'
+      description: '128 Mb Memory - Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - '128 Mb Memory'
+          - 'Dedicated Memcached 1.4 server'
+          - 'Memcached 1.4 running inside a Docker container'
+    - id: '0d1bb839-ba7b-4163-af09-b5f4f610cf1e'
+      name: '512Mb'
+      max_containers: 2
+      container:
+        backend: 'docker'
+        image: 'frodenas/memcached'
+        tag: '1.4'
+        memory: '512m'
+      credentials:
+        username:
+          key: 'MEMCACHED_USERNAME'
+        password:
+          key: 'MEMCACHED_PASSWORD'
+      description: '512 Mb Memory - Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - '512 Mb Memory'
+          - 'Dedicated Memcached 1.4 server'
+          - 'Memcached 1.4 running inside a Docker container'
+    - id: '49ca90b5-90f1-4f32-9161-44585cee63d2'
+      name: '1Gb'
+      max_containers: 1
+      container:
+        backend: 'docker'
+        image: 'frodenas/memcached'
+        tag: '1.4'
+        memory: '1g'
+      credentials:
+        username:
+          key: 'MEMCACHED_USERNAME'
+        password:
+          key: 'MEMCACHED_PASSWORD'
+      description: '1 Gb Memory - Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - '1 Gb Memory'
+          - 'Dedicated Memcached 1.4 server'
+          - 'Memcached 1.4 running inside a Docker container'
 
 - type: replace
   path: /variables/-

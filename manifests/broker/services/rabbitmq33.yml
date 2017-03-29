@@ -21,29 +21,29 @@
       id: docker-broker-rabbitmq33
       secret: ((docker_broker_rabbitmq33_secret))
     plans:
-        id: '6d3d7e5a-c7ce-4f80-99ca-7cc52445d355'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/rabbitmq'
-          tag: 'latest'
-        credentials:
-          username:
-            key: 'RABBITMQ_USERNAME'
-          password:
-            key: 'RABBITMQ_PASSWORD'
-          uri:
-            prefix: 'amqp'
-            port: '5672/tcp'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated RabbitMQ 3.3 server'
-            - 'RabbitMQ 3.3 running inside a Docker container'
+    - id: '6d3d7e5a-c7ce-4f80-99ca-7cc52445d355'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/rabbitmq'
+        tag: 'latest'
+      credentials:
+        username:
+          key: 'RABBITMQ_USERNAME'
+        password:
+          key: 'RABBITMQ_PASSWORD'
+        uri:
+          prefix: 'amqp'
+          port: '5672/tcp'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated RabbitMQ 3.3 server'
+          - 'RabbitMQ 3.3 running inside a Docker container'
 
 - type: replace
   path: /variables/-

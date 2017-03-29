@@ -21,34 +21,34 @@
       id: docker-broker-mongodb26
       secret: ((docker_broker_mongodb26_secret))
     plans:
-        id: '6d8024b1-7deb-4dc7-a72a-33ec3f7a1bfc'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/mongodb'
-          tag: '2.6'
-          command: '--smallfiles --httpinterface'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          username:
-            key: 'MONGODB_USERNAME'
-          password:
-            key: 'MONGODB_PASSWORD'
-          dbname:
-            key: 'MONGODB_DBNAME'
-          uri:
-            prefix: 'mongodb'
-            port: '27017/tcp'
-        description: 'Free Trial'
-        metadata:
-          costs:
-          - amount:
-              usd: 0.0
-            unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated 2.6 MongoDB server'
-            - 'MongoDB 2.6 running inside a Docker container'
+    - id: '6d8024b1-7deb-4dc7-a72a-33ec3f7a1bfc'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/mongodb'
+        tag: '2.6'
+        command: '--smallfiles --httpinterface'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        username:
+          key: 'MONGODB_USERNAME'
+        password:
+          key: 'MONGODB_PASSWORD'
+        dbname:
+          key: 'MONGODB_DBNAME'
+        uri:
+          prefix: 'mongodb'
+          port: '27017/tcp'
+      description: 'Free Trial'
+      metadata:
+        costs:
+        - amount:
+            usd: 0.0
+          unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated 2.6 MongoDB server'
+          - 'MongoDB 2.6 running inside a Docker container'
 
 - type: replace
   path: /variables/-

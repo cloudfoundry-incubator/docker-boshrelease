@@ -21,32 +21,32 @@
       id: docker-broker-postgresql93
       secret: ((docker_broker_postgresql93_secret))
     plans:
-        id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/postgresql'
-          tag: 'latest'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          username:
-            key: 'POSTGRES_USERNAME'
-          password:
-            key: 'POSTGRES_PASSWORD'
-          dbname:
-            key: 'POSTGRES_DBNAME'
-          uri:
-            prefix: 'postgres'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated PostgreSQL 9.3 server'
-            - 'PostgreSQL 9.3 running inside a Docker container'
+    - id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/postgresql'
+        tag: 'latest'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        username:
+          key: 'POSTGRES_USERNAME'
+        password:
+          key: 'POSTGRES_PASSWORD'
+        dbname:
+          key: 'POSTGRES_DBNAME'
+        uri:
+          prefix: 'postgres'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated PostgreSQL 9.3 server'
+          - 'PostgreSQL 9.3 running inside a Docker container'
 
 - type: replace
   path: /variables/-

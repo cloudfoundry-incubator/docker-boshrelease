@@ -23,22 +23,22 @@
       id: docker-broker-logstash14
       secret: ((docker_broker_logstash14_secret))
     plans:
-        id: '5218782d-7fab-4534-92b8-434204d88c7b'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/logstash'
-          tag: '1.4'
-        syslog_drain_port: '514/tcp'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated Logstash 1.4 server'
-            - 'Logstash 1.4 running inside a Docker container'
+    - id: '5218782d-7fab-4534-92b8-434204d88c7b'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/logstash'
+        tag: '1.4'
+      syslog_drain_port: '514/tcp'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated Logstash 1.4 server'
+          - 'Logstash 1.4 running inside a Docker container'
 
 - type: replace
   path: /variables/-

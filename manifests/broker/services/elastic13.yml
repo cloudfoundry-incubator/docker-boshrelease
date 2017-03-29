@@ -23,23 +23,23 @@
       id: docker-broker-elastic13
       secret: ((docker_broker_elastic13_secret))
     plans:
-        id: 'cff75095-36b7-4e91-91e4-4d27b7bd8867'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/elasticsearch'
-          tag: '1.3'
-          persistent_volumes:
-            - '/data'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated Elasticsearch 1.3 server'
-            - 'Elasticsearch 1.3 running inside a Docker container'
+    - id: 'cff75095-36b7-4e91-91e4-4d27b7bd8867'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/elasticsearch'
+        tag: '1.3'
+        persistent_volumes:
+          - '/data'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated Elasticsearch 1.3 server'
+          - 'Elasticsearch 1.3 running inside a Docker container'
 
 - type: replace
   path: /variables/-

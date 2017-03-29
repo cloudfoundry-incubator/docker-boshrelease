@@ -22,27 +22,27 @@
       id: docker-broker-etcd04
       secret: ((docker_broker_etcd04_secret))
     plans:
-        id: '5d52a2bc-2da1-11e4-852f-a6c5e4d22fb7'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'drnic/etcd'
-          tag: '0.4.6'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          uri:
-            prefix: 'etcd'
-            port: '4001/tcp'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated Etcd 0.4.6 server'
-            - 'Etcd 0.4.6 running inside a Docker container'
+    - id: '5d52a2bc-2da1-11e4-852f-a6c5e4d22fb7'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'drnic/etcd'
+        tag: '0.4.6'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        uri:
+          prefix: 'etcd'
+          port: '4001/tcp'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated Etcd 0.4.6 server'
+          - 'Etcd 0.4.6 running inside a Docker container'
 
 - type: replace
   path: /variables/-

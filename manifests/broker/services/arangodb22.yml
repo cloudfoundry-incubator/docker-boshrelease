@@ -21,32 +21,32 @@
       id: docker-broker-arangodb22
       secret: ((docker_broker_arangodb22_secret))
     plans:
-        id: '01a3df74-0718-48ca-8b30-a9f79e8bec94'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/arangodb'
-          tag: '2.2'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          username:
-            key: 'ARANGODB_USERNAME'
-          password:
-            key: 'ARANGODB_PASSWORD'
-          dbname:
-            key: 'ARANGODB_DBNAME'
-          uri:
-            prefix: 'arangodb'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated ArangoDB 2.2 server'
-            - 'ArangoDB 2.2 running inside a Docker container'
+    - id: '01a3df74-0718-48ca-8b30-a9f79e8bec94'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/arangodb'
+        tag: '2.2'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        username:
+          key: 'ARANGODB_USERNAME'
+        password:
+          key: 'ARANGODB_PASSWORD'
+        dbname:
+          key: 'ARANGODB_DBNAME'
+        uri:
+          prefix: 'arangodb'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated ArangoDB 2.2 server'
+          - 'ArangoDB 2.2 running inside a Docker container'
 
 - type: replace
   path: /variables/-

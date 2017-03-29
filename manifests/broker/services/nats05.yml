@@ -22,29 +22,29 @@
       id: docker-broker-nats05
       secret: ((docker_broker_nats05_secret))
     plans:
-        id: 'b9310e34-2fa4-11e4-b626-a6c5e4d22fb7'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'drnic/gnatsd'
-          tag: '0.5.4'
-        credentials:
-          username:
-            key: 'NATS_USERNAME'
-          password:
-            key: 'NATS_PASSWORD'
-          uri:
-            prefix: 'nats'
-            port: '4222/tcp'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated NATS server'
-            - 'NATS running inside a Docker container'
+    - id: 'b9310e34-2fa4-11e4-b626-a6c5e4d22fb7'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'drnic/gnatsd'
+        tag: '0.5.4'
+      credentials:
+        username:
+          key: 'NATS_USERNAME'
+        password:
+          key: 'NATS_PASSWORD'
+        uri:
+          prefix: 'nats'
+          port: '4222/tcp'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated NATS server'
+          - 'NATS running inside a Docker container'
 
 - type: replace
   path: /variables/-

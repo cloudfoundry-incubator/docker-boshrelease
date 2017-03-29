@@ -21,26 +21,26 @@
       id: docker-broker-redis28
       secret: ((docker_broker_redis28_secret))
     plans:
-        id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/redis'
-          tag: '2.8'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          password:
-            key: 'REDIS_PASSWORD'
-        description: 'Free Trial'
-        metadata:
-          costs:
-          - amount:
-              usd: 0.0
-            unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated Redis 2.8 server'
-            - 'Redis 2.8 running inside a Docker container'
+    - id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/redis'
+        tag: '2.8'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        password:
+          key: 'REDIS_PASSWORD'
+      description: 'Free Trial'
+      metadata:
+        costs:
+        - amount:
+            usd: 0.0
+          unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated Redis 2.8 server'
+          - 'Redis 2.8 running inside a Docker container'
 
 
 - type: replace

@@ -21,32 +21,32 @@
       id: docker-broker-couchdb16
       secret: ((docker_broker_couchdb16_secret))
     plans:
-        id: '3a35568d-aea9-447f-9e39-363c2e9da193'
-        name: 'free'
-        container:
-          backend: 'docker'
-          image: 'frodenas/couchdb'
-          tag: '1.6'
-          persistent_volumes:
-            - '/data'
-        credentials:
-          username:
-            key: 'COUCHDB_USERNAME'
-          password:
-            key: 'COUCHDB_PASSWORD'
-          dbname:
-            key: 'COUCHDB_DBNAME'
-          uri:
-            prefix: 'couchdb'
-        description: 'Free Trial'
-        metadata:
-          costs:
-            - amount:
-                usd: 0.0
-              unit: 'MONTHLY'
-          bullets:
-            - 'Dedicated CouchDB 1.6 server'
-            - 'CouchDB 1.6 running inside a Docker container'
+    - id: '3a35568d-aea9-447f-9e39-363c2e9da193'
+      name: 'free'
+      container:
+        backend: 'docker'
+        image: 'frodenas/couchdb'
+        tag: '1.6'
+        persistent_volumes:
+          - '/data'
+      credentials:
+        username:
+          key: 'COUCHDB_USERNAME'
+        password:
+          key: 'COUCHDB_PASSWORD'
+        dbname:
+          key: 'COUCHDB_DBNAME'
+        uri:
+          prefix: 'couchdb'
+      description: 'Free Trial'
+      metadata:
+        costs:
+          - amount:
+              usd: 0.0
+            unit: 'MONTHLY'
+        bullets:
+          - 'Dedicated CouchDB 1.6 server'
+          - 'CouchDB 1.6 running inside a Docker container'
 
 - type: replace
   path: /variables/-
