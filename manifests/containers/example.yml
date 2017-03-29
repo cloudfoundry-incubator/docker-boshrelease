@@ -77,6 +77,6 @@ update:
 
 releases:
 - name: docker
-  version: 30.0.0-rc.3
-  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.3/docker-30.0.0-rc.3.tgz
-  sha1: 2cbd5d0a9cfdfacede55d0231a75893f824f32dd
+  version: 30.0.0-rc.7
+  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.7/docker-30.0.0-rc.7.tgz
+  sha1: 4badb303131906a1fec3e2ed6eaaa39e66a55b56
