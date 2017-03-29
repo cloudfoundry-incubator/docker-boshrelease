@@ -1,0 +1,22 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source: {repository: dingotiles/dingo-postgresql-release-pipeline}
+
+inputs:
+- name: boshrelease
+- name: boshrelease-ci
+- name: candidate-release
+- name: version
+
+outputs:
+- name: final-release-repo
+- name: final-release-tarball
+
+params:
+  aws_access_key_id:
+  aws_secret_access_key:
+
+run:
+  path: ./boshrelease-ci/ci/tasks/finalize-release.sh
