@@ -40,6 +40,8 @@ cf_api_url: ${cf_api_url:-}
 cf_skip_ssl_validation: ${cf_skip_ssl_validation:-}
 cf_admin_username: ${cf_admin_username:-}
 cf_admin_password: ${cf_admin_password:-}
+broker_route_name: ${BOSH_DEPLOYMENT}
+broker_route_uri: ${BOSH_DEPLOYMENT}.${cf_system_domain}
 YAML
 
 op_patch_files_flags=""

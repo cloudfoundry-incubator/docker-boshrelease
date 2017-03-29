@@ -22,3 +22,4 @@ meta:
     cf_skip_ssl_validation: (( vault "secret/bosh-lites/lite49" "/cf:skip_ssl_validation" ))
     cf_admin_username: (( vault "secret/bosh-lites/lite49" "/cf:admin_username" ))
     cf_admin_password: (( vault "secret/bosh-lites/lite49" "/cf:admin_password" ))
+    cf_system_domain: (( vault "secret/bosh-lites/lite49" "/cf:system_domain" ))
