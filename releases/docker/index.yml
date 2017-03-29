@@ -9,6 +9,8 @@ builds:
     version: 29.0.0
   7273d761-6fb5-43e4-b358-97e1379de540:
     version: 28.0.2
+  955339be-8679-48f0-755f-a9f245dca54b:
+    version: 30.0.0-rc.7
   3429046d-58c2-49d7-ad70-41eee7e95ee6:
     version: "27"
   de0623c5-3ad4-4bb0-ac87-997b4ae5ff8b:
