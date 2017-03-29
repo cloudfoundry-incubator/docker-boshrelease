@@ -21,7 +21,7 @@
       id: docker-broker-mysql56
       secret: ((docker_broker_mysql56_secret))
     plans:
-      - id: 'd42fc3cc-1341-4aa3-866e-01bc5243dc2e'
+        id: 'd42fc3cc-1341-4aa3-866e-01bc5243dc2e'
         name: 'free'
         container:
           backend: 'docker'

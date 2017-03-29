@@ -21,7 +21,7 @@
       id: docker-broker-redis28
       secret: ((docker_broker_redis28_secret))
     plans:
-      - id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
+        id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
         name: 'free'
         container:
           backend: 'docker'

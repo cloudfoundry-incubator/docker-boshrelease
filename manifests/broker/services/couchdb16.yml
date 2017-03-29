@@ -1,0 +1,55 @@
+---
+- type: replace
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
+  value:
+    id: 'b76f6d51-f701-48c2-9614-7240fe580346'
+    name: 'couchdb16'
+    description: 'CouchDB 1.6 service for application development and testing'
+    bindable: true
+    tags:
+      - 'couchdb16'
+      - 'couchdb'
+      - 'document'
+    metadata:
+      displayName: 'CouchDB 1.6'
+      imageUrl: 'data:image/png;base64,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'
+      longDescription: 'A CouchDB 1.6 service for development and testing running inside a Docker container'
+      providerDisplayName: 'Pivotal Software'
+      documentationUrl: 'http://docs.run.pivotal.io'
+      supportUrl: 'http://support.run.pivotal.io/home'
+    dashboard_client:
+      id: docker-broker-couchdb16
+      secret: ((docker_broker_couchdb16_secret))
+    plans:
+        id: '3a35568d-aea9-447f-9e39-363c2e9da193'
+        name: 'free'
+        container:
+          backend: 'docker'
+          image: 'frodenas/couchdb'
+          tag: '1.6'
+          persistent_volumes:
+            - '/data'
+        credentials:
+          username:
+            key: 'COUCHDB_USERNAME'
+          password:
+            key: 'COUCHDB_PASSWORD'
+          dbname:
+            key: 'COUCHDB_DBNAME'
+          uri:
+            prefix: 'couchdb'
+        description: 'Free Trial'
+        metadata:
+          costs:
+            - amount:
+                usd: 0.0
+              unit: 'MONTHLY'
+          bullets:
+            - 'Dedicated CouchDB 1.6 server'
+            - 'CouchDB 1.6 running inside a Docker container'
+
+- type: replace
+  path: /variables/-
+  value:
+    name: docker_broker_couchdb16_secret
+    type: password

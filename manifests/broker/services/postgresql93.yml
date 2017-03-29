@@ -21,7 +21,7 @@
       id: docker-broker-postgresql93
       secret: ((docker_broker_postgresql93_secret))
     plans:
-      - id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
+        id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
         name: 'free'
         container:
           backend: 'docker'

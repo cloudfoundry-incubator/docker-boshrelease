@@ -1,0 +1,52 @@
+---
+- type: replace
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
+  value:
+    id: '3ce3d09a-90f0-437b-82f7-6a33194025c7'
+    name: 'rabbitmq33'
+    description: 'RabbitMQ 3.3 service for application development and testing'
+    bindable: true
+    tags:
+      - 'rabbitmq33'
+      - 'rabbitmq'
+      - 'amqp'
+    metadata:
+      displayName: 'RabbitMQ 3.3'
+      imageUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAECElEQVR42u2bW2xTdRzHBxgBmdcYjMYQTLYJ3kEDEogJXsYD80HfwCcSExfxwYc9mHEpC46hCCsyMUuY0ZcuAcSlBdNBJga3DqWHjbX0Ar3Z08vo2q3t/ufSdqc//idsyqVnp02c3Q6/X/JJ2pP2m/4+Ped//udWUYGFhYWFpVjzKIsolZSHC/DQ5GdKyVuskDWVN39WdN7e3v6owz60ffwGe0mIs2FK9HbERCjCxUOugNfd2tzc/LRanl6vf8rndjaSGGuTv1soT6B5rP/6fqPRuKzsAoaYS5+Inn6ON2wH/kgdZfO9HNsK2YGu/PDw8PHa2tolSlk6na7yRjSsE2zdKf7HbYWzJvME5mc+Fg62GQyGJ8vZ/8I467nAn2gA0rh8elrWgJThM3SNeVkprLe39/mxoPOs0LE1TxqfmzaPa3sfkq5+q91uX1NOAUvGwj6X/I+oCqBI4wmpq6tro1LY4ODgqlFnXz/XVqeaxR3aCGOM0U3rnXIKqExGvG7+2JYiBcQlk8mk+IOtVuvqhKPvYlECDlIBVtM1m832XokDLApAASgABaAAFIACUAAKQAEoAAWggP9VwER6RDKbze8qhTEM83riau+f3JHNRQtwOBxzR0DW/1fe7/c3Ud5kWXbt7cjLQsHgp+kr3T7u0NvqefvXQfpiZywcZr8IBALr7s4rFp/Pt9blcr3S0tLy+IwL4Du25MUBYyxt++1yqgBk4HRAOP55juhWquftqgH+p48lnvmFTdl7BlIKmarYzzNJz+U/RiKh1s7OzuUzKkA+zcV9vR44fS1whzfdCV1GvnkLiG5FkVm3JBClvFI4+gEIzAku6L2mpz0tmEEBsxfu+w+Bi7ER2tMj96cAOu6ICXac9vQECkABKAAFoAAUMFcENL0EhB4X3DMZosvInhc1LoDOAsVzByHrsUAueAVy7NA/ZL39IJ7/Dsi+NzQqYM8LIJq/AolPQT6fL4iUzUCm7weNCjiwAbLOHsXmp5gQ0kB2r9CeAHkbl1d9NQGSJAHZ+5o2BeTodq4mQIZ8uQoFaFSApTgBe1/V4CBId4FZx1n1QZBLAtlVrUEBu2tAONMMkkCmFSD2fKvhiRCd6Ym/7oOJ0RDd54sg5TK3oK8nklEQzAfuo2OBHVVAdlZPUgVqt9nhwRAKQAEoAAWggP9AwCjrcRd7s/SsFxBn06UKWBTxOi38yYY5L4Dv+AhS0cDftKfHShEwz3za2CBctwiC4TPg2+56YEJ+XyxKD0fMOHXyVWbIOHtylgu/t9KeHijp8nB9ff1S46mTTSHPVWcy7B1JRbyJf/GVgLcsjIU98ajP6ek+YzpMeyn58vhUPUh5hlJFqZljVFOelZ9+qcDCwsLCKlw3AWXj3QaIfwkWAAAAAElFTkSuQmCC'
+      longDescription: 'A RabbitMQ 3.3 service for development and testing running inside a Docker container'
+      providerDisplayName: 'Pivotal Software'
+      documentationUrl: 'http://docs.run.pivotal.io'
+      supportUrl: 'http://support.run.pivotal.io/home'
+    dashboard_client:
+      id: docker-broker-rabbitmq33
+      secret: ((docker_broker_rabbitmq33_secret))
+    plans:
+        id: '6d3d7e5a-c7ce-4f80-99ca-7cc52445d355'
+        name: 'free'
+        container:
+          backend: 'docker'
+          image: 'frodenas/rabbitmq'
+          tag: 'latest'
+        credentials:
+          username:
+            key: 'RABBITMQ_USERNAME'
+          password:
+            key: 'RABBITMQ_PASSWORD'
+          uri:
+            prefix: 'amqp'
+            port: '5672/tcp'
+        description: 'Free Trial'
+        metadata:
+          costs:
+            - amount:
+                usd: 0.0
+              unit: 'MONTHLY'
+          bullets:
+            - 'Dedicated RabbitMQ 3.3 server'
+            - 'RabbitMQ 3.3 running inside a Docker container'
+
+- type: replace
+  path: /variables/-
+  value:
+    name: docker_broker_rabbitmq33_secret
+    type: password
