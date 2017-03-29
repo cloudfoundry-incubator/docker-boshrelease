@@ -9,6 +9,7 @@ export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
 export BOSH_CLIENT=${BOSH_CLIENT:?required}
 export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
 export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
+release_version="$(cat version/number)"
 
 if [[ "${delete_deployment_first:-false}" != "false" ]]; then
   bosh2 -n delete-deployment
