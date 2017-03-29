@@ -34,7 +34,6 @@ RELEASE_TGZ=$PWD/releases/${release_name}/${release_name}-${release_version}.tgz
 
 if [ -e ${RELEASE_YML} ]; then
   echo "release already created from previous job; making tarball..."
-  bosh -n create release --with-tarball ${RELEASE_YML}
 else
   echo "finalizing release"
   bosh2 -n finalize-release --version "$release_version" ${CANDIDATE_DIR}/${release_name}-*.tgz
@@ -42,4 +41,6 @@ else
   git commit -m "release v${release_version}"
 fi
 
-mv ${RELEASE_TGZ} ${FINAL_RELEASE_TARBALL}
+bosh2 create-release \
+  --tarball ${FINAL_RELEASE_TARBALL}/${release_name}-${release_version}.tgz \
+  ${RELEASE_YML}
