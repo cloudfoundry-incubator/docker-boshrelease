@@ -11,6 +11,10 @@
   value:
     release: routing
     name: route_registrar
+    consumes:
+      nats:
+        deployment: cf
+        from: nats
     properties:
       route_registrar:
         routes:
