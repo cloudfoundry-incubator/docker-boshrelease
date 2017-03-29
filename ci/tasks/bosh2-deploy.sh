@@ -38,11 +38,17 @@ cat > tmp/vars.yml <<YAML
 --- {}
 YAML
 
+op_patch_files_flags=""
+for op_patch_file in ${op_patch_files//,/ } ; do
+   op_patch_files_flags="${op_patch_files_flags} -o $op_patch_file"
+done
+
 set -x
-bosh2 int ${manifest_path:?required} \
+bosh2 int ${base_manifest:?required} \
   -o           manifests/op-dev.yml  \
   -o           tmp/deployment.yml    \
   -o           tmp/versions.yml      \
+  ${op_patch_files_flags}            \
   --vars-store tmp/creds.yml \
   --vars-file  tmp/vars.yml  \
   --var-errs \

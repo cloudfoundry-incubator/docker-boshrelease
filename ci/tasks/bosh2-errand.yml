@@ -19,11 +19,7 @@ params:
   BOSH_CLIENT_SECRET:
   BOSH_DEPLOYMENT:
 
-  delete_deployment_first: false
-  base_manifest:
-  op_patch_files: "" # comma separated list of relative files
-
-  test_errand:
+  errand:
 
 run:
-  path: boshrelease-ci/ci/tasks/bosh2-deploy.sh
+  path: boshrelease-ci/ci/tasks/bosh2-errand.sh
