@@ -26,19 +26,19 @@ golang/go1.5.1.linux-amd64.tar.gz:
   size: 77875767
   object_id: 3c26a347-ae52-4ccb-b0e3-f22e3e863c7c
   sha: 46eecd290d8803887dec718c691cc243f2175fe0
-ruby/bundler-1.10.6.gem:
-  size: 251392
-  object_id: fe11c6d1-bbfe-4865-8687-5010b45fb399
-  sha: 55a37fccd1c0cb5542d468e35d3be46dd0667f73
-ruby/ruby-2.2.3.tar.gz:
-  size: 16626772
-  object_id: e4e21c91-1176-4455-b367-097f7bdef1d0
-  sha: 0d9e158534cb31e72740138b8f697b57b448e5c3
-ruby/rubygems-2.5.0.tgz:
-  size: 467978
-  object_id: 218484d6-81a4-40e1-b7ca-e720ce3ba3a8
-  sha: 03613d7013b61ecabef2424221438a692e53bbfc
-ruby/yaml-0.1.6.tar.gz:
-  size: 503012
-  object_id: c6eb17c4-f0e5-41fe-8114-8a3cb67f6327
-  sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
+ruby/bundler-1.14.6.gem:
+  size: 319488
+  object_id: 00dfe10d-016e-422f-6ada-92abc8298f29
+  sha: 3e84d3a4dd43bfaec988b029f45c0d7ffa205ab8
+ruby/ruby-2.3.3.tar.gz:
+  size: 17813577
+  object_id: 9488d9aa-4f3f-41e4-76da-befd0db2bb33
+  sha: 1014ee699071aa2ddd501907d18cbe15399c997d
+ruby/rubygems-2.6.11.tgz:
+  size: 766785
+  object_id: eb64bc3a-61d4-4c66-5117-ded07c3aa71c
+  sha: 1475ff4d7ad565d521e56d4d0461931d2c00563c
+ruby/yaml-0.1.7.tar.gz:
+  size: 527518
+  object_id: 0b3b59cb-33be-494c-71b5-81ca4916f2c4
+  sha: 3590cbf092ef4c71bc0a9b404c00a626b1e04dee
