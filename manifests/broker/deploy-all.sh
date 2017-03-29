@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# USAGE:
+#   ./manifests/broker/deploy-all.sh --vars-store tmp/creds.yml
+#   ./manifests/broker/deploy-all.sh \
+#     -o manifests/broker/op-cf-integration.yml \
+#     -l tmp/vars-cf-lite49.yml -o manifests/op-public-tls.yml \
+#     -o manifests/broker/op-external-host.yml \
+#     --vars-store tmp/creds.yml
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 
