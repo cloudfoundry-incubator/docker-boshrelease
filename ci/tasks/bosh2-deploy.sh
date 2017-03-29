@@ -15,8 +15,6 @@ if [[ "${delete_deployment_first:-false}" != "false" ]]; then
   bosh2 -n delete-deployment
 fi
 
-bosh2 upload-release candidate-release/*.tgz
-
 cd boshrelease-ci
 release_name=$(bosh2 int config/final.yml --path /final_name)
 
