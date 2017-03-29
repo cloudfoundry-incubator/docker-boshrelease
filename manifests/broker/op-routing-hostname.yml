@@ -10,7 +10,7 @@
   path: /instance_groups/name=docker/jobs/-
   value:
     release: routing
-    name: route_register
+    name: route_registrar
     properties:
       route_registrar:
         routes:
