@@ -26,7 +26,7 @@
       container:
         backend: 'docker'
         image: 'frodenas/mysql'
-        tag: 'latest'
+        tag: '5.6'
         persistent_volumes:
           - '/data'
       credentials:

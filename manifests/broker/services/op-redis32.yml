@@ -2,31 +2,31 @@
 - type: replace
   path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
   value:
-    id: '3101b971-1044-4816-a7ac-9ded2e028079'
-    name: 'redis28'
-    description: 'Redis 2.8 service for application development and testing'
+    id: '0fdcc9c0-14f5-11e7-9d8c-cfde16aa4822'
+    name: 'redis32'
+    description: 'Redis 3.2 service for application development and testing'
     bindable: true
     tags:
-      - 'redis28'
+      - 'redis32'
       - 'redis'
       - 'key-value'
     metadata:
-      displayName: 'Redis 2.8'
+      displayName: 'Redis 3.2'
       imageUrl: 'data:image/png;base64,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'
       longDescription: 'A Redis 2.8 service for development and testing running inside a Docker container'
       providerDisplayName: 'Cloud Foundry Community'
       documentationUrl: 'https://github.com/frodenas/docker-redis'
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
-      id: docker-broker-redis28
-      secret: ((docker_broker_redis28_secret))
+      id: docker-broker-redis32
+      secret: ((docker_broker_redis32_secret))
     plans:
-    - id: '2451fa22-df16-4c10-ba6e-1f682d3dcdc9'
+    - id: '13d21792-14f5-11e7-81cd-4357fa4eeda9'
       name: 'free'
       container:
         backend: 'docker'
         image: 'frodenas/redis'
-        tag: '2.8'
+        tag: '3.2'
         persistent_volumes:
           - '/data'
       credentials:
@@ -39,12 +39,12 @@
             usd: 0.0
           unit: 'MONTHLY'
         bullets:
-          - 'Dedicated Redis 2.8 server'
-          - 'Redis 2.8 running inside a Docker container'
+          - 'Dedicated Redis 3.2 server'
+          - 'Redis 3.2 running inside a Docker container'
 
 
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_redis28_secret
+    name: docker_broker_redis32_secret
     type: password
