@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-neo4j21
-      secret: ((docker_broker_neo4j21_secret))
+      secret: ((docker-broker-neo4j21-secret))
     plans:
     - id: '8f1028b9-68ad-4e6c-bd5a-dbbafd622ffb'
       name: 'free'
@@ -43,5 +43,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_neo4j21_secret
+    name: docker-broker-neo4j21-secret
     type: password

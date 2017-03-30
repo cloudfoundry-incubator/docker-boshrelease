@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-mysql56
-      secret: ((docker_broker_mysql56_secret))
+      secret: ((docker-broker-mysql56-secret))
     plans:
     - id: 'd42fc3cc-1341-4aa3-866e-01bc5243dc2e'
       name: 'free'
@@ -51,5 +51,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_mysql56_secret
+    name: docker-broker-mysql56-secret
     type: password

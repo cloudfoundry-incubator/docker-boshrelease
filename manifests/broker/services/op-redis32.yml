@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-redis32
-      secret: ((docker_broker_redis32_secret))
+      secret: ((docker-broker-redis32-secret))
     plans:
     - id: '13d21792-14f5-11e7-81cd-4357fa4eeda9'
       name: 'free'
@@ -46,5 +46,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_redis32_secret
+    name: docker-broker-redis32-secret
     type: password

@@ -19,7 +19,7 @@
     requires: []
     dashboard_client:
       id: docker-broker-rethink114
-      secret: ((docker_broker_rethink114_secret))
+      secret: ((docker-broker-rethink114-secret))
     plans:
     - id: '6194d79a-2e5b-11e4-af5d-a6c5e4d22fb7'
       name: 'free'
@@ -46,5 +46,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_rethink114_secret
+    name: docker-broker-rethink114-secret
     type: password

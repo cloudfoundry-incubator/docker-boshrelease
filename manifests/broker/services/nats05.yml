@@ -20,7 +20,7 @@
     requires: []
     dashboard_client:
       id: docker-broker-nats05
-      secret: ((docker_broker_nats05_secret))
+      secret: ((docker-broker-nats05-secret))
     plans:
     - id: 'b9310e34-2fa4-11e4-b626-a6c5e4d22fb7'
       name: 'free'
@@ -49,5 +49,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_nats05_secret
+    name: docker-broker-nats05-secret
     type: password

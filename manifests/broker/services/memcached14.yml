@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-memcached14
-      secret: ((docker_broker_memcached14_secret))
+      secret: ((docker-broker-memcached14-secret))
     plans:
     - id: 'febbe2ce-1461-419f-a237-3b35cb43fe09'
       name: '128Mb'
@@ -94,5 +94,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_memcached14_secret
+    name: docker-broker-memcached14-secret
     type: password

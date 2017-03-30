@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-mongodb26
-      secret: ((docker_broker_mongodb26_secret))
+      secret: ((docker-broker-mongodb26-secret))
     plans:
     - id: '6d8024b1-7deb-4dc7-a72a-33ec3f7a1bfc'
       name: 'free'
@@ -53,5 +53,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_mongodb26_secret
+    name: docker-broker-mongodb26-secret
     type: password

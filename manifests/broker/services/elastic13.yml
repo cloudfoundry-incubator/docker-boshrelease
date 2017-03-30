@@ -21,7 +21,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-elastic13
-      secret: ((docker_broker_elastic13_secret))
+      secret: ((docker-broker-elastic13-secret))
     plans:
     - id: 'cff75095-36b7-4e91-91e4-4d27b7bd8867'
       name: 'free'
@@ -44,5 +44,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_elastic13_secret
+    name: docker-broker-elastic13-secret
     type: password

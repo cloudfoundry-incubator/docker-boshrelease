@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-rabbitmq33
-      secret: ((docker_broker_rabbitmq33_secret))
+      secret: ((docker-broker-rabbitmq33-secret))
     plans:
     - id: '6d3d7e5a-c7ce-4f80-99ca-7cc52445d355'
       name: 'free'
@@ -48,5 +48,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_rabbitmq33_secret
+    name: docker-broker-rabbitmq33-secret
     type: password

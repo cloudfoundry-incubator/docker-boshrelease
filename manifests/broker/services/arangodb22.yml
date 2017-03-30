@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-arangodb22
-      secret: ((docker_broker_arangodb22_secret))
+      secret: ((docker-broker-arangodb22-secret))
     plans:
     - id: '01a3df74-0718-48ca-8b30-a9f79e8bec94'
       name: 'free'
@@ -51,5 +51,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_arangodb22_secret
+    name: docker-broker-arangodb22-secret
     type: password

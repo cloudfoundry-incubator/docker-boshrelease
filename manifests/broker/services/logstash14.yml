@@ -21,7 +21,7 @@
       - 'syslog_drain'
     dashboard_client:
       id: docker-broker-logstash14
-      secret: ((docker_broker_logstash14_secret))
+      secret: ((docker-broker-logstash14-secret))
     plans:
     - id: '5218782d-7fab-4534-92b8-434204d88c7b'
       name: 'free'
@@ -43,5 +43,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_logstash14_secret
+    name: docker-broker-logstash14-secret
     type: password

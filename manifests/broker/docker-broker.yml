@@ -20,15 +20,15 @@ instance_groups:
         shared: true
     properties:
       username: broker
-      password: ((broker_password))
-      cookie_secret: ((broker_cookie_secret))
+      password: ((broker-password))
+      cookie_secret: ((broker-cookie-secret))
       max_containers: 20
       services: []
 
 variables:
-- name: broker_password
+- name: broker-password
   type: password
-- name: broker_cookie_secret
+- name: broker-cookie-secret
   type: password
 
 stemcells:

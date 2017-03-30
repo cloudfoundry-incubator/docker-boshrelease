@@ -20,7 +20,7 @@
     requires: []
     dashboard_client:
       id: docker-broker-consul03
-      secret: ((docker_broker_consul03_secret))
+      secret: ((docker-broker-consul03-secret))
     plans:
     - id: '2cb83bb4-2df9-11e4-a506-a6c5e4d22fb7'
       name: 'free'
@@ -47,5 +47,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_consul03_secret
+    name: docker-broker-consul03-secret
     type: password

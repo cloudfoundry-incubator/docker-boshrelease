@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-couchdb16
-      secret: ((docker_broker_couchdb16_secret))
+      secret: ((docker-broker-couchdb16-secret))
     plans:
     - id: '3a35568d-aea9-447f-9e39-363c2e9da193'
       name: 'free'
@@ -51,5 +51,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_couchdb16_secret
+    name: docker-broker-couchdb16-secret
     type: password

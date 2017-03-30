@@ -19,7 +19,7 @@
       supportUrl: 'https://slack.cloudfoundry.org'
     dashboard_client:
       id: docker-broker-postgresql96
-      secret: ((docker_broker_postgresql96_secret))
+      secret: ((docker-broker-postgresql96-secret))
     plans:
     - id: 'f30f03fa-14f7-11e7-8d86-cf0d7f2c3728'
       name: 'free'
@@ -51,5 +51,5 @@
 - type: replace
   path: /variables/-
   value:
-    name: docker_broker_postgresql96_secret
+    name: docker-broker-postgresql96-secret
     type: password
