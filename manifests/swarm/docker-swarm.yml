@@ -16,9 +16,9 @@ instance_groups:
       tcp_address: 0.0.0.0
       tls: true
       tls_verify: true
-      tls_cacert: "((docker_tls.ca))"
-      tls_cert: "((docker_tls.certificate))"
-      tls_key: "((docker_tls.private_key))"
+      tls_cacert: "((docker-tls.ca))"
+      tls_cert: "((docker-tls.certificate))"
+      tls_key: "((docker-tls.private_key))"
 
 - name: swarm
   instances: 1
@@ -31,15 +31,15 @@ instance_groups:
     release: docker
 
 variables:
-- name: docker_ca
+- name: docker-ca
   type: certificate
   options:
     is_ca: true
     common_name: dockerCA
-- name: docker_tls
+- name: docker-tls
   type: certificate
   options:
-    ca: docker_ca
+    ca: docker-ca
     common_name: docker
     extended_key_usage:
     - client_auth
