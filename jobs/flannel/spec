@@ -12,5 +12,5 @@ properties:
   apiserver.ip:
     description: ip of api server
 
-  flannel.ip-range:
+  ip-range:
     description: ip range of flannel overlay network

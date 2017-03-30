@@ -20,7 +20,7 @@ case $1 in
     mkdir -p /dev/net
     mknod /dev/net/tun c 10 200 || true
 
-    <% if_p('flannel.ip-range') do |range| %>
+    <% if_p('ip-range') do |range| %>
     curl -XPUT http://<%= p('apiserver.ip') %>:4001/v2/keys/coreos.com/network/config \
       -d value='{"Network": "<%= range %>"}'
     <% end %>
