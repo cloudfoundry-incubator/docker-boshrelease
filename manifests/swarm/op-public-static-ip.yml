@@ -3,4 +3,4 @@
   path: /instance_groups/name=swarm/networks/0
   value:
     name: public
-    static_ips: [((network_static_ip))]
+    static_ips: [((network-static-ip))]

@@ -18,11 +18,11 @@
     properties:
       route_registrar:
         routes:
-        - name: ((broker_route_name)) # deployment name
+        - name: ((broker-route-name)) # deployment name
           port: 80
           registration_interval: 20s
-          uris: [((broker_route_uri))]
+          uris: [((broker-route-uri))]
 
 - type: replace
   path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/external_host?
-  value: ((broker_route_uri))
+  value: ((broker-route-uri))

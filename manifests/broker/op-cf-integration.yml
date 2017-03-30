@@ -22,10 +22,10 @@
       release: broker-registrar
       properties:
         cf:
-          api_url: ((cf_api_url))
-          username: ((cf_admin_username))
-          password: ((cf_admin_password))
-          skip_ssl_validation: ((cf_skip_ssl_validation))
+          api_url: ((cf-api-url))
+          username: ((cf-admin-username))
+          password: ((cf-admin-password))
+          skip_ssl_validation: ((cf-skip-ssl-validation))
 
 # - type: replace
 #   path: /instance_groups/-
