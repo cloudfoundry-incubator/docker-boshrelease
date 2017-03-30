@@ -25,7 +25,7 @@
       name: 'free'
       container:
         backend: 'docker'
-        image: 'frodenas/redis'
+        image: 'cfcommunity/redis'
         tag: '3.2'
         persistent_volumes:
           - '/data'

@@ -25,7 +25,7 @@
       name: 'free'
       container:
         backend: 'docker'
-        image: 'frodenas/mysql'
+        image: 'cfcommunity/mysql'
         tag: '5.6'
         persistent_volumes:
           - '/data'

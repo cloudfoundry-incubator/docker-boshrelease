@@ -25,7 +25,7 @@
       name: 'free'
       container:
         backend: 'docker'
-        image: 'frodenas/postgresql'
+        image: 'cfcommunity/postgresql'
         tag: '9.6'
         persistent_volumes:
           - '/data'
