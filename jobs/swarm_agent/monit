@@ -1,4 +1,0 @@
-check process swarm_agent with pidfile /var/vcap/sys/run/swarm_agent/swarm_agent.pid
-  group vcap
-  start program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/swarm_agent/bin/ctl start'"
-  stop program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/swarm_agent/bin/ctl stop'"

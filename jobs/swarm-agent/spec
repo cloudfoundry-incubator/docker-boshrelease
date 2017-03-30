@@ -1,5 +1,5 @@
 ---
-name: swarm_agent
+name: swarm-agent
 
 packages:
   - bosh-helpers

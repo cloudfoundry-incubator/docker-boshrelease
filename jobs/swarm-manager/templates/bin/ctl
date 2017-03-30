@@ -3,8 +3,8 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 
 # Setup common env vars and folders
-source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'swarm_manager'
-export SWARM_MANAGER_PID_FILE=${SWARM_MANAGER_PID_DIR}/swarm_manager.pid
+source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'swarm-manager'
+export SWARM_MANAGER_PID_FILE=${SWARM_MANAGER_PID_DIR}/swarm-manager.pid
 
 case $1 in
 
@@ -18,7 +18,7 @@ case $1 in
         ${SWARM_MANAGER_LOG_LEVEL} \
         manage \
         --cluster-driver="swarm" \
-        --host unix://${SWARM_MANAGER_PID_DIR}/swarm_manager.sock \
+        --host unix://${SWARM_MANAGER_PID_DIR}/swarm-manager.sock \
         ${SWARM_MANAGER_HOST} \
         ${SWARM_MANAGER_STRATEGY} \
         ${SWARM_MANAGER_FILTERS} \

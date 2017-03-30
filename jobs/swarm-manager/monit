@@ -1,0 +1,5 @@
+check process swarm-manager with pidfile /var/vcap/sys/run/swarm-manager/swarm-manager.pid
+  group vcap
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/swarm-manager/bin/ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/swarm-manager/bin/ctl stop'"
+  if failed unixsocket /var/vcap/sys/run/swarm-manager/swarm-manager.sock with timeout 5 seconds for 5 cycles then restart

@@ -1,5 +1,4 @@
 name: docker-swarm
-# TODO add TLS certs
 # TODO docker-swarm-sanity-test job
 
 instance_groups:
@@ -28,7 +27,7 @@ instance_groups:
   stemcell: default
   networks: [{name: default}]
   jobs:
-  - name: swarm_manager
+  - name: swarm-manager
     release: docker
 
 variables:
