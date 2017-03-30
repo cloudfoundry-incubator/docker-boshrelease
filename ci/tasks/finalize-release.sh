@@ -29,18 +29,22 @@ then
   git config --global user.email "drnic+bot@starkandwayne.com"
 fi
 
-RELEASE_YML=$PWD/releases/${release_name}/${release_name}-${release_version}.yml
-RELEASE_TGZ=$PWD/releases/${release_name}/${release_name}-${release_version}.tgz
-
-if [ -e ${RELEASE_YML} ]; then
+release_yml=$PWD/releases/${release_name}/${release_name}-${release_version}.yml
+if [ -e ${release_yml} ]; then
   echo "release already created from previous job; making tarball..."
 else
   echo "finalizing release"
   bosh2 -n finalize-release --version "$release_version" ${CANDIDATE_DIR}/${release_name}-*.tgz
+
   git add -A
   git commit -m "release v${release_version}"
 fi
 
+final_release_tgz=${FINAL_RELEASE_TARBALL}/${release_name}-${release_version}.tgz
 bosh2 create-release \
-  --tarball ${FINAL_RELEASE_TARBALL}/${release_name}-${release_version}.tgz \
-  ${RELEASE_YML}
+  --tarball ${final_release_tgz} ${release_yml}
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+$DIR/update-manifests-with-latest-release.sh $release_name $release_version $final_release_tgz
+git add -A
+git commit -m "update manifests for v${release_version}"
