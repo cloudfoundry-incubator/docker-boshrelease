@@ -11,11 +11,9 @@ manifests=(containers/example.yml broker/docker-broker.yml swarm/docker-swarm.ym
 for manifest in ${manifests[@]}; do
   manifest_path=manifests/$manifest
   manifest_len=$(wc -l $manifest_path | awk '{print $1}')
-  manifest_head=$(head -n `expr $manifest_len - 5` $manifest_path)
+  manifest_head=$(head -n `expr $manifest_len - 4` $manifest_path)
   cat > $manifest_path <<YAML
 ${manifest_head}
-
-releases:
 - name: $name
   version: $version
   url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v${version}/${name}-${version}.tgz

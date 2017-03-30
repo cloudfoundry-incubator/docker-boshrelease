@@ -2,9 +2,19 @@
 name: docker-broker
 
 instance_groups:
-- name: docker
+- name: subway
   azs: [z1]
   instances: 1
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: subway-broker
+    release: cf-subway
+
+- name: docker
+  azs: [z1,z2,z3]
+  instances: 3
   persistent_disk: 65536
   vm_type: default
   stemcell: default
@@ -44,6 +54,8 @@ update:
   serial: false
 
 releases:
+- name: cf-subway
+  version: latest
 - name: docker
   version: 30.0.0-rc.7
   url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.7/docker-30.0.0-rc.7.tgz

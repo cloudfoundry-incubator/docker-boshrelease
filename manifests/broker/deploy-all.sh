@@ -2,17 +2,10 @@
 
 # USAGE:
 #   ./manifests/broker/deploy-all.sh --vars-store tmp/creds.yml
-# 
-#   ./manifests/broker/deploy-all.sh \
-#     -l tmp/vars-cf-lite49.yml --vars-store tmp/creds.yml \
-#     -o manifests/broker/op-cf-integration.yml
 #
 #   ./manifests/broker/deploy-all.sh \
 #     -l tmp/vars-cf-lite49.yml --vars-store tmp/creds.yml \
-#     -o manifests/op-public-tls.yml \
-#     -o manifests/broker/op-cf-integration.yml \
-#     -o manifests/broker/op-external-host.yml \
-#     -o manifests/broker/op-public-static-ip.yml
+#     -o manifests/broker/op-cf-integration.yml
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 
