@@ -1,6 +1,0 @@
----
-- type: replace
-  path: /instance_groups/name=docker/networks/0
-  value:
-    name: public
-    static_ips: [((network_static_ip))]
