@@ -6,6 +6,16 @@ There are three basic use cases supported by the Docker BOSH release:
 * service broker to allow dynamic provisioning of containers
 * docker swarm - manager and many backend docker vms
 
+## Preparation
+
+Your BOSH needs to have a cloud-config installed with a `default` option for both `networks` & `vm_types`. See `manifests/boshlite-cloud-config.yml`.
+
+Target your BOSH using environment variables:
+
+```
+export BOSH_ENVIRONMENT=<alias or IP>
+```
+
 ## Static containers
 
 ```
