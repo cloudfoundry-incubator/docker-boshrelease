@@ -17,8 +17,10 @@ source /var/vcap/jobs/sanity-test-broker/helpers/ctl_setup.sh 'sanity-test-broke
   password = broker.p("password")
   host = broker.p("external_host", broker.instances.first.address)
   uri = "#{protocol}://#{username}:#{password}@#{host}"
+  redacted_uri = "#{protocol}://#{username}:REDACTED@#{host}"
   broker.if_p("port") do |broker_port|
     uri += ":#{broker_port}"
+    redacted_uri += ":#{broker_port}"
   end
 
   services = broker.p("services")
@@ -26,7 +28,7 @@ source /var/vcap/jobs/sanity-test-broker/helpers/ctl_setup.sh 'sanity-test-broke
 -%>
 export uri=<%= uri %>
 
-echo Pinging /v2/catalog for service names...
+echo Pinging $redacted_uri/v2/catalog for service names...
 curl -s $uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")"
 service_names=$(curl -s $uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")")
 
