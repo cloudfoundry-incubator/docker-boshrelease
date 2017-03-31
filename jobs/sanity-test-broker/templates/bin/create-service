@@ -16,9 +16,10 @@ create_instance() {
   local instance_id=$3
   info creating service instance ${instance_id} for plan ${plan_id}
   curl -s ${broker_uri}/v2/service_instances/${instance_id} \
-       -XPUT \
-       -d "{\"service_id\":\"${service_id}\",\"plan_id\":\"${plan_id}\"}" \
-       >&2 || {
+      -H 'Content-Type: application/json' \
+      -X PUT \
+      -d "{\"service_id\":\"${service_id}\",\"plan_id\":\"${plan_id}\",\"organization_guid\":\"x\",\"space_guid\":\"x\"}" \
+      >&2 || {
     echo "Couldn't create service instance"
     exit 1
   }
@@ -31,8 +32,9 @@ create_binding() {
   local binding_id=$4
   info creating binding ${binding_id} for instance ${instance_id}
   curl -sf ${broker_uri}/v2/service_instances/${instance_id}/service_bindings/${binding_id} \
-    -XPUT \
-    -d "{\"service_id\": \"${service_id}\", \"plan_id\": \"${plan_id}\"}" || {
+    -H 'Content-Type: application/json' \
+    -X PUT \
+    -d "{\"service_id\": \"${service_id}\", \"plan_id\": \"${plan_id}\",\"organization_guid\":\"x\",\"space_guid\":\"x\"}" || {
     echo "Couldn't create instance binding"
     exit 1
   }

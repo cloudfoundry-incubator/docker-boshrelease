@@ -12,7 +12,9 @@ instance_id=$3
 binding_id=$4
 
 curl -sf ${broker_uri}/v2/service_instances/${instance_id}/service_bindings/${binding_id}\?plan_id=${plan_id}\&service_id=${service_id} \
-     -XDELETE
+    -H 'Content-Type: application/json' \
+    -X DELETE
 
 curl -sf ${broker_uri}/v2/service_instances/${instance_id}\?plan_id=${plan_id}\&service_id=${service_id} \
-     -XDELETE
+    -H 'Content-Type: application/json' \
+    -X DELETE
