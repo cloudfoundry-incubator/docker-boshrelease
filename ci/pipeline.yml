@@ -127,6 +127,15 @@ jobs:
       BOSH_DEPLOYMENT: testflight-docker-broker
       op_patch_files: manifests/broker/services/op-mysql56.yml,manifests/broker/services/op-redis32.yml,manifests/broker/services/op-postgresql96.yml
       base_manifest: manifests/broker/docker-broker.yml
+  - task: sanity-test-basic
+    file: boshrelease-ci/ci/tasks/bosh2-errand.yml
+    params:
+      BOSH_ENVIRONMENT: (( grab meta.bosh-lite-testflight.bosh_environment ))
+      BOSH_CA_CERT: (( grab meta.bosh-lite-testflight.bosh_ca_cert ))
+      BOSH_CLIENT: (( grab meta.bosh-lite-testflight.bosh_client ))
+      BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
+      BOSH_DEPLOYMENT: testflight-docker-broker
+      errand: sanity-test
   - task: deploy-with-cf-integration
     file: boshrelease-ci/ci/tasks/bosh2-deploy.yml
     params:
@@ -151,7 +160,7 @@ jobs:
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-docker-broker
       errand: broker-registrar
-  - task: sanity-test
+  - task: sanity-test-with-hostname
     file: boshrelease-ci/ci/tasks/bosh2-errand.yml
     params:
       BOSH_ENVIRONMENT: (( grab meta.bosh-lite-testflight.bosh_environment ))
