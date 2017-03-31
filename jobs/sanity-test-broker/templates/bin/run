@@ -7,8 +7,7 @@ set -u # report the usage of uninitialized variables
 
 # Setup env vars and folders for the errand script
 source /var/vcap/jobs/sanity-test-broker/helpers/ctl_setup.sh 'sanity-test-broker'
-
-############################################################################
+export PATH=/var/vcap/jobs/sanity-test-broker/bin:$PATH
 
 <%
   broker = link("servicebroker")
@@ -25,12 +24,13 @@ source /var/vcap/jobs/sanity-test-broker/helpers/ctl_setup.sh 'sanity-test-broke
 
   services = broker.p("services")
   service_names = services.map {|s| s["name"]}.join(",")
--%>
-export uri=<%= uri %>
+%>
+export broker_uri=<%= uri %>
+export redacted_uri=<%= redacted_uri %>
 
 echo Pinging $redacted_uri/v2/catalog for service names...
-curl -s $uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")"
-service_names=$(curl -s $uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")")
+curl -s $broker_uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")"
+service_names=$(curl -s $broker_uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")")
 
 echo Testing <%= service_names %> == $service_names
 if [[ "$service_names" != "<%= service_names %>" ]]; then
@@ -39,3 +39,22 @@ if [[ "$service_names" != "<%= service_names %>" ]]; then
 else
   echo "Ok"
 fi
+
+catalog=$(curl -sf ${broker_uri}/v2/catalog)
+service_ids=$(echo $catalog | jq -r ".services[].id")
+for service_id in ${service_ids[@]}; do
+  service_name=$(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").name")
+  plan_ids=$(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").plans[].id")
+  for plan_id in ${plan_ids[@]}; do
+    plan_name=$(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").plans[] | select(.id == \"$plan_id\").name")
+    instance_id=T-$(date +"%s" | rev)
+    binding_id=B-$(date +"%s" | rev)
+    unset uri
+
+    echo Provisioning service $service_name / $plan_name as $instance_id/$binding_id...
+    credentials=$(create-service $service_id $plan_id $instance_id $binding_id)
+
+    echo Deprovisioning service $service_name / $plan_name ...
+    delete-service $service_id $plan_id $instance_id $binding_id
+  done
+done

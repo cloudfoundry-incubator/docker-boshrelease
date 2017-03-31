@@ -3,6 +3,8 @@ name: sanity-test-broker
 packages: [jq]
 templates:
   bin/run: bin/run
+  bin/create-service: bin/create-service
+  bin/delete-service: bin/delete-service
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
