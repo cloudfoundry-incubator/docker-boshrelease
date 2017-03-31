@@ -46,13 +46,12 @@ main() {
   local instance_id=$3
   local binding_id=$4
 
-  create_instance $service_id $plan_id $instance_id
-  info
+  info $(create_instance $service_id $plan_id $instance_id | head -c80)
   credentials=$(create_binding $service_id $plan_id $instance_id $binding_id)
 
   uri=$(echo $credentials | jq -r ".credentials.uri")
   if [[ "${uri:-null}" == "null" ]]; then
-    echo "Binding credentials missing 'uri' key"
+    info "Binding credentials missing 'uri' key"
   fi
 
   # return credentials to caller

@@ -53,8 +53,8 @@ for service_id in ${service_ids[@]}; do
 
     echo Provisioning service $service_name / $plan_name as $instance_id/$binding_id...
     credentials=$(create-service $service_id $plan_id $instance_id $binding_id)
-    echo $credentials | head -c80
-    echo
+    echo $credentials
+    echo "."
 
     echo Deprovisioning service $service_name / $plan_name ...
     delete-service $service_id $plan_id $instance_id $binding_id
