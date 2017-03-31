@@ -47,6 +47,7 @@ main() {
   local binding_id=$4
 
   create_instance $service_id $plan_id $instance_id
+  info
   credentials=$(create_binding $service_id $plan_id $instance_id $binding_id)
 
   uri=$(echo $credentials | jq -r ".credentials.uri")
