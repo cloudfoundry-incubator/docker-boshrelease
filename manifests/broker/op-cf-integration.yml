@@ -8,6 +8,35 @@
     sha1: d6486bfe6c76b612ab6e0c2d3e38376ad780f378
 
 - type: replace
+  path: /releases/-
+  value:
+    name: routing
+    version: 0.147.0
+    url: https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.147.0
+    sha1: 526af8e02a170b424f80148eed95f373bf831a6a
+
+- type: replace
+  path: /instance_groups/name=subway/jobs/-
+  value:
+    release: routing
+    name: route_registrar
+    consumes:
+      nats:
+        deployment: cf
+        from: nats
+    properties:
+      route_registrar:
+        routes:
+        - name: ((broker-route-name)) # deployment name
+          port: 8000
+          registration_interval: 20s
+          uris: [((broker-route-uri))]
+
+- type: replace
+  path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/external_host?
+  value: ((broker-route-uri))
+
+- type: replace
   path: /instance_groups/-
   value:
     name: broker-registrar
