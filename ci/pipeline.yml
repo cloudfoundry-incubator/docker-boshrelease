@@ -150,22 +150,7 @@ jobs:
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-docker-broker
       errand: broker-registrar
-  - task: deploy-with-cf-integration-and-routing-hostname
-    file: boshrelease-ci/ci/tasks/bosh2-deploy.yml
-    params:
-      BOSH_ENVIRONMENT: (( grab meta.bosh-lite-testflight.bosh_environment ))
-      BOSH_CA_CERT: (( grab meta.bosh-lite-testflight.bosh_ca_cert ))
-      BOSH_CLIENT: (( grab meta.bosh-lite-testflight.bosh_client ))
-      BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
-      BOSH_DEPLOYMENT: testflight-docker-broker
-      base_manifest: manifests/broker/docker-broker.yml
-      op_patch_files: manifests/broker/op-cf-integration.yml,manifests/broker/op-routing-hostname.yml,manifests/broker/services/op-mysql56.yml,manifests/broker/services/op-redis32.yml,manifests/broker/services/op-postgresql96.yml
-      cf_api_url: (( grab meta.bosh-lite-testflight.cf_api_url ))
-      cf_skip_ssl_validation: (( grab meta.bosh-lite-testflight.cf_skip_ssl_validation ))
-      cf_admin_username: (( grab meta.bosh-lite-testflight.cf_admin_username ))
-      cf_admin_password: (( grab meta.bosh-lite-testflight.cf_admin_password ))
-      cf_system_domain: (( grab meta.bosh-lite-testflight.cf_system_domain ))
-  - task: register-broker
+  - task: sanity-test
     file: boshrelease-ci/ci/tasks/bosh2-errand.yml
     params:
       BOSH_ENVIRONMENT: (( grab meta.bosh-lite-testflight.bosh_environment ))
@@ -173,7 +158,7 @@ jobs:
       BOSH_CLIENT: (( grab meta.bosh-lite-testflight.bosh_client ))
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-docker-broker
-      errand: broker-registrar
+      errand: sanity-test
 
 - name: testflight-swarm
   public: true

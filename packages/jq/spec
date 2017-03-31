@@ -1,0 +1,5 @@
+---
+name: jq
+dependencies: []
+files:
+- jq/jq-linux64-1.5

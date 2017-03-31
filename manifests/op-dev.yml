@@ -3,4 +3,4 @@
   path: /releases/name=docker
   value:
     name: docker
-    version: 30.0.0-rc.7+latest
+    version: latest

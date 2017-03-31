@@ -1,0 +1,13 @@
+---
+name: sanity-test-broker
+packages: [jq]
+templates:
+  bin/run: bin/run
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+consumes:
+- name: servicebroker
+  type: servicebroker
+
+properties: {}

@@ -26,6 +26,10 @@ golang/go1.5.1.linux-amd64.tar.gz:
   size: 77875767
   object_id: 3c26a347-ae52-4ccb-b0e3-f22e3e863c7c
   sha: 46eecd290d8803887dec718c691cc243f2175fe0
+jq/jq-linux64-1.5:
+  size: 3027945
+  object_id: 7edab2fd-36ac-4a75-50df-e17e81596ec3
+  sha: d8e36831c3c94bb58be34dd544f44a6c6cb88568
 ruby/bundler-1.14.6.gem:
   size: 319488
   object_id: 00dfe10d-016e-422f-6ada-92abc8298f29
