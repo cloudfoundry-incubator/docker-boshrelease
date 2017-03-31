@@ -48,10 +48,11 @@ main() {
   credentials=$(create_binding $service_id $plan_id $instance_id $binding_id)
 
   uri=$(echo $credentials | jq -r ".credentials.uri")
-  if [[ "${uri}X" == "X" ]]; then
+  if [[ "${uri:-null}" == "null" ]]; then
     echo "Binding credentials missing 'uri' key"
   fi
 
+  # return credentials to caller
   echo $credentials
 }
 
