@@ -36,12 +36,12 @@ YAML
 
 cat > tmp/vars.yml <<YAML
 ---
-cf_api_url: ${cf_api_url:-}
-cf_skip_ssl_validation: ${cf_skip_ssl_validation:-}
-cf_admin_username: ${cf_admin_username:-}
-cf_admin_password: ${cf_admin_password:-}
-broker_route_name: ${BOSH_DEPLOYMENT}
-broker_route_uri: ${BOSH_DEPLOYMENT}.${cf_system_domain}
+cf-api-url: ${cf_api_url:-}
+cf-skip-ssl-validation: ${cf_skip_ssl_validation:-}
+cf-admin-username: ${cf_admin_username:-}
+cf-admin-password: ${cf_admin_password:-}
+broker-route-name: ${BOSH_DEPLOYMENT}
+broker-route-uri: ${BOSH_DEPLOYMENT}.${cf_system_domain}
 YAML
 
 op_patch_files_flags=""
