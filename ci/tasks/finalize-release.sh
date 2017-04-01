@@ -2,6 +2,8 @@
 
 set -e
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 release_version=$(cat version/number)
 
 FINAL_RELEASE_TARBALL=$PWD/final-release-tarball
@@ -44,7 +46,6 @@ final_release_tgz=${FINAL_RELEASE_TARBALL}/${release_name}-${release_version}.tg
 bosh2 create-release \
   --tarball ${final_release_tgz} ${release_yml}
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 $DIR/update-manifests-with-latest-release.sh $release_name $release_version $final_release_tgz
 git add -A
 git commit -m "update manifests for v${release_version}"
