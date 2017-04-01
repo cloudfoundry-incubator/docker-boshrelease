@@ -71,6 +71,6 @@ releases:
   url: https://bosh.io/d/github.com/cloudfoundry-community/cf-subway-boshrelease?v=3.0.0
   sha1: 4e241dff1552e626e0677941da69944eafeca1ff
 - name: docker
-  version: 30.0.0-rc.7
-  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.7/docker-30.0.0-rc.7.tgz
-  sha1: 4badb303131906a1fec3e2ed6eaaa39e66a55b56
+  version: 30.0.0-rc.21
+  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.21/docker-30.0.0-rc.21.tgz
+  sha1: 0fc0da5857884a7a98cb537540a88ef9d2e9efa3
