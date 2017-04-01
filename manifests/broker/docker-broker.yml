@@ -22,6 +22,14 @@ instance_groups:
   jobs:
   - name: docker
     release: docker
+    properties:
+      tcp_address: 0.0.0.0
+      tls: true
+      tls_verify: true
+      tls_cacert: "((docker-tls.ca))"
+      tls_cert: "((docker-tls.certificate))"
+      tls_key: "((docker-tls.private_key))"
+
   - name: cf-containers-broker
     release: docker
     provides:
@@ -52,6 +60,18 @@ variables:
   type: password
 - name: broker-cookie-secret
   type: password
+- name: docker-ca
+  type: certificate
+  options:
+    is_ca: true
+    common_name: dockerCA
+- name: docker-tls
+  type: certificate
+  options:
+    ca: docker-ca
+    common_name: docker
+    extended_key_usage:
+    - client_auth
 
 stemcells:
 - alias: default

@@ -30,8 +30,8 @@ To expose the Docker daemon externally via TCP port, include the `op-public-tls.
 ```
 export BOSH_DEPLOYMENT=containers-example
 bosh2 deploy manifests/containers/example.yml \
-  -o manifests/op-public-tls.yml \
-  --vars-store tmp/creds.yml
+  --vars-store tmp/creds.yml \
+  -o manifests/op-public-tls.yml
 ```
 
 The first time you run this it will automatically generate a root CA and TLS certificate and store it in `tmp/creds.yml`.
@@ -81,7 +81,8 @@ You can also integrate your service broker with your Cloud Foundry.
 
 ```
 export BOSH_DEPLOYMENT=docker-broker
-bosh2 deploy manifests/broker/docker-broker.yml --vars-store tmp/creds.yml \
+bosh2 deploy manifests/broker/docker-broker.yml \
+  --vars-store tmp/creds.yml \
   -o manifests/op-cf-integration.yml \
   -o manifests/broker/services/op-postgresql96.yml \
   -o manifests/broker/services/op-mysql56.yml \
@@ -102,5 +103,6 @@ The docker swarm deployment includes automatic generation of TLS certificates th
 
 ```
 export BOSH_DEPLOYMENT=docker-swarm
-bosh2 deploy manifests/swarm/docker-swarm.yml --vars-store tmp/creds.yml
+bosh2 deploy manifests/swarm/docker-swarm.yml \
+  --vars-store tmp/creds.yml
 ```
