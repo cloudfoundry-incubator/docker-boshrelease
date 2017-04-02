@@ -1,1 +1,8 @@
-<% if_p('tls_cert') do |cert| %><% if cert.index("\n").nil? %><%= cert.gsub('\\n', "\n") %><% else %><%= cert %><% end %><% end %>
+<%=
+  cert = p('tls_cert')
+  if cert.index("\n").nil?
+    cert.gsub('\\n', "\n")
+  else
+    cert
+  end
+%>

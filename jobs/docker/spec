@@ -21,11 +21,9 @@ provides:
   type: docker-tcp
   properties:
   - tcp_port
-  - tls
   - tls_cacert
   - tls_cert
   - tls_key
-  - tls_verify
 
 properties:
   tcp_address:
@@ -98,18 +96,12 @@ properties:
   storage_options:
     description: "Array of storage driver options"
 
-  tls:
-    description: "Use TLS"
-    default: false
   tls_cacert:
     description: "Trust only remotes providing a certificate signed by the CA given here"
   tls_cert:
     description: "TLS certificate file"
   tls_key:
     description: "TLS key file"
-  tls_verify:
-    description: "Use TLS and verify the remote"
-    default: false
 
   userland_proxy:
     description: "Use userland proxy for loopback traffic"

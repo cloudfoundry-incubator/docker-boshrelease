@@ -24,8 +24,6 @@ instance_groups:
     release: docker
     properties:
       tcp_address: 0.0.0.0
-      tls: true
-      tls_verify: true
       tls_cacert: "((docker-tls.ca))"
       tls_cert: "((docker-tls.certificate))"
       tls_key: "((docker-tls.private_key))"
