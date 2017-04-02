@@ -53,27 +53,19 @@ export SWARM_MANAGER_API_ENABLE_CORS="--api-enable-cors=<%= p('api_enable_cors')
 export SWARM_MANAGER_OVERCOMMIT="--cluster-opt=swarm.overcommit=<%= p('overcommit') %>"
 
 # Use TLS
-export SWARM_MANAGER_TLS="--tls=<%= link('docker').p('tls') %>"
+export SWARM_MANAGER_TLS="--tls=true"
 
-<% link('docker').if_p('tls_cacert') do |tls_cacert| -%>
-# Trust only remotes providing a certificate signed by the CA given here
-export SWARM_MANAGER_TLS_CACERT="--tlscacert=${SWARM_MANAGER_CONF_DIR}/docker.cacert"
-<% end -%>
-
-<% link('docker').if_p('tls_cert') do |tls_cert| -%>
-# Path to TLS certificate file
-export SWARM_MANAGER_TLS_CERT="--tlscert=${SWARM_MANAGER_CONF_DIR}/docker.cert"
-<% end -%>
-
-<% link('docker').if_p('tls_key') do |tls_key| -%>
-# Path to TLS key file
-export SWARM_MANAGER_TLS_KEY="--tlskey=${SWARM_MANAGER_CONF_DIR}/docker.key"
-<% end -%>
-
-<% if link('docker').p('tls_verify', false) -%>
 # Use TLS and verify the remote
 export SWARM_MANAGER_TLS_VERIFY="--tlsverify=true"
-<% end -%>
+
+# Trust only remotes providing a certificate signed by the CA given here
+export SWARM_MANAGER_TLS_CACERT="--tlscacert=${SWARM_MANAGER_CONF_DIR}/docker.cacert"
+
+# Path to TLS certificate file
+export SWARM_MANAGER_TLS_CERT="--tlscert=${SWARM_MANAGER_CONF_DIR}/docker.cert"
+
+# Path to TLS key file
+export SWARM_MANAGER_TLS_KEY="--tlskey=${SWARM_MANAGER_CONF_DIR}/docker.key"
 
 <% if_p('swarm.discovery_options') do |discovery_options| -%>
 # Swarm discovery options
