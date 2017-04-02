@@ -14,7 +14,6 @@ params:
   BOSH_CA_CERT:
   BOSH_CLIENT:
   BOSH_CLIENT_SECRET:
-  BOSH_DEPLOYMENT:
 
 run:
   path: boshrelease-ci/ci/tasks/bosh2-upload-release.sh
