@@ -10,6 +10,8 @@ source /var/vcap/jobs/sanity-test-broker/helpers/ctl_setup.sh 'sanity-test-broke
 export PATH=/var/vcap/jobs/sanity-test-broker/bin:$PATH
 export sanity_tests_by_tag=$JOB_DIR/sanity-tests-by-tag
 
+source /var/vcap/jobs/docker/bin/envrc
+
 <%
   broker = link("servicebroker")
   protocol = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
@@ -22,17 +24,19 @@ export sanity_tests_by_tag=$JOB_DIR/sanity-tests-by-tag
     uri += ":#{broker_port}"
     url += ":#{broker_port}"
   end
+
+  docker_broker_catalog = link("docker-broker-catalog").p("services")
 %>
 export broker_uri=<%= uri %>
+docker_broker_catalog='<%= docker_broker_catalog.to_json %>'
+
+echo Service catalog
 export EDEN_BROKER_URL=<%= url %>
 export EDEN_BROKER_CLIENT="<%= username %>"
 export EDEN_BROKER_CLIENT_SECRET="<%= password %>"
-
-echo Service catalog
 eden catalog
 
-# TODO: could eden include this "test-all-service-plans" feature?
-# If it did, how might we integrate sanity tests for redis/postgresql/mysql etc?
+# TODO: could eden include this "eden test-all" feature?
 catalog=$(curl -sf ${broker_uri}/v2/catalog)
 service_ids=$(echo $catalog | jq -r ".services[].id")
 for service_id in ${service_ids[@]}; do
@@ -46,21 +50,14 @@ for service_id in ${service_ids[@]}; do
     unset uri
 
     echo Provisioning service $service_name / $plan_name as $instance_id/$binding_id...
-    export credentials=$(create-service $service_id $plan_id $instance_id $binding_id)
+    credentials=$(create-service $service_id $plan_id $instance_id $binding_id)
     echo $credentials
     echo "."
 
-    # echo Looking for sanity tests by service tags: $(echo $service_tags | paste -sd ", " -)
-    # found_tag=
-    # for service_tag in "${service_tags[@]}"; do
-    #   if [[ -f $sanity_tests_by_tag/$service_tag/run.sh ]]; then
-    #     echo Running tests for tag $service_tag
-    #     . $sanity_tests_by_tag/$service_tag/run.sh
-    #   fi
-    # done
-    # if [[ ${found_tag:-X} == "X" ]]; then
-    #   echo No sanity tests found for $service_name / $plan_name
-    # fi
+    plan_container=$(echo $docker_broker_catalog | jq -r ".[] | select(.id == \"$service_id\").plans[] | select(.id == \"$plan_id\").container")
+    service_plan_image=$(echo $plan_container | jq -r ".image"):$(echo $plan_container | jq -r '.tag // "latest"')
+    # TODO: eden test-all $credentials will run the following
+    . $JOB_DIR/bin/test-credentials
 
     echo Deprovisioning service $service_name / $plan_name ...
     delete-service $service_id $plan_id $instance_id $binding_id

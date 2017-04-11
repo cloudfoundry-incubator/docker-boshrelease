@@ -62,6 +62,15 @@ instance_groups:
     consumes:
       servicebroker:
         from: subway
+      docker-broker-catalog:
+        from: backend
+  - name: docker
+    release: docker
+    properties:
+      tcp_address: 0.0.0.0
+      tls_cacert: "((docker-tls.ca))"
+      tls_cert: "((docker-tls.certificate))"
+      tls_key: "((docker-tls.private_key))"
 
 variables:
 - name: subway-broker-password
