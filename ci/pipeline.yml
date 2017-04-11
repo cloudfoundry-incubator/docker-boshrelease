@@ -7,14 +7,6 @@ resources:
     branch: (( grab meta.pipeline-branch ))
     private_key: (( grab meta.github-private-key ))
 
-- name: boshrelease-trigger
-  type: git
-  source:
-    uri: git@github.com:cloudfoundry-community/docker-boshrelease.git
-    branch: (( grab meta.pipeline-branch ))
-    private_key: (( grab meta.github-private-key ))
-    paths: [config/blobs.yml, packages/**/*, packages/*, jobs/*, jobs/**/*, src/**/*, src/*]
-
 - name: boshrelease-ci
   type: git
   source:
@@ -64,8 +56,7 @@ jobs:
   serial_groups: [version]
   plan:
   - aggregate:
-    - {get: boshrelease}
-    - {get: boshrelease-trigger, trigger: true, params: {skip_download: true}}
+    - {get: boshrelease, trigger}
     - {get: version, params: {pre: rc}}
   - put: version
     params: {file: version/number}
