@@ -3,9 +3,10 @@
   path: /releases/-
   value:
     name: broker-registrar
-    version: 3.0.0
-    url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.0.0
-    sha1: d6486bfe6c76b612ab6e0c2d3e38376ad780f378
+    version: latest
+    # version: 3.0.0
+    # url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.0.0
+    # sha1: d6486bfe6c76b612ab6e0c2d3e38376ad780f378
 
 - type: replace
   path: /releases/-
@@ -49,6 +50,9 @@
     jobs:
     - name: broker-registrar
       release: broker-registrar
+      consumes:
+        servicebroker:
+          from: subway
       properties:
         cf:
           api_url: ((cf-api-url))
@@ -56,16 +60,25 @@
           password: ((cf-admin-password))
           skip_ssl_validation: ((cf-skip-ssl-validation))
 
-# - type: replace
-#   path: /instance_groups/-
-#   value:
-#     name: broker-deregistrar
-#     instances: 1
-#     azs: [z1]
-#     lifecycle: errand
-#     vm_type: default
-#     stemcell: default
-#     networks: [{name: default}]
-#     jobs:
-#     - name: broker-deregistrar
-#       release: broker-registrar
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: broker-deregistrar
+    instances: 1
+    azs: [z1]
+    lifecycle: errand
+    vm_type: default
+    stemcell: default
+    networks: [{name: default}]
+    jobs:
+    - name: broker-deregistrar
+      release: broker-registrar
+      consumes:
+        servicebroker:
+          from: subway
+      properties:
+        cf:
+          api_url: ((cf-api-url))
+          username: ((cf-admin-username))
+          password: ((cf-admin-password))
+          skip_ssl_validation: ((cf-skip-ssl-validation))

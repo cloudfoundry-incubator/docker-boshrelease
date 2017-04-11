@@ -11,6 +11,13 @@ instance_groups:
   jobs:
   - name: subway-broker
     release: cf-subway
+    consumes:
+      backend:
+        from: backend
+    properties:
+      username: broker
+      password: ((subway-broker-password))
+      name: docker-broker
 
 - name: docker
   azs: [z1,z2,z3]
@@ -32,12 +39,12 @@ instance_groups:
     release: docker
     provides:
       cf-containers-broker:
-        as: servicebroker
+        as: backend
         shared: true
     properties:
       username: broker
-      password: ((broker-password))
-      cookie_secret: ((broker-cookie-secret))
+      password: ((docker-broker-password))
+      cookie_secret: ((docker-broker-cookie-secret))
       max_containers: 20
       services: []
 
@@ -52,11 +59,16 @@ instance_groups:
   jobs:
   - name: sanity-test-broker
     release: docker
+    consumes:
+      servicebroker:
+        from: subway
 
 variables:
-- name: broker-password
+- name: subway-broker-password
   type: password
-- name: broker-cookie-secret
+- name: docker-broker-password
+  type: password
+- name: docker-broker-cookie-secret
   type: password
 - name: docker-ca
   type: certificate
@@ -85,9 +97,10 @@ update:
 
 releases:
 - name: cf-subway
-  version: 3.0.0
-  url: https://bosh.io/d/github.com/cloudfoundry-community/cf-subway-boshrelease?v=3.0.0
-  sha1: 4e241dff1552e626e0677941da69944eafeca1ff
+  version: latest
+  # version: 3.0.0
+  # url: https://bosh.io/d/github.com/cloudfoundry-community/cf-subway-boshrelease?v=3.0.0
+  # sha1: 4e241dff1552e626e0677941da69944eafeca1ff
 - name: docker
   version: 30.0.0-rc.21
   url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.21/docker-30.0.0-rc.21.tgz
