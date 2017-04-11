@@ -8,6 +8,7 @@ set -u # report the usage of uninitialized variables
 # Setup env vars and folders for the errand script
 source /var/vcap/jobs/sanity-test-broker/helpers/ctl_setup.sh 'sanity-test-broker'
 export PATH=/var/vcap/jobs/sanity-test-broker/bin:$PATH
+export sanity_tests_by_tag=$JOB_DIR/sanity-tests-by-tag
 
 <%
   broker = link("servicebroker")
@@ -15,25 +16,28 @@ export PATH=/var/vcap/jobs/sanity-test-broker/bin:$PATH
   username = broker.p("username")
   password = broker.p("password")
   host = broker.p("external_host", broker.instances.first.address)
+  url = "#{protocol}://#{host}"
   uri = "#{protocol}://#{username}:#{password}@#{host}"
-  redacted_uri = "#{protocol}://#{username}:REDACTED@#{host}"
   broker.if_p("port") do |broker_port|
     uri += ":#{broker_port}"
-    redacted_uri += ":#{broker_port}"
+    url += ":#{broker_port}"
   end
 %>
 export broker_uri=<%= uri %>
-export redacted_uri=<%= redacted_uri %>
+export EDEN_BROKER_URL=<%= url %>
+export EDEN_BROKER_CLIENT="<%= username %>"
+export EDEN_BROKER_CLIENT_SECRET="<%= password %>"
 
-echo Pinging $redacted_uri/v2/catalog for service names...
-curl -s $broker_uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")"
-service_names=$(curl -s $broker_uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")")
-echo "Service names: $service_names"
+echo Service catalog
+eden catalog
 
+# TODO: could eden include this "test-all-service-plans" feature?
+# If it did, how might we integrate sanity tests for redis/postgresql/mysql etc?
 catalog=$(curl -sf ${broker_uri}/v2/catalog)
 service_ids=$(echo $catalog | jq -r ".services[].id")
 for service_id in ${service_ids[@]}; do
   service_name=$(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").name")
+  service_tags=($(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").tags[]"))
   plan_ids=$(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").plans[].id")
   for plan_id in ${plan_ids[@]}; do
     plan_name=$(echo $catalog | jq -r ".services[] | select(.id == \"$service_id\").plans[] | select(.id == \"$plan_id\").name")
@@ -42,9 +46,21 @@ for service_id in ${service_ids[@]}; do
     unset uri
 
     echo Provisioning service $service_name / $plan_name as $instance_id/$binding_id...
-    credentials=$(create-service $service_id $plan_id $instance_id $binding_id)
+    export credentials=$(create-service $service_id $plan_id $instance_id $binding_id)
     echo $credentials
     echo "."
+
+    # echo Looking for sanity tests by service tags: $(echo $service_tags | paste -sd ", " -)
+    # found_tag=
+    # for service_tag in "${service_tags[@]}"; do
+    #   if [[ -f $sanity_tests_by_tag/$service_tag/run.sh ]]; then
+    #     echo Running tests for tag $service_tag
+    #     . $sanity_tests_by_tag/$service_tag/run.sh
+    #   fi
+    # done
+    # if [[ ${found_tag:-X} == "X" ]]; then
+    #   echo No sanity tests found for $service_name / $plan_name
+    # fi
 
     echo Deprovisioning service $service_name / $plan_name ...
     delete-service $service_id $plan_id $instance_id $binding_id

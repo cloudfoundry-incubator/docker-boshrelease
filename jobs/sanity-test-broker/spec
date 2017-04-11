@@ -1,6 +1,6 @@
 ---
 name: sanity-test-broker
-packages: [jq]
+packages: [jq, eden-cli]
 templates:
   bin/run: bin/run
   bin/create-service: bin/create-service
