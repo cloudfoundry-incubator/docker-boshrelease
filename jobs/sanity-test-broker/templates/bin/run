@@ -21,9 +21,6 @@ export PATH=/var/vcap/jobs/sanity-test-broker/bin:$PATH
     uri += ":#{broker_port}"
     redacted_uri += ":#{broker_port}"
   end
-
-  services = broker.p("services")
-  service_names = services.map {|s| s["name"]}.join(",")
 %>
 export broker_uri=<%= uri %>
 export redacted_uri=<%= redacted_uri %>
@@ -31,14 +28,7 @@ export redacted_uri=<%= redacted_uri %>
 echo Pinging $redacted_uri/v2/catalog for service names...
 curl -s $broker_uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")"
 service_names=$(curl -s $broker_uri/v2/catalog | jq -r ".services | map(.name) | join(\",\")")
-
-echo Testing <%= service_names %> == $service_names
-if [[ "$service_names" != "<%= service_names %>" ]]; then
-  echo "Failed"
-  exit 1
-else
-  echo "Ok"
-fi
+echo "Service names: $service_names"
 
 catalog=$(curl -sf ${broker_uri}/v2/catalog)
 service_ids=$(echo $catalog | jq -r ".services[].id")
