@@ -45,7 +45,13 @@ Run a static set of Docker containers, backed by a persistent disk:
 
 ![ctop-example](manifests/containers/ctop-example.png)
 
-See `manifests/README.md` for deployment instructions.
+See [`manifests/README.md`](manifests/README.md) for deployment instructions.
+
+## Docker Swarm
+
+Deploy and manage a cluster of Docker Swarm.
+
+See [`manifests/README.md`](manifests/README.md) for deployment instructions.
 
 ### Pair your Dockerfile with a `bosh-service.yml`
 
