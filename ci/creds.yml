@@ -1,6 +1,6 @@
 ---
 meta:
-  pipeline-branch: links-and-cloud-config
+  pipeline-branch: master
   github-release-access-token: (( vault "secret/cfcommunity-boshreleases" "/github:token" ))
   github-private-key: (( vault "secret/cfcommunity-boshreleases" "/github:private_key" ))
 
