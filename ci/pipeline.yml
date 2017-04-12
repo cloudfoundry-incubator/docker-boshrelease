@@ -39,7 +39,6 @@ resources:
     access_token: (( grab meta.github-release-access-token ))
     user: cloudfoundry-community
     repository: docker-boshrelease
-    drafts: true
     pre_release: true
 
 - name: github-release
