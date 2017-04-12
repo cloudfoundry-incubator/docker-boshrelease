@@ -78,3 +78,5 @@ See [`manifests/README.md`](manifests/README.md) for deployment instructions.
 ## Status of Docker Broker images
 
 This project was original created many years ago, and overtime some of the community Docker images have been maintained; and some have not. All of them have been retained in the `manifests/broker/services` as examples. If you are excited by one of them but it is a very old version, create an Issue, and we'll help you upgrade it.
+
+See https://github.com/cloudfoundry-community/cf-containers-broker for more information about how services are configured, how to pass properties into Docker images, how credentials are randomly generated, etc.
