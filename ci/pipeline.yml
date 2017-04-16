@@ -264,3 +264,26 @@ jobs:
       commitish: generated-commitish/commitish
       globs:
       - final-release-tarball/*.tgz
+
+- name: patch
+  public: true
+  plan:
+  - { get: version, passed: [shipit], trigger: true, params: { bump: patch, pre: rc } }
+  # - { get: version, trigger: true, params: { bump: patch, pre: rc } }
+  - { put: version, params: { file: version/number } }
+
+- name: major
+  public: true
+  plan:
+  - get: version
+    params: {bump: major, pre: rc}
+  - put: version
+    params: {file: version/number}
+
+- name: minor
+  public: true
+  plan:
+  - get: version
+    params: {bump: minor, pre: rc}
+  - put: version
+    params: {file: version/number}
