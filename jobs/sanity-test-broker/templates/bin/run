@@ -34,6 +34,12 @@ echo Service catalog
 export EDEN_BROKER_URL=<%= url %>
 export EDEN_BROKER_CLIENT="<%= username %>"
 export EDEN_BROKER_CLIENT_SECRET="<%= password %>"
+
+echo EDEN_BROKER_URL=<%= url %>
+echo EDEN_BROKER_CLIENT="<%= username %>"
+echo EDEN_BROKER_CLIENT_SECRET="<%= password %>"
+echo eden catalog
+
 eden catalog
 
 # TODO: could eden include this "eden test-all" feature?
