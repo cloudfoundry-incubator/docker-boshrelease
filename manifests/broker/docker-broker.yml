@@ -46,6 +46,7 @@ instance_groups:
       password: ((docker-broker-password))
       cookie_secret: ((docker-broker-cookie-secret))
       max_containers: 20
+      fetch_images: true
       services: []
 
 - name: sanity-test
