@@ -23,6 +23,7 @@
     plans:
     - id: '13d21792-14f5-11e7-81cd-4357fa4eeda9'
       name: 'free'
+      description: 'Free Trial'
       container:
         backend: 'docker'
         image: 'frodenas/redis'
@@ -32,7 +33,6 @@
       credentials:
         password:
           key: 'REDIS_PASSWORD'
-      description: 'Free Trial'
       metadata:
         costs:
         - amount:
