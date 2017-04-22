@@ -14,6 +14,10 @@ instance_groups:
     consumes:
       backend:
         from: backend
+    provides:
+      subway:
+        as: broker
+        shared: true
     properties:
       username: broker
       password: ((subway-broker-password))
@@ -62,7 +66,7 @@ instance_groups:
     release: docker
     consumes:
       servicebroker:
-        from: subway
+        from: broker
       docker-broker-catalog:
         from: backend
   - name: docker
