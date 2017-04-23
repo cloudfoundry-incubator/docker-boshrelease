@@ -51,7 +51,7 @@
       release: broker-registrar
       consumes:
         servicebroker:
-          from: subway
+          from: broker
       properties:
         cf:
           api_url: ((cf-api-url))
@@ -74,7 +74,7 @@
       release: broker-registrar
       consumes:
         servicebroker:
-          from: subway
+          from: broker
       properties:
         cf:
           api_url: ((cf-api-url))
