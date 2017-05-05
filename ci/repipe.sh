@@ -9,5 +9,5 @@ echo fetching credentials
 spruce merge pipeline.yml creds.yml > pipeline-deploy.yml
 
 cd $DIR/..
-fly -t vsphere sp -p $(basename $(pwd)) -c ci/pipeline-deploy.yml
+fly -t snw sp -p $(basename $(pwd)) -c ci/pipeline-deploy.yml
 rm ci/pipeline-deploy.yml
