@@ -3,9 +3,9 @@
   path: /releases/-
   value:
     name: broker-registrar
-    version: 3.1.2
-    url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.1.2
-    sha1: 6d65c834f4b8380e123203adb148968ca611dc42
+    version: 3.2.2
+    url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.2.2
+    sha1: f82c6a346d871ccb9835b8e6341f966cf7ebc7c9
 
 - type: replace
   path: /releases/-
