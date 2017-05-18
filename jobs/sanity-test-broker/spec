@@ -21,4 +21,7 @@ consumes:
   # properties:
   # - services
 
-properties: {}
+properties:
+  fetch_images:
+    description: "Fetch/pull container images"
+    default: true
