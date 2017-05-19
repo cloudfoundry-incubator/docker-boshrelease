@@ -14,6 +14,7 @@ production:
   host_directory: /var/vcap/store/cf-containers-broker/
   max_containers: <%= p('max_containers') %>
   allocate_docker_host_ports: <%= p('allocate_docker_host_ports') %>
+  enable_host_port_envvar: <%= p('enable_host_port_envvar') %>
 
   container_env_var_dir: '/var/vcap/store/cf-containers-broker/envdir'
   log_path: '/var/vcap/sys/log/cf-containers-broker/cf-containers-broker.log'

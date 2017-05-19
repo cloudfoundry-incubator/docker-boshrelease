@@ -69,6 +69,15 @@ properties:
   allocate_docker_host_ports:
     description: "Allocate Docker host ports when creating a container"
     default: true
+  enable_host_port_envvar:
+    description: |-
+      If provisioning services with "allocate_docker_host_ports: true"
+      you can optionally enable the addition of a DOCKER_HOST_PORT_nnnn env var
+      for each exposed port.
+      This will create the container and then recreate the container with an additional
+      DOCKER_HOST_PORT_nnnn environment variable for each exposed port.
+      If you wish to disable this two-step provisioning process, set to true
+    default: false
   fetch_images:
     description: "Fetch new/updated container images on restart"
     default: true
