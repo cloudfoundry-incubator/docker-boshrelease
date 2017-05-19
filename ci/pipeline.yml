@@ -269,7 +269,7 @@ jobs:
   public: true
   plan:
   - { get: version, passed: [shipit], trigger: true, params: { bump: patch, pre: rc } }
-  # - { get: version, trigger: true, params: { bump: patch, pre: rc } }
+  # - { get: version, params: { bump: patch, pre: rc } }
   - { put: version, params: { file: version/number } }
 
 - name: major
