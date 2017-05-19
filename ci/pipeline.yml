@@ -204,7 +204,7 @@ jobs:
   - task: generate-commitish
     config:
       platform: linux
-      image: docker:///dingotiles/dingo-postgresql-release-pipeline
+      rootfs_uri: docker:///starkandwayne/concourse
       inputs: [{name: boshrelease}]
       outputs: [{name: generated-commitish}]
       run:
@@ -247,7 +247,7 @@ jobs:
   - task: generate-commitish
     config:
       platform: linux
-      image: docker:///dingotiles/dingo-postgresql-release-pipeline
+      rootfs_uri: docker:///starkandwayne/concourse
       inputs: [{name: boshrelease}]
       outputs: [{name: generated-commitish}]
       run:
