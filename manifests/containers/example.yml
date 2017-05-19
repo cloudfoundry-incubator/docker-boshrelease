@@ -98,4 +98,4 @@ releases:
 - name: docker
   version: 30.1.1
   url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.1.1/docker-30.1.1.tgz
-  sha1: a227a67d52273adb24832b36398c75f3082b3c6d
+  sha1: ddcf763c4e9ddfbdda253fd270ee99d4de081286
