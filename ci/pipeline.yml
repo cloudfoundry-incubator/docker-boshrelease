@@ -97,6 +97,7 @@ jobs:
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-containers-example
       base_manifest: manifests/containers/example.yml
+      delete_deployment_first: true
 
 - name: testflight-broker
   public: true
@@ -117,6 +118,7 @@ jobs:
       BOSH_DEPLOYMENT: testflight-docker-broker
       op_patch_files: manifests/broker/services/op-mysql56.yml,manifests/broker/services/op-redis32.yml,manifests/broker/services/op-postgresql96.yml
       base_manifest: manifests/broker/docker-broker.yml
+      delete_deployment_first: true
   - task: sanity-test-basic
     file: boshrelease-ci/ci/tasks/bosh2-errand.yml
     params:
@@ -178,6 +180,7 @@ jobs:
       BOSH_CLIENT_SECRET: (( grab meta.bosh-lite-testflight.bosh_client_secret ))
       BOSH_DEPLOYMENT: testflight-docker-swarm
       base_manifest: manifests/swarm/docker-swarm.yml
+      delete_deployment_first: true
 
 - name: shipit-rc
   serial_groups: [version]
