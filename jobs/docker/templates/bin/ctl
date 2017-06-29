@@ -42,7 +42,7 @@ case $1 in
     fi
 
     # Start Docker daemon
-    exec docker daemon \
+    exec dockerd \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG} \
         ${DOCKER_DEFAULT_GATEWAY:-} \
