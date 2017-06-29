@@ -19,10 +19,10 @@ export DOCKER_STORE_DIR=${STORE_DIR}
 # Directory to store the Docker temp files
 export DOCKER_TMP_DIR=${TMP_DIR}
 
-<% if_p('tcp_address', 'tcp_port') do |address, port| %>
+<% if_p('tcp_address', 'tcp_port', 'listen_tcp') do |address, port, listen| %><% if listen %>
 # TCP Address/Port where Docker daemon will listen to
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
-<% end %>
+<% end %> <% end %>
 
 <% if_p('bridge', 'cidr_prefix') do |bridge, cidr_prefix| %>
 # Attach containers to a network bridge

@@ -26,6 +26,9 @@ provides:
   - tls_key
 
 properties:
+  listen_tcp:
+    description: "Should the docker daemon listen on tcp be active (or should docker only be accessible via unix socket)"
+    default: true
   tcp_address:
     description: "TCP address where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "127.0.0.1"
