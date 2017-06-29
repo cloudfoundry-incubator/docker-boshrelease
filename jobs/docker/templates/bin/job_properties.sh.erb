@@ -19,10 +19,10 @@ export DOCKER_STORE_DIR=${STORE_DIR}
 # Directory to store the Docker temp files
 export DOCKER_TMP_DIR=${TMP_DIR}
 
-<% if_p('tcp_address', 'tcp_port', 'listen_tcp') do |address, port, listen| %><% if listen %>
+<% if_p('tcp_address', 'tcp_port') do |address, port| %>
 # TCP Address/Port where Docker daemon will listen to
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
-<% end %> <% end %>
+<% end %>
 
 <% if_p('bridge', 'cidr_prefix') do |bridge, cidr_prefix| %>
 # Attach containers to a network bridge
@@ -138,8 +138,6 @@ export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
 export DOCKER_STORAGE_OPTIONS="<%= storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>"
 <% end %>
 
-
-<% if_p('tls_cacert', 'tls_cert', 'tls_key') do || %>
 # Use TLS and verify the remote
 export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
 
@@ -151,7 +149,6 @@ export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
 
 # Path to TLS key file
 export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
-<% end %>
 
 # Use userland proxy for loopback traffic
 export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('userland_proxy') %>"

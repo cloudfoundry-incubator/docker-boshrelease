@@ -75,9 +75,9 @@ case $1 in
         ${DOCKER_STORAGE_OPTIONS:-} \
         ${DOCKER_TCP:-} \
         ${DOCKER_TLS_VERIFY_OPTION} \
-        ${DOCKER_TLS_CACERT:-} \
-        ${DOCKER_TLS_CERT:-} \
-        ${DOCKER_TLS_KEY:-} \
+        ${DOCKER_TLS_CACERT} \
+        ${DOCKER_TLS_CERT} \
+        ${DOCKER_TLS_KEY} \
         ${DOCKER_USERLAND_PROXY} \
         ${DOCKER_BIP:-} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \

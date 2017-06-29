@@ -1,5 +1,5 @@
 <%=
-  cert = p('tls_cert', "")
+  cert = p('tls_cert')
   if cert.index("\n").nil?
     cert.gsub('\\n', "\n")
   else
