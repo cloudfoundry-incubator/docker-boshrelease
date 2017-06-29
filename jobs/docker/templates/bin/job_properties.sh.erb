@@ -138,6 +138,8 @@ export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
 export DOCKER_STORAGE_OPTIONS="<%= storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>"
 <% end %>
 
+
+<% if_p('tls_cacert', 'tls_cert', 'tls_key') do || %>
 # Use TLS and verify the remote
 export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
 
@@ -149,6 +151,7 @@ export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
 
 # Path to TLS key file
 export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
+<% end %>
 
 # Use userland proxy for loopback traffic
 export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('userland_proxy') %>"
