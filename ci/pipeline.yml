@@ -207,7 +207,10 @@ jobs:
   - task: generate-commitish
     config:
       platform: linux
-      rootfs_uri: docker:///starkandwayne/concourse
+      image_resource:
+        type: docker-image
+        source:
+          repository: starkandwayne/concourse
       inputs: [{name: boshrelease}]
       outputs: [{name: generated-commitish}]
       run:
@@ -250,7 +253,10 @@ jobs:
   - task: generate-commitish
     config:
       platform: linux
-      rootfs_uri: docker:///starkandwayne/concourse
+      image_resource:
+        type: docker-image
+        source:
+          repository: starkandwayne/concourse
       inputs: [{name: boshrelease}]
       outputs: [{name: generated-commitish}]
       run:
