@@ -57,7 +57,6 @@ instance_groups:
   azs: [z1]
   lifecycle: errand
   instances: 1
-  persistent_disk: 65536
   vm_type: default
   stemcell: default
   networks: [{name: default}]
