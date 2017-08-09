@@ -2,6 +2,12 @@
 
 set -e # exit immediately if a simple command exits with a non-zero status
 
+if [[ -z $(df | grep /var/vcap/store) ]]; then
+  echo "WARNING: No persisent disk provided. Setting up symlink to ephemeral disk."
+  mkdir -p /var/vcap/data/weak-store
+  ln -s /var/vcap/data/weak-store /var/vcap/store
+fi
+
 # Setup common env vars and folders
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
 export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
