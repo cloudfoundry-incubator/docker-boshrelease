@@ -15,12 +15,12 @@ properties:
       containers.name: String containing the name of the container
       containers.image: String containing the name of the image to create/run
       containers.command: Optional String containing the command to the run (including arguments)
-      containers.blkio_weight: Optional string containg the Block IO (relative weight)
+      containers.blkio_weight: Optional string containing the Block IO (relative weight)
       containers.cap_adds: Optional array of Linux capabilities to add
       containers.cap_drops: Optional array of Linux capabilities to drop
-      containers.cpu_period: Optional string containg the CPU CFS (Completely Fair Scheduler) period limit
-      containers.cpu_quota: Optional string containg the CPU CFS (Completely Fair Scheduler) quota limit
-      containers.cpu_shares: Optional string containg the CPU shares to assign to the container (relative weight)
+      containers.cpu_period: Optional string containing the CPU CFS (Completely Fair Scheduler) period limit
+      containers.cpu_quota: Optional string containing the CPU CFS (Completely Fair Scheduler) quota limit
+      containers.cpu_shares: Optional string containing the CPU shares to assign to the container (relative weight)
       containers.depends_on: Optional array of names of others containers in the same job that this container depends on
       containers.devices: Optional array of host devices to add to the container
       containers.disable_content_trust: Optional boolean to skip image verification
