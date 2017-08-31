@@ -74,17 +74,17 @@ export <%= container['name'] %>_devices="<%= Array(container['devices']).join(',
 export <%= container['name'] %>_disable_content_trust="--disable-content-trust=<%= container.has_key?('disable_content_trust') ? container['disable_content_trust'] : true %>"
 
 <% unless container['dns'].nil? || container['dns'].empty? %>
-Set custom DNS servers
+# Set custom DNS servers
 export <%= container['name'] %>_dns="<%= Array(container['dns']).join(',').split(',').map { |server| "--dns=#{server}" }.join(' ') %>"
 <% end %>
 
 <% unless container['dns_options'].nil? || container['dns_options'].empty? %>
-Set DNS options
+# Set DNS options
 export <%= container['name'] %>_dns_options="<%= Array(container['dns_options']).join(',').split(',').map { |option| "--dns-opt=#{option}" }.join(' ') %>"
 <% end %>
 
 <% unless container['dns_search'].nil? || container['dns_search'].empty? %>
-Set custom DNS search domains
+# Set custom DNS search domains
 export <%= container['name'] %>_dns_search="<%= Array(container['dns_search']).join(',').split(',').map { |domain| "--dns-search=#{domain}" }.join(' ') %>"
 <% end %>
 
@@ -169,7 +169,7 @@ export <%= container['name'] %>_memory_swap="--memory-swap=<%= container['memory
 <% end %>
 
 <% if container['memory_swappiness'] %>
-Tuning container memory swappiness
+# Tuning container memory swappiness
 export <%= container['name'] %>_memory_swappiness="--memory-swappiness=<%= container['memory_swappiness'] %>"
 <% end %>
 
