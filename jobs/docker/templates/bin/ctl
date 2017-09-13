@@ -6,6 +6,8 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
 export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
 export PATH="/var/vcap/packages/docker/bin:$PATH"
+export TMPDIR="/var/vcap/data/tmp"
+export DOCKER_STORE_DIR="/var/vcap/data"
 
 case $1 in
 
