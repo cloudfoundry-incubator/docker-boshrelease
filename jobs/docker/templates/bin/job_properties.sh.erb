@@ -156,6 +156,9 @@ export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('userland_proxy') %>"
 # Maximum number of open files
 export DOCKER_ULIMIT_NOFILE=<%= p('ulimit.nofile') %>
 
+# mmap counts
+export DOCKER_VM_MAX_MAP_COUNT=<%= p('vm.max_map_count') %>
+
 <% if p('flannel', false) %>
 source /run/flannel/subnet.env
 export DOCKER_BIP="--bip=${FLANNEL_SUBNET}"
