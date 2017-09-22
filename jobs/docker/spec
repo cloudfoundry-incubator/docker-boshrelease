@@ -112,6 +112,10 @@ properties:
     description: "Maximum number of open files"
     default: 8192
 
+  vm.max_map_count:
+    description: "If set, sets vm.max_map_count on VM"
+    default: ""
+
   flannel:
     description: "Enable flannel support"
     default: false

@@ -24,6 +24,9 @@ case $1 in
     # Set ulimits
     ulimit -n ${DOCKER_ULIMIT_NOFILE}
 
+    # Set vm.max_map_count
+    [ -n "${DOCKER_VM_MAX_MAP_COUNT}" ] && sysctl -w vm.max_map_count=${DOCKER_VM_MAX_MAP_COUNT}
+
     # Mount cgroupfs hierarchy
     ${JOB_DIR}/bin/cgroupfs-mount
 
