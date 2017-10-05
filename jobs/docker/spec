@@ -127,3 +127,7 @@ properties:
     description: "HTTPS proxy that Docker should use"
   env.no_proxy:
     description: "List of comma-separated hosts that Docker should skip connecting to the proxy"
+
+  store_dir:
+    description: "Path to use as the root of the Docker runtime"
+    default: "/var/vcap/store"

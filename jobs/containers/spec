@@ -59,3 +59,4 @@ properties:
       containers.volumes_from: Optional array of mount volumes from the specified container(s)
       containers.volume_driver: Optional string containing the volume driver for the container
       containers.workdir: Optional string containing the working directory inside the container
+      containers.store_dir: Optional string containing directory to store the containers data files

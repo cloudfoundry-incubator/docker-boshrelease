@@ -14,7 +14,8 @@ export CONTAINERS_LOG_DIR=${LOG_DIR}
 export CONTAINERS_PID_DIR=${RUN_DIR}
 
 # Directory to store the Containers data files
-export CONTAINERS_STORE_DIR=${STORE_DIR}
+export CONTAINERS_STORE_DIR=<%= p(container['store_dir']).empty? ? '/var/vcap/store' : p(container['store_dir'])%>/${JOB_NAME}
+export STORE_DIR=${CONTAINERS_STORE_DIR}
 
 # Directory to store the Containers temp files
 export CONTAINERS_TMP_DIR=${TMP_DIR}
