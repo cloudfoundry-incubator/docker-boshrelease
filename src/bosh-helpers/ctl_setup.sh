@@ -21,20 +21,20 @@ export JOB_DIR=$HOME/jobs/$JOB_NAME
 # Setup log, run, store and tmp folders
 export LOG_DIR=$HOME/sys/log/$JOB_NAME
 export RUN_DIR=$HOME/sys/run/$JOB_NAME
-export STORE_DIR=$HOME/store/$JOB_NAME
 export TMP_DIR=$HOME/sys/tmp/$JOB_NAME
 export TMPDIR=$TMP_DIR
+
+# Load job properties
+if [ -f $JOB_DIR/bin/job_properties.sh ]; then
+  source $JOB_DIR/bin/job_properties.sh
+fi
+
 for dir in $LOG_DIR $RUN_DIR $STORE_DIR $TMP_DIR
 do
   mkdir -p ${dir}
   chown vcap:vcap ${dir}
   chmod 775 ${dir}
 done
-
-# Load job properties
-if [ -f $JOB_DIR/bin/job_properties.sh ]; then
-  source $JOB_DIR/bin/job_properties.sh
-fi
 
 # Load some control helpers
 source $HOME/packages/bosh-helpers/ctl_utils.sh
