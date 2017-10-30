@@ -1,0 +1,20 @@
+#!/bin/bash
+
+GITHUB_OWNER=$1
+RELEASE_NAME=$2
+VERSION=$3
+SHA1=$4
+MANIFEST_PATH=$5
+: ${MANIFEST_PATH:?USAGE: ./ci/scripts/update-manifest GITHUB_OWNER RELEASE_NAME VERSION SHA1 MANIFEST_PATH}
+
+set -e -u
+
+manifest_len=$(wc -l $MANIFEST_PATH | awk '{print $1}')
+manifest_head=$(head -n `expr $manifest_len - 4` $MANIFEST_PATH)
+cat > $MANIFEST_PATH <<YAML
+${manifest_head}
+- name: $RELEASE_NAME
+  version: $VERSION
+  url: https://github.com/${GITHUB_OWNER}/${RELEASE_NAME}-boshrelease/releases/download/v${VERSION}/${RELEASE_NAME}-${VERSION}.tgz
+  sha1: $SHA1
+YAML

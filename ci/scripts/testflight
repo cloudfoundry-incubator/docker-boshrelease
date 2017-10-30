@@ -1,0 +1,169 @@
+#!/bin/bash
+#
+# ci/scripts/testflight
+#
+# Script for testing a BOSH release using bosh2
+#
+# author:  James Hunt <james@niftylogic.com>
+
+header() {
+	echo
+	echo "###############################################"
+	echo
+	echo $*
+	echo
+}
+
+#!/bin/bash
+
+set -e
+
+: ${BOSH_ENVIRONMENT:?required}
+: ${BOSH_CA_CERT:?required}
+: ${BOSH_CLIENT:?required}
+: ${BOSH_CLIENT_SECRET:?required}
+: ${BOSH_DEPLOYMENT:?required}
+: ${MANIFEST_PATH:?required}
+: ${AWS_ACCESS_KEY:?required}
+: ${AWS_SECRET_KEY:?required}
+
+cd ${REPO_ROOT:?required}
+header "Pulling in any git submodules..."
+git submodule update --init --recursive --force
+
+header "Confirming testflight inputs"
+
+echo "Confirming deployment manifest ${MANIFEST_PATH} exists"
+if [[ ! -f ${MANIFEST_PATH} ]]; then
+	echo "Deployment manifest ${MANIFEST_PATH} does not exist"
+	exit 1
+fi
+
+echo "Confirming that \$MANIFEST_VARS is valid"
+mkdir -p tmp
+
+# $MANIFEST_VARS can either be "key: value" or "key=value"
+# and will be converted to "key: value" YAML
+echo "${MANIFEST_VARS:-"{} ---"}" | sed -e "s/ *= */: /g" > tmp/vars.yml
+if [[ ! -z $DEBUG ]]; then
+	echo "Variables passed to deployment manifest:"
+	cat tmp/vars.yml
+fi
+# convert YAML to JSON to check YAML validity
+spruce json tmp/vars.yml > /dev/null
+
+echo "Confirming each operator file exists: ${MANIFEST_OP_PATHS:-ok, none specified.}"
+op_patch_file_errors=
+for op_patch_file in ${MANIFEST_OP_PATHS//,/ } ; do
+	if [[ ! -f $op_patch_file ]]; then
+		op_patch_file_errors=1
+		echo "Operator file missing: ${op_patch_file}"
+	fi
+done
+if [[ ! -z ${op_patch_file_errors} ]]; then
+	exit 1
+fi
+
+
+header "Cleaning up from any previous deployments..."
+bosh2 -n delete-deployment
+
+header "Creating candidate BOSH release..."
+bosh2 -n reset-release # in case dev_releases/ is in repo accidentally
+
+cat > config/private.yml <<YAML
+---
+blobstore:
+  provider: s3
+  options:
+    access_key_id: ${AWS_ACCESS_KEY}
+    secret_access_key: ${AWS_SECRET_KEY}
+YAML
+bosh2 create-release
+bosh2 upload-release --rebase
+
+header "Deploying to ${BOSH_ENVIRONMENT}..."
+release_name=$(bosh2 int config/final.yml --path /final_name)
+
+header "Choosing cloud-config options"
+vm_type=$(bosh2 int <(bosh2 cloud-config) --path /vm_types/0/name)
+disk_type=$(bosh2 int <(bosh2 cloud-config) --path /disk_types/0/name)
+network=$(bosh2 int <(bosh2 cloud-config) --path /networks/0/name)
+
+release_final_version=$(spruce json dev_releases/*/index.yml | jq -r ".builds[].version" | sed -e "s%+.*%%")
+release_dev_version="${release_final_version}.latest"
+
+cat > tmp/deployment.yml <<YAML
+---
+- type: replace
+  path: /name
+  value: ${BOSH_DEPLOYMENT}
+
+- type: replace
+  path: /releases/name=${release_name}
+  value:
+    name: ${release_name}
+    version: ${release_dev_version}
+YAML
+
+for ig_name in $(spruce json ${MANIFEST_PATH} | jq -r ".instance_groups[].name"); do
+cat >> tmp/deployment.yml <<YAML
+- type: replace
+  path: /instance_groups/name=${ig_name}/vm_type
+  value: ${vm_type}
+
+- type: replace
+  path: /instance_groups/name=${ig_name}/networks
+  value: [{name: ${network}}]
+
+YAML
+done
+
+instance_groups_with_persistent_disk_types=$(spruce json $MANIFEST_PATH | jq -r ".instance_groups[] | select(.persistent_disk_type).name")
+for ig_name in $instance_groups_with_persistent_disk_types; do
+	cat >> tmp/deployment.yml <<YAML
+- type: replace
+  path: /instance_groups/name=${ig_name}/persistent_disk_type
+  value: ${disk_type}
+
+YAML
+done
+
+op_patch_files_flags=""
+for op_patch_file in ${MANIFEST_OP_PATHS//,/ } ; do
+   op_patch_files_flags="${op_patch_files_flags} -o $op_patch_file"
+done
+
+set -x
+
+bosh2 int ${MANIFEST_PATH} \
+  -o tmp/deployment.yml    \
+  ${op_patch_files_flags}            \
+  --vars-store tmp/creds.yml \
+  --vars-file  tmp/vars.yml  \
+  --var-errs \
+    > tmp/manifest.yml
+
+bosh2 -n deploy tmp/manifest.yml
+
+TEST_ERRAND=${TEST_ERRAND:-} # backwards compatibility
+TEST_ERRANDS=${TEST_ERRANDS:-$TEST_ERRAND}
+if [[ -n ${TEST_ERRANDS} ]]; then
+	for errand in ${TEST_ERRANDS}; do
+		header "Running '${errand}' errand"
+		bosh2 -n run-errand ${errand}
+	done
+else
+	echo "No test errands specified, skipping."
+fi
+
+if [[ -z ${SKIP_DELETE_DEPLOYMENT:-} ]]; then
+	header "Cleaning up after successful deployment..."
+	bosh2 -n delete-deployment
+else
+	header "Skipping cleanup of successful deployment."
+fi
+
+echo
+echo "SUCCESS"
+exit 0
