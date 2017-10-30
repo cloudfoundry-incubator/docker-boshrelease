@@ -16,7 +16,7 @@ meta:
 
   image:
     name: starkandwayne/concourse-ruby
-    tag: 2.4
+    tag: 2.3
 
   bosh-lite:
     target: https://10.58.111.49:25555
