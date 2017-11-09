@@ -6,17 +6,7 @@
 #
 # author:  James Hunt <james@niftylogic.com>
 
-header() {
-	echo
-	echo "###############################################"
-	echo
-	echo $*
-	echo
-}
-
-#!/bin/bash
-
-set -e
+set -eu
 
 : ${BOSH_ENVIRONMENT:?required}
 : ${BOSH_CA_CERT:?required}
@@ -26,6 +16,21 @@ set -e
 : ${MANIFEST_PATH:?required}
 : ${AWS_ACCESS_KEY:?required}
 : ${AWS_SECRET_KEY:?required}
+
+header() {
+	echo
+	echo "###############################################"
+	echo
+	echo $*
+	echo
+}
+
+delete_deployment() {
+	header "Cleaning up deployment..."
+	bosh2 -n delete-deployment --force
+}
+trap delete_deployment EXIT SIGINT SIGTERM
+
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 $DIR/wait-until-proxy-bosh-cf-running
@@ -67,9 +72,7 @@ if [[ ! -z ${op_patch_file_errors} ]]; then
 	exit 1
 fi
 
-
-header "Cleaning up from any previous deployments..."
-bosh2 -n delete-deployment --force
+delete_deployment
 
 header "Creating candidate BOSH release..."
 bosh2 -n reset-release # in case dev_releases/ is in repo accidentally
@@ -158,13 +161,6 @@ if [[ -n ${TEST_ERRANDS} ]]; then
 	done
 else
 	echo "No test errands specified, skipping."
-fi
-
-if [[ -z ${SKIP_DELETE_DEPLOYMENT:-} ]]; then
-	header "Cleaning up after successful deployment..."
-	bosh2 -n delete-deployment --force
-else
-	header "Skipping cleanup of successful deployment."
 fi
 
 echo
