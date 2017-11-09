@@ -40,7 +40,7 @@ if [[ "${PROXY_IP:-X}" != "X" ]]; then
 		ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key \
 			-o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=60 \
 			"whoami"
-		[[ $? -eq 0 ]] && { $test_proxy=0; }
+		[ $? -eq 0 ] && { $test_proxy=0; }
 	done
 	set -e
 
