@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -eu
+
+header() {
+	echo
+	echo "###############################################"
+	echo
+	echo $*
+	echo
+}
+function cleanup_tunnel {
+  ps ax | grep "ssh.*9999" | grep -v grep | awk '{print $1}' | xargs -L1 kill
+}
+
+if [[ "${PROXY_IP:-X}" != "X" ]]; then
+  : ${PROXY_USERNAME:?required if PROXY_IP set}
+  : ${PROXY_PRIVATE_KEY:?required if PROXY_IP set}
+
+  mkdir -p proxy/ssh
+  chmod 700 proxy/ssh
+  echo "${PROXY_PRIVATE_KEY}" > proxy/ssh/private_key
+  chmod 600 proxy/ssh/private_key
+
+  header "Checking jumpbox available..."
+  cleanup_tunnel
+  set +e
+  until ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key \
+      -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=60 \
+      "whoami"
+  do
+    echo "Waiting until jumpbox/proxy available..."
+  done
+  set -e
+
+  header "Starting socks5 proxy..."
+  ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key -N -D 9999 &
+  sleep 10
+
+  echo BOSH_ALL_PROXY=socks5://localhost:9999
+  export BOSH_ALL_PROXY=socks5://localhost:9999
+fi
+
+header "Checking bosh available..."
+until bosh env; do
+  echo "Waiting until bosh available..."
+done
+
+# header "Checking Cloud Foundry available..."
+# until cf login -a https://api. -o system -s dev --skip-ssl-validation; do
+#   echo "Waiting until Cloud Foundry available..."
+# done
+
+echo
+echo
