@@ -27,6 +27,8 @@ set -e
 : ${AWS_ACCESS_KEY:?required}
 : ${AWS_SECRET_KEY:?required}
 
+apt-get install -y git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev nodejs
+
 cd ${REPO_ROOT:?required}
 header "Pulling in any git submodules..."
 git submodule update --init --recursive --force

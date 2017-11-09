@@ -37,7 +37,7 @@ meta:
     access_token: (( vault "secret/pipelines/shared/github:access_token" ))
 
   slack:
-    webhook: (( vault "secret/pipelines/" meta.name "-boshrelease/slack:webhook" ))
+    webhook: SKIP
     channel:       '#docker-boshrelease'
     username:      starkandwayne-ci
     icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
