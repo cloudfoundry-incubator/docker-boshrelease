@@ -27,7 +27,20 @@ set -e
 : ${AWS_ACCESS_KEY:?required}
 : ${AWS_SECRET_KEY:?required}
 
-apt-get install -y git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev nodejs
+if [[ "${PROXY_IP:-X}" != "X" ]]; then
+	mkdir -p proxy/ssh
+	chmod 700 proxy/ssh
+	echo "${PROXY_PRIVATE_KEY}" > proxy/ssh/private_key
+	chmod 600 proxy/ssh/private_key
+
+	echo Starting socks5 proxy...
+	ssh ${PROXY_USERNAME}@${PROXY_IP} \
+	  -i proxy/ssh/private_key -N -D 9999 &
+
+	sleep 10
+	echo BOSH_ALL_PROXY=socks5://localhost:9999
+	export BOSH_ALL_PROXY=socks5://localhost:9999
+fi
 
 cd ${REPO_ROOT:?required}
 header "Pulling in any git submodules..."
