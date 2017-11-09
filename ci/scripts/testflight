@@ -91,7 +91,7 @@ fi
 
 
 header "Cleaning up from any previous deployments..."
-bosh2 -n delete-deployment
+bosh2 -n delete-deployment --force
 
 header "Creating candidate BOSH release..."
 bosh2 -n reset-release # in case dev_releases/ is in repo accidentally
@@ -184,7 +184,7 @@ fi
 
 if [[ -z ${SKIP_DELETE_DEPLOYMENT:-} ]]; then
 	header "Cleaning up after successful deployment..."
-	bosh2 -n delete-deployment
+	bosh2 -n delete-deployment --force
 else
 	header "Skipping cleanup of successful deployment."
 fi
