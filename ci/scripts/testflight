@@ -16,6 +16,7 @@ set -eu
 : ${MANIFEST_PATH:?required}
 : ${AWS_ACCESS_KEY:?required}
 : ${AWS_SECRET_KEY:?required}
+DEBUG=${DEBUG:-}
 
 header() {
 	echo
