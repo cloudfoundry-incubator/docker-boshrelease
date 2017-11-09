@@ -37,7 +37,7 @@ meta:
       private_key: (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:private_key" ))
 
   broker:
-    test-errands: ~
+    test-errands: sanity-test
     deployment: testflight-docker-broker
     manifest:
       path:      manifests/broker/docker-broker.yml
