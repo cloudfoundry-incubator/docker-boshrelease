@@ -1,0 +1,12 @@
+- type: replace
+  path: /instance_groups/name=docker/jobs/name=docker/properties/tcp_address
+  value: 127.0.0.1
+
+- type: remove
+  path: /instance_groups/name=docker/jobs/name=docker/properties/tls_cacert
+
+- type: remove
+  path: /instance_groups/name=docker/jobs/name=docker/properties/tls_cert
+
+- type: remove
+  path: /instance_groups/name=docker/jobs/name=docker/properties/tls_key

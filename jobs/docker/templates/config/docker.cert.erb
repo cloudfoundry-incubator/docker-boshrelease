@@ -1,8 +1,12 @@
 <%=
+unless p('tcp_address') == "127.0.0.1" || p('tcp_address') == "localhost"
   cert = p('tls_cert')
   if cert.index("\n").nil?
     cert.gsub('\\n', "\n")
   else
     cert
   end
+else
+  ""
+end
 %>

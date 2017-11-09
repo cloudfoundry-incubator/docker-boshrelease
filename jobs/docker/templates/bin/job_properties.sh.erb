@@ -23,6 +23,20 @@ export DOCKER_TMP_DIR=${TMP_DIR}
 <% if_p('tcp_address', 'tcp_port') do |address, port| %>
 # TCP Address/Port where Docker daemon will listen to
 export DOCKER_TCP="--host tcp://<%= address %>:<%= port %>"
+
+<% unless address == "127.0.0.1" || address == "localhost" %>
+# Use TLS and verify the remote
+export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
+
+# Trust only remotes providing a certificate signed by the CA given here
+export DOCKER_TLS_CACERT="--tlscacert=${DOCKER_CONF_DIR}/docker.cacert"
+
+# Path to TLS certificate file
+export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
+
+# Path to TLS key file
+export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
+<% end %>
 <% end %>
 
 <% if_p('bridge', 'cidr_prefix') do |bridge, cidr_prefix| %>
@@ -138,18 +152,6 @@ export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
 # Storage driver options
 export DOCKER_STORAGE_OPTIONS="<%= storage_options.map { |storage_option| "--storage-opt=#{storage_option}" }.join(' ') %>"
 <% end %>
-
-# Use TLS and verify the remote
-export DOCKER_TLS_VERIFY_OPTION="--tlsverify=true"
-
-# Trust only remotes providing a certificate signed by the CA given here
-export DOCKER_TLS_CACERT="--tlscacert=${DOCKER_CONF_DIR}/docker.cacert"
-
-# Path to TLS certificate file
-export DOCKER_TLS_CERT="--tlscert=${DOCKER_CONF_DIR}/docker.cert"
-
-# Path to TLS key file
-export DOCKER_TLS_KEY="--tlskey=${DOCKER_CONF_DIR}/docker.key"
 
 # Use userland proxy for loopback traffic
 export DOCKER_USERLAND_PROXY="--userland-proxy=<%= p('userland_proxy') %>"

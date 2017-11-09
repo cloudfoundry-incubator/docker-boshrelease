@@ -32,6 +32,14 @@ properties:
   tcp_port:
     description: "TCP port where Docker daemon will listen to (if not set, TCP will not be available)"
     default: "4243"
+
+  tls_cacert:
+    description: "Trust only remotes providing a certificate signed by the CA given here, if tcp_address not 127.0.0.1"
+  tls_cert:
+    description: "TLS certificate file, if tcp_address not 127.0.0.1"
+  tls_key:
+    description: "TLS key file, if tcp_address not 127.0.0.1"
+
   bridge:
     description: "Name of the network bridge to attach containers (defaults to docker0)"
   cidr_prefix:
@@ -97,13 +105,6 @@ properties:
     description: "Use a specific storage driver"
   storage_options:
     description: "Array of storage driver options"
-
-  tls_cacert:
-    description: "Trust only remotes providing a certificate signed by the CA given here"
-  tls_cert:
-    description: "TLS certificate file"
-  tls_key:
-    description: "TLS key file"
 
   userland_proxy:
     description: "Use userland proxy for loopback traffic"
