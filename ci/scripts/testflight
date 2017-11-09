@@ -35,6 +35,7 @@ trap delete_deployment EXIT SIGINT SIGTERM
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 $DIR/wait-until-proxy-bosh-cf-running
+if [[ "${PROXY_IP:-X}" != "X" ]] ; then export BOSH_ALL_PROXY=socks5://localhost:9999 ; fi
 
 cd ${REPO_ROOT:?required}
 header "Pulling in any git submodules..."
