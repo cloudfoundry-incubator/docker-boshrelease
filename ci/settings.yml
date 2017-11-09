@@ -38,7 +38,7 @@ meta:
 
   broker:
     test-errands: sanity-test
-    deployment: testflight-docker-broker
+    deployment: docker-broker-testflight
     manifest:
       path:      manifests/broker/docker-broker.yml
       operators: "manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
