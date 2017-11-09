@@ -78,7 +78,7 @@ jobs:
   - do:
     - aggregate:
       - { get: git, trigger: true }
-    - task: testflight
+    - task: testflight-broker
       config:
         platform: linux
         image_resource:

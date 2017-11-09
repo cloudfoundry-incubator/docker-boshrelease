@@ -33,9 +33,17 @@ if [[ "${PROXY_IP:-X}" != "X" ]]; then
 	echo "${PROXY_PRIVATE_KEY}" > proxy/ssh/private_key
 	chmod 600 proxy/ssh/private_key
 
+	test_proxy=1
+	echo "Checking ${PROXY_USERNAME}@${PROXY_IP} is ready..."
+	until [ test_proxy -eq 0 ]; do
+		ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key \
+			-o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
+			"whoami"
+		[[ $? -eq 0 ]] && { test_proxy=0; }
+	done
+
 	echo Starting socks5 proxy...
-	ssh ${PROXY_USERNAME}@${PROXY_IP} \
-	  -i proxy/ssh/private_key -N -D 9999 &
+	ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key -N -D 9999 &
 
 	sleep 10
 	echo BOSH_ALL_PROXY=socks5://localhost:9999
