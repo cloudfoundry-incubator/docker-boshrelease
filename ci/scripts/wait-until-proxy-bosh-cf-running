@@ -9,9 +9,6 @@ header() {
 	echo $*
 	echo
 }
-function cleanup_tunnel {
-  ps ax | grep "ssh.*9999" | grep -v grep | awk '{print $1}' | xargs -L1 kill
-}
 
 if [[ "${PROXY_IP:-X}" != "X" ]]; then
   : ${PROXY_USERNAME:?required if PROXY_IP set}
@@ -23,7 +20,6 @@ if [[ "${PROXY_IP:-X}" != "X" ]]; then
   chmod 600 proxy/ssh/private_key
 
   header "Checking jumpbox available..."
-  cleanup_tunnel
   set +e
   until ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key \
       -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=60 \
@@ -42,7 +38,7 @@ if [[ "${PROXY_IP:-X}" != "X" ]]; then
 fi
 
 header "Checking bosh available..."
-until bosh env; do
+until bosh2 env; do
   echo "Waiting until bosh available..."
 done
 
