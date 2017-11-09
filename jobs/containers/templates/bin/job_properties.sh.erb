@@ -13,10 +13,6 @@ export CONTAINERS_LOG_DIR=${LOG_DIR}
 # Directory to store the Containers process IDs
 export CONTAINERS_PID_DIR=${RUN_DIR}
 
-# Directory to store the Containers data files
-export CONTAINERS_STORE_DIR=<%= p(container['store_dir']).empty? ? '/var/vcap/store' : p(container['store_dir'])%>/${JOB_NAME}
-export STORE_DIR=${CONTAINERS_STORE_DIR}
-
 # Directory to store the Containers temp files
 export CONTAINERS_TMP_DIR=${TMP_DIR}
 
@@ -30,6 +26,10 @@ export DOCKER_COMMAND="/var/vcap/packages/docker/bin/docker -H unix:///var/vcap/
 
 # Name of the Docker image to create/run
 export <%= container['name'] %>_image="<%= container['image'] %>"
+
+# Directory to store the Containers data files
+export CONTAINERS_STORE_DIR=<%= container['store_dir'] || '/var/vcap/store' %>/${JOB_NAME}
+export STORE_DIR=${CONTAINERS_STORE_DIR}
 
 <% if container['command'] %>
 # Command to the run (including arguments)
