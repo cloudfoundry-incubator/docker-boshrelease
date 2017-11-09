@@ -33,6 +33,7 @@ if [[ "${PROXY_IP:-X}" != "X" ]]; then
 	echo "${PROXY_PRIVATE_KEY}" > proxy/ssh/private_key
 	chmod 600 proxy/ssh/private_key
 
+	set +e
 	test_proxy=1
 	echo "Checking ${PROXY_USERNAME}@${PROXY_IP} is ready..."
 	until [ $test_proxy -eq 0 ]; do
@@ -41,6 +42,7 @@ if [[ "${PROXY_IP:-X}" != "X" ]]; then
 			"whoami"
 		[[ $? -eq 0 ]] && { $test_proxy=0; }
 	done
+	set -e
 
 	echo Starting socks5 proxy...
 	ssh ${PROXY_USERNAME}@${PROXY_IP} -i proxy/ssh/private_key -N -D 9999 &
