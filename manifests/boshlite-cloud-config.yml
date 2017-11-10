@@ -87,7 +87,7 @@ vm_types:
 - name: r3.4xlarge
 - name: r3.8xlarge
 - name: t2.nano
-- name: docker
-  version: 30.1.4
-  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.1.4/docker-30.1.4.tgz
-  sha1: f79a70452b3ddae52f5ac78dd37ff8d9e6ec19e2
+- name: t2.micro
+- name: t2.small
+- name: t2.medium
+- name: t2.large
