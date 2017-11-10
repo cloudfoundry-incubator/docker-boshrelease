@@ -24,38 +24,47 @@ meta:
     password: (( vault "secret/bosh-lites/lite49/users/admin:password" ))
     cacert:   (( vault "secret/bosh-lites/lite49/certs:rootCA.pem" ))
 
-  bosh:
-    alias:    aws-community-ohio
-    ip:       (( vault "secret/bosh-envs/" meta.bosh.alias "/env:ip" ))
-    username: (( vault "secret/bosh-envs/" meta.bosh.alias "/env:username" ))
-    password: (( vault "secret/bosh-envs/" meta.bosh.alias "/env:password" ))
-    cacert:   (( vault "secret/bosh-envs/" meta.bosh.alias "/env:cacert" ))
-    target:   (( concat "https://" meta.bosh.ip ":25555" ))
-    proxy:
-      ip:          (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:ip" ))
-      username:    (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:username" ))
-      private_key: (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:private_key" ))
-    cf:
-      api_url:         (( vault "secret/bosh-envs/" meta.bosh.alias "/cf:api_url" ))
-      username:        admin
-      password:        (( vault "secret/bosh-envs/" meta.bosh.alias "/cf:admin_password" ))
-      system_domain:   (( vault "secret/bosh-envs/" meta.bosh.alias "/cf:system_domain" ))
+    broker:
+      test-errands: sanity-test
+      deployment: docker-broker-testflight
+      manifest:
+        path:      manifests/broker/docker-broker.yml
+        operators: "manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
+        vars:   "--- {}"
+        vars-pr: (( grab meta.bosh-lite.broker.manifest.vars ))
 
-  broker:
-    test-errands: sanity-test broker-registrar broker-deregistrar
-    deployment: docker-broker-testflight
-    manifest:
-      path:      manifests/broker/docker-broker.yml
-      operators: "manifests/broker/op-cf-integration.yml,manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
-      vars: (( concat
-        "\ncf-route=" meta.broker.deployment "." meta.bosh.cf.system_domain
-        "\ncf-api-url="        meta.bosh.cf.api_url
-        "\ncf-admin-username=" meta.bosh.cf.username
-        "\ncf-admin-password=" meta.bosh.cf.password
-        "\ncf-skip-ssl-validation=true"
-        "\nbroker-route-name=" meta.broker.deployment
-        "\nbroker-route-uri="  meta.broker.deployment "." meta.bosh.cf.system_domain ))
-      vars-pr: (( grab meta.broker.manifest.vars ))
+  bosh-aws:
+    alias:    aws-community-ohio
+    ip:       (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:ip" ))
+    username: (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:username" ))
+    password: (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:password" ))
+    cacert:   (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:cacert" ))
+    target:   (( concat "https://" meta.bosh-aws.ip ":25555" ))
+    proxy:
+      ip:          (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/proxy:ip" ))
+      username:    (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/proxy:username" ))
+      private_key: (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/proxy:private_key" ))
+    cf:
+      api_url:         (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/cf:api_url" ))
+      username:        admin
+      password:        (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/cf:admin_password" ))
+      system_domain:   (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/cf:system_domain" ))
+
+    broker:
+      test-errands: sanity-test broker-registrar broker-deregistrar
+      deployment: docker-broker-testflight
+      manifest:
+        path:      manifests/broker/docker-broker.yml
+        operators: "manifests/broker/op-cf-integration.yml,manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
+        vars: (( concat
+          "\ncf-route=" meta.bosh-aws.broker.deployment "." meta.bosh-aws.cf.system_domain
+          "\ncf-api-url="        meta.bosh-aws.cf.api_url
+          "\ncf-admin-username=" meta.bosh-aws.cf.username
+          "\ncf-admin-password=" meta.bosh-aws.cf.password
+          "\ncf-skip-ssl-validation=true"
+          "\nbroker-route-name=" meta.bosh-aws.broker.deployment
+          "\nbroker-route-uri="  meta.bosh-aws.broker.deployment "." meta.bosh-aws.cf.system_domain ))
+        vars-pr: (( grab meta.bosh-aws.broker.manifest.vars ))
 
   aws:
     bucket: (( concat meta.name "-boshrelease" ))
@@ -78,12 +87,53 @@ meta:
     blob_failure:  '(( concat "$BUILD_PIPELINE_NAME: :airplane_arriving: <" meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed to update the blob for $BUILD_JOB_NAME>" ))'
 
 groups:
-- name: broker
+- name: aws
   jobs:
-  - testflight-broker
+  - testflight-aws-broker
 
 jobs:
-- name: testflight-broker
+- name: testflight
+  plan:
+  - name: main
+    do:
+    - name: testflights
+      aggregate:
+      - name: testflight-broker
+        task: testflight-broker
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: (( grab meta.image.name ))
+              tag:        (( grab meta.image.tag ))
+          inputs:
+            - { name: git }
+          run:
+            path: ./git/ci/scripts/testflight
+            args: []
+          params:
+            REPO_ROOT:            git
+            BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
+            BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
+            BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
+            BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
+            BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.broker.deployment ))
+            TEST_ERRANDS:         sanity-test
+            MANIFEST_PATH:        (( grab meta.bosh-lite.broker.manifest.path ))
+            MANIFEST_VARS:        (( grab meta.bosh-lite.broker.manifest.vars ))
+            MANIFEST_OP_PATHS:    (( grab meta.bosh-lite.broker.manifest.operators ))
+            AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
+            AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
+      on_failure:
+        put: notify
+        params:
+          channel:  (( grab meta.slack.channel ))
+          username: (( grab meta.slack.username ))
+          icon_url: (( grab meta.slack.icon ))
+          text:    '(( concat meta.slack.fail_url " " meta.pipeline ": testflight job failed" ))'
+
+- name: testflight-aws-broker
   public: true
   serial: true
   plan:
@@ -105,18 +155,18 @@ jobs:
           args: []
         params:
           REPO_ROOT:            git
-          BOSH_ENVIRONMENT:     (( grab meta.bosh.target ))
-          BOSH_CA_CERT:         (( grab meta.bosh.cacert ))
-          BOSH_CLIENT:          (( grab meta.bosh.username ))
-          BOSH_CLIENT_SECRET:   (( grab meta.bosh.password ))
-          PROXY_IP:             (( grab meta.bosh.proxy.ip ))
-          PROXY_USERNAME:       (( grab meta.bosh.proxy.username ))
-          PROXY_PRIVATE_KEY:    (( grab meta.bosh.proxy.private_key ))
-          BOSH_DEPLOYMENT:      (( grab meta.broker.deployment ))
-          TEST_ERRANDS:         (( grab meta.broker.test-errands ))
-          MANIFEST_PATH:        (( grab meta.broker.manifest.path ))
-          MANIFEST_VARS:        (( grab meta.broker.manifest.vars ))
-          MANIFEST_OP_PATHS:    (( grab meta.broker.manifest.operators ))
+          BOSH_ENVIRONMENT:     (( grab meta.bosh-aws.target ))
+          BOSH_CA_CERT:         (( grab meta.bosh-aws.cacert ))
+          BOSH_CLIENT:          (( grab meta.bosh-aws.username ))
+          BOSH_CLIENT_SECRET:   (( grab meta.bosh-aws.password ))
+          PROXY_IP:             (( grab meta.bosh-aws.proxy.ip ))
+          PROXY_USERNAME:       (( grab meta.bosh-aws.proxy.username ))
+          PROXY_PRIVATE_KEY:    (( grab meta.bosh-aws.proxy.private_key ))
+          BOSH_DEPLOYMENT:      (( grab meta.bosh-aws.broker.deployment ))
+          TEST_ERRANDS:         (( grab meta.bosh-aws.broker.test-errands ))
+          MANIFEST_PATH:        (( grab meta.bosh-aws.broker.manifest.path ))
+          MANIFEST_VARS:        (( grab meta.bosh-aws.broker.manifest.vars ))
+          MANIFEST_OP_PATHS:    (( grab meta.bosh-aws.broker.manifest.operators ))
           AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
           AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
     on_failure:
