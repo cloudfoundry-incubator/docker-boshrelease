@@ -17,6 +17,7 @@ set -eu
 : ${AWS_ACCESS_KEY:?required}
 : ${AWS_SECRET_KEY:?required}
 DEBUG=${DEBUG:-}
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 header() {
 	echo
@@ -30,12 +31,8 @@ delete_deployment() {
 	header "Cleaning up deployment..."
 	bosh2 -n delete-deployment --force
 }
-trap delete_deployment EXIT SIGINT SIGTERM
+trap "echo; echo; echo; delete_deployment" EXIT SIGINT SIGTERM
 
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-$DIR/wait-until-proxy-bosh-cf-running
-if [[ "${PROXY_IP:-X}" != "X" ]] ; then export BOSH_ALL_PROXY=socks5://localhost:9999 ; fi
 
 cd ${REPO_ROOT:?required}
 header "Pulling in any git submodules..."
@@ -73,6 +70,9 @@ done
 if [[ ! -z ${op_patch_file_errors} ]]; then
 	exit 1
 fi
+
+$DIR/wait-until-proxy-bosh-cf-running
+if [[ "${PROXY_IP:-X}" != "X" ]] ; then export BOSH_ALL_PROXY=socks5://localhost:9999 ; fi
 
 delete_deployment
 

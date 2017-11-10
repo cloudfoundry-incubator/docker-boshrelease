@@ -35,14 +35,26 @@ meta:
       ip:          (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:ip" ))
       username:    (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:username" ))
       private_key: (( vault "secret/bosh-envs/" meta.bosh.alias "/proxy:private_key" ))
+    cf:
+      api_url:         (( vault "secret/bosh-envs/" meta.bosh.alias "/cf:api_url" ))
+      username:        admin
+      password:        (( vault "secret/bosh-envs/" meta.bosh.alias "/cf:admin_password" ))
+      system_domain:   (( vault "secret/bosh-envs/" meta.bosh.alias "/cf:system_domain" ))
 
   broker:
-    test-errands: sanity-test
+    test-errands: sanity-test broker-registrar broker-deregistrar
     deployment: docker-broker-testflight
     manifest:
       path:      manifests/broker/docker-broker.yml
-      operators: "manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
-      vars:   "--- {}"
+      operators: "manifests/broker/op-cf-integration.yml,manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
+      vars: (( concat
+        "\ncf-route=" meta.broker.deployment "." meta.bosh.cf.system_domain
+        "\ncf-api-url="        meta.bosh.cf.api_url
+        "\ncf-admin-username=" meta.bosh.cf.username
+        "\ncf-admin-password=" meta.bosh.cf.password
+        "\ncf-skip-ssl-validation=true"
+        "\nbroker-route-name=" meta.broker.deployment
+        "\nbroker-route-uri="  meta.broker.deployment "." meta.bosh.cf.system_domain ))
       vars-pr: (( grab meta.broker.manifest.vars ))
 
   aws:

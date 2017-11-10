@@ -43,11 +43,13 @@ until bosh2 env; do
 	sleep 60
 done
 
-# header "Checking Cloud Foundry available..."
-# until cf login -a https://api. -o system -s dev --skip-ssl-validation; do
-#   echo "Waiting until Cloud Foundry available..."
-#   sleep 60
-# done
+if [[ "${CF_API_URL:-X}" != "X" ]]; then
+	header "Checking Cloud Foundry available..."
+	until cf login -a https://api. -o system -s dev --skip-ssl-validation; do
+	  echo "Waiting until Cloud Foundry available..."
+	  sleep 60
+	done
+fi
 
 echo
 echo
