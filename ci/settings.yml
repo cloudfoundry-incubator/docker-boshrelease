@@ -27,6 +27,7 @@ meta:
     broker:
       test-errands: sanity-test
       deployment: docker-broker-testflight
+      deployment-pr: docker-broker-testflight-pr
       manifest:
         path:      manifests/broker/docker-broker.yml
         operators: "manifests/broker/services/op-redis32.yml" # comma separated list relative to repo root
@@ -36,6 +37,7 @@ meta:
     swarm:
       test-errands: ~
       deployment: docker-swarm-testflight
+      deployment-pr: docker-swarm-testflight-pr
       manifest:
         path:      manifests/swarm/docker-swarm.yml
         operators: ""
@@ -159,6 +161,67 @@ jobs:
             BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.swarm.deployment ))
             MANIFEST_PATH:        (( grab meta.bosh-lite.swarm.manifest.path ))
             MANIFEST_VARS:        (( grab meta.bosh-lite.swarm.manifest.vars ))
+            MANIFEST_OP_PATHS:    (( grab meta.bosh-lite.swarm.manifest.operators ))
+            AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
+            AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
+
+- name: testflight-pr
+  plan:
+  - name: main
+    do:
+    - name: testflights
+      aggregate:
+      - name: testflight-broker
+        task: testflight-broker
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: (( grab meta.image.name ))
+              tag:        (( grab meta.image.tag ))
+          inputs:
+            - { name: git }
+          run:
+            path: ./git/ci/scripts/testflight
+            args: []
+          params:
+            REPO_ROOT:            git
+            BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
+            BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
+            BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
+            BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
+            BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.broker.deployment-pr ))
+            TEST_ERRANDS:         (( grab meta.bosh-lite.broker.test-errands ))
+            MANIFEST_PATH:        (( grab meta.bosh-lite.broker.manifest.path ))
+            MANIFEST_VARS:        (( grab meta.bosh-lite.broker.manifest.vars-pr ))
+            MANIFEST_OP_PATHS:    (( grab meta.bosh-lite.broker.manifest.operators ))
+            AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
+            AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
+      - name: testflight-swarm
+        task: testflight-swarm
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: (( grab meta.image.name ))
+              tag:        (( grab meta.image.tag ))
+          inputs:
+            - { name: git }
+          run:
+            path: ./git/ci/scripts/testflight
+            args: []
+          params:
+            REPO_ROOT:            git
+            BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
+            BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
+            BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
+            BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
+            TEST_ERRANDS:         (( grab meta.bosh-lite.swarm.test-errands ))
+            BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.swarm.deployment-pr ))
+            MANIFEST_PATH:        (( grab meta.bosh-lite.swarm.manifest.path ))
+            MANIFEST_VARS:        (( grab meta.bosh-lite.swarm.manifest.vars-pr ))
             MANIFEST_OP_PATHS:    (( grab meta.bosh-lite.swarm.manifest.operators ))
             AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
             AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))

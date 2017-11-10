@@ -134,43 +134,45 @@ jobs:
         params:
           path: git-pull-requests
           status: pending
-      - name: testflight
-        task: testflight
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: (( grab meta.image.name ))
-              tag:        (( grab meta.image.tag ))
-          inputs:
-            - { name: git-pull-requests }
-          run:
-            path: ./git-pull-requests/ci/scripts/testflight
-            args: []
-          params:
-            REPO_ROOT:            git-pull-requests
-            BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
-            BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
-            BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
-            BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
-            BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.deployment-pr ))
-            TEST_ERRANDS:         (( grab meta.test-errands || meta.test-errand || ~ ))
-            AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
-            AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
-            MANIFEST_PATH:        (( grab meta.manifest.path ))
-            MANIFEST_VARS:        (( grab meta.manifest.vars-pr ))
-            MANIFEST_OP_PATHS:    (( grab meta.manifest.operator_file_paths ))
-        on_success:
-          put: git-pull-requests
-          params:
-            path: git-pull-requests
-            status: success
-        on_failure:
-          put: git-pull-requests
-          params:
-            path: git-pull-requests
-            status: failure
+      - name: testflights
+        aggregate:
+        - name: testflight
+          task: testflight
+          config:
+            platform: linux
+            image_resource:
+              type: docker-image
+              source:
+                repository: (( grab meta.image.name ))
+                tag:        (( grab meta.image.tag ))
+            inputs:
+              - { name: git-pull-requests }
+            run:
+              path: ./git-pull-requests/ci/scripts/testflight
+              args: []
+            params:
+              REPO_ROOT:            git-pull-requests
+              BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
+              BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
+              BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
+              BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
+              BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.deployment-pr ))
+              TEST_ERRANDS:         (( grab meta.test-errands || meta.test-errand || ~ ))
+              AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
+              AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
+              MANIFEST_PATH:        (( grab meta.manifest.path ))
+              MANIFEST_VARS:        (( grab meta.manifest.vars-pr ))
+              MANIFEST_OP_PATHS:    (( grab meta.manifest.operator_file_paths ))
+          on_success:
+            put: git-pull-requests
+            params:
+              path: git-pull-requests
+              status: success
+          on_failure:
+            put: git-pull-requests
+            params:
+              path: git-pull-requests
+              status: failure
       - name: pr-success-message
         task: pr-success-message
         config:
