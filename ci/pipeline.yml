@@ -78,35 +78,40 @@ jobs:
     public: true
     serial: true
     plan:
-    - do:
-      - aggregate:
+    - name: main
+      do:
+      - name: get
+        aggregate:
         - { get: git, trigger: true }
-      - task: testflight
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: (( grab meta.image.name ))
-              tag:        (( grab meta.image.tag ))
-          inputs:
-            - { name: git }
-          run:
-            path: ./git/ci/scripts/testflight
-            args: []
-          params:
-            REPO_ROOT:            git
-            BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
-            BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
-            BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
-            BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
-            BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.deployment ))
-            TEST_ERRANDS:         (( grab meta.test-errands || meta.test-errand || ~ ))
-            AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
-            AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
-            MANIFEST_PATH:        (( grab meta.manifest.path ))
-            MANIFEST_VARS:        (( grab meta.manifest.vars ))
-            MANIFEST_OP_PATHS:    (( grab meta.manifest.operator_file_paths ))
+      - name: testflights
+        aggregate:
+        - name: testflight
+          task: testflight
+          config:
+            platform: linux
+            image_resource:
+              type: docker-image
+              source:
+                repository: (( grab meta.image.name ))
+                tag:        (( grab meta.image.tag ))
+            inputs:
+              - { name: git }
+            run:
+              path: ./git/ci/scripts/testflight
+              args: []
+            params:
+              REPO_ROOT:            git
+              BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
+              BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
+              BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
+              BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.password ))
+              BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.deployment ))
+              TEST_ERRANDS:         (( grab meta.test-errands || meta.test-errand || ~ ))
+              AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
+              AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
+              MANIFEST_PATH:        (( grab meta.manifest.path ))
+              MANIFEST_VARS:        (( grab meta.manifest.vars ))
+              MANIFEST_OP_PATHS:    (( grab meta.manifest.operator_file_paths ))
       on_failure:
         put: notify
         params:
