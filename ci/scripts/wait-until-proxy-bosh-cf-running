@@ -13,6 +13,8 @@ header() {
 if [[ "${PROXY_IP:-X}" != "X" ]]; then
   : ${PROXY_USERNAME:?required if PROXY_IP set}
   : ${PROXY_PRIVATE_KEY:?required if PROXY_IP set}
+	ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../../.." && pwd )"
+	cd $ROOT
 
   mkdir -p proxy/ssh
   chmod 700 proxy/ssh
