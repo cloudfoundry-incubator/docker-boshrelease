@@ -124,13 +124,18 @@ jobs:
     public: true
     serial: true
     plan:
-    - do:
-      - { get: git-pull-requests, trigger: true, version: every }
-      - put: git-pull-requests
+    - name: main
+      do:
+      - name: get
+        aggregate:
+          - { get: git-pull-requests, trigger: true, version: every }
+      - name: pending-status
+        put: git-pull-requests
         params:
           path: git-pull-requests
           status: pending
-      - task: testflight
+      - name: testflight
+        task: testflight
         config:
           platform: linux
           image_resource:
@@ -166,7 +171,8 @@ jobs:
           params:
             path: git-pull-requests
             status: failure
-      - task: pr-success-message
+      - name: pr-success-message
+        task: pr-success-message
         config:
           platform: linux
           image_resource:
