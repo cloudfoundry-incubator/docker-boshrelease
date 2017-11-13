@@ -181,12 +181,12 @@ jobs:
               repository: (( grab meta.image.name ))
               tag:        (( grab meta.image.tag ))
           inputs:
-            - { name: git }
+            - { name: git-pull-requests }
           run:
-            path: ./git/ci/scripts/testflight
+            path: ./git-pull-requests/ci/scripts/testflight
             args: []
           params:
-            REPO_ROOT:            git
+            REPO_ROOT:            git-pull-requests
             BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
             BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
             BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
@@ -208,12 +208,12 @@ jobs:
               repository: (( grab meta.image.name ))
               tag:        (( grab meta.image.tag ))
           inputs:
-            - { name: git }
+            - { name: git-pull-requests }
           run:
-            path: ./git/ci/scripts/testflight
+            path: ./git-pull-requests/ci/scripts/testflight
             args: []
           params:
-            REPO_ROOT:            git
+            REPO_ROOT:            git-pull-requests
             BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.target ))
             BOSH_CA_CERT:         (( grab meta.bosh-lite.cacert ))
             BOSH_CLIENT:          (( grab meta.bosh-lite.username ))
