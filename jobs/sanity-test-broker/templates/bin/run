@@ -31,13 +31,13 @@ export broker_uri=<%= uri %>
 docker_broker_catalog='<%= docker_broker_catalog.to_json %>'
 
 echo Service catalog
-export EDEN_BROKER_URL=<%= url %>
-export EDEN_BROKER_CLIENT="<%= username %>"
-export EDEN_BROKER_CLIENT_SECRET="<%= password %>"
+export SB_BROKER_URL=<%= url %>
+export SB_BROKER_USERNAME="<%= username %>"
+export SB_BROKER_PASSWORD="<%= password %>"
 
-echo EDEN_BROKER_URL=<%= url %>
-echo EDEN_BROKER_CLIENT="<%= username %>"
-echo EDEN_BROKER_CLIENT_SECRET="<%= password %>"
+echo SB_BROKER_URL=<%= url %>
+echo SB_BROKER_USERNAME="<%= username %>"
+echo SB_BROKER_PASSWORD="<%= password %>"
 echo eden catalog
 
 eden catalog
