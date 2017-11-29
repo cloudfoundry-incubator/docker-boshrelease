@@ -1,6 +1,6 @@
 ---
 - type: replace
-- name: docker
-  version: 30.1.5
-  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.1.5/docker-30.1.5.tgz
-  sha1: cc1536949e5e9d857d13ba2ed0781636a46f81da
+  path: /releases/name=docker
+  value:
+    name: docker
+    version: latest
