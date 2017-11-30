@@ -1,9 +1,3 @@
-[submodule "src/cf-containers-broker"]
-	path = src/cf-containers-broker
-	url = https://github.com/cloudfoundry-community/cf-containers-broker.git
 [submodule "src/github.com/docker/swarm"]
 	path = src/github.com/docker/swarm
 	url = https://github.com/docker/swarm.git
-[submodule "src/github.com/starkandwayne/eden"]
-	path = src/github.com/starkandwayne/eden
-	url = https://github.com/starkandwayne/eden.git

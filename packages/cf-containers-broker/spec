@@ -1,6 +1,0 @@
----
-name: cf-containers-broker
-dependencies:
-  - ruby
-files:
-  - cf-containers-broker/**/*

@@ -1,8 +1,0 @@
----
-name: ruby
-dependencies: []
-files:
-  - ruby/ruby-*.tar.gz
-  - ruby/rubygems-*.tgz
-  - ruby/bundler-*.gem
-  - ruby/yaml-*.tar.gz
