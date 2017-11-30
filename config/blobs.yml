@@ -26,23 +26,3 @@ golang/go1.8.linux-amd64.tar.gz:
   size: 89803580
   object_id: c93e5882-1c50-47ba-72af-add1b98eaa18
   sha: a93fe8fc245e3554f956bc823f30ef4eb23c2068
-jq/jq-linux64-1.5:
-  size: 3027945
-  object_id: 7edab2fd-36ac-4a75-50df-e17e81596ec3
-  sha: d8e36831c3c94bb58be34dd544f44a6c6cb88568
-ruby/bundler-1.14.6.gem:
-  size: 319488
-  object_id: 00dfe10d-016e-422f-6ada-92abc8298f29
-  sha: 3e84d3a4dd43bfaec988b029f45c0d7ffa205ab8
-ruby/ruby-2.3.3.tar.gz:
-  size: 17813577
-  object_id: 9488d9aa-4f3f-41e4-76da-befd0db2bb33
-  sha: 1014ee699071aa2ddd501907d18cbe15399c997d
-ruby/rubygems-2.6.11.tgz:
-  size: 766785
-  object_id: eb64bc3a-61d4-4c66-5117-ded07c3aa71c
-  sha: 1475ff4d7ad565d521e56d4d0461931d2c00563c
-ruby/yaml-0.1.7.tar.gz:
-  size: 527518
-  object_id: 0b3b59cb-33be-494c-71b5-81ca4916f2c4
-  sha: 3590cbf092ef4c71bc0a9b404c00a626b1e04dee

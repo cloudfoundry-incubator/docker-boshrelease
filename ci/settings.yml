@@ -14,10 +14,6 @@ meta:
     email: (( vault "secret/ci/git:email" ))
     name:  (( vault "secret/ci/git:name" ))
 
-  image:
-    name: starkandwayne/concourse-ruby
-    tag: 2.3
-
   bosh-lite:
     target: https://10.58.111.49:25555
     username: (( vault "secret/bosh-lites/lite49/users/admin:username" ))
