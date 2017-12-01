@@ -103,7 +103,7 @@ if [[ -z $(git config --global user.name) ]]; then
 fi
 
 (cd ${REPO_ROOT}
- for MANIFEST_PATH in $(ls manifests/*.yml); do
+ for MANIFEST_PATH in $(ls manifests/{containers,swarm}/*.yml); do
    $DIR/update-manifest $GITHUB_OWNER $RELEASE_NAME $VERSION $SHA1 $MANIFEST_PATH
  done
  git merge --no-edit ${BRANCH}
