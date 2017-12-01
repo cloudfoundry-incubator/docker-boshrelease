@@ -2,47 +2,16 @@
 
 If you're already working with Docker images then BOSH is a great way to put them into production. Deploy a complete system on Day 1 and have confidence with Day 2 operational support: resurrection of missing servers, resize host machines, resize disks, update host servers with CVE patches, and much more.
 
-This BOSH release can help. See an example below of a host machine running several Docker containers, all backed by a persistent disk. Also see how to add a `service.yml` deployment file to your `Dockerfile` repository to make life easy for your users.
+This BOSH release can help. See an example below of a host machine running several Docker containers, all backed by a persistent disk. Also see how to add a `bosh.yml` deployment file to your `Dockerfile` repository to make life easy for your users.
 
-It can also be used to dynamically provision Docker containers running databases and message buses with an API that is [Open Service Broker API](https://www.openservicebrokerapi.org/) compatible.
+It can also be used to dynamically provision Docker containers running databases and message buses with an API that is [Open Service Broker API](https://www.openservicebrokerapi.org/) compatible. See the [cf-containers-broker-boshrelease](https://github.com/cloudfoundry-community/cf-containers-broker-boshrelease) for more information.
 
 Finally, you can deploy & manage a cluster of Docker Swarm nodes.
 
 Related links:
 
 * [CI](https://ci.starkandwayne.com/teams/main/pipelines/docker-boshrelease)
-* [docker-broker-deployment](https://github.com/cloudfoundry-community/docker-broker-deployment) (see below)
-
-## Dynamically provision containers via Open Service Broker API
-
-This BOSH release includes a `cf-containers-broker` job provides an API that can provision new Docker containers running PostgreSQL/MySQL/Redis/whatever on demand. The API is [Open Service Broker API](https://www.openservicebrokerapi.org/) compatible, which means you can register it with Cloud Foundry, Kubernetes and more.
-
-Allow users to dynamically provision persistent services, running in Docker containers, using the `cf` Cloud Foundry CLI:
-
-![cf-create-service-ctop](manifests/broker/cf-create-service-ctop.gif)
-
-The example usage is MySQL 5.6: each provisioned service is running inside a dedicated Docker container. The service provides credentials that look like:
-
-```
-$ cf create-service mysql56 free mysql1
-$ cf create-service-key mysql1 mysql1-key
-$ cf service-key mysql1 mysql1-key
-{
- "dbname": "wcfh1voergicdt9n",
- "hostname": "10.244.33.0",
- "password": "mlasvy5fpq9zx8mb",
- "port": "32770",
- "ports": {
-  "3306/tcp": "32770"
- },
- "uri": "mysql://duawbyody1ashrgr:mlasvy5fpq9zx8mb@10.244.33.0:32770/wcfh1voergicdt9n",
- "username": "duawbyody1ashrgr"
-}
-```
-
-See [docker-broker-deployment](https://github.com/cloudfoundry-community/docker-broker-deployment) for a dedicated repo that is all about deploying an Open Service Broker API compatible cluster that runs your favourite services inside on-demand Docker containers.
-
-This repo is similar/same as `manifests/broker` folder, which is used for the CI test harness.
+* [cf-containers-broker-boshrelease](https://github.com/cloudfoundry-community/cf-containers-broker-boshrelease) * [docker-broker-deployment](https://github.com/cloudfoundry-community/docker-broker-deployment)
 
 ## Static set of containers on a VM
 
@@ -74,9 +43,3 @@ bosh2 deploy bosh-redis.yml --vars-store creds.yml
 Deploy and manage a cluster of Docker Swarm.
 
 See [`manifests/README.md`](manifests/README.md) for deployment instructions.
-
-## Status of Docker Broker images
-
-This project was original created many years ago, and overtime some of the community Docker images have been maintained; and some have not. All of them have been retained in the `manifests/broker/services` as examples. If you are excited by one of them but it is a very old version, create an Issue, and we'll help you upgrade it.
-
-See https://github.com/cloudfoundry-community/cf-containers-broker for more information about how services are configured, how to pass properties into Docker images, how credentials are randomly generated, etc.
