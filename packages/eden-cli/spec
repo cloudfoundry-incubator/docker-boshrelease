@@ -1,6 +1,0 @@
----
-name: eden-cli
-dependencies:
-- golang
-files:
-- github.com/starkandwayne/eden/**/*
