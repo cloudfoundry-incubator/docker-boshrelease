@@ -52,6 +52,7 @@ properties:
       containers.restart: Optional string containing the restart policy to apply when a container exits (no, on-failure, always)
       containers.security_options: Optional array of security options
       containers.stop_signal: Optional string containing the signal to stop a container, SIGTERM by default
+      containers.timeout: Optional string containing the length of Monit timeout in seconds
       containers.ulimits: Optional array of Ulimit options
       containers.user: Optional string containing the username or UID to run the first process
       containers.volumes: Optional array of volumes to bind mount
