@@ -1,7 +1,7 @@
 <% p('containers', []).each do |container| %>
 check process <%= container['name'] %> with pidfile /var/vcap/sys/run/containers/<%= container['name'] %>.pid
   group vcap
-  start program "/var/vcap/packages/bosh-helpers/monit_debugger <%= container['name'] %>_ctl '/var/vcap/jobs/containers/bin/ctl start <%= container['name'] %>'"
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger <%= container['name'] %>_ctl '/var/vcap/jobs/containers/bin/ctl start <%= container['name'] %>'" <% unless container['timeout'].to_s.empty? %>with timeout <%= container['timeout'] %> seconds<% end %>
   stop program "/var/vcap/packages/bosh-helpers/monit_debugger <%= container['name'] %>_ctl '/var/vcap/jobs/containers/bin/ctl stop <%= container['name'] %>'"
   depends on <%= ['docker'].concat(Array(container.fetch('depends_on', []))).join(',') %>
 <% end %>
