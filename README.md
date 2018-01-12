@@ -10,7 +10,7 @@ Finally, you can deploy & manage a cluster of Docker Swarm nodes.
 
 Related links:
 
-* [CI](https://ci.starkandwayne.com/teams/main/pipelines/docker-boshrelease)
+* [CI](https://ci-ohio.starkandwayne.com/teams/cfcommunity/pipelines/docker-boshrelease)
 * [cf-containers-broker-boshrelease](https://github.com/cloudfoundry-community/cf-containers-broker-boshrelease) * [docker-broker-deployment](https://github.com/cloudfoundry-community/docker-broker-deployment)
 
 ## Static set of containers on a VM

@@ -1,8 +1,11 @@
 ---
 meta:
   name:    docker
-  target:  sw
-  url:     https://ci.starkandwayne.com
+
+  # fly -t ohio-cf login -c https://ci-ohio.starkandwayne.com -n cfcommunity
+  target:  ohio-cf
+  url:     https://ci-ohio.starkandwayne.com
+
   test-errand: ~
 
   manifest:
@@ -11,14 +14,14 @@ meta:
   initial_version: 30.2.0
 
   git:
-    email: (( vault "secret/ci/git:email" ))
-    name:  (( vault "secret/ci/git:name" ))
+    email:  ((git-commit-email))
+    name:   ((git-commit-name))
 
   bosh-lite:
-    target: https://10.58.111.49:25555
-    username: (( vault "secret/bosh-lites/lite49/users/admin:username" ))
-    password: (( vault "secret/bosh-lites/lite49/users/admin:password" ))
-    cacert:   (( vault "secret/bosh-lites/lite49/certs:rootCA.pem" ))
+    target:   ((bosh-lite-environment))
+    cacert:   ((bosh-lite-ca-cert))
+    username: ((bosh-lite-client))
+    password: ((bosh-lite-client-secret))
 
     swarm:
       test-errands: ~
@@ -32,21 +35,21 @@ meta:
 
   aws:
     bucket: (( concat meta.name "-boshrelease" ))
-    access_key: (( vault "secret/aws/cfcommunity:access" ))
-    secret_key: (( vault "secret/aws/cfcommunity:secret" ))
+    access_key: ((aws-cfcommunity-access))
+    secret_key: ((aws-cfcommunity-secret))
 
   github:
     owner:  cloudfoundry-community
     repo:   (( concat meta.name "-boshrelease" ))
     branch: master
-    private_key:  (( vault "secret/pipelines/shared/github:private_key" ))
-    access_token: (( vault "secret/pipelines/shared/github:access_token" ))
+    private_key:  ((github-private-key))
+    access_token: ((github-access-token))
 
   slack:
-    webhook: (( vault "secret/pipelines/docker-boshrelease/slack:webhook" ))
+    webhook:  ((slack-webhook))
+    icon:     ((slack-logo))
+    username: ((slack-username))
     channel:       '#docker-boshrelease'
-    username:      starkandwayne-ci
-    icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
     blob_success:  '(( concat "$BUILD_PIPELINE_NAME: New version of $BUILD_JOB_NAME was detected, and updated in master. <" meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME| Cut a new release?>" ))'
     blob_failure:  '(( concat "$BUILD_PIPELINE_NAME: :airplane_arriving: <" meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed to update the blob for $BUILD_JOB_NAME>" ))'
 
