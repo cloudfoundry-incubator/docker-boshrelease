@@ -14,8 +14,6 @@ set -eu
 : ${BOSH_CLIENT_SECRET:?required}
 : ${BOSH_DEPLOYMENT:?required}
 : ${MANIFEST_PATH:?required}
-: ${AWS_ACCESS_KEY:?required}
-: ${AWS_SECRET_KEY:?required}
 DEBUG=${DEBUG:-}
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -79,14 +77,6 @@ delete_deployment
 header "Creating candidate BOSH release..."
 bosh2 -n reset-release # in case dev_releases/ is in repo accidentally
 
-cat > config/private.yml <<YAML
----
-blobstore:
-  provider: s3
-  options:
-    access_key_id: ${AWS_ACCESS_KEY}
-    secret_access_key: ${AWS_SECRET_KEY}
-YAML
 bosh2 create-release
 bosh2 upload-release --rebase
 
