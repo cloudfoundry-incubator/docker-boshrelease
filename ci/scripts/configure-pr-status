@@ -1,0 +1,8 @@
+#!/bin/bash
+set -ce
+
+pushd git-pull-requests > /dev/null
+  pr_url=$(git config --get pullrequest.url)
+popd > /dev/null
+
+echo "<${pr_url}|Pull request passed testflight> Merge when ready: ${pr_url}" > message/body
