@@ -46,7 +46,9 @@ until bosh2 env; do
 done
 
 if [[ -f git/tmp/vars.yml ]]; then
+	set +e
 	cf_api_url=$(bosh2 int git/tmp/vars.yml --path /cf-api-url)
+	set -e
 	if [[ "${cf_api_url:-X}" != "X" ]]; then
 		header "Checking Cloud Foundry available..."
 		until cf api $cf_api_url --skip-ssl-validation; do
