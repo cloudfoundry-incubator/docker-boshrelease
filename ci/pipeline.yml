@@ -3,28 +3,30 @@ groups:
   jobs:
   - testflight
   - testflight-pr
-  - rc
-  - shipit
-  - major
-  - minor
+  - release-candidate
+  - ship-it
+  - bump-major
+  - bump-minor
 
 resource_types:
 - name: slack-notification
   type: docker-image
   source:
     repository: cfcommunity/slack-notification-resource
+
 - name: pull-request
   type: docker-image
   source:
     repository: jtarchie/pr
 
 resources:
-- name: git
+- name: git-docker-boshrelease
   type: git
   source:
+    uri: git@github.com:cloudfoundry-incubator/docker-boshrelease
     branch: tmp/kubo-ci
     private_key: ((git-ssh-key))
-    uri: git@github.com:cloudfoundry-incubator/docker-boshrelease
+
 - name: git-pull-requests
   type: pull-request
   source:
@@ -32,32 +34,36 @@ resources:
     base: master
     private_key: ((git-ssh-key))
     access_token: ((github-token-key))
+
 - name: version
   type: semver
   source:
     driver: gcs
+    bucket: kubo-pipeline-store
     key: docker-boshrelease-version
     json_key: ((gcs-json-key))
-    bucket: kubo-pipeline-store
     initial_version: 31.0.1
-- name: notify
+
+- name: slack-notification
   type: slack-notification
   source:
     url: ((build-alert-slack-url))
-- name: github
+
+- name: github-release
   type: github-release
   source:
-    access_token: ((github-kubo-gitbot-access-token))
+    user: cloudfoundry-incubator
     repository: docker-boshrelease
-    user: cloudfoundry-community
+    access_token: ((github-kubo-gitbot-access-token))
+
 - name: s3-tarball
   type: s3
   source:
-    access_key_id: invalid
     bucket: docker-boshrelease
-    regexp: docker-(.*).tgz
     region_name: us-east-1
+    access_key_id: invalid
     secret_access_key: invalid
+    regexp: docker-(.*).tgz
 
 jobs:
 - name: testflight
@@ -66,18 +72,19 @@ jobs:
   plan:
   - do:
     - aggregate:
-      - get: git
+      - get: git-docker-boshrelease
         trigger: true
-      name: get
     - aggregate:
-      - config:
+      - name: testflight
+        task: testflight
+        config:
           image_resource:
+            type: docker-image
             source:
               repository: starkandwayne/concourse
               tag: latest
-            type: docker-image
           inputs:
-          - name: git
+          - name: git-docker-boshrelease
           params: &testflight_params
             AWS_ACCESS_KEY: invalid
             AWS_SECRET_KEY: invalid
@@ -92,40 +99,37 @@ jobs:
             MANIFEST_OP_PATHS: ""
             MANIFEST_PATH: manifests/containers/example.yml
             MANIFEST_VARS: '--- {}'
-            REPO_ROOT: git
+            REPO_ROOT: git-docker-boshrelease
             TEST_ERRANDS: null
           platform: linux
           run:
+            path: ./git-docker-boshrelease/ci/scripts/testflight
             args: []
-            path: ./git/ci/scripts/testflight
-        name: testflight
-        task: testflight
-      - config:
+      - name: testflight-swarm
+        task: testflight-swarm
+        config:
           image_resource:
+            type: docker-image
             source:
               repository: starkandwayne/concourse
               tag: latest
-            type: docker-image
           inputs:
-          - name: git
+          - name: git-docker-boshrelease
           params:
             <<: *testflight_params
             BOSH_DEPLOYMENT: docker-swarm-testflight
             MANIFEST_PATH: manifests/swarm/docker-swarm.yml
           platform: linux
           run:
+            path: ./git-docker-boshrelease/ci/scripts/testflight
             args: []
-            path: ./git/ci/scripts/testflight
-        name: testflight-swarm
-        task: testflight-swarm
-      name: testflights
-    name: main
     on_failure:
+      put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
           Concourse Failure! :sad_panda:> docker-boshrelease: testflight job failed'
-      put: notify
+
 - name: testflight-pr
   public: true
   serial: true
@@ -133,21 +137,21 @@ jobs:
   - do:
     - aggregate:
       - get: git-pull-requests
-        trigger: true
         version: every
-      name: get
-    - name: pending-status
+        trigger: true
+    - put: git-pull-requests
       params:
         path: git-pull-requests
         status: pending
-      put: git-pull-requests
     - aggregate:
-      - config:
+      - name: testflight
+        task: testflight
+        config:
           image_resource:
+            type: docker-image
             source:
               repository: starkandwayne/concourse
               tag: latest
-            type: docker-image
           inputs:
           - name: git-pull-requests
           params:
@@ -156,9 +160,8 @@ jobs:
             REPO_ROOT: git-pull-requests
           platform: linux
           run:
-            args: []
             path: ./git-pull-requests/ci/scripts/testflight
-        name: testflight
+            args: []
         on_failure:
           params:
             path: git-pull-requests
@@ -169,8 +172,9 @@ jobs:
             path: git-pull-requests
             status: success
           put: git-pull-requests
-        task: testflight
-      - config:
+      - name: testflight-swarm
+        task: testflight-swarm
+        config:
           image_resource:
             source:
               repository: starkandwayne/concourse
@@ -185,17 +189,16 @@ jobs:
             REPO_ROOT: git-pull-requests
           platform: linux
           run:
-            args: []
             path: ./git-pull-requests/ci/scripts/testflight
-        name: testflight-swarm
-        task: testflight-swarm
-      name: testflights
-    - config:
+            args: []
+    - name: pr-success-message
+      task: pr-success-message
+      config:
         image_resource:
+          type: docker-image
           source:
             repository: starkandwayne/concourse
             tag: latest
-          type: docker-image
         inputs:
         - name: git-pull-requests
         outputs:
@@ -210,37 +213,35 @@ jobs:
             cd -
             echo "<${pr_url}|Pull request passed testflight> Merge when ready: ${pr_url}" > message/body
           path: sh
-      name: pr-success-message
-      task: pr-success-message
-    name: main
     on_success:
+      put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text_file: message/body
-      put: notify
-- name: rc
+
+- name: release-candidate
   public: true
   plan:
   - do:
     - aggregate:
-      - get: git
-        passed:
-        - testflight
+      - get: git-docker-boshrelease
+        passed: [ testflight ]
         trigger: true
       - get: version
         params:
           pre: rc
         trigger: true
-    - params:
+    - put: version
+      params:
         file: version/number
-      put: version
     on_failure:
+      put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
           Concourse Failure! :sad_panda:> docker-boshrelease: rc job failed'
-      put: notify
-- name: minor
+
+- name: bump-minor
   public: true
   plan:
   - do:
@@ -248,16 +249,17 @@ jobs:
       params:
         bump: minor
       trigger: false
-    - params:
+    - put: version
+      params:
         file: version/number
-      put: version
     on_failure:
+      put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: minor job failed'
-      put: notify
-- name: major
+          Concourse Failure! :sad_panda:> docker-boshrelease: bump-minor job failed'
+
+- name: bump-major
   public: true
   plan:
   - do:
@@ -265,16 +267,17 @@ jobs:
       params:
         bump: major
       trigger: false
-    - params:
+    - put: version
+      params:
         file: version/number
-      put: version
     on_failure:
+      put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: major job failed'
-      put: notify
-- name: shipit
+          Concourse Failure! :sad_panda:> docker-boshrelease: bump-major job failed'
+
+- name: ship-it
   public: true
   serial: true
   plan:
@@ -283,21 +286,21 @@ jobs:
       - get: version
         params:
           bump: final
-        passed:
-        - rc
-      - get: git
-        passed:
-        - rc
+        passed: [ release-candidate ]
+      - get: git-docker-boshrelease
+        passed: [ release-candidate ]
       name: inputs
-    - config:
+    - name: release
+      task: release
+      config:
         image_resource:
+          type: docker-image
           source:
             repository: starkandwayne/concourse
             tag: latest
-          type: docker-image
         inputs:
         - name: version
-        - name: git
+        - name: git-docker-boshrelease
         outputs:
         - name: gh
         - name: pushme
@@ -312,44 +315,37 @@ jobs:
           NOTIFICATION_OUT: notifications
           RELEASE_ROOT: gh
           REPO_OUT: pushme
-          REPO_ROOT: git
+          REPO_ROOT: git-docker-boshrelease
           VERSION_FROM: version/number
         platform: linux
         run:
+          path: ./git-docker-boshrelease/ci/scripts/shipit
           args: []
-          path: ./git/ci/scripts/shipit
-      name: release
-      task: release
-    - name: upload-git
+    - put: git-docker-boshrelease
       params:
         rebase: true
-        repository: pushme/git
-      put: git
-    - name: tarball
+        repository: pushme/git-docker-boshrelease
+    - put: s3-tarball
       params:
         file: gh/artifacts/docker-*.tgz
-      put: s3-tarball
-    - name: github-release
+    - put: github-release
       params:
         body: gh/notes.md
         globs:
         - gh/artifacts/*
         name: gh/name
         tag: gh/tag
-      put: github
-    - name: version-bump
+    - put: version
       params:
         bump: patch
-      put: version
     - aggregate:
-      - params:
+      - put: slack-notification
+        params:
           channel: '#docker-boshrelease'
           text_file: notifications/message
-        put: notify
-      name: notify
     on_failure:
+      put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
           Concourse Failure! :sad_panda:> docker-boshrelease: shipit job failed'
-      put: notify
