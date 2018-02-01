@@ -42,7 +42,7 @@ function deploy() {
 function cleanup() {
   echo "Cleanup bosh director..."
   bosh delete-deployment -n --force
-  bosh clean-up --all
+  bosh clean-up -n --all
 }
 
 function main() {
