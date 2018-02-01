@@ -1,0 +1,32 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: starkandwayne/concourse
+    tag: latest
+
+inputs:
+- name: version
+- name: git-docker-boshrelease
+
+outputs:
+- name: gh
+- name: pushme
+- name: notifications
+
+params:
+  AWS_ACCESS_KEY:
+  AWS_SECRET_KEY:
+  BRANCH:
+  GIT_EMAIL:
+  GIT_NAME:
+  GITHUB_OWNER:
+  NOTIFICATION_OUT:
+  RELEASE_ROOT:
+  REPO_OUT:
+  REPO_ROOT:
+  VERSION_FROM:
+
+run:
+  path: git-docker-boshrelease/ci/scripts/shipit

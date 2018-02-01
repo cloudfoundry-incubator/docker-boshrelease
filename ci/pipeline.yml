@@ -75,54 +75,30 @@ jobs:
       - get: git-docker-boshrelease
         trigger: true
     - aggregate:
-      - name: testflight
-        task: testflight
-        config:
-          image_resource:
-            type: docker-image
-            source:
-              repository: starkandwayne/concourse
-              tag: latest
-          inputs:
-          - name: git-docker-boshrelease
-          params: &testflight_params
-            AWS_ACCESS_KEY: invalid
-            AWS_SECRET_KEY: invalid
-            PROXY_PRIVATE_KEY: ((docker-bosh.proxy-private-key))
-            PROXY_USERNAME: ((docker-bosh.proxy-username))
-            PROXY_IP: ((docker-bosh.proxy-ip))
-            BOSH_CA_CERT: ((docker-bosh.ca-cert))
-            BOSH_CLIENT: ((docker-bosh.client))
-            BOSH_CLIENT_SECRET: ((docker-bosh.client-secret))
-            BOSH_DEPLOYMENT: docker-testflighten
-            BOSH_ENVIRONMENT: ((docker-bosh.environment))
-            MANIFEST_OP_PATHS: ""
-            MANIFEST_PATH: manifests/containers/example.yml
-            MANIFEST_VARS: '--- {}'
-            REPO_ROOT: git-docker-boshrelease
-            TEST_ERRANDS: null
-          platform: linux
-          run:
-            path: ./git-docker-boshrelease/ci/scripts/testflight
-            args: []
-      - name: testflight-swarm
-        task: testflight-swarm
-        config:
-          image_resource:
-            type: docker-image
-            source:
-              repository: starkandwayne/concourse
-              tag: latest
-          inputs:
-          - name: git-docker-boshrelease
-          params:
-            <<: *testflight_params
-            BOSH_DEPLOYMENT: docker-swarm-testflight
-            MANIFEST_PATH: manifests/swarm/docker-swarm.yml
-          platform: linux
-          run:
-            path: ./git-docker-boshrelease/ci/scripts/testflight
-            args: []
+      - task: testflight
+        file: git-docker-boshrelease/ci/tasks/testflight.yml
+        params: &testflight_params
+          AWS_ACCESS_KEY: invalid
+          AWS_SECRET_KEY: invalid
+          PROXY_PRIVATE_KEY: ((docker-bosh.proxy-private-key))
+          PROXY_USERNAME: ((docker-bosh.proxy-username))
+          PROXY_IP: ((docker-bosh.proxy-ip))
+          BOSH_CA_CERT: ((docker-bosh.ca-cert))
+          BOSH_CLIENT: ((docker-bosh.client))
+          BOSH_CLIENT_SECRET: ((docker-bosh.client-secret))
+          BOSH_DEPLOYMENT: docker-testflighten
+          BOSH_ENVIRONMENT: ((docker-bosh.environment))
+          MANIFEST_OP_PATHS: ""
+          MANIFEST_PATH: manifests/containers/example.yml
+          MANIFEST_VARS: '--- {}'
+          REPO_ROOT: git-docker-boshrelease
+          TEST_ERRANDS: null
+      - task: testflight-swarm
+        file: git-docker-boshrelease/ci/tasks/testflight.yml
+        params:
+          <<: *testflight_params
+          BOSH_DEPLOYMENT: docker-swarm-testflight
+          MANIFEST_PATH: manifests/swarm/docker-swarm.yml
     on_failure:
       put: slack-notification
       params:
@@ -144,75 +120,31 @@ jobs:
         path: git-pull-requests
         status: pending
     - aggregate:
-      - name: testflight
-        task: testflight
-        config:
-          image_resource:
-            type: docker-image
-            source:
-              repository: starkandwayne/concourse
-              tag: latest
-          inputs:
-          - name: git-pull-requests
-          params:
-            <<: *testflight_params
-            BOSH_DEPLOYMENT: docker-testflight-pr
-            REPO_ROOT: git-pull-requests
-          platform: linux
-          run:
-            path: ./git-pull-requests/ci/scripts/testflight
-            args: []
+      - task: testflight
+        file: git-docker-boshrelease/ci/tasks/testflight.yml
+        params:
+          <<: *testflight_params
+          BOSH_DEPLOYMENT: docker-testflight-pr
+          REPO_ROOT: git-pull-requests
         on_failure:
+          put: git-pull-requests
           params:
             path: git-pull-requests
             status: failure
-          put: git-pull-requests
         on_success:
+          put: git-pull-requests
           params:
             path: git-pull-requests
             status: success
-          put: git-pull-requests
-      - name: testflight-swarm
-        task: testflight-swarm
-        config:
-          image_resource:
-            source:
-              repository: starkandwayne/concourse
-              tag: latest
-            type: docker-image
-          inputs:
-          - name: git-pull-requests
-          params:
-            <<: *testflight_params
-            BOSH_DEPLOYMENT: docker-swarm-testflight-pr
-            MANIFEST_PATH: manifests/swarm/docker-swarm.yml
-            REPO_ROOT: git-pull-requests
-          platform: linux
-          run:
-            path: ./git-pull-requests/ci/scripts/testflight
-            args: []
-    - name: pr-success-message
-      task: pr-success-message
-      config:
-        image_resource:
-          type: docker-image
-          source:
-            repository: starkandwayne/concourse
-            tag: latest
-        inputs:
-        - name: git-pull-requests
-        outputs:
-        - name: message
-        platform: linux
-        run:
-          args:
-          - -ce
-          - |
-            cd git-pull-requests
-            pr_url=$(git config --get pullrequest.url)
-            cd -
-            echo "<${pr_url}|Pull request passed testflight> Merge when ready: ${pr_url}" > message/body
-          path: sh
+      - task: testflight-swarm
+        file: git-docker-boshrelease/ci/tasks/testflight.yml
+        params:
+          <<: *testflight_params
+          BOSH_DEPLOYMENT: docker-swarm-testflight-pr
+          MANIFEST_PATH: manifests/swarm/docker-swarm.yml
+          REPO_ROOT: git-pull-requests
+    - task: pr-success-message
+      file: git-docker-boshrelease/ci/tasks/configure-pr-status.yml
     on_success:
       put: slack-notification
       params:
@@ -290,37 +222,20 @@ jobs:
       - get: git-docker-boshrelease
         passed: [ release-candidate ]
       name: inputs
-    - name: release
-      task: release
-      config:
-        image_resource:
-          type: docker-image
-          source:
-            repository: starkandwayne/concourse
-            tag: latest
-        inputs:
-        - name: version
-        - name: git-docker-boshrelease
-        outputs:
-        - name: gh
-        - name: pushme
-        - name: notifications
-        params:
-          AWS_ACCESS_KEY: invalid
-          AWS_SECRET_KEY: invalid
-          BRANCH: master
-          GIT_EMAIL: invalid
-          GIT_NAME: invalid
-          GITHUB_OWNER: cloudfoundry-community
-          NOTIFICATION_OUT: notifications
-          RELEASE_ROOT: gh
-          REPO_OUT: pushme
-          REPO_ROOT: git-docker-boshrelease
-          VERSION_FROM: version/number
-        platform: linux
-        run:
-          path: ./git-docker-boshrelease/ci/scripts/shipit
-          args: []
+    - task: release
+      file: git-docker-boshrelease/ci/tasks/ship-it.yml
+      params:
+        AWS_ACCESS_KEY: invalid
+        AWS_SECRET_KEY: invalid
+        BRANCH: master
+        GIT_EMAIL: invalid
+        GIT_NAME: invalid
+        GITHUB_OWNER: cloudfoundry-community
+        NOTIFICATION_OUT: notifications
+        RELEASE_ROOT: gh
+        REPO_OUT: pushme
+        REPO_ROOT: git-docker-boshrelease
+        VERSION_FROM: version/number
     - put: git-docker-boshrelease
       params:
         rebase: true

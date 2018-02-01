@@ -1,0 +1,30 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: starkandwayne/concourse
+    tag: latest
+
+inputs:
+- name: git-docker-boshrelease
+
+params:
+  AWS_ACCESS_KEY:
+  AWS_SECRET_KEY:
+  PROXY_PRIVATE_KEY:
+  PROXY_USERNAME:
+  PROXY_IP:
+  BOSH_CA_CERT:
+  BOSH_CLIENT:
+  BOSH_CLIENT_SECRET:
+  BOSH_DEPLOYMENT:
+  BOSH_ENVIRONMENT:
+  MANIFEST_OP_PATHS:
+  MANIFEST_PATH:
+  MANIFEST_VARS:
+  REPO_ROOT:
+  TEST_ERRANDS:
+
+run:
+  path: ./git-docker-boshrelease/ci/scripts/testflight

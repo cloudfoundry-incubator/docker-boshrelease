@@ -1,0 +1,16 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: starkandwayne/concourse
+    tag: latest
+
+inputs:
+- name: git-pull-requests
+
+outputs:
+- name: message
+
+run:
+  path: git-docker-boshrelease/ci/scripts/configure-pr-status
