@@ -1,8 +1,8 @@
 groups:
 - name: docker-boshrelease
   jobs:
-  - testflight
-  - testflight-pr
+  - test-docker-boshrelease
+  - test-docker-boshrelease-pr
   - release-candidate
   - ship-it
   - bump-major
@@ -66,7 +66,7 @@ resources:
     regexp: docker-(.*).tgz
 
 jobs:
-- name: testflight
+- name: test-docker-boshrelease
   public: true
   serial: true
   plan:
@@ -75,9 +75,9 @@ jobs:
       - get: git-docker-boshrelease
         trigger: true
     - aggregate:
-      - task: testflight
-        file: git-docker-boshrelease/ci/tasks/testflight.yml
-        params: &testflight_params
+      - task: test-docker-boshrelease
+        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+        params: &test_docker_boshrelease_params
           AWS_ACCESS_KEY: invalid
           AWS_SECRET_KEY: invalid
           PROXY_PRIVATE_KEY: ((docker-bosh.proxy-private-key))
@@ -86,27 +86,23 @@ jobs:
           BOSH_CA_CERT: ((docker-bosh.ca-cert))
           BOSH_CLIENT: ((docker-bosh.client))
           BOSH_CLIENT_SECRET: ((docker-bosh.client-secret))
-          BOSH_DEPLOYMENT: docker-testflighten
+          BOSH_DEPLOYMENT: docker-testflight
           BOSH_ENVIRONMENT: ((docker-bosh.environment))
-          MANIFEST_OP_PATHS: ""
-          MANIFEST_PATH: manifests/containers/example.yml
-          MANIFEST_VARS: '--- {}'
-          REPO_ROOT: git-docker-boshrelease
-          TEST_ERRANDS: null
-      - task: testflight-swarm
-        file: git-docker-boshrelease/ci/tasks/testflight.yml
+          MANIFEST_PATH: git-docker-boshrelease/manifests/containers/example.yml
+      - task: test-docker-boshrelease-swarm
+        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
         params:
-          <<: *testflight_params
+          <<: *test_docker_boshrelease_params
           BOSH_DEPLOYMENT: docker-swarm-testflight
-          MANIFEST_PATH: manifests/swarm/docker-swarm.yml
+          MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
     on_failure:
       put: slack-notification
       params:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: testflight job failed'
+          Concourse Failure! :sad_panda:> docker-boshrelease: test-docker-boshrelease job failed'
 
-- name: testflight-pr
+- name: test-docker-boshrelease-pr
   public: true
   serial: true
   plan:
@@ -120,10 +116,12 @@ jobs:
         path: git-pull-requests
         status: pending
     - aggregate:
-      - task: testflight
-        file: git-docker-boshrelease/ci/tasks/testflight.yml
+      - task: test-docker-boshrelease
+        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+        input_mapping:
+          git-docker-boshrelease: git-pull-requests
         params:
-          <<: *testflight_params
+          <<: *test_docker_boshrelease_params
           BOSH_DEPLOYMENT: docker-testflight-pr
           REPO_ROOT: git-pull-requests
         on_failure:
@@ -136,13 +134,12 @@ jobs:
           params:
             path: git-pull-requests
             status: success
-      - task: testflight-swarm
-        file: git-docker-boshrelease/ci/tasks/testflight.yml
+      - task: test-docker-boshrelease-swarm
+        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
         params:
-          <<: *testflight_params
+          <<: *test_docker_boshrelease_params
           BOSH_DEPLOYMENT: docker-swarm-testflight-pr
-          MANIFEST_PATH: manifests/swarm/docker-swarm.yml
-          REPO_ROOT: git-pull-requests
+          MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
     - task: pr-success-message
       file: git-docker-boshrelease/ci/tasks/configure-pr-status.yml
     on_success:
@@ -157,7 +154,7 @@ jobs:
   - do:
     - aggregate:
       - get: git-docker-boshrelease
-        passed: [ testflight ]
+        passed: [ test-docker-boshrelease ]
         trigger: true
       - get: version
         params:

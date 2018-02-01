@@ -1,0 +1,57 @@
+#!/bin/bash -exu
+
+ROOT="${PWD}"
+
+function setup_socks5_proxy() {
+  echo "Setup socks5 proxy..."
+  echo "${PROXY_PRIVATE_KEY}" > "${ROOT}/proxy_private_key"
+  chmod 400 proxy_private_key
+  ssh -4 -f -N -D 9999 "${PROXY_USERNAME}@${PROXY_IP}" \
+    -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=60 \
+    -i "${ROOT}/proxy_private_key"
+  export BOSH_ALL_PROXY="socks5://localhost:9999"
+}
+
+function create_release() {
+  echo "Create dev release..."
+  pushd git-docker-boshrelease > /dev/null
+    bosh create-release --force --timestamp-version
+    bosh upload-release
+  popd > /dev/null
+}
+
+function upload_stemcell() {
+  echo "Upload stemcell..."
+  bosh upload-stemcell stemcell/stemcell.tgz
+}
+
+function create_ops_files() {
+cat > /tmp/update_manifest_name.yml <<EOF
+- type: replace
+  path: /name
+  value: ${BOSH_DEPLOYMENT}
+EOF
+}
+
+function deploy() {
+  echo "Deploy ${MANIFEST_PATH}..."
+  bosh deploy -n "${MANIFEST_PATH}" \
+    -o /tmp/update_manifest_name.yml
+}
+
+function cleanup() {
+  echo "Cleanup bosh director..."
+  bosh delete-deployment -n --force
+  bosh clean-up --all
+}
+
+function main() {
+  setup_socks5_proxy
+  create_release
+  upload_stemcell
+  create_ops_files
+  deploy
+}
+
+trap cleanup EXIT SIGTERM SIGINT
+main

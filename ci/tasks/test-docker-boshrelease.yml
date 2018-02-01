@@ -3,7 +3,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: starkandwayne/concourse
+    repository: pcfkubo/kubo-ci
     tag: latest
 
 inputs:
@@ -20,11 +20,7 @@ params:
   BOSH_CLIENT_SECRET:
   BOSH_DEPLOYMENT:
   BOSH_ENVIRONMENT:
-  MANIFEST_OP_PATHS:
   MANIFEST_PATH:
-  MANIFEST_VARS:
-  REPO_ROOT:
-  TEST_ERRANDS:
 
 run:
-  path: ./git-docker-boshrelease/ci/scripts/testflight
+  path: ./git-docker-boshrelease/ci/scripts/test-docker-boshrelease
