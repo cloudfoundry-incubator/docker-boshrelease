@@ -18,6 +18,9 @@ docker/docker-1.13.1.tgz:
   size: 27851024
   object_id: 2f2af923-48da-4e73-82e1-14f4dedd678e
   sha: 0ff46d8eea0c694f349e1d40cdc10200a1a19e2c
+docker/docker-17.12.0-ce.tgz:
+  size: 34272897
+  sha: cf03016cc491ca4549b11486d9ba5a9d242f8a07
 flannel/flannel-0.5.5-linux-amd64.tar.gz:
   size: 3489977
   object_id: fee79737-4dad-4420-9f27-3180796bcc4a

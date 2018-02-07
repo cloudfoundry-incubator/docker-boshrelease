@@ -64,9 +64,6 @@ export DOCKER_DEFAULT_GATEWAY_V6="--default-gateway-v6=<%= default_gateway_v6 %>
 export DOCKER_DEFAULT_ULIMITS="<%= default_ulimits.map { |default_ulimit| "--default-ulimit=#{default_ulimit}" }.join(' ') %>"
 <% end %>
 
-# Do not contact legacy registries
-export DOCKER_DISABLE_LEGACY_REGISTRY="--disable-legacy-registry=<%= p('disable_legacy_registry') %>"
-
 <% if_p('dns_servers') do |dns_servers| %>
 # DNS servers to be used
 export DOCKER_DNS_SERVERS="<%= dns_servers.map { |dns_server| "--dns=#{dns_server}" }.join(' ') %>"

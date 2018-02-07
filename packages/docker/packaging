@@ -5,7 +5,6 @@ set -u # report the usage of uninitialized variables
 CPUS=`grep -c ^processor /proc/cpuinfo`
 
 # We grab the latest versions that are in the directory
-AUFS_TOOLS_VERSION=`ls -r docker/aufs-tools_*.deb | sed 's/docker\/aufs-tools_\(.*\).deb/\1/' | head -1`
 AUTOCONF_VERSION=`ls -r docker/autoconf-*.tar.gz | sed 's/docker\/autoconf-\(.*\)\.tar\.gz/\1/' | head -1`
 BRIDGE_UTILS_VERSION=`ls -r docker/bridge-utils-*.tar.gz | sed 's/docker\/bridge-utils-\(.*\)\.tar\.gz/\1/' | head -1`
 DOCKER_VERSION=`ls -r docker/docker-*.tgz | sed 's/docker\/docker-\(.*\)\.tgz/\1/' | head -1`
@@ -25,10 +24,6 @@ if [[ $? != 0 ]] ; then
   echo "Failed extracting bridge-utils ${BRIDGE_UTILS_VERSION}"
   exit 1
 fi
-
-# Copy aufs-tools package
-echo "Copying aufs-tools ${AUFS_TOOLS_VERSION}..."
-cp -a ${BOSH_COMPILE_TARGET}/docker/aufs-tools_${AUFS_TOOLS_VERSION}.deb ${BOSH_INSTALL_TARGET}/
 
 # Build Autoconf package
 echo "Building Autoconf ${AUTOCONF_VERSION}..."
