@@ -1,0 +1,26 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pcfkubo/kubo-ci
+    tag: latest
+
+inputs:
+- name: git-docker-boshrelease
+- name: git-pull-requests
+- name: stemcell
+
+params:
+  PROXY_PRIVATE_KEY:
+  PROXY_USERNAME:
+  PROXY_IP:
+  BOSH_CA_CERT:
+  BOSH_CLIENT:
+  BOSH_CLIENT_SECRET:
+  BOSH_DEPLOYMENT:
+  BOSH_ENVIRONMENT:
+  MANIFEST_PATH:
+
+run:
+  path: ./git-docker-boshrelease/ci/scripts/test-docker-boshrelease
