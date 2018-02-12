@@ -6,7 +6,7 @@ function setup_socks5_proxy() {
   echo "Setup socks5 proxy..."
   echo "${PROXY_PRIVATE_KEY}" > "${ROOT}/proxy_private_key"
   chmod 400 proxy_private_key
-  export BOSH_ALL_PROXY="ssh+socks5://${PROXY_USERNAME}@${PROXY_IP}?private-key=${ROOT}/proxy_private_key"
+  export BOSH_ALL_PROXY="ssh+socks5://${PROXY_USERNAME}@${PROXY_IP}:22?private-key=${ROOT}/proxy_private_key"
 }
 
 function create_release() {
