@@ -9,7 +9,13 @@ function setup_socks5_proxy() {
   ssh -4 -f -N -D 9999 "${PROXY_USERNAME}@${PROXY_IP}" \
     -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=60 \
     -i "${ROOT}/proxy_private_key"
-  export BOSH_ALL_PROXY="socks5://localhost:9999"
+  echo $! > "${ROOT}/socks5proxy.pid"
+}
+
+function kill_socks5_proxy() {
+  if [[ -f "${ROOT}/socks5proxy.pid" ]]; then
+    kill -9 $(cat "${ROOT}/socks5proxy.pid")
+  fi
 }
 
 function create_release() {
@@ -43,6 +49,7 @@ function cleanup() {
   echo "Cleanup bosh director..."
   bosh delete-deployment -n --force
   bosh clean-up -n --all
+  kill_socks5_proxy
 }
 
 function main() {
