@@ -8,10 +8,9 @@ image_resource:
 
 inputs:
 - name: git-docker-boshrelease
+- name: stemcell
 
 params:
-  AWS_ACCESS_KEY:
-  AWS_SECRET_KEY:
   PROXY_PRIVATE_KEY:
   PROXY_USERNAME:
   PROXY_IP:
