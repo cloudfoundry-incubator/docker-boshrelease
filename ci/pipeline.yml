@@ -19,12 +19,17 @@ resource_types:
   source:
     repository: jtarchie/pr
 
+- name: gcs
+  type: docker-image
+  source:
+    repository: frodenas/gcs-resource
+
 resources:
 - name: git-docker-boshrelease
   type: git
   source:
     uri: git@github.com:cloudfoundry-incubator/docker-boshrelease
-    branch: tmp/kubo-ci
+    branch: master
     private_key: ((git-ssh-key))
 
 - name: git-pull-requests
@@ -46,24 +51,27 @@ resources:
 
 - name: slack-notification
   type: slack-notification
-  source:
-    url: ((build-alert-slack-url))
+  # source:
+  #   url: ((build-alert-slack-url))
 
 - name: github-release
   type: github-release
   source:
-    user: cloudfoundry-incubator
+    owner: cloudfoundry-incubator
     repository: docker-boshrelease
-    access_token: ((github-kubo-gitbot-access-token))
+    access_token: ((github-token-key))
 
 - name: s3-tarball
-  type: s3
+  type: gcs
   source:
     bucket: docker-boshrelease
-    region_name: us-east-1
-    access_key_id: invalid
-    secret_access_key: invalid
+    json_key: ((gcs-json-key))
     regexp: docker-(.*).tgz
+
+- name: ubuntu-trusty-stemcell-gcp
+  type: bosh-io-stemcell
+  source:
+    name: bosh-google-kvm-ubuntu-trusty-go_agent
 
 jobs:
 - name: test-docker-boshrelease
@@ -74,27 +82,26 @@ jobs:
     - aggregate:
       - get: git-docker-boshrelease
         trigger: true
-    - aggregate:
-      - task: test-docker-boshrelease
-        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-        params: &test_docker_boshrelease_params
-          AWS_ACCESS_KEY: invalid
-          AWS_SECRET_KEY: invalid
-          PROXY_PRIVATE_KEY: ((docker-bosh.proxy-private-key))
-          PROXY_USERNAME: ((docker-bosh.proxy-username))
-          PROXY_IP: ((docker-bosh.proxy-ip))
-          BOSH_CA_CERT: ((docker-bosh.ca-cert))
-          BOSH_CLIENT: ((docker-bosh.client))
-          BOSH_CLIENT_SECRET: ((docker-bosh.client-secret))
-          BOSH_DEPLOYMENT: docker-testflight
-          BOSH_ENVIRONMENT: ((docker-bosh.environment))
-          MANIFEST_PATH: git-docker-boshrelease/manifests/containers/example.yml
-      - task: test-docker-boshrelease-swarm
-        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-        params:
-          <<: *test_docker_boshrelease_params
-          BOSH_DEPLOYMENT: docker-swarm-testflight
-          MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
+      - get: stemcell
+        resource: ubuntu-trusty-stemcell-gcp
+    - task: test-docker-boshrelease
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params: &test_docker_boshrelease_params
+        PROXY_PRIVATE_KEY: ((docker-bosh.proxy-private-key))
+        PROXY_USERNAME: ((docker-bosh.proxy-username))
+        PROXY_IP: ((docker-bosh.proxy-ip))
+        BOSH_CA_CERT: ((docker-bosh.ca-cert))
+        BOSH_CLIENT: ((docker-bosh.client))
+        BOSH_CLIENT_SECRET: ((docker-bosh.client-secret))
+        BOSH_DEPLOYMENT: docker-testflight
+        BOSH_ENVIRONMENT: ((docker-bosh.environment))
+        MANIFEST_PATH: git-docker-boshrelease/manifests/containers/example.yml
+    - task: test-docker-boshrelease-swarm
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-swarm-testflight
+        MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
     on_failure:
       put: slack-notification
       params:
@@ -111,35 +118,34 @@ jobs:
       - get: git-pull-requests
         version: every
         trigger: true
+      - get: stemcell
+        resource: ubuntu-trusty-stemcell-gcp
     - put: git-pull-requests
       params:
         path: git-pull-requests
         status: pending
-    - aggregate:
-      - task: test-docker-boshrelease
-        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-        input_mapping:
-          git-docker-boshrelease: git-pull-requests
+    - task: test-docker-boshrelease
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-testflight-pr
+        MANIFEST_PATH: git-pull-requests/manifests/containers/example.yml
+      on_failure:
+        put: git-pull-requests
         params:
-          <<: *test_docker_boshrelease_params
-          BOSH_DEPLOYMENT: docker-testflight-pr
-          REPO_ROOT: git-pull-requests
-        on_failure:
-          put: git-pull-requests
-          params:
-            path: git-pull-requests
-            status: failure
-        on_success:
-          put: git-pull-requests
-          params:
-            path: git-pull-requests
-            status: success
-      - task: test-docker-boshrelease-swarm
-        file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+          path: git-pull-requests
+          status: failure
+      on_success:
+        put: git-pull-requests
         params:
-          <<: *test_docker_boshrelease_params
-          BOSH_DEPLOYMENT: docker-swarm-testflight-pr
-          MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
+          path: git-pull-requests
+          status: success
+    - task: test-docker-boshrelease-swarm
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-swarm-testflight-pr
+        MANIFEST_PATH: git-pull-requests/manifests/swarm/docker-swarm.yml
     - task: pr-success-message
       file: git-docker-boshrelease/ci/tasks/configure-pr-status.yml
     on_success:
@@ -222,12 +228,12 @@ jobs:
     - task: release
       file: git-docker-boshrelease/ci/tasks/ship-it.yml
       params:
-        AWS_ACCESS_KEY: invalid
-        AWS_SECRET_KEY: invalid
+        AWS_ACCESS_KEY:  ((gcs-access-key-id))
+        AWS_SECRET_KEY: ((gcs-secret-access-key))
         BRANCH: master
-        GIT_EMAIL: invalid
-        GIT_NAME: invalid
-        GITHUB_OWNER: cloudfoundry-community
+        GIT_EMAIL: "cfcr+cibot@pivotal.io"
+        GIT_NAME: "CFCR CI BOT"
+        GITHUB_OWNER: cloudfoundry-incubator
         NOTIFICATION_OUT: notifications
         RELEASE_ROOT: gh
         REPO_OUT: pushme
