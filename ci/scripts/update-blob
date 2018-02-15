@@ -17,8 +17,8 @@ cat <<EOF >config/private.yml
 blobstore:
   provider: s3
   options:
-    access_key_id: ${AWS_ACCESS_KEY:?required}
-    secret_access_key: ${AWS_SECRET_KEY:?required}
+    access_key_id: ${S3_ACCESS_KEY:?required}
+    secret_access_key: ${S3_SECRET_KEY:?required}
 EOF
 
 blobs_to_remove=$(spruce json config/blobs.yml | jq -r "keys[] | select(test(\"${BLOB_CLEANUP}\"))")
