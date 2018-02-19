@@ -45,7 +45,7 @@ resources:
   source:
     driver: gcs
     bucket: kubo-pipeline-store
-    key: docker-boshrelease-version
+    key: versions/docker-boshrelease-version
     json_key: ((gcs-json-key))
     initial_version: 31.0.1
 
