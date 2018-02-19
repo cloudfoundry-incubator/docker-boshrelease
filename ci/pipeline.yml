@@ -115,6 +115,7 @@ jobs:
   plan:
   - do:
     - aggregate:
+      - get: git-docker-boshrelease
       - get: git-pull-requests
         version: every
         trigger: true
