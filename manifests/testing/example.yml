@@ -1,0 +1,76 @@
+---
+# name: containers-example
+name: docker-i8n-tests
+
+instance_groups:
+- name: docker
+  azs: [z1]
+  instances: 1
+  persistent_disk: 65536
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: docker
+    release: docker
+    properties:
+      tcp_address: 0.0.0.0
+      tcp_port: 2376
+      tls_cacert: "((docker-tls.ca))"
+      tls_cert: "((docker-tls.certificate))"
+      tls_key: "((docker-tls.private_key))"
+      log_level: debug
+
+- name: tests
+  azs: [z1]
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  lifecycle: errand
+  instances: 1
+  jobs:
+  - name: sanity-tests
+    release: docker
+    properties:
+      tls_cert: "((sanity-tests-tls.certificate))"
+      tls_key: "((sanity-tests-tls.private_key))"
+
+variables:
+- name: docker-ca
+  type: certificate
+  options:
+    is_ca: true
+    common_name: dockerCA
+- name: docker-tls
+  type: certificate
+  options:
+    ca: docker-ca
+    common_name: docker
+    extended_key_usage:
+    - server_auth
+
+- name: sanity-tests-tls
+  type: certificate
+  options:
+    ca: docker-ca
+    common_name: sanity.test
+    extended_key_usage:
+    - client_auth
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 32
+  serial: false
+
+releases:
+- name: docker
+  version: 31.0.1
+  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v31.0.1/docker-31.0.1.tgz
+  sha1: 550ab08cb6dcd113ab5182d84fbcb09d966a612a
