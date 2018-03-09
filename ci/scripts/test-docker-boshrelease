@@ -56,7 +56,7 @@ function main() {
   upload_stemcell
   create_ops_files
   deploy
-  if [ -z "${RUN_TESTS}" ]; then
+  if [ ! -z "${RUN_TESTS}" ]; then
     run_tests
   fi
   exit 0
