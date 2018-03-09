@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+# Setting Go variable
+export GOROOT=/var/vcap/packages/golang
+export PATH=${GOROOT}/bin:${PATH}
+export GOPATH=/var/vcap/packages/sanity-tests/
+
+# Setting the docker binaries in path
+export DOCKER_BASE_PATH=/var/vcap/packages/docker
+export PATH=${DOCKER_BASE_PATH}/bin:${PATH}
+
+<% docker = link('docker') %>
+export DOCKER_HOST="tcp://<%= docker.instances[0].address %>:<%= docker.p('tcp_port') %>"
+export DOCKER_CERT_PATH="/var/vcap/jobs/sanity-tests/config"
+
+echo "Running sanity tests..."
+pushd /var/vcap/packages/sanity-tests/src/tests
+go test -v tests/cli

@@ -1,0 +1,26 @@
+---
+name: sanity-tests
+
+templates:
+  bin/run: bin/run
+  config/ca.pem.erb: config/ca.pem
+  config/cert.pem.erb: config/cert.pem
+  config/key.pem.erb: config/key.pem
+
+consumes:
+- name: docker
+  type: docker-tcp
+  properties:
+  - tcp_port
+  - tls_cacert
+
+packages:
+  - sanity-tests
+  - golang
+  - docker
+
+properties:
+  tls_cert:
+    description: "TLS certificate file"
+  tls_key:
+    description: "TLS key file"
