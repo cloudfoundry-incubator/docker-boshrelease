@@ -20,6 +20,7 @@ params:
   BOSH_DEPLOYMENT:
   BOSH_ENVIRONMENT:
   MANIFEST_PATH:
+  RUN_TESTS:
 
 run:
   path: ./git-docker-boshrelease/ci/scripts/test-docker-boshrelease

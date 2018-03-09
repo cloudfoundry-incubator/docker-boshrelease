@@ -102,6 +102,14 @@ jobs:
         <<: *test_docker_boshrelease_params
         BOSH_DEPLOYMENT: docker-swarm-testflight
         MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
+    - task: run-integration-tests
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-integration-tests
+        MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
+        RUN_TESTS: true
+
     on_failure:
       put: slack-notification
       params:

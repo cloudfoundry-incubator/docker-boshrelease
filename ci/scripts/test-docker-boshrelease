@@ -38,6 +38,12 @@ function deploy() {
     -o /tmp/update_manifest_name.yml
 }
 
+function run_tests() {
+  echo "Run tests..."
+  bosh -d "${BOSH_DEPLOYMENT}" \
+    run-errand tests
+}
+
 function cleanup() {
   echo "Cleanup bosh director..."
   bosh delete-deployment -n --force
@@ -50,6 +56,9 @@ function main() {
   upload_stemcell
   create_ops_files
   deploy
+  if [ -z "${RUN_TESTS}" ]; then
+    run_tests
+  fi
   exit 0
 }
 
