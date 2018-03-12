@@ -1,6 +1,5 @@
 ---
-# name: containers-example
-name: docker-i8n-tests
+name: integration-tests
 
 instance_groups:
 - name: docker
@@ -20,6 +19,18 @@ instance_groups:
       tls_cert: "((docker-tls.certificate))"
       tls_key: "((docker-tls.private_key))"
       log_level: debug
+      insecure_registries:
+        - localhost:5000
+  - name: containers
+    release: docker
+    properties:
+      containers:
+        - name: registry
+          image: "registry"
+          bind_ports:
+            - "5000:5000"
+          bind_volumes:
+            - "/var/lib/registry"
 
 - name: tests
   azs: [z1]

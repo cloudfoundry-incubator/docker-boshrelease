@@ -23,10 +23,10 @@ var _ = Describe("Docker CLI Image Operations", func() {
 	})
 
 	AfterEach(func() {
-		runner.DeleteAllImages()
+		runner.Cleanup()
 	})
 
-	Context("Docker CLI should be able to perform image operations", func() {
+	Context("Docker CLI should be able to perform simple image operations", func() {
 		It("should be able to pull images from an external registry", func() {
 			s := runner.RunDockerCommand("pull", "docker.io/library/alpine")
 			Eventually(s, "120s").Should(gexec.Exit(0))
@@ -54,5 +54,37 @@ var _ = Describe("Docker CLI Image Operations", func() {
 			Eventually(s, "120s").Should(gexec.Exit(0))
 			Eventually(s).Should(gbytes.Say("Untagged: alpine"))
 		})
+	})
+
+	Context("Docker CLI should be able to work with a private registry", func() {
+		It("should be able to pull/push from/to a private registry", func() {
+			By("pull an image locally")
+			s := runner.RunDockerCommand("pull", "docker.io/library/hello-world")
+			Eventually(s, "120s").Should(gexec.Exit(0))
+
+			By("tag the image")
+			s = runner.RunDockerCommand("image", "tag", "hello-world", "localhost:5000/hello-world")
+			Eventually(s, "20s").Should(gexec.Exit(0))
+
+			By("push to the local registry")
+			s = runner.RunDockerCommand("push", "localhost:5000/hello-world")
+			Eventually(s, "120s").Should(gexec.Exit(0))
+
+			By("pull from the local registry", func() {
+				By("remove the pushed image")
+				s = runner.RunDockerCommand("rmi", "localhost:5000/hello-world")
+				Eventually(s, "120s").Should(gexec.Exit(0))
+
+				By("pull the image from the registry")
+				s = runner.RunDockerCommand("pull", "localhost:5000/hello-world")
+				Eventually(s, "120s").Should(gexec.Exit(0))
+
+				By("images list contains that image")
+				s = runner.RunDockerCommand("images")
+				Eventually(s, "20s").Should(gexec.Exit(0))
+				Eventually(s).Should(gbytes.Say("localhost:5000/hello-world"))
+			})
+		})
+
 	})
 })

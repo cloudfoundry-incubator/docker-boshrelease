@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"encoding/json"
 	"fmt"
 	"os/exec"
 	"path/filepath"
@@ -11,6 +12,16 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
+
+type ContainerSummary struct {
+	id   string
+	name string
+}
+
+type ImgSummary struct {
+	id         string
+	repository string
+}
 
 // DockerRunner ...
 type DockerRunner struct {
@@ -50,16 +61,54 @@ func (runner DockerRunner) RunDockerCommand(args ...string) *gexec.Session {
 	return session
 }
 
-func (runner DockerRunner) DeleteAllImages() {
-	s := runner.RunDockerCommand("images", "--quiet")
-	Eventually(s, "15s").Should(gexec.Exit(0))
+func (runner DockerRunner) LoadImages() {
 
-	ids := strings.Split(string(s.Out.Contents()), "\n")
-	for _, id := range ids {
-		fmt.Println(id)
-		if id != "" {
-			s = runner.RunDockerCommand("rmi", id)
-			Eventually(s, "30s").Should(gexec.Exit(0))
+	s := runner.RunDockerCommand("pull", "docker.io/library/hello-world")
+	Eventually(s, "120s").Should(gexec.Exit(0))
+
+	s = runner.RunDockerCommand("pull", "docker.io/library/alpine")
+	Eventually(s, "120s").Should(gexec.Exit(0))
+}
+
+func (runner DockerRunner) Cleanup() {
+
+	// Clean up containers
+	s := runner.RunDockerCommand("ps", "-a", "--format", `{"id":{{json .ID}},"name":{{json .Names}}}`)
+	Eventually(s, "15s").Should(gexec.Exit(0))
+	containers := strings.Split(string(s.Out.Contents()), "\n")
+	for _, container := range containers {
+		if container != "" {
+			c := unmarshalContainer(container)
+			if c != nil && c.name != "registry" {
+				s = runner.RunDockerCommand("rm", c.id)
+				Eventually(s, "30s").Should(gexec.Exit(0))
+			}
 		}
 	}
+
+	// Clean up images
+	s = runner.RunDockerCommand("images", "--format", `{"id":{{json .ID}},"repository":{{json .Repository}}}`)
+	Eventually(s, "15s").Should(gexec.Exit(0))
+	images := strings.Split(string(s.Out.Contents()), "\n")
+	for _, image := range images {
+		if image != "" {
+			i := unmarshalImage(image)
+			if i != nil && i.repository != "registry" {
+				s = runner.RunDockerCommand("rmi", i.repository)
+				Eventually(s, "30s").Should(gexec.Exit(0))
+			}
+		}
+	}
+}
+
+func unmarshalContainer(data string) *ContainerSummary {
+	var c *ContainerSummary
+	_ = json.Unmarshal([]byte(data), c)
+	return c
+}
+
+func unmarshalImage(data string) *ImgSummary {
+	var img *ImgSummary
+	_ = json.Unmarshal([]byte(data), img)
+	return img
 }
