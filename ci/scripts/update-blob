@@ -2,60 +2,30 @@
 
 set -e
 
-: ${BLOB_DIR:?required}
-: ${BLOB_NAME:?required}
-: ${BLOB_BINARY:?required}
-: ${BLOB_CLEANUP:?required}
-: ${BLOB_DESTINATION:?required}
-
-VERSION=$(cat ${BLOB_DIR}/version)
+BLOB_BINARY=$1
+BLOB_DESTINATION=${2:?Blob Destination required}
+BLOB_PREFIX=$3
+REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.."; pwd)
 
 pushd ${REPO_ROOT:?required}
 
-cat <<EOF >config/private.yml
+cat <<EOF > "config/private.yml"
 ---
 blobstore:
   provider: s3
   options:
-    access_key_id: ${S3_ACCESS_KEY:?required}
-    secret_access_key: ${S3_SECRET_KEY:?required}
+    access_key_id: ${ACCESS_KEY_ID:?required}
+    secret_access_key: ${SECRET_ACCESS_KEY:?required}
 EOF
 
-blobs_to_remove=$(spruce json config/blobs.yml | jq -r "keys[] | select(test(\"${BLOB_CLEANUP}\"))")
+blobs_to_remove=$(spruce json config/blobs.yml | jq -r "keys[] | select(test(\"${BLOB_PREFIX}\"))")
 if [[ ! -z $blobs_to_remove ]]; then
-  echo "$blobs_to_remove" | xargs -L1 bosh2 remove-blob
+  echo "$blobs_to_remove" | xargs -L1 bosh remove-blob
 fi
 
 # expand ${VERSION} env var into file path
 eval "blob_destination=${BLOB_DESTINATION}"
-bosh2 add-blob ../${BLOB_DIR}/${BLOB_BINARY} "${blob_destination}"
-bosh2 -n upload-blobs
+bosh add-blob ${BLOB_BINARY} "${blob_destination}"
+bosh -n upload-blobs
 rm config/private.yml
 popd
-
-if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
-  pushd ${REPO_ROOT}
-  cat <<EOF >>ci/release_notes.md
-
-# ${BLOB_NAME}
-Bumped ${BLOB_URL} to v${VERSION}
-EOF
-  popd
-
-  # GIT!
-  if [[ -z $(git config --global user.email) ]]; then
-    git config --global user.email "ci@starkandwayne.com"
-  fi
-  if [[ -z $(git config --global user.name) ]]; then
-    git config --global user.name "CI Bot"
-  fi
-
-  (cd ${REPO_ROOT}
-   git merge --no-edit ${BRANCH}
-   git add -A
-   git status
-   git commit -m "Bumped ${BLOB_NAME} to v${VERSION}")
-fi
-
-# so that future steps in the pipeline can push our changes
-cp -a ${REPO_ROOT} ${REPO_OUT}

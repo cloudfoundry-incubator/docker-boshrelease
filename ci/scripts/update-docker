@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -xe
+
+DOCKER_REPO_ROOT="git-docker-ce-release"
+DOCKER_VERSION=$(cat ${DOCKER_REPO_ROOT}/version)
+REPO_ROOT="git-docker-boshrelease"
+REPO_OUT="git-docker-boshrelease-output"
+
+wget https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz -O ${DOCKER_REPO_ROOT}/docker-${DOCKER_VERSION}.tgz
+
+blob_binary_path="$(pwd)/${DOCKER_REPO_ROOT}/docker-${DOCKER_VERSION}.tgz"
+${REPO_ROOT}/ci/scripts/update-blob $blob_binary_path "docker/docker-${DOCKER_VERSION}.tgz" "docker/docker"
+
+if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
+  pushd ${REPO_ROOT}
+  cat <<EOF >>ci/release_notes.md
+
+# ${BLOB_NAME}
+Bumped Docker to v${DOCKER_VERSION}
+EOF
+  popd
+  # GIT!
+  if [[ -z $(git config --global user.email) ]]; then
+    git config --global user.email "cfcr+cibot@pivotal.io"
+  fi
+  if [[ -z $(git config --global user.name) ]]; then
+    git config --global user.name "CFCR CI BOT"
+  fi
+
+  (cd ${REPO_ROOT}
+   git add -A
+   git status
+   git commit -m "Bumped Docker to v${DOCKER_VERSION}")
+fi
+
+# so that future steps in the pipeline can push our changes
+cp -a ${REPO_ROOT} ${REPO_OUT}

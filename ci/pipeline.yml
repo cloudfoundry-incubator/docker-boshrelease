@@ -7,6 +7,7 @@ groups:
   - ship-it
   - bump-major
   - bump-minor
+  - bump-docker-components
 
 resource_types:
 - name: slack-notification
@@ -23,6 +24,12 @@ resource_types:
   type: docker-image
   source:
     repository: frodenas/gcs-resource
+
+- name: github-release-with-version-filtering
+  type: docker-image
+  source:
+    repository: pcfkubo/github-release-resource
+    tag: filter-version
 
 resources:
 - name: git-docker-boshrelease
@@ -72,6 +79,14 @@ resources:
   type: bosh-io-stemcell
   source:
     name: bosh-google-kvm-ubuntu-trusty-go_agent
+
+- name: git-docker-ce-release
+  type: github-release-with-version-filtering
+  source:
+    owner: docker
+    repository: docker-ce
+    version_filter: "< 18.0.0"
+    access_token: ((github-token-key))
 
 jobs:
 - name: test-docker-boshrelease
@@ -276,3 +291,19 @@ jobs:
         channel: '#docker-boshrelease'
         text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
           Concourse Failure! :sad_panda:> docker-boshrelease: shipit job failed'
+
+- name: bump-docker-components
+  plan:
+  - get: git-docker-boshrelease
+  - get: git-docker-ce-release
+    trigger: true
+    params:
+      include_source_tarball: true
+  - task: update-docker
+    file: git-docker-boshrelease/ci/tasks/bump-docker-version.yml
+    params:
+      ACCESS_KEY_ID: ((gcs-access-key-id))
+      SECRET_ACCESS_KEY: ((gcs-secret-access-key))
+  - put: git-docker-boshrelease
+    params:
+      repository: git-docker-boshrelease-output
