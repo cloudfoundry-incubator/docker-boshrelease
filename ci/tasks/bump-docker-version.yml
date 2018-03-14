@@ -16,3 +16,6 @@ params:
 
 run:
   path: ./git-docker-boshrelease/ci/scripts/update-docker
+
+outputs:
+- name: git-docker-boshrelease-output
