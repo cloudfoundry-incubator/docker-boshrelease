@@ -1,6 +1,6 @@
 ---
 name: swarm
 dependencies:
-  - golang
+  - golang-1.10-linux
 files:
   - github.com/docker/swarm/**/*

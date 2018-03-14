@@ -1,8 +1,6 @@
 set -eux
 
-# Set Golang dependency
-export GOROOT=$(readlink -nf /var/vcap/packages/golang)
-export PATH=${GOROOT}/bin:${PATH}
+source /var/vcap/packages/golang-1.10-linux/bosh/compile.env
 
 mkdir -p ${BOSH_INSTALL_TARGET}/src/tests
 cp -a ${BOSH_COMPILE_TARGET}/tests/* ${BOSH_INSTALL_TARGET}/src/tests
