@@ -12,9 +12,6 @@ case $1 in
   start)
     pid_guard ${DOCKER_PID_FILE} ${JOB_NAME}
 
-    # Install aufs-tools
-    dpkg -i /var/vcap/packages/docker/aufs-tools_20120411-3_amd64.deb
-
     # Create docker data store
     if [ ! -d ${DOCKER_STORE_DIR}/docker ]; then
       mkdir -p ${DOCKER_STORE_DIR}/docker
