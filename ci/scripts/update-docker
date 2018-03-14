@@ -35,4 +35,4 @@ EOF
 fi
 
 # so that future steps in the pipeline can push our changes
-cp -a ${REPO_ROOT} ${REPO_OUT}
+cp -r ${REPO_ROOT}/. ${REPO_OUT}
