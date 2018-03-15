@@ -53,9 +53,6 @@ properties:
     description: "Container default gateway IPv6 address"
   default_ulimits:
     description: "Array of default ulimits for containers"
-  disable_legacy_registry:
-    description: "Do not contact legacy registries"
-    default: false
   dns_servers:
     description: "Array of DNS servers to be used"
   dns_options:
