@@ -30,6 +30,6 @@ bosh -n upload-blobs
 rm config/private.yml
 
 find packages/ -name "spec" | while read file; do
-  sed -i '' "s|${BLOB_PREFIX}-.*|${BLOB_DESTINATION}|g" $file
+  sed -i "s|${BLOB_PREFIX}-.*|${BLOB_DESTINATION}|g" $file
 done
 popd
