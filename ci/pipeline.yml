@@ -37,14 +37,14 @@ resources:
   source:
     uri: git@github.com:cloudfoundry-incubator/docker-boshrelease
     branch: master
-    private_key: ((git-ssh-key))
+    private_key: ((git-ssh-key.private_key))
 
 - name: git-pull-requests
   type: pull-request
   source:
     repo: cloudfoundry-incubator/docker-boshrelease
     base: master
-    private_key: ((git-ssh-key))
+    private_key: ((git-ssh-key.private_key))
     access_token: ((github-token-key))
 
 - name: version
