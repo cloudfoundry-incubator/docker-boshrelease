@@ -170,6 +170,13 @@ jobs:
         <<: *test_docker_boshrelease_params
         BOSH_DEPLOYMENT: docker-swarm-testflight-pr
         MANIFEST_PATH: git-pull-requests/manifests/swarm/docker-swarm.yml
+    - task: run-integration-tests
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-integration-tests
+        MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
+        RUN_TESTS: true
     - task: pr-success-message
       file: git-docker-boshrelease/ci/tasks/configure-pr-status.yml
     on_success:
