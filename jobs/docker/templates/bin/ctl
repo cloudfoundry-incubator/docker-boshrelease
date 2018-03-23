@@ -102,6 +102,9 @@ case $1 in
     # Stop Docker daemon
     echo -n "Stopping docker daemon..."
     kill_and_wait ${DOCKER_PID_FILE}
+    echo "DEBUG: Contents of /proc/mounts after stopping docker"
+    cat /proc/mounts
+
     if grep -qs '/var/vcap/store/docker/docker/overlay' /proc/mounts; then
       umount /var/vcap/store/docker/docker/overlay
     fi
