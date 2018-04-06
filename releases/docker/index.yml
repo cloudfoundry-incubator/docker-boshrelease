@@ -3,6 +3,8 @@ builds:
     version: 30.1.1
   1fb75983-9be4-4134-6c53-cc382f406947:
     version: 30.0.0-rc.3
+  33ba6373-2fd4-422e-43f1-16a8da738c12:
+    version: 31.1.0
   3429046d-58c2-49d7-ad70-41eee7e95ee6:
     version: "27"
   38d605cc-33e4-4828-5620-6f8112a2373b:
