@@ -74,8 +74,6 @@ properties:
   ip_masq:
     description: "Enable IP masquerading"
     default: true
-  bip:
-    description: "Bridge IP in CIDR form. Example: 172.17.0.1/24. If set, this value will be used for the docker0 bridge '--bip' argument."
   iptables:
     description: "Enable Docker's addition of iptables rules"
     default: true
