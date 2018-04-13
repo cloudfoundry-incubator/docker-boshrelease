@@ -56,6 +56,6 @@ update:
 
 releases:
 - name: docker
-  version: 31.1.0
-  url: https://github.com/cloudfoundry-incubator/docker-boshrelease/releases/download/v31.1.0/docker-31.1.0.tgz
-  sha1: 129e20c9c749e3f1cbdb1f17d52de562f3fef3ad
+  version: 32.0.0
+  url: https://github.com/cloudfoundry-incubator/docker-boshrelease/releases/download/v32.0.0/docker-32.0.0.tgz
+  sha1: f192296243e68150ae66656fc9134a2b2a023184
