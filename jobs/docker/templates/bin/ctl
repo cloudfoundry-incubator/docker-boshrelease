@@ -57,7 +57,7 @@ case $1 in
         ${DOCKER_DNS_SEARCH:-} \
         ${DOCKER_EXEC_OPTIONS:-} \
         --group vcap \
-        --graph ${DOCKER_STORE_DIR}/docker \
+        --data-root ${DOCKER_STORE_DIR}/docker \
         --host unix://${DOCKER_PID_DIR}/docker.sock \
         ${DOCKER_ICC} \
         ${DOCKER_INSECURE_REGISTRIES:-} \
