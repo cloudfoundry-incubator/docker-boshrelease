@@ -45,7 +45,7 @@ case $1 in
     fi
 
     # Start Docker daemon
-    exec dockerd \
+    nohup dockerd \
         ${DOCKER_BRIDGE:-} \
         ${DOCKER_DEBUG} \
         ${DOCKER_DEFAULT_GATEWAY:-} \
@@ -83,7 +83,18 @@ case $1 in
         ${DOCKER_TLS_KEY} \
         ${DOCKER_USERLAND_PROXY} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
-        2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
+        2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log \
+        &
+
+    while [ ! -S ${DOCKER_PID_DIR}/docker.sock ];do
+      sleep .5
+    done
+
+    # Log in to any registries
+<% p('logins', []).each do |login| %>
+    /var/vcap/packages/docker/bin/docker -H unix://${DOCKER_PID_DIR}/docker.sock login \
+      --username <%= login['username'] %> --password <%= login['password'] %> <%= login['endpoint'] %>
+<% end %>
     ;;
 
   stop)

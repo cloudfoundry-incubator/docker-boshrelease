@@ -127,3 +127,10 @@ properties:
   store_dir:
     description: "Path to use as the root of the Docker runtime"
     default: "/var/vcap/store"
+
+  logins:
+    description: "List of hashes containing registries to log in to and their credentials"
+    example: |
+      - endpoint: https://my.private.registry.local/
+        username: foo
+        password: bar
