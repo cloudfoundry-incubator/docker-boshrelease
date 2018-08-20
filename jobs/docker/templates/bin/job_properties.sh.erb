@@ -140,6 +140,9 @@ export DOCKER_REGISTRY_MIRRORS="<%= registry_mirrors.map { |registry_mirror| "--
 # Enable selinux support
 export DOCKER_SELINUX_ENABLED="--selinux-enabled=<%= p('selinux_enable') %>"
 
+# Enable shared_mounts
+export DOCKER_SHARED_MOUNTS_ENABLE=<%= p('shared_mounts_enable') %>
+
 <% if_p('storage_driver') do |storage_driver| %>
 # Use a specific storage driver
 export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"

@@ -100,6 +100,9 @@ properties:
     description: "Use a specific storage driver"
   storage_options:
     description: "Array of storage driver options"
+  shared_mounts_enable:
+    description: "Enable shared_mounts"
+    default: false
 
   userland_proxy:
     description: "Use userland proxy for loopback traffic"
