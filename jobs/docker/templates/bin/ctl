@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e # exit immediately if a simple command exits with a non-zero status
+set -u # exit when using non-initialized environment variable
 
 # Setup common env vars and folders
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
