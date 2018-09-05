@@ -57,7 +57,7 @@ case $1 in
         ${DOCKER_DNS_SEARCH:-} \
         ${DOCKER_EXEC_OPTIONS:-} \
         --group vcap \
-        --graph ${DOCKER_STORE_DIR}/docker \
+        --data-root ${DOCKER_STORE_DIR}/docker \
         --host unix://${DOCKER_PID_DIR}/docker.sock \
         ${DOCKER_ICC} \
         ${DOCKER_INSECURE_REGISTRIES:-} \
@@ -82,7 +82,6 @@ case $1 in
         ${DOCKER_TLS_CERT} \
         ${DOCKER_TLS_KEY} \
         ${DOCKER_USERLAND_PROXY} \
-        ${DOCKER_BIP:-} \
         >>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${DOCKER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
@@ -105,8 +104,17 @@ case $1 in
     echo "DEBUG: Contents of /proc/mounts after stopping docker"
     cat /proc/mounts
 
-    if grep -qs '/var/vcap/store/docker/docker/overlay' /proc/mounts; then
+    mounts=$(cat /proc/mounts | grep "/var/vcap/store/docker/docker/overlay/.*" | awk '{print $2}')
+    for mount in $mounts; do
+      echo "Unmounting $mount"
+      umount $mount
+    done
+
+    if [[ -d /var/vcap/store/docker/docker/overlay ]]; then
+      set +e
+      echo "Unmounting /var/vcap/store/docker/docker/overlay"
       umount /var/vcap/store/docker/docker/overlay
+      set -e
     fi
     ;;
 

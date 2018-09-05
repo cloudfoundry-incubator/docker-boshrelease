@@ -160,13 +160,14 @@ export DOCKER_ULIMIT_NOFILE=<%= p('ulimit.nofile') %>
 export DOCKER_VM_MAX_MAP_COUNT=<%= p('vm.max_map_count') %>
 
 <% if p('flannel', false) %>
-source /run/flannel/subnet.env
-export DOCKER_BIP="--bip=${FLANNEL_SUBNET}"
-export DOCKER_MTU="--mtu=${FLANNEL_MTU}"
-<% end %>
-
-<% if_p('bip') do |bip| %>
-export DOCKER_BIP="--bip=<%= bip %>"
+ source /run/flannel/subnet.env
+ export DOCKER_MTU="--mtu=${FLANNEL_MTU}"
+  # Attach containers to a network bridge
+  <% if_p('bridge') do |bridge| %>
+    export DOCKER_BRIDGE="--bridge=<%= p('bridge') %>"
+    export DOCKER_BRIDGE_NAME=<%= p('bridge') %>
+    export DOCKER_BRIDGE_CIDR="${FLANNEL_SUBNET}"
+  <% end %>
 <% end %>
 
 # Proxy configuration
