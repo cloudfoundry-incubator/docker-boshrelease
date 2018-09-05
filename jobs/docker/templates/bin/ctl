@@ -51,7 +51,6 @@ case $1 in
         ${DOCKER_DEFAULT_GATEWAY:-} \
         ${DOCKER_DEFAULT_GATEWAY_V6:-} \
         ${DOCKER_DEFAULT_ULIMITS:-} \
-        ${DOCKER_DISABLE_LEGACY_REGISTRY} \
         ${DOCKER_DNS_SERVERS:-} \
         ${DOCKER_DNS_OPTIONS:-} \
         ${DOCKER_DNS_SEARCH:-} \
