@@ -44,6 +44,9 @@ case $1 in
         set -e
     fi
 
+    # Enable shared_mounts
+    [ "${DOCKER_SHARED_MOUNTS_ENABLE}" = "true" ] && mount --make-shared /
+
     # Start Docker daemon
     exec dockerd \
         ${DOCKER_BRIDGE:-} \
