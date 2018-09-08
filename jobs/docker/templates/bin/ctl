@@ -35,7 +35,7 @@ case $1 in
     ${JOB_DIR}/bin/setup-user-env
 
     # Create network bridge
-    if [ ! -z ${DOCKER_BRIDGE_NAME} ]; then
+    if [ -n "${DOCKER_BRIDGE_NAME:-}" ]; then
         set +e
         ip link delete docker0
         ip link delete ${DOCKER_BRIDGE_NAME}
