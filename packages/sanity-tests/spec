@@ -1,6 +1,6 @@
 ---
 name: sanity-tests
 dependencies:
-  - golang-1.10-linux
+  - golang-1.11-linux
 files:
 - tests/**/*

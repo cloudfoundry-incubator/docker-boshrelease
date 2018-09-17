@@ -2,7 +2,7 @@
 
 set -eu
 
-source /var/vcap/packages/golang-1.10-linux/bosh/runtime.env
+source /var/vcap/packages/golang-1.11-linux/bosh/runtime.env
 
 # Setting the docker binaries in path
 export DOCKER_BASE_PATH=/var/vcap/packages/docker
