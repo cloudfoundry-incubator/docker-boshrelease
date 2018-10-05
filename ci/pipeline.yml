@@ -75,10 +75,10 @@ resources:
     json_key: ((gcs-json-key))
     regexp: docker-(.*).tgz
 
-- name: ubuntu-trusty-stemcell-gcp
+- name: ubuntu-xenial-stemcell-gcp
   type: bosh-io-stemcell
   source:
-    name: bosh-google-kvm-ubuntu-trusty-go_agent
+    name: bosh-google-kvm-ubuntu-xenial-go_agent
 
 - name: git-docker-ce-release
   type: github-release-with-version-filtering
@@ -98,7 +98,7 @@ jobs:
       - get: git-docker-boshrelease
         trigger: true
       - get: stemcell
-        resource: ubuntu-trusty-stemcell-gcp
+        resource: ubuntu-xenial-stemcell-gcp
     - task: test-docker-boshrelease
       file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
       params: &test_docker_boshrelease_params
@@ -124,6 +124,12 @@ jobs:
         BOSH_DEPLOYMENT: docker-integration-tests
         MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
         RUN_TESTS: true
+    - task: test-minimal-deployment
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-minimal-tests
+        MANIFEST_PATH: git-docker-boshrelease/manifests/testing/minimal.yml
 
     on_failure:
       put: slack-notification
@@ -143,7 +149,7 @@ jobs:
         version: every
         trigger: true
       - get: stemcell
-        resource: ubuntu-trusty-stemcell-gcp
+        resource: ubuntu-xenial-stemcell-gcp
     - put: git-pull-requests
       params:
         path: git-pull-requests
