@@ -70,6 +70,7 @@ case $1 in
         ${DOCKER_IPTABLES} \
         ${DOCKER_IPV6} \
         ${DOCKER_LABELS:-} \
+        ${DOCKER_LIVE_RESTORE:-} \
         ${DOCKER_LOG_LEVEL} \
         ${DOCKER_LOG_DRIVER:-} \
         ${DOCKER_LOG_OPTIONS:-} \

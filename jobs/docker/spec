@@ -82,6 +82,9 @@ properties:
     default: false
   labels:
     description: "Array of key=value labels for the daemon"
+  live_restore:
+    description: "Keep containers running if the daemon becomes unavailable"
+    default: false
   log_level:
     description: "Set the logging level (debug, info, warn, error, fatal)"
     default: "info"

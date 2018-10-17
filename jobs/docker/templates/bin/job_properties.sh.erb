@@ -114,6 +114,11 @@ export DOCKER_IPV6="--ipv6=<%= p('ipv6') %>"
 export DOCKER_LABELS="<%= labels.map { |label| "--label=#{label}" }.join(' ') %>"
 <% end %>
 
+# Enable the live-restore flag
+<% if p('live_restore') %>
+export DOCKER_LIVE_RESTORE="--live-restore"
+<% end %>
+
 # Set the logging level
 export DOCKER_LOG_LEVEL="--log-level=<%= p('log_level') %>"
 
