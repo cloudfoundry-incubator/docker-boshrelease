@@ -85,7 +85,7 @@ resources:
   source:
     owner: docker
     repository: docker-ce
-    version_filter: "< 18.0.0"
+    version_filter: "< 18.07.0"
     access_token: ((github-token-key))
 
 jobs:
