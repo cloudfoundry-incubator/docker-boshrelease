@@ -12,26 +12,14 @@ fi
 
 (
   cd /sys/fs/cgroup
-  for sys in $(awk '!/^#/ { if ($4 == 1) print $1 }' /proc/cgroups); do
-    mkdir -p $sys
+  for sys in $(awk -F: '{print $2}' /proc/self/cgroup); do
+    mkdir -p $sys/name=/
     if ! mountpoint -q $sys; then
-      if ! mount -n -t cgroup -o $sys cgroup $sys; then
-        rmdir $sys || true
+      if ! mount -n -t cgroup -o $sys cgroup $sys/name=/; then
+        rmdir $sys/name=/ || true
       fi
     fi
   done
-  
-  if grep -q warden /var/vcap/bosh/etc/infrastructure; then
-    for sys in $(printf "systemd\nunified\ncpu\ncpuacct\nnet_cls\nnet_prio"); do
-      mkdir -p $sys
-    done
-    mount -t cgroup -o rw,nosuid,nodev,noexec,relatime,xattr,name=systemd cgroup /sys/fs/cgroup/systemd
-    mount -t cgroup2 -o rw,nosuid,nodev,noexec,relatime,nsdelegate  cgroup /sys/fs/cgroup/unified
-    mount -t cgroup -o rw,nosuid,nodev,noexec,relatime,cpu,cpuacct cgroup /sys/fs/cgroup/cpu
-    mount -t cgroup -o rw,nosuid,nodev,noexec,relatime,cpu,cpuacct cgroup /sys/fs/cgroup/cpuacct
-    mount -t cgroup -o rw,nosuid,nodev,noexec,relatime,net_cls,net_prio cgroup /sys/fs/cgroup/net_cls
-    mount -t cgroup -o rw,nosuid,nodev,noexec,relatime,net_cls,net_prio cgroup /sys/fs/cgroup/net_prio
-  fi
 )
 
 exit 0
