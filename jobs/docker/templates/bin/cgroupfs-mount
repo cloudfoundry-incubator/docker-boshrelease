@@ -12,14 +12,25 @@ fi
 
 (
   cd /sys/fs/cgroup
-  for sys in $(awk -F: '{print $2}' /proc/self/cgroup); do
-    mkdir -p $sys/name=/
-    if ! mountpoint -q $sys; then
-      if ! mount -n -t cgroup -o $sys cgroup $sys/name=/; then
-        rmdir $sys/name=/ || true
+  if grep -q warden /var/vcap/bosh/etc/infrastructure; then
+    for sys in $(awk -F: '{print $2}' /proc/self/cgroup); do
+      mkdir -p $sys/name=/
+      if ! mountpoint -q $sys; then
+        if ! mount -n -t cgroup -o $sys cgroup $sys/name=/; then
+          rmdir $sys/name=/ || true
+        fi
       fi
-    fi
-  done
+    done
+  else
+    for sys in $(awk '!/^#/ { if ($4 == 1) print $1 }' /proc/cgroups); do
+      mkdir -p $sys
+      if ! mountpoint -q $sys; then
+        if ! mount -n -t cgroup -o $sys cgroup $sys; then
+          rmdir $sys || true
+        fi
+      fi
+    done
+  fi
 )
 
 exit 0
