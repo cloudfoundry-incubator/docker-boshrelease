@@ -18,7 +18,7 @@ resource_types:
 - name: pull-request
   type: docker-image
   source:
-    repository: jtarchie/pr
+    repository: teliaoss/github-pr-resource
 
 - name: gcs
   type: docker-image
@@ -42,9 +42,7 @@ resources:
 - name: git-pull-requests
   type: pull-request
   source:
-    repo: cloudfoundry-incubator/docker-boshrelease
-    base: master
-    private_key: ((git-ssh-key.private_key))
+    repository: cloudfoundry-incubator/docker-boshrelease
     access_token: ((github-token-key))
 
 - name: version
