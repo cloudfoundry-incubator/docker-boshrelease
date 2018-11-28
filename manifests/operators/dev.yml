@@ -4,3 +4,8 @@
   value:
     name: docker
     version: latest
+
+# required to run docker-boshrelease on bosh-lite
+- type: replace
+  path: /instance_groups/name=docker?/persistent_disk
+  value: 1024

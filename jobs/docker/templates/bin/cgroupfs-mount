@@ -14,10 +14,23 @@ fi
   cd /sys/fs/cgroup
   if grep -q warden /var/vcap/bosh/etc/infrastructure; then
     for sys in $(awk -F: '{print $2}' /proc/self/cgroup); do
-      mkdir -p $sys/name=/
-      if ! mountpoint -q $sys; then
-        if ! mount -n -t cgroup -o $sys cgroup $sys/name=/; then
-          rmdir $sys/name=/ || true
+      if [ $(echo $sys | grep -c ',') -gt 0 ]
+      then
+        for cgroup in $(echo $sys | sed 's/,/\n/'); do
+          mkdir -p $cgroup
+          if ! mountpoint -q $cgroup; then
+            if ! mount -n -t cgroup -o $sys cgroup $cgroup; then
+              rmdir $cgroup || true
+            fi
+          fi
+        done
+      else
+        cgroup=$(echo $sys | sed 's/name=//')
+        mkdir -p $cgroup
+        if ! mountpoint -q $sys; then
+          if ! mount -n -t cgroup -o $sys cgroup $cgroup; then
+            rmdir $cgroup || true
+          fi
         fi
       fi
     done
