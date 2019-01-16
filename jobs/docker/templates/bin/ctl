@@ -108,16 +108,23 @@ case $1 in
     echo "DEBUG: Contents of /proc/mounts after stopping docker"
     cat /proc/mounts
 
-    mounts=$(cat /proc/mounts | grep "/var/vcap/store/docker/docker/overlay/.*" | awk '{print $2}')
+    mounts=$(cat /proc/mounts | grep "/var/vcap/store/docker/docker/${DOCKER_STORAGE_DRIVER_VALUE}/.*" | awk '{print $2}')
     for mount in $mounts; do
       echo "Unmounting $mount"
       umount $mount
     done
 
-    if [[ -d /var/vcap/store/docker/docker/overlay ]]; then
+    if [[ -d /var/vcap/store/docker/docker/${DOCKER_STORAGE_DRIVER_VALUE} ]]; then
       set +e
-      echo "Unmounting /var/vcap/store/docker/docker/overlay"
-      umount /var/vcap/store/docker/docker/overlay
+      echo "Unmounting /var/vcap/store/docker/docker/${DOCKER_STORAGE_DRIVER_VALUE}"
+      umount /var/vcap/store/docker/docker/${DOCKER_STORAGE_DRIVER_VALUE}
+      set -e
+    fi
+
+    if [[ -d /var/vcap/store/docker/docker ]]; then
+      set +e
+      echo "Unmounting /var/vcap/store/docker/docker"
+      umount /var/vcap/store/docker/docker
       set -e
     fi
     ;;

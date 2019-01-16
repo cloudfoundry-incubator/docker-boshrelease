@@ -148,10 +148,9 @@ export DOCKER_SELINUX_ENABLED="--selinux-enabled=<%= p('selinux_enable') %>"
 # Enable shared_mounts
 export DOCKER_SHARED_MOUNTS_ENABLE=<%= p('shared_mounts_enable') %>
 
-<% if_p('storage_driver') do |storage_driver| %>
 # Use a specific storage driver
-export DOCKER_STORAGE_DRIVER="--storage-driver=<%= storage_driver %>"
-<% end %>
+export DOCKER_STORAGE_DRIVER="--storage-driver=<%= p('storage_driver') %>"
+export DOCKER_STORAGE_DRIVER_VALUE="<%= p('storage_driver') %>"
 
 <% if_p('storage_options') do |storage_options| %>
 # Storage driver options

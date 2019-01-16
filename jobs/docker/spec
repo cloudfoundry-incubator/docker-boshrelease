@@ -101,6 +101,7 @@ properties:
     default: false
   storage_driver:
     description: "Use a specific storage driver"
+    default: "overlay2"
   storage_options:
     description: "Array of storage driver options"
   shared_mounts_enable:
