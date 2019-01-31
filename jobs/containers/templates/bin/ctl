@@ -85,7 +85,7 @@ case $1 in
       "$(eval echo "\$${container_name}_command")" \
     "
     echo "$(date) Running Docker command with options: ${docker_options}"
-    ${DOCKER_COMMAND}  ${docker_options} \
+    eval echo ${docker_options} | xargs ${DOCKER_COMMAND}  \
         >>${LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
         2>>${LOG_DIR}/${OUTPUT_LABEL}.stderr.log
 
