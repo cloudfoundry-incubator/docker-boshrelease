@@ -8,6 +8,22 @@ source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
 export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
 export PATH="/var/vcap/packages/docker/bin:$PATH"
 
+function remove_docker_network_db(){
+    rm -f /var/vcap/data/docker/docker/network/files/local-kv.db
+}
+
+function create_network_bridge(){
+    if [ -n "${DOCKER_BRIDGE_NAME:-}" ]; then
+        set +e
+        ip link delete docker0
+        ip link delete ${DOCKER_BRIDGE_NAME}
+        /var/vcap/packages/docker/sbin/brctl addbr ${DOCKER_BRIDGE_NAME}
+        ip addr add ${DOCKER_BRIDGE_CIDR} dev ${DOCKER_BRIDGE_NAME}
+        ip link set dev ${DOCKER_BRIDGE_NAME} up
+        set -e
+    fi
+}
+
 case $1 in
 
   start)
@@ -34,16 +50,8 @@ case $1 in
     # Setup ssh env vars
     ${JOB_DIR}/bin/setup-user-env
 
-    # Create network bridge
-    if [ -n "${DOCKER_BRIDGE_NAME:-}" ]; then
-        set +e
-        ip link delete docker0
-        ip link delete ${DOCKER_BRIDGE_NAME}
-        /var/vcap/packages/docker/sbin/brctl addbr ${DOCKER_BRIDGE_NAME}
-        ip addr add ${DOCKER_BRIDGE_CIDR} dev ${DOCKER_BRIDGE_NAME}
-        ip link set dev ${DOCKER_BRIDGE_NAME} up
-        set -e
-    fi
+    create_network_bridge
+    remove_docker_network_db
 
     # Enable shared_mounts
     [ "${DOCKER_SHARED_MOUNTS_ENABLE}" = "true" ] && mount --make-shared /
