@@ -5,6 +5,8 @@ builds:
     version: 32.0.0
   1fb75983-9be4-4134-6c53-cc382f406947:
     version: 30.0.0-rc.3
+  2151ada9-4ad5-41da-6da3-a52ecf567937:
+    version: 35.1.1
   33ba6373-2fd4-422e-43f1-16a8da738c12:
     version: 31.1.0
   3429046d-58c2-49d7-ad70-41eee7e95ee6:
