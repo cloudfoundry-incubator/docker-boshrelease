@@ -9,7 +9,7 @@ export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
 export PATH="/var/vcap/packages/docker/bin:$PATH"
 
 function remove_docker_network_db(){
-    rm -f /var/vcap/data/docker/docker/network/files/local-kv.db
+    rm -f ${DOCKER_STORE_DIR}/docker/network/files/local-kv.db
 }
 
 function create_network_bridge(){
