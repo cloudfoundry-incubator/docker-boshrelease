@@ -36,6 +36,8 @@ case $1 in
     if [ ! -d ${DOCKER_STORE_DIR}/docker ]; then
       mkdir -p ${DOCKER_STORE_DIR}/docker
       chmod 770 ${DOCKER_STORE_DIR}/docker
+    else
+      remove_docker_network_db
     fi
 
     # Set ulimits
@@ -51,7 +53,6 @@ case $1 in
     ${JOB_DIR}/bin/setup-user-env
 
     create_network_bridge
-    remove_docker_network_db
 
     # Enable shared_mounts
     [ "${DOCKER_SHARED_MOUNTS_ENABLE}" = "true" ] && mount --make-shared /
