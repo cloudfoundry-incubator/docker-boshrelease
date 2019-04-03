@@ -8,10 +8,6 @@ source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'docker'
 export DOCKER_PID_FILE=${DOCKER_PID_DIR}/docker.pid
 export PATH="/var/vcap/packages/docker/bin:$PATH"
 
-function remove_docker_network_db(){
-    rm -f ${DOCKER_STORE_DIR}/docker/network/files/local-kv.db
-}
-
 function create_network_bridge(){
     if [ -n "${DOCKER_BRIDGE_NAME:-}" ]; then
         set +e
@@ -36,8 +32,6 @@ case $1 in
     if [ ! -d ${DOCKER_STORE_DIR}/docker ]; then
       mkdir -p ${DOCKER_STORE_DIR}/docker
       chmod 770 ${DOCKER_STORE_DIR}/docker
-    else
-      remove_docker_network_db
     fi
 
     # Set ulimits
