@@ -46,7 +46,7 @@ Containers to be deployed must be specified at the properties section of each jo
 | containers[].bind_ports[] | N | Array of Strings | Network ports to map from the container to the host
 | containers[].read_only | N | Boolean | Mount the container's root filesystem as read only
 | containers[].restart | N | String | Restart policy to apply when a container exits (no, on-failure, always)
-| containers[].ecurity_options[] | N | Array of Strings | Security options
+| containers[].security_options[] | N | Array of Strings | Security options
 | containers[].stop_signal | N | String | Signal to stop a container, SIGTERM by default
 | containers[].ulimits[] | N | Array of Strings | Ulimit options
 | containers[].user | N | String | Username or UID to run the first container process
