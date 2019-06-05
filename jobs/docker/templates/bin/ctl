@@ -51,6 +51,11 @@ case $1 in
     # Enable shared_mounts
     [ "${DOCKER_SHARED_MOUNTS_ENABLE}" = "true" ] && mount --make-shared /
 
+    # Link the default docker configuration location to the location specified by docker bosh release
+    if [[ "${DOCKER_PID_DIR}" != "/var/run" ]]; then
+      ln -s "${DOCKER_PID_DIR}/docker.sock" "/var/run/docker.sock"
+    fi
+
     # Start Docker daemon
     exec dockerd \
         ${DOCKER_BRIDGE:-} \
@@ -129,6 +134,10 @@ case $1 in
       echo "Unmounting /var/vcap/store/docker/docker"
       umount /var/vcap/store/docker/docker
       set -e
+    fi
+
+    if [[ -L "/var/run/docker.sock" ]]; then
+      rm /var/run/docker.sock
     fi
     ;;
 
