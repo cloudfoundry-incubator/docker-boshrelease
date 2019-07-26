@@ -1,6 +1,8 @@
 builds:
   0a13ff06-c7b1-4849-5163-c4d784c66a9b:
     version: 35.2.1
+  0d80636e-cd94-46e1-6d6c-06c805bb47fe:
+    version: 35.2.2
   0fd9bb38-8617-4f65-696f-23077d6d6568:
     version: 30.1.1
   1b3e4748-0bf7-4214-42ee-630e44c607ef:
