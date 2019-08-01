@@ -55,5 +55,5 @@ fi
 
 echo "Copying docker ${DOCKER_VERSION} binaries..."
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
-cp docker/docker* ${BOSH_INSTALL_TARGET}/bin
+cp docker/* ${BOSH_INSTALL_TARGET}/bin
 chmod +x ${BOSH_INSTALL_TARGET}/bin/*
