@@ -18,10 +18,10 @@ docker/bridge-utils-1.5.tar.gz:
   size: 33472
   object_id: 3253d1aa-0846-43b6-a22e-48f7a7905a47
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
-docker/docker-18.06.3-ce.tgz:
-  size: 43844133
-  object_id: 731aa295-69a4-4efd-5a69-896cd6687bfb
-  sha: 79a983a41275bd7a660a42935504f5c1ff7a5858
+docker/docker-18.09.8.tgz:
+  size: 48074820
+  object_id: cf3b39ff-6096-4172-77c6-2bafffeadbdd
+  sha: 142d8161148eaf546ad956a519fc7cab7d407ca3
 flannel/flannel-0.5.5-linux-amd64.tar.gz:
   size: 3489977
   object_id: fee79737-4dad-4420-9f27-3180796bcc4a
