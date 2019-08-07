@@ -26,7 +26,7 @@ if (!(Test-Path "$dataRootBase\docker-windows")) {
   mkdir "$dataRootBase\docker-windows"
 }
 
-$dockerDataDir = "$env:ProgramData\docker-windows"
+$dockerDataDir = "$env:ProgramData\docker"
 
 $dockerConfigDir = "$dockerDataDir\config"
 if (!(Test-Path $dockerConfigDir)) {
