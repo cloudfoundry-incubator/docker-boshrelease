@@ -2,10 +2,6 @@ ctop/ctop-0.5.1-linux-amd64:
   size: 5667856
   object_id: fd5ff7f3-2e78-4efe-4fd9-b043457b063d
   sha: 891ceca493b5dba65b855db09acb1c6d692210ea
-docker-windows/docker-18-09-0.zip:
-  size: 35556399
-  object_id: 03e4e24b-676d-4244-432b-3e1186153c74
-  sha: sha256:8088f1fccd8aa90096cf45dd0f8f82da5cb44141e65cc217c0339bf7173a6a0b
 docker/aufs-tools_20120411-3_amd64.deb:
   size: 91762
   object_id: c56fabd2-fc6c-4467-911b-5bc0a267f402
