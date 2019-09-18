@@ -12,9 +12,11 @@ templates:
   bin/envrc: bin/envrc
   bin/setup-user-env: bin/setup-user-env
   bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/setup_docker_registry_certs.sh: bin/setup_docker_registry_certs.sh
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key
+  config/docker_registry_certs.erb: config/docker_registry_certs
 
 provides:
 - name: docker
@@ -123,7 +125,22 @@ properties:
     description: "Enable flannel support"
     default: false
 
-
+  registry_ca_cert:
+    description: |
+      Array of domain names and certificates used to securely communicate with a private docker registry
+    example:
+      registry_ca_cert:
+        - domain_name: |
+            "mydockerregistrydomain.com"
+          ca_cert: |
+            -----BEGIN CERTIFICATE-----
+            -----END CERTIFICATE-----
+        - domain_name: |
+            "mydockerregistrydomain2.com"
+          ca_cert: |
+            -----BEGIN CERTIFICATE-----
+            -----END CERTIFICATE-----
+    default: []
   env.http_proxy:
     description: "HTTP proxy that Docker should use"
   env.https_proxy:

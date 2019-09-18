@@ -1,0 +1,18 @@
+<%
+if_p("registry_ca_cert") do |registry_ca_cert|
+  if !registry_ca_cert.is_a?(Array)
+    registry_ca_cert = [registry_ca_cert]
+  end
+
+  registry_ca_cert.each_with_index do |registry_cert, i|
+    ca_cert = registry_cert['ca_cert'].strip
+    domain_name = registry_cert['domain_name'].strip
+%>
+<%= domain_name %>
+<%= ca_cert %>
+
+*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+<%
+  end
+ end
+%>
