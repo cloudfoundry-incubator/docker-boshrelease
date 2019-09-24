@@ -5,6 +5,7 @@ packages:
   - bosh-helpers
   - docker
   - ctop
+  - docker-registry-certs
 
 templates:
   bin/cgroupfs-mount: bin/cgroupfs-mount
@@ -12,7 +13,6 @@ templates:
   bin/envrc: bin/envrc
   bin/setup-user-env: bin/setup-user-env
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/setup_docker_registry_certs.sh: bin/setup_docker_registry_certs.sh
   config/docker.cacert.erb: config/docker.cacert
   config/docker.cert.erb: config/docker.cert
   config/docker.key.erb: config/docker.key

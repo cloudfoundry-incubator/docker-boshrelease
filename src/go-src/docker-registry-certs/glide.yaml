@@ -1,0 +1,11 @@
+package: docker-registry-certs
+import:
+- package: github.com/onsi/ginkgo
+  version: ~1.10.1
+  subpackages:
+  - ginkgo
+- package: github.com/onsi/gomega
+  version: ~1.7.0
+  subpackages:
+  - '...'
+- package: golang.org/x/net
