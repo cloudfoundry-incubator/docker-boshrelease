@@ -10,11 +10,6 @@ groups:
   - bump-docker-components
 
 resource_types:
-- name: slack-notification
-  type: docker-image
-  source:
-    repository: cfcommunity/slack-notification-resource
-
 - name: pull-request
   type: docker-image
   source:
@@ -36,7 +31,7 @@ resources:
   type: git
   source:
     uri: git@github.com:cloudfoundry-incubator/docker-boshrelease
-    branch: master
+    branch: docker_ca_cert
     private_key: ((git-ssh-key.private_key))
 
 - name: git-pull-requests
@@ -50,21 +45,9 @@ resources:
   source:
     driver: gcs
     bucket: kubo-pipeline-store
-    key: versions/docker-boshrelease-version
+    key: versions/dev-docker-boshrelease-version
     json_key: ((gcs-json-key))
-    initial_version: 31.0.1
-
-- name: slack-notification
-  type: slack-notification
-  # source:
-  #   url: ((build-alert-slack-url))
-
-- name: github-release
-  type: github-release
-  source:
-    owner: cloudfoundry-incubator
-    repository: docker-boshrelease
-    access_token: ((github-token-key))
+    initial_version: 36.0.0-dev.1
 
 - name: s3-tarball
   type: gcs
@@ -92,7 +75,7 @@ jobs:
   serial: true
   plan:
   - do:
-    - aggregate:
+    - in_parallel:
       - get: git-docker-boshrelease
         trigger: true
       - get: stemcell
@@ -129,19 +112,12 @@ jobs:
         BOSH_DEPLOYMENT: docker-minimal-tests
         MANIFEST_PATH: git-docker-boshrelease/manifests/testing/minimal.yml
 
-    on_failure:
-      put: slack-notification
-      params:
-        channel: '#docker-boshrelease'
-        text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: test-docker-boshrelease job failed'
-
 - name: test-docker-boshrelease-pr
   public: true
   serial: true
   plan:
   - do:
-    - aggregate:
+    - in_parallel:
       - get: git-docker-boshrelease
       - get: git-pull-requests
         version: every
@@ -183,17 +159,12 @@ jobs:
         RUN_TESTS: true
     - task: pr-success-message
       file: git-docker-boshrelease/ci/tasks/configure-pr-status.yml
-    on_success:
-      put: slack-notification
-      params:
-        channel: '#docker-boshrelease'
-        text_file: message/body
 
 - name: release-candidate
   public: true
   plan:
   - do:
-    - aggregate:
+    - in_parallel:
       - get: git-docker-boshrelease
         passed: [ test-docker-boshrelease ]
         trigger: true
@@ -204,12 +175,6 @@ jobs:
     - put: version
       params:
         file: version/number
-    on_failure:
-      put: slack-notification
-      params:
-        channel: '#docker-boshrelease'
-        text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: rc job failed'
 
 - name: bump-minor
   public: true
@@ -222,12 +187,6 @@ jobs:
     - put: version
       params:
         file: version/number
-    on_failure:
-      put: slack-notification
-      params:
-        channel: '#docker-boshrelease'
-        text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: bump-minor job failed'
 
 - name: bump-major
   public: true
@@ -240,19 +199,13 @@ jobs:
     - put: version
       params:
         file: version/number
-    on_failure:
-      put: slack-notification
-      params:
-        channel: '#docker-boshrelease'
-        text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: bump-major job failed'
 
 - name: ship-it
   public: true
   serial: true
   plan:
   - do:
-    - aggregate:
+    - in_parallel:
       - get: version
         params:
           bump: final
@@ -265,43 +218,21 @@ jobs:
       params:
         S3_ACCESS_KEY:  ((gcs-access-key-id))
         S3_SECRET_KEY: ((gcs-secret-access-key))
-        BRANCH: master
-        GIT_EMAIL: "cfcr+cibot@pivotal.io"
+        BRANCH: docker_ca_cert
+        GIT_EMAIL:
         GIT_NAME: "CFCR CI BOT"
         GITHUB_OWNER: cloudfoundry-incubator
-        NOTIFICATION_OUT: notifications
+        NOTIFICATION_OUT:
         RELEASE_ROOT: gh
-        REPO_OUT: pushme
-        REPO_ROOT: git-docker-boshrelease
+        REPO_OUT:
+        REPO_ROOT:
         VERSION_FROM: version/number
-    - put: git-docker-boshrelease
-      params:
-        rebase: true
-        repository: pushme/git-docker-boshrelease
     - put: s3-tarball
       params:
         file: gh/artifacts/docker-*.tgz
-    - put: github-release
-      params:
-        body: gh/notes.md
-        globs:
-        - gh/artifacts/*
-        name: gh/name
-        tag: gh/tag
     - put: version
       params:
         bump: patch
-    - aggregate:
-      - put: slack-notification
-        params:
-          channel: '#docker-boshrelease'
-          text_file: notifications/message
-    on_failure:
-      put: slack-notification
-      params:
-        channel: '#docker-boshrelease'
-        text: '<https://ci.kubo.sh/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|
-          Concourse Failure! :sad_panda:> docker-boshrelease: shipit job failed'
 
 - name: bump-docker-components
   plan:
