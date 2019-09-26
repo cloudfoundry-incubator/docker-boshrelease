@@ -52,7 +52,7 @@ case $1 in
     [ "${DOCKER_SHARED_MOUNTS_ENABLE}" = "true" ] && mount --make-shared /
 
     # Create certs for private docker registry
-    ${JOB_DIR}/bin/setup_docker_registry_certs.sh
+    /var/vcap/packages/docker-registry-certs/bin/generate_certs ${JOB_DIR}/config/docker_registry_certs
 
     # Start Docker daemon
     exec dockerd \
