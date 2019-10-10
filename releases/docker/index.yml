@@ -41,6 +41,8 @@ builds:
     version: 35.3.2
   8c5ccd9b-5798-4b3c-a600-42cf30158fee:
     version: "25"
+  93db6fee-2a7a-47f1-77ba-1dda0e86187c:
+    version: 35.3.4
   94451be0-048c-44b1-548a-6914318f7ac9:
     version: 33.0.1
   955339be-8679-48f0-755f-a9f245dca54b:
