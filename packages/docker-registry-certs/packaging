@@ -8,9 +8,7 @@ mv ${BOSH_COMPILE_TARGET}/go-src/vendor ${BOSH_COMPILE_TARGET}/src/go-src/vendor
 
 export GOPATH=${BOSH_COMPILE_TARGET}
 
-# Run unit tests
 pushd ${BOSH_COMPILE_TARGET}/src/go-src/docker-registry-certs
-go test ./...
 
 # Create the executable file
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
