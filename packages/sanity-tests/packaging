@@ -2,6 +2,10 @@ set -eux
 
 source /var/vcap/packages/golang-1.12-linux/bosh/compile.env
 
-mkdir -p ${BOSH_INSTALL_TARGET}/src/tests
-cp -a ${BOSH_COMPILE_TARGET}/tests/* ${BOSH_INSTALL_TARGET}/src/tests
+mkdir -p ${BOSH_INSTALL_TARGET}/src/go-src/tests
+cp -a ${BOSH_COMPILE_TARGET}/go-src/tests/* ${BOSH_INSTALL_TARGET}/src/go-src/tests
+
+mkdir -p ${BOSH_INSTALL_TARGET}/src/go-src/vendor
+cp -a ${BOSH_COMPILE_TARGET}/go-src/vendor/* ${BOSH_INSTALL_TARGET}/src/go-src/vendor
+
 export GOPATH=${BOSH_INSTALL_TARGET}

@@ -1,0 +1,15 @@
+set -eux
+
+source /var/vcap/packages/golang-1.12-linux/bosh/compile.env
+
+mkdir -p ${BOSH_COMPILE_TARGET}/src/go-src
+mv ${BOSH_COMPILE_TARGET}/go-src/docker-registry-certs ${BOSH_COMPILE_TARGET}/src/go-src/docker-registry-certs
+mv ${BOSH_COMPILE_TARGET}/go-src/vendor ${BOSH_COMPILE_TARGET}/src/go-src/vendor
+
+export GOPATH=${BOSH_COMPILE_TARGET}
+
+pushd ${BOSH_COMPILE_TARGET}/src/go-src/docker-registry-certs
+
+# Create the executable file
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+go build -o ${BOSH_INSTALL_TARGET}/bin/generate_certs ${BOSH_COMPILE_TARGET}/src/go-src/docker-registry-certs/main.go

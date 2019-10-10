@@ -51,6 +51,9 @@ case $1 in
     # Enable shared_mounts
     [ "${DOCKER_SHARED_MOUNTS_ENABLE}" = "true" ] && mount --make-shared /
 
+    # Create certs for private docker registry
+    /var/vcap/packages/docker-registry-certs/bin/generate_certs ${JOB_DIR}/config/docker_registry_certs
+
     # Start Docker daemon
     exec dockerd \
         ${DOCKER_BRIDGE:-} \
