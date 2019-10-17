@@ -1,6 +1,6 @@
 set -eux
 
-source /var/vcap/packages/golang-1.12-linux/bosh/compile.env
+source /var/vcap/packages/golang-1.13-linux/bosh/compile.env
 
 mkdir -p ${BOSH_COMPILE_TARGET}/src/go-src
 mv ${BOSH_COMPILE_TARGET}/go-src/docker-registry-certs ${BOSH_COMPILE_TARGET}/src/go-src/docker-registry-certs
