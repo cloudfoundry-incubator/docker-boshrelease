@@ -13,6 +13,12 @@ Related links:
 * [CI](https://ci-ohio.starkandwayne.com/teams/cfcommunity/pipelines/docker-boshrelease)
 * [cf-containers-broker-boshrelease](https://github.com/cloudfoundry-community/cf-containers-broker-boshrelease) * [docker-broker-deployment](https://github.com/cloudfoundry-community/docker-broker-deployment)
 
+## Initialize Project
+
+There is a submodule for Swarm that needs to be initialized:
+
+`git submodule update --init --recursive`
+
 ## Static set of containers on a VM
 
 Run a static set of Docker containers, backed by a persistent disk:
