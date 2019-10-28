@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd /var/vcap/jobs/print-component-version/packages
+
+CTOP_VERSION="$(./ctop/bin/ctop -v)"
+
+pushd docker/bin > /dev/null
+  CONTAINERD_VERSION="$(./containerd -v)"
+  # containerd-shim doesn't have a version command and the code shows the same version as containerd above
+  # containerd-shim --version
+  CTR_VERSION="$(./ctr -v)"
+  DOCKER_VERSION="$(./docker -v)"
+  DOCKERD_VERSION="$(./dockerd -v)"
+  DOCKER_INIT_VERSION="$(./docker-init --version)"
+  # could not find a way to view the version, but this is likely to be the same as docker
+  # docker-proxy --version
+  RUNC_VERSION="$(./runc -v | head -n 1)"
+popd > /dev/null
+
+# this comes from src/go-src/docker-registry-certs in this repo, since it is our code we don't need to print the version
+# ./docker-registry-certs/bin/generate_certs
+
+cat <<EOF
+- name: "ctop"
+  components:
+  - "marketing_name": "ctop"
+    "marketing_version": "$CTOP_VERSION"
+- name: "docker"
+  components:
+  - "marketing_name": "containerd"
+    "marketing_version": "$CONTAINERD_VERSION"
+  - "marketing_name": "ctr"
+    "marketing_version": "$CTR_VERSION"
+  - "marketing_name": "docker"
+    "marketing_version": "$DOCKER_VERSION"
+  - "marketing_name": "dockerd"
+    "marketing_version": "$DOCKERD_VERSION"
+  - "marketing_name": "docker-init"
+    "marketing_version": "$DOCKER_INIT_VERSION"
+  - "marketing_name": "runc"
+    "marketing_version": "$RUNC_VERSION"
+EOF
