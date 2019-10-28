@@ -1,5 +1,5 @@
 ---
-name: print-component-version
+name: print-docker-component-version
 
 templates:
     run.erb: bin/run
