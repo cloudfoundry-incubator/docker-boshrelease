@@ -12,7 +12,7 @@ pushd docker/bin > /dev/null
   # containerd-shim --version
   CTR_VERSION="$(./ctr -v)"
   DOCKER_VERSION="$(./docker -v)"
-  DOCKERD_VERSION="$(./dockerd -v)"
+  DOCKER_D_VERSION="$(./dockerd -v)"
   DOCKER_INIT_VERSION="$(./docker-init --version)"
   # could not find a way to view the version, but this is likely to be the same as docker
   # docker-proxy --version
@@ -22,23 +22,34 @@ popd > /dev/null
 # this comes from src/go-src/docker-registry-certs in this repo, since it is our code we don't need to print the version
 # ./docker-registry-certs/bin/generate_certs
 
-cat <<EOF
-- name: "ctop"
-  components:
-  - "marketing_name": "ctop"
-    "marketing_version": "$CTOP_VERSION"
-- name: "docker"
-  components:
-  - "marketing_name": "containerd"
-    "marketing_version": "$CONTAINERD_VERSION"
-  - "marketing_name": "ctr"
-    "marketing_version": "$CTR_VERSION"
-  - "marketing_name": "docker"
-    "marketing_version": "$DOCKER_VERSION"
-  - "marketing_name": "dockerd"
-    "marketing_version": "$DOCKERD_VERSION"
-  - "marketing_name": "docker-init"
-    "marketing_version": "$DOCKER_INIT_VERSION"
-  - "marketing_name": "runc"
-    "marketing_version": "$RUNC_VERSION"
+# TODO:
+#- flannel
+#- golang-1.12-linux
+#- swarm
+
+# $1 = package name
+# $2 = package version
+# $3 = license
+# $4 = tgz name
+# $5 = url
+# ex. print_osm_format ctop "$CTOP_VERSION" MIT name-of-ctop.tgz TBD
+print_osm_format() {
+  cat <<EOF
+other:$1:$2:
+  name: $1
+  version: '$2'
+  repository: Other
+  license: $3
+  other-distribution: /tmp/osl/$4
+  url: $5
 EOF
+}
+
+
+print_osm_format ctop "$CTOP_VERSION" "$(cat ctop/LICENSE.txt)" "$(basename "$(cat ctop/URL.txt)")" "$(cat ctop/URL.txt)"
+print_osm_format containerd "$CONTAINERD_VERSION" LICENSE path-to-containerd.tgz URL
+print_osm_format ctr "$CTR_VERSION" LICENSE path-to-ctr.tgz URL
+print_osm_format docker "$DOCKER_VERSION" LICENSE path-to-docker.tgz URL
+print_osm_format dockerd "$DOCKER_D_VERSION" LICENSE path-to-dockerd.tgz URL
+print_osm_format docker-init "$DOCKER_INIT_VERSION" LICENSE path-to-docker-init.tgz URL
+print_osm_format runc "$RUNC_VERSION" LICENSE path-to-runc.tgz URL

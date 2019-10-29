@@ -7,5 +7,8 @@ templates:
 packages:
 - ctop
 - docker
+- flannel
+- golang-1.12-linux
+- swarm
 
 properties: {}

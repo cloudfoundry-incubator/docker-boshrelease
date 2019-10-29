@@ -4,3 +4,8 @@ set -u # report the usage of uninitialized variables
 mkdir -p $BOSH_INSTALL_TARGET/bin
 cp ctop/ctop-*-linux-amd64 $BOSH_INSTALL_TARGET/bin/ctop
 chmod +x $BOSH_INSTALL_TARGET/bin/ctop
+
+echo -n "https://github.com/bcicen/ctop/archive/v0.5.1.tar.gz" > $BOSH_INSTALL_TARGET/URL.txt
+
+# source of license data: https://github.com/bcicen/ctop LICENSE text file
+echo -n "MIT" > $BOSH_INSTALL_TARGET/LICENSE.txt

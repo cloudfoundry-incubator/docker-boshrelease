@@ -57,3 +57,7 @@ echo "Copying docker ${DOCKER_VERSION} binaries..."
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
 cp docker/* ${BOSH_INSTALL_TARGET}/bin
 chmod +x ${BOSH_INSTALL_TARGET}/bin/*
+
+# source: https://github.com/docker/docker-ce/blob/v18.09.8/components/engine/LICENSE
+echo "Apache2.0" > ${BOSH_INSTALL_TARGET}/DOCKER_LICENSE.txt
+echo "https://github.com/docker/docker-ce/archive/v18.09.8.zip" > ${BOSH_INSTALL_TARGET}/DOCKER_URL.txt
