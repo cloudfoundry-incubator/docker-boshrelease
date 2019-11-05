@@ -1,11 +1,9 @@
-set -e # exit immediately if a simple command exits with a non-zero status
-set -u # report the usage of uninitialized variables
+set -eu
 
 mkdir -p $BOSH_INSTALL_TARGET/bin
-cp ctop/ctop-*-linux-amd64 $BOSH_INSTALL_TARGET/bin/ctop
+
+CTOP_PACKAGE="ctop"
+CTOP_VERSION="0.5.1"
+
+cp ctop/$CTOP_PACKAGE-$CTOP_VERSION-linux-amd64 $BOSH_INSTALL_TARGET/bin/ctop
 chmod +x $BOSH_INSTALL_TARGET/bin/ctop
-
-echo -n "https://github.com/bcicen/ctop/archive/v0.5.1.tar.gz" > $BOSH_INSTALL_TARGET/URL.txt
-
-# source of license data: https://github.com/bcicen/ctop LICENSE text file
-echo -n "MIT" > $BOSH_INSTALL_TARGET/LICENSE.txt
