@@ -43,7 +43,7 @@ make install
 
 # Extract docker package
 DOCKER_PACKAGE=docker
-DOCKER_VERSION="18.09.8"
+DOCKER_VERSION="18.09.9"
 echo "Extracting docker ${DOCKER_VERSION}..."
 tar xzvf ${BOSH_COMPILE_TARGET}/docker/${DOCKER_PACKAGE}-${DOCKER_VERSION}.tgz
 if [[ $? != 0 ]] ; then
