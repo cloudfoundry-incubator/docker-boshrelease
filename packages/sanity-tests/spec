@@ -1,7 +1,7 @@
 ---
 name: sanity-tests
 dependencies:
-  - golang-1.13-linux
+  - golang-1.14-linux
 files:
 - go-src/tests/**/*
 - go-src/vendor/**/*

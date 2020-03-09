@@ -1,6 +1,6 @@
 set -eu
 
-source /var/vcap/packages/golang-1.13-linux/bosh/compile.env
+source /var/vcap/packages/golang-1.14-linux/bosh/compile.env
 
 # Build Docker Swarm package
 echo "Building Docker Swarm..."

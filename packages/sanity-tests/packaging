@@ -1,6 +1,6 @@
 set -eux
 
-source /var/vcap/packages/golang-1.13-linux/bosh/compile.env
+source /var/vcap/packages/golang-1.14-linux/bosh/compile.env
 
 mkdir -p ${BOSH_INSTALL_TARGET}/src/go-src/tests
 cp -a ${BOSH_COMPILE_TARGET}/go-src/tests/* ${BOSH_INSTALL_TARGET}/src/go-src/tests
