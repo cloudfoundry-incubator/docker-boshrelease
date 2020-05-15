@@ -35,6 +35,17 @@ case $1 in
         fi
     fi
 
+    # Log in to private registry if necessary for pulling
+    if [ ! -z "$(eval echo "\$${container_name}_login")" ]
+    then
+        image="$(eval echo "\$${container_name}_image")"
+        login_opts="$(eval echo "\$${container_name}_login")"
+        echo "$(date) Logging in to custom registry"
+        ${DOCKER_COMMAND} login ${login_opts}
+        echo "$(date) Pulling image ${image}"
+        ${DOCKER_COMMAND} pull ${image}
+    fi
+
     # Start Docker container
     docker_options="run --detach \
       --name ${container_name} \

@@ -250,4 +250,9 @@ cat > "${CONTAINERS_CONF_DIR}"/<%= container['name'] %>/Dockerfile <<DOCKERFILE
 <%= container['dockerfile'] %>
 DOCKERFILE
 <% end %>
+
+<% if container['login'] %>
+export <%= container['name'] %>_login="--username <%= container['login']['username']  %> --password <%= container['login']['password'] %> <%= container['login']['server'] %>"
+<% end %>
+
 <% end %>
