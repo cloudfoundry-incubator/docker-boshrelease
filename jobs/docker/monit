@@ -1,5 +1,5 @@
 check process docker with pidfile /var/vcap/sys/run/docker/docker.pid
   group vcap
   start program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/docker/bin/ctl start'"
-  stop program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/docker/bin/ctl stop'" with timeout 60 seconds
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger ctl '/var/vcap/jobs/docker/bin/ctl stop'" with timeout 180 seconds
   if failed unixsocket /var/vcap/sys/run/docker/docker.sock with timeout 5 seconds for 5 cycles then restart
