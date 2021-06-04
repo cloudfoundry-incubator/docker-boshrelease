@@ -1,7 +1,7 @@
 ---
 final_name: docker
 blobstore:
-  provider: s3
+  provider: gcs
   options:
     bucket_name: docker-boshrelease-blobs
     region: us-east1

@@ -1,0 +1,11 @@
+---
+name: print-docker-component-version
+
+templates:
+    run.erb: bin/run
+
+packages:
+- ctop
+- docker
+
+properties: {}

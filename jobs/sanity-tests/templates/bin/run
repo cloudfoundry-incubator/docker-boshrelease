@@ -2,7 +2,7 @@
 
 set -eu
 
-source /var/vcap/packages/golang-1.12-linux/bosh/runtime.env
+source /var/vcap/packages/golang-1.14-linux/bosh/runtime.env
 
 # Setting the docker binaries in path
 export DOCKER_BASE_PATH=/var/vcap/packages/docker
@@ -15,5 +15,5 @@ export DOCKER_CERT_PATH="/var/vcap/jobs/sanity-tests/config"
 export GOPATH=/var/vcap/packages/sanity-tests/
 
 echo "Running sanity tests..."
-pushd /var/vcap/packages/sanity-tests/src/tests
-go test -v tests/cli
+pushd /var/vcap/packages/sanity-tests/src/go-src/tests
+go test -v go-src/tests/cli

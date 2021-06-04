@@ -1,0 +1,7 @@
+---
+name: docker-registry-certs
+dependencies:
+  - golang-1.14-linux
+files:
+- go-src/docker-registry-certs/**/*
+- go-src/vendor/**/*

@@ -16,7 +16,7 @@ consumes:
 
 packages:
   - sanity-tests
-  - golang-1.12-linux
+  - golang-1.14-linux
   - docker
 
 properties:
