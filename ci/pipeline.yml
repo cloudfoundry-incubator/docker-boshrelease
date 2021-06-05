@@ -1,14 +1,3 @@
-groups:
-- name: docker-boshrelease
-  jobs:
-  - test-docker-boshrelease
-  - test-docker-boshrelease-pr
-  - release-candidate
-  - ship-it
-  - bump-major
-  - bump-minor
-  - bump-docker-components
-
 resource_types:
 - name: pull-request
   type: docker-image
@@ -31,7 +20,7 @@ resources:
   type: git
   source:
     uri: git@github.com:cloudfoundry-incubator/docker-boshrelease
-    branch: master
+    branch: main
     private_key: ((git-ssh-key.private_key))
 
 - name: git-pull-requests
@@ -73,7 +62,7 @@ resources:
   source:
     owner: docker
     repository: docker-ce
-    tag_filter: v19.03.(.*)
+    tag_filter: v19.(.*).(.*)
     access_token: ((github-token-key))
 
 jobs:
@@ -86,37 +75,38 @@ jobs:
       trigger: true
     - get: stemcell
       resource: ubuntu-bionic-stemcell-gcp
-  - task: test-docker-boshrelease
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-    params: &test_docker_boshrelease_params
-      PROXY_PRIVATE_KEY: ((docker-bosh-env-ssh.private_key))
-      PROXY_USERNAME: ((docker-bosh-env-username))
-      PROXY_IP: ((docker-bosh-env-ip))
-      BOSH_CA_CERT: ((docker-bosh-env-cert.certificate))
-      BOSH_CLIENT: ((docker-bosh-env-client))
-      BOSH_CLIENT_SECRET: ((docker-bosh-env-client-secret))
-      BOSH_DEPLOYMENT: ((docker-bosh-env-deployment))
-      BOSH_ENVIRONMENT: ((docker-bosh-env-environment))
-      MANIFEST_PATH: git-docker-boshrelease/manifests/containers/example.yml
-  - task: test-docker-boshrelease-swarm
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-    params:
-      <<: *test_docker_boshrelease_params
-      BOSH_DEPLOYMENT: docker-swarm-testflight
-      MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
-  - task: run-integration-tests
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-    params:
-      <<: *test_docker_boshrelease_params
-      BOSH_DEPLOYMENT: docker-integration-tests
-      MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
-      RUN_TESTS: true
-  - task: test-minimal-deployment
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
-    params:
-      <<: *test_docker_boshrelease_params
-      BOSH_DEPLOYMENT: docker-minimal-tests
-      MANIFEST_PATH: git-docker-boshrelease/manifests/testing/minimal.yml
+  - in_parallel:
+    - task: test-docker-boshrelease
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params: &test_docker_boshrelease_params
+        PROXY_PRIVATE_KEY: ((docker-bosh-env-ssh.private_key))
+        PROXY_USERNAME: ((docker-bosh-env-username))
+        PROXY_IP: ((docker-bosh-env-ip))
+        BOSH_CA_CERT: ((docker-bosh-env-cert.certificate))
+        BOSH_CLIENT: ((docker-bosh-env-client))
+        BOSH_CLIENT_SECRET: ((docker-bosh-env-client-secret))
+        BOSH_DEPLOYMENT: ((docker-bosh-env-deployment))
+        BOSH_ENVIRONMENT: ((docker-bosh-env-environment))
+        MANIFEST_PATH: git-docker-boshrelease/manifests/containers/example.yml
+    - task: test-docker-boshrelease-swarm
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-swarm-testflight
+        MANIFEST_PATH: git-docker-boshrelease/manifests/swarm/docker-swarm.yml
+    - task: run-integration-tests
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-integration-tests
+        MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
+        RUN_TESTS: true
+    - task: test-minimal-deployment
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-minimal-tests
+        MANIFEST_PATH: git-docker-boshrelease/manifests/testing/minimal.yml
 
 - name: test-docker-boshrelease-pr
   public: true
@@ -133,35 +123,36 @@ jobs:
     params:
       path: git-pull-requests
       status: pending
-  - task: test-docker-boshrelease
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
-    params:
-      <<: *test_docker_boshrelease_params
-      BOSH_DEPLOYMENT: docker-testflight-pr
-      MANIFEST_PATH: git-pull-requests/manifests/containers/example.yml
-    on_failure:
-      put: git-pull-requests
+  - in_parallel:
+    - task: test-docker-boshrelease
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
       params:
-        path: git-pull-requests
-        status: failure
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-testflight-pr
+        MANIFEST_PATH: git-pull-requests/manifests/containers/example.yml
+    - task: test-docker-boshrelease-swarm
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-swarm-testflight-pr
+        MANIFEST_PATH: git-pull-requests/manifests/swarm/docker-swarm.yml
+    - task: run-integration-tests
+      file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
+      params:
+        <<: *test_docker_boshrelease_params
+        BOSH_DEPLOYMENT: docker-integration-tests-pr
+        MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
+        RUN_TESTS: true
     on_success:
       put: git-pull-requests
       params:
         path: git-pull-requests
         status: success
-  - task: test-docker-boshrelease-swarm
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
-    params:
-      <<: *test_docker_boshrelease_params
-      BOSH_DEPLOYMENT: docker-swarm-testflight-pr
-      MANIFEST_PATH: git-pull-requests/manifests/swarm/docker-swarm.yml
-  - task: run-integration-tests
-    file: git-docker-boshrelease/ci/tasks/test-docker-boshrelease-pr.yml
-    params:
-      <<: *test_docker_boshrelease_params
-      BOSH_DEPLOYMENT: docker-integration-tests
-      MANIFEST_PATH: git-docker-boshrelease/manifests/testing/example.yml
-      RUN_TESTS: true
+    on_failure:
+      put: git-pull-requests
+      params:
+        path: git-pull-requests
+        status: failure
 
 - name: release-candidate
   public: true
@@ -173,24 +164,6 @@ jobs:
     - get: version
       params:
         pre: rc
-      trigger: true
-
-- name: bump-minor
-  public: true
-  plan:
-  - get: version
-    params:
-      bump: minor
-  - put: version
-    params:
-      file: version/number
-
-- name: bump-major
-  public: true
-  plan:
-  - get: version
-    params:
-      bump: major
   - put: version
     params:
       file: version/number
@@ -210,7 +183,7 @@ jobs:
     file: git-docker-boshrelease/ci/tasks/ship-it.yml
     params:
       GCS_JSON_KEY: ((docker-bosh-gcs-key))
-      BRANCH: master
+      BRANCH: main
       GIT_EMAIL: "cfcr+cibot@pivotal.io"
       GIT_NAME: "CFCR CI BOT"
       GITHUB_OWNER: cloudfoundry-incubator
@@ -251,3 +224,38 @@ jobs:
   - put: git-docker-boshrelease
     params:
       repository: git-docker-boshrelease-output
+
+#
+# Bumping versions
+#
+
+- name: bump-minor
+  public: true
+  plan:
+  - get: version
+    params:
+      bump: minor
+  - put: version
+    params:
+      file: version/number
+
+- name: bump-major
+  public: true
+  plan:
+  - get: version
+    params:
+      bump: major
+  - put: version
+    params:
+      file: version/number
+
+- name: bump-patch
+  public: true
+  plan:
+  - get: version
+    params:
+      bump: patch
+  - put: version
+    params:
+      file: version/number
+
