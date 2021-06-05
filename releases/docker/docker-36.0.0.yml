@@ -1,0 +1,103 @@
+name: docker
+version: 36.0.0
+commit_hash: f5d627f
+uncommitted_changes: false
+jobs:
+- name: containers
+  version: 3ec51e4942f709f9a53ca8dc53b9914415044f7a9ff8e69aae93fe0fe5b80eed
+  fingerprint: 3ec51e4942f709f9a53ca8dc53b9914415044f7a9ff8e69aae93fe0fe5b80eed
+  sha1: sha256:5e6f81900857e459242dc1a21eb77dfb464d70907780ce4e06be94fbee4d6b8d
+  packages:
+  - bosh-helpers
+- name: docker
+  version: a330bcf253b1835cdd2ba70b6497d05a7f0b4f7d41b9bf34a54b7c04d897061a
+  fingerprint: a330bcf253b1835cdd2ba70b6497d05a7f0b4f7d41b9bf34a54b7c04d897061a
+  sha1: sha256:a1931691073e3f1be222fc9af83ba4baa75e8e98b368e0e356fbb02d8efa841b
+  packages:
+  - bosh-helpers
+  - docker
+  - ctop
+  - docker-registry-certs
+- name: flannel
+  version: f372a3e9ab0e8c2892606af8e7710cd2d664e613670ef0a5417933f24f2e66cd
+  fingerprint: f372a3e9ab0e8c2892606af8e7710cd2d664e613670ef0a5417933f24f2e66cd
+  sha1: sha256:202eca981cb9d10aa6b9516e65e54cde574f315dcfa86dc5d44efc8eb8495aa0
+  packages:
+  - flannel
+- name: print-docker-component-version
+  version: 81db91499ba75a729b77f47a02e9f708a585ec209e4366ecdee729cc9cb262cd
+  fingerprint: 81db91499ba75a729b77f47a02e9f708a585ec209e4366ecdee729cc9cb262cd
+  sha1: sha256:beb7dbba9eff1ec2aa28f9095cd2598489c655ba0a18a6bc48d2b04b534ad01c
+  packages:
+  - ctop
+  - docker
+- name: sanity-tests
+  version: 43069d438c7bd6996c0e06a78f773ae69b5966440760ea39358525df844c6c01
+  fingerprint: 43069d438c7bd6996c0e06a78f773ae69b5966440760ea39358525df844c6c01
+  sha1: sha256:77ea497ede66709d61c4d0ed03b44e0ff66c97617c8dda5b55a5c4a78c832ff8
+  packages:
+  - sanity-tests
+  - golang-1.14-linux
+  - docker
+- name: swarm-agent
+  version: 17faa48ab8a9941c43e5c886039b39e0c2bee52a9ae59244080515040d12a8c0
+  fingerprint: 17faa48ab8a9941c43e5c886039b39e0c2bee52a9ae59244080515040d12a8c0
+  sha1: sha256:ecb63a447d7440cadfd1c3b833e2e6d13b22ad2fcaf28717f38071dc0bb7e759
+  packages:
+  - bosh-helpers
+  - swarm
+- name: swarm-manager
+  version: 0689b5b9a84274d422bd96613bdb59037e14f61eb35c63659fcf07167185f37a
+  fingerprint: 0689b5b9a84274d422bd96613bdb59037e14f61eb35c63659fcf07167185f37a
+  sha1: sha256:25c827ef2da0219e9a8250b39a18f940da7758438de7caa930e2d627dcd03c04
+  packages:
+  - bosh-helpers
+  - swarm
+packages:
+- name: bosh-helpers
+  version: 95f2c9a581fd837c8dde39a36ae78d3bb5a3d3bab82b13d0e5087ee10b1834ed
+  fingerprint: 95f2c9a581fd837c8dde39a36ae78d3bb5a3d3bab82b13d0e5087ee10b1834ed
+  sha1: sha256:6ef5a3557561a23e49af500174a2e39f58a5e35e5076c8c19375a1b2e33f3c8a
+  dependencies: []
+- name: ctop
+  version: 1bf76fd07d9c0b4f368febf68562182fb20b663194b2dd2e0fa8a30c43741c48
+  fingerprint: 1bf76fd07d9c0b4f368febf68562182fb20b663194b2dd2e0fa8a30c43741c48
+  sha1: sha256:1f16f0ae0372978fe3c923f7e718e9047bb6a0a7a0a793d1de3cc6c90bd5bbfc
+  dependencies: []
+- name: docker
+  version: 0dab9a807dc505047ad25868b4bb05754d98e6953b9862169d2d7a22117c864f
+  fingerprint: 0dab9a807dc505047ad25868b4bb05754d98e6953b9862169d2d7a22117c864f
+  sha1: sha256:b8909c5b3f2c9b2e4fa5c55e71c18dbb02a0dbbda83b56f7dfb97832a5106b00
+  dependencies: []
+- name: docker-registry-certs
+  version: 6372877a71f1133750a484f11ea9a9eabf43b22c744dda490cdbd09875b8fc9b
+  fingerprint: 6372877a71f1133750a484f11ea9a9eabf43b22c744dda490cdbd09875b8fc9b
+  sha1: sha256:c690693cb8ea0ece9a16f29e23812b1be6907e49b9b52b36e2c0984e50a52dd0
+  dependencies:
+  - golang-1.14-linux
+- name: flannel
+  version: a28fed3f2fa47675ec1c5850107061f0151022ea83a4f5db890478c6ec46e1cd
+  fingerprint: a28fed3f2fa47675ec1c5850107061f0151022ea83a4f5db890478c6ec46e1cd
+  sha1: sha256:d32cc3e7a56124ef26ffdb293dd45b3a229e022c439afcb0624474843a40340e
+  dependencies: []
+- name: golang-1.14-linux
+  version: e39ccd52f4a0bf9ed6e45967ac18d5303fe9f58f7e40ffabe8527dd3f9105a53
+  fingerprint: e39ccd52f4a0bf9ed6e45967ac18d5303fe9f58f7e40ffabe8527dd3f9105a53
+  sha1: sha256:614499d84f3a225efd5fa9c423d32cdbe4b413ca05862e8cdb9d11023ca2eb8e
+  dependencies: []
+- name: sanity-tests
+  version: 2b90421790b4303710a54bcc991b75d4f07be935c6283ef5613e8edb99b0d52d
+  fingerprint: 2b90421790b4303710a54bcc991b75d4f07be935c6283ef5613e8edb99b0d52d
+  sha1: sha256:1067091496d8817e9fd696736e275f7188cd1e4f2b5d27464a3b8e519e28dca6
+  dependencies:
+  - golang-1.14-linux
+- name: swarm
+  version: de0442d420f4f15dd1abfdb43a881350df1469345b329055b01c1ab047f0120e
+  fingerprint: de0442d420f4f15dd1abfdb43a881350df1469345b329055b01c1ab047f0120e
+  sha1: sha256:89a27b90d902a8294b49a9b948409f684547a4c93208ace29ee21e611cef946d
+  dependencies:
+  - golang-1.14-linux
+license:
+  version: 81e3e6d7179fa5024476a96475b7261086329616ef47ee74a404211cddfea4da
+  fingerprint: 81e3e6d7179fa5024476a96475b7261086329616ef47ee74a404211cddfea4da
+  sha1: sha256:84fa9ab7f75df54387ec025a785db1285a9c52fc67297669ce2ac068495e37f4

@@ -71,6 +71,8 @@ builds:
     version: 31.0.0
   e855068f-2252-4a9d-7f19-23a879d1b99d:
     version: 30.0.0-rc.31
+  ede27bbf-1e77-4387-5b26-58dde57bce94:
+    version: 36.0.0
   f49788e7-1368-4af1-90f7-f747d9c82f61:
     version: "26"
 format-version: "2"
