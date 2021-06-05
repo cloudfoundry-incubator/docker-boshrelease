@@ -209,8 +209,7 @@ jobs:
   - task: release
     file: git-docker-boshrelease/ci/tasks/ship-it.yml
     params:
-      S3_ACCESS_KEY:  ((gcs-access-key-id))
-      S3_SECRET_KEY: ((gcs-secret-access-key))
+      GCS_JSON_KEY: ((docker-bosh-gcs-key))
       BRANCH: master
       GIT_EMAIL: "cfcr+cibot@pivotal.io"
       GIT_NAME: "CFCR CI BOT"

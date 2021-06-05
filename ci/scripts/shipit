@@ -49,10 +49,10 @@ RELEASE_NAME=$(bosh int config/final.yml --path /final_name)
 cat > config/private.yml <<YAML
 ---
 blobstore:
-  provider: s3
+  provider: gcs
   options:
-    access_key_id: ${S3_ACCESS_KEY}
-    secret_access_key: ${S3_SECRET_KEY}
+    credentials_source: static
+    json_key: '${GCS_JSON_KEY}'
 YAML
 
 header "Pulling in any git submodules..."
