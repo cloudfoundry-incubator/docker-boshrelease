@@ -43,14 +43,14 @@ make install
 
 # Extract docker package
 DOCKER_PACKAGE=docker
-echo "Extracting docker ${DOCKER_VERSION}..."
+echo "Extracting docker ..."
 tar xzvf ${BOSH_COMPILE_TARGET}/docker/${DOCKER_PACKAGE}-*.tgz
 if [[ $? != 0 ]] ; then
-  echo "Failed extracting docker ${DOCKER_VERSION}"
+  echo "Failed extracting docker"
   exit 1
 fi
 
-echo "Copying docker ${DOCKER_VERSION} binaries..."
+echo "Copying docker binaries..."
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
 cp docker/* ${BOSH_INSTALL_TARGET}/bin
 chmod +x ${BOSH_INSTALL_TARGET}/bin/*
