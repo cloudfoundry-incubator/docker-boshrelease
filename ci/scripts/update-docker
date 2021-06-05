@@ -4,6 +4,7 @@ set -xe
 
 DOCKER_REPO_ROOT="git-docker-ce-release"
 DOCKER_VERSION=$(cat ${DOCKER_REPO_ROOT}/tag)
+DOCKER_VERSION="${DOCKER_VERSION:1}"
 REPO_ROOT="git-docker-boshrelease"
 REPO_OUT="git-docker-boshrelease-output"
 
