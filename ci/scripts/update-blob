@@ -14,8 +14,8 @@ cat <<EOF > "config/private.yml"
 blobstore:
   provider: gcs
   options:
-    access_key_id: ${ACCESS_KEY_ID:?required}
-    secret_access_key: ${SECRET_ACCESS_KEY:?required}
+    credentials_source: static
+    json_key: '${GCS_JSON_KEY}'
 EOF
 
 blobs_to_remove=$(spruce json config/blobs.yml | jq -r "keys[] | select(test(\"${BLOB_PREFIX}\"))")

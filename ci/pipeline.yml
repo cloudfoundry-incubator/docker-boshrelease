@@ -313,8 +313,7 @@ jobs:
   - task: update-docker
     file: git-docker-boshrelease/ci/tasks/bump-docker-version.yml
     params:
-      ACCESS_KEY_ID: ((gcs-access-key-id))
-      SECRET_ACCESS_KEY: ((gcs-secret-access-key))
+      GCS_JSON_KEY: ((docker-bosh-gcs-key))
   - put: git-docker-boshrelease
     params:
       repository: git-docker-boshrelease-output

@@ -11,8 +11,7 @@ inputs:
 - name: git-docker-ce-release
 
 params:
-  ACCESS_KEY_ID:
-  SECRET_ACCESS_KEY:
+  GCS_JSON_KEY:
 
 run:
   path: ./git-docker-boshrelease/ci/scripts/update-docker
