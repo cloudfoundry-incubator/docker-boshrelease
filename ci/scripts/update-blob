@@ -12,7 +12,7 @@ pushd ${REPO_ROOT:?required}
 cat <<EOF > "config/private.yml"
 ---
 blobstore:
-  provider: s3
+  provider: gcs
   options:
     access_key_id: ${ACCESS_KEY_ID:?required}
     secret_access_key: ${SECRET_ACCESS_KEY:?required}
