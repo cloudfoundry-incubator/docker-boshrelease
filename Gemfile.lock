@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bosh-template (2.2.0)
+    bosh-template (2.2.1)
       semi_semantic (~> 1.2.0)
     diff-lcs (1.4.4)
     rspec (3.10.0)
