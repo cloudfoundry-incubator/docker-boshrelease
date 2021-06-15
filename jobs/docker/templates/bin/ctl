@@ -54,7 +54,7 @@ case $1 in
 
     # Link the default docker configuration location to the location specified by docker bosh release
     if [[ "${DOCKER_PID_DIR}" != "/var/run" ]]; then
-      ln -s "${DOCKER_PID_DIR}/docker.sock" "/var/run/docker.sock"
+      ln -sf "${DOCKER_PID_DIR}/docker.sock" "/var/run/docker.sock"
     fi
 
     # Create certs for private docker registry
