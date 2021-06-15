@@ -61,3 +61,6 @@ properties:
       containers.volume_driver: Optional string containing the volume driver for the container
       containers.workdir: Optional string containing the working directory inside the container
       containers.store_dir: Optional string containing directory to store the containers data files
+      containers.login.server: Optional string containing the server address to login to before pulling the container image
+      containers.login.username: Optional string containing the username to login with before pulling the container image
+      containers.login.password: Optional string containing the paswword to login with before pulling the container image
