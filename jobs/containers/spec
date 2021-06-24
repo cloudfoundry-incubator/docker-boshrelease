@@ -38,6 +38,7 @@ properties:
       containers.links: Optional array of links to another containers (name:alias)
       containers.log_driver: Optional string containing the log driver for the container
       containers.log_options: Optional array of log driver options
+      containers.log_rotate: Optional content of a logrotate file for this container
       containers.lxc_options: Optional array of custom lxc options
       containers.mac_address: Optional string containing the container MAC address
       containers.memory: Optional string containing the memory limit to assign to the container (format: <number><optional unit>, where unit = b, k, m or g)

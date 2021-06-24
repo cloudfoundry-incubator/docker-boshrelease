@@ -144,6 +144,11 @@ export <%= container['name'] %>_log_driver="--log-driver=<%= container['log_driv
 export <%= container['name'] %>_log_options="<%= Array(container['log_options']).join(',').split(',').map { |log_option| "--log-opt=#{log_option}" }.join(' ') %>"
 <% end %>
 
+<% if container['log_rotate'] %>
+# Write log rotate file for the container
+echo -e "<%= container['log_rotate'] %>" > /etc/logrotate.d/<%= container['name'] %>
+<% end %>
+
 <% unless container['lxc_options'].nil? || container['lxc_options'].empty? %>
 # Custom lxc options
 export <%= container['name'] %>_lxc_options="<%= Array(container['lxc_options']).join(',').split(',').map { |lxc_option| "--lxc-conf=#{lxc_option}" }.join(' ') %>"
